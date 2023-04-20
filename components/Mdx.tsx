@@ -11,7 +11,7 @@ function Quote({ quote, author }: Quote) {
   return (
     <div className="flex flex-col">
       <div className="mx-2 my-4 text-2xl italic leading-relaxed">{quote}</div>
-      <div className="mx-2 self-end text-lg italic underline">
+      <div className="mx-2 self-end text-lg italic underline underline-offset-2">
         &quot;{author}&quot;
       </div>
     </div>

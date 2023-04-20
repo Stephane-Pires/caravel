@@ -54,7 +54,7 @@ function getLabel(tag: SUBJECT | TYPE) {
 
 export function Tag({ tag }: TagProps) {
   return (
-    <div className={`${getColor(tag)} my-2 mr-4 rounded-lg px-2 py-1`}>
+    <div className={`${getColor(tag)} my-2 rounded-lg px-2 py-1`}>
       {getLabel(tag)}
     </div>
   )
