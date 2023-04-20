@@ -1,12 +1,18 @@
 # TODO
 
-- [ ] : Architecture on
+- [ ] : Architecture
+
+  - [ ] : Me => /curriculum vitae + /books + /projects ==> (ship)
+
+  - [ ] : Inspiration => (dynamique) inspiration-articles ==> (new island)
+
+  - [ ] : Though => (dynamique) Though-articles ==> (logbook)
+
+  - [ ] : Dynamique routing (me, inspiration, tought)
 
 - [ ] : Defines features, mock-up them
 
-  - [ ] : Star Component
-
-- [ ] : Define (color, spacing, shadow, typo)
+  - [x] : Star Component
 
 - [ ] : Use tailwind.config.js to customize design system
 
@@ -18,6 +24,6 @@
 
 - [ ] : Add linting rules (tailwind, mdx)
 
-- [ ] : Customize Markdown HTML balises
+- [x] : Customize Markdown HTML balises
 
 - [x] : Try [contentLayer](https://www.contentlayer.dev/) or [next-mdx-remote](https://github.com/hashicorp/next-mdx-remote)
