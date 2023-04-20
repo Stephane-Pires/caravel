@@ -1,16 +1,14 @@
-import { Counter } from "@/components/Counter"
-import { CustomDiv } from "@/components/CustomDiv"
+import { Mdx } from "@/components/Mdx"
+import { Star } from "@/components/Star"
+import { STARS } from "@/enums/stars"
 import { allContents } from "contentlayer/generated"
-import { useMDXComponent } from "next-contentlayer/hooks"
 
 export default function Home() {
-  console.log("allContents[0].title", allContents[0].title)
-  console.log("allContents[0].boy", allContents[0].body.code)
-  const MDXContent = useMDXComponent(allContents[0].body.code)
-
   return (
     <main className="flex min-h-screen flex-col items-center justify-between p-24">
-      <MDXContent components={{ Counter, CustomDiv }} />
+      <Star star={STARS.THREE} />
+
+      <Mdx code={allContents[0].body.code} />
     </main>
   )
 }

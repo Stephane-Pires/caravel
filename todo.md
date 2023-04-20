@@ -1,6 +1,10 @@
 # TODO
 
+- [ ] : Architecture on
+
 - [ ] : Defines features, mock-up them
+
+  - [ ] : Star Component
 
 - [ ] : Define (color, spacing, shadow, typo)
 
@@ -16,4 +20,4 @@
 
 - [ ] : Customize Markdown HTML balises
 
-- [ ] : Try [contentLayer](https://www.contentlayer.dev/) or [next-mdx-remote](https://github.com/hashicorp/next-mdx-remote)
+- [x] : Try [contentLayer](https://www.contentlayer.dev/) or [next-mdx-remote](https://github.com/hashicorp/next-mdx-remote)
