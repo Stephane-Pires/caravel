@@ -2,13 +2,7 @@
 
 - [ ] : Architecture
 
-  - [ ] : Me => /curriculum vitae + /books + /projects ==> (ship)
-
-  - [ ] : Inspiration => (dynamique) inspiration-articles ==> (new island)
-
-  - [ ] : Though => (dynamique) Though-articles ==> (logbook)
-
-  - [ ] : Dynamique routing (me, inspiration, tought)
+  - [ ] : Blog => (dynamique) inspiration-articles ==> (logbook)
 
 - [ ] : Defines features, mock-up them
 

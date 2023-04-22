@@ -1,5 +1,10 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
+  future: {
+    // https://github.com/tailwindlabs/tailwindcss/pull/8394
+    // Unactive hover on mobile (which has a weird effect - there is no hover on mobile you fool)
+    hoverOnlyWhenSupported: true,
+  },
   content: [
     "./components/**/*.{js,ts,jsx,tsx}",
     "./src/app/**/*.{js,ts,jsx,tsx}",

@@ -3,6 +3,10 @@ import { Card } from "@/components/Card"
 export default function Home() {
   return (
     <main className="flex min-h-screen flex-col items-center justify-between p-10">
+      <h1 className="mb-8 mt-4 font-serif text-4xl text-emerald-200">
+        LogBook 😍
+      </h1>
+
       <Card
         title="Ship leaving the coast"
         image="boat-living-coast.jpeg"
