@@ -10,9 +10,9 @@ export const SUBJECT = {
 
 export type SUBJECT = keyof typeof SUBJECT
 
-export const TYPE = {
+export const CATEGORY = {
   THOUGH: "ADVENTURE",
-  INSPIRATION: "CODE",
+  INSPIRATION: "INSPIRATION",
 }
 
-export type TYPE = keyof typeof TYPE
+export type CATEGORY = keyof typeof CATEGORY

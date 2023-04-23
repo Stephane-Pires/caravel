@@ -10,11 +10,31 @@ export const Content = defineDocumentType(() => ({
       description: "The title of the Content",
       required: true,
     },
+    image: {
+      type: "string",
+      description: "The image of the content",
+      required: true,
+    },
+    date: {
+      type: "date",
+      description: "The date of the content",
+      required: true,
+    },
+    subject: {
+      type: "string",
+      description: "The subject of the content",
+      required: true,
+    },
+    category: {
+      type: "string",
+      description: "The category of the content",
+      required: true,
+    },
   },
   computedFields: {
     url: {
       type: "string",
-      resolve: (post) => `/posts/${post._raw.flattenedPath}`,
+      resolve: (content) => `${content._raw.flattenedPath}`,
     },
   },
 }))
@@ -25,9 +45,5 @@ export default makeSource({
   mdx: {
     rehypePlugins: [],
     remarkPlugins: [],
-    // esbuildOptions: (options) => {
-    //   options.tsconfig = `${process.env.PWD}/tsconfig.mdx.json`
-    //   return options
-    // },
   },
 })

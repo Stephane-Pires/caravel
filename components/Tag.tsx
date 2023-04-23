@@ -1,12 +1,12 @@
-import { SUBJECT, TYPE } from "@/enums/tag"
+import { CATEGORY, SUBJECT } from "@/enums/tag"
 
-type Tag = SUBJECT | TYPE
+type Tag = SUBJECT | CATEGORY
 
 interface TagProps {
   tag: Tag
 }
 
-function getColor(tag: SUBJECT | TYPE) {
+function getColor(tag: SUBJECT | CATEGORY) {
   switch (tag) {
     case "CODE":
       return "bg-teal-300"
@@ -29,7 +29,7 @@ function getColor(tag: SUBJECT | TYPE) {
   }
 }
 
-function getLabel(tag: SUBJECT | TYPE) {
+function getLabel(tag: SUBJECT | CATEGORY) {
   switch (tag) {
     case "CODE":
       return "Code 🧑‍💻"

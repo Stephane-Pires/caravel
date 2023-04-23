@@ -1,33 +1,56 @@
+import { allContents } from "@/.contentlayer/generated"
 import { Card } from "@/components/Card"
+import { CATEGORY, SUBJECT } from "@/enums/tag"
+import { compareDesc } from "date-fns"
+import Link from "next/link"
 
-export default function Home() {
+// export const generateMetadata = ({ params }) => {
+//   const content = allContents.find(
+//     (content) => content._raw.flattenedPath === params.slug
+//   )
+//   return { title: content.title }
+// }
+
+export default function Blog() {
+  const allContentSortedByDateDesc = allContents.sort((a, b) =>
+    compareDesc(new Date(a.date), new Date(b.date))
+  )
+
+  const allFontmatter = allContentSortedByDateDesc.map(
+    ({ title, image, date, subject, category, url, _id }) => ({
+      title,
+      image,
+      date,
+      subject,
+      category,
+      url,
+      id: _id,
+    })
+  )
+
   return (
     <main className="flex min-h-screen flex-col items-center justify-between p-10">
       <h1 className="mb-8 mt-4 font-serif text-4xl text-emerald-200">
         LogBook 😍
       </h1>
 
-      <Card
-        title="Ship leaving the coast"
-        image="boat-living-coast.jpeg"
-        date="Mon 12 Dec 2003"
-        subject="MOVIE"
-        type="INSPIRATION"
-      />
-      <Card
-        title="sandbox_title"
-        image="boat-living-coast.jpeg"
-        date="sandbox_12_03_20"
-        subject="MOVIE"
-        type="INSPIRATION"
-      />
-      <Card
-        title="sandbox_title"
-        image="boat-living-coast.jpeg"
-        date="sandbox_12_03_20"
-        subject="MOVIE"
-        type="INSPIRATION"
-      />
+      <>
+        {allFontmatter.map(
+          ({ title, image, date, subject, category, url, id }) => {
+            return (
+              <Link key={id} href={`/blog/${url}`}>
+                <Card
+                  title={title}
+                  image={image}
+                  date={date}
+                  subject={subject as SUBJECT}
+                  category={category as CATEGORY}
+                />
+              </Link>
+            )
+          }
+        )}
+      </>
     </main>
   )
 }
