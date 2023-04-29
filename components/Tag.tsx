@@ -21,7 +21,8 @@ function getColor(tag: SUBJECT | CATEGORY) {
     case "FUTUR":
       return "bg-purple-300"
     case "BOOK_FICTIONNAL":
-      return "bg-fuschia-300"
+    case "BOOK_NON_FICTIONNAL":
+      return "bg-stone-300"
     case "THOUGH":
       return "bg-pink-300"
     case "INSPIRATION":
@@ -44,6 +45,7 @@ function getLabel(tag: SUBJECT | CATEGORY) {
     case "FUTUR":
       return "Futur 🔮"
     case "BOOK_FICTIONNAL":
+    case "BOOK_NON_FICTIONNAL":
       return "Book 📚"
     case "THOUGH":
       return "Though 💭"

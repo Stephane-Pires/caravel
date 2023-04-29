@@ -6,12 +6,13 @@ export const SUBJECT = {
   GAME_VIDEO: "GAME_VIDEO",
   TEAMS: "TEAMS",
   FUTUR: "FUTUR",
+  BOOK_NON_FICTIONNAL: "BOOK_NON_FICTIONNAL",
 }
 
 export type SUBJECT = keyof typeof SUBJECT
 
 export const CATEGORY = {
-  THOUGH: "ADVENTURE",
+  THOUGH: "THOUGH",
   INSPIRATION: "INSPIRATION",
 }
 

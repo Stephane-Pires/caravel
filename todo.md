@@ -2,7 +2,15 @@
 
 - [ ] : Architecture
 
-  - [ ] : Blog => (dynamique) inspiration-articles ==> (logbook)
+  - [x] : Blog => (dynamique) inspiration-articles ==> (logbook)
+
+  - [ ] : Landing page
+
+  - [ ] : Navbar
+
+- [ ] : Find assets for Star components
+
+- [ ] : Find a logo
 
 - [ ] : Defines features, mock-up them
 
@@ -10,7 +18,7 @@
 
 - [ ] : Use tailwind.config.js to customize design system
 
-  - [ ] : Define Fonts to use (Font for Header, font for Text, font for Code)
+  - [x] : Define Fonts to use (Font for Header, font for Text, font for Code)
 
   - [ ] : Define Colors
 

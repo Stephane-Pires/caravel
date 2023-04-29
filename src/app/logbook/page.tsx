@@ -2,6 +2,7 @@ import { allContents } from "@/.contentlayer/generated"
 import { Card } from "@/components/Card"
 import { CATEGORY, SUBJECT } from "@/enums/tag"
 import { compareDesc } from "date-fns"
+import Image from "next/image"
 import Link from "next/link"
 
 // export const generateMetadata = ({ params }) => {
@@ -29,16 +30,18 @@ export default function Blog() {
   )
 
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-10">
-      <h1 className="mb-8 mt-4 font-serif text-4xl text-emerald-200">
-        LogBook 😍
-      </h1>
+    <main className="flex min-h-screen flex-col items-center  p-10">
+      <div className="mb-8 mt-4 flex flex-row items-center gap-8 align-middle font-serif text-4xl text-emerald-200 underline decoration-double decoration-2 sm:text-6xl ">
+        <div className="relative h-[150px] w-[150px] ">
+          <Image src="/logbook/logbook.png" alt="Icon logbook" fill />
+        </div>
+      </div>
 
-      <>
+      <div className="grid gap-8 p-10 lg:grid-cols-2 2xl:grid-cols-4">
         {allFontmatter.map(
           ({ title, image, date, subject, category, url, id }) => {
             return (
-              <Link key={id} href={`/blog/${url}`}>
+              <Link key={id} href={`/logbook/${url}`}>
                 <Card
                   title={title}
                   image={image}
@@ -50,7 +53,7 @@ export default function Blog() {
             )
           }
         )}
-      </>
+      </div>
     </main>
   )
 }

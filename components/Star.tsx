@@ -11,27 +11,30 @@ export function Star({ star }: StarProps) {
       return (
         <Image
           alt="wind force weak"
-          src="/wind/little-wind.png"
-          width={80}
-          height={80}
+          src="/stars/star.png"
+          width={120}
+          height={120}
+          className="rounded-full"
         />
       )
     case "TWO":
       return (
         <Image
-          alt="wind force medium"
-          src="/wind/medium-wind.png"
-          width={80}
-          height={80}
+          alt="stars force medium"
+          src="/stars/two-stars.png"
+          width={120}
+          height={120}
+          className="rounded-full"
         />
       )
     case "THREE":
       return (
         <Image
-          alt="wind force strong"
-          src="/wind/strong-wind.png"
-          width={80}
-          height={80}
+          alt="stars force strong"
+          src="/stars/three-stars.png"
+          width={120}
+          height={120}
+          className="rounded-full"
         />
       )
   }

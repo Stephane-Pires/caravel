@@ -30,6 +30,11 @@ export const Content = defineDocumentType(() => ({
       description: "The category of the content",
       required: true,
     },
+    star: {
+      type: "string",
+      description: "How much i like this content",
+      required: true,
+    },
   },
   computedFields: {
     url: {

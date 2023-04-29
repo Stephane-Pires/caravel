@@ -1,0 +1,61 @@
+import { Mdx } from "@/components/Mdx"
+import { Star } from "@/components/Star"
+import { STAR } from "@/enums/stars"
+import { Content, allContents } from "contentlayer/generated"
+import Image from "next/image"
+
+export async function generateStaticParams() {
+  return allContents.map((content) => ({
+    slug: content.url,
+  }))
+}
+
+export default function BlogContent({
+  params: { slug },
+}: {
+  params: { slug: Content["url"] }
+}) {
+  const findContent = (slug: Content["url"]) => {
+    const resultat = allContents.find((content) => content.url === slug)
+
+    if (resultat) {
+      return resultat
+    } else {
+      throw new Error("Unable to retrieve this content URL")
+    }
+  }
+
+  const content = findContent(slug)
+
+  return (
+    <main className="flex min-h-screen flex-col items-center px-10 sm:justify-between">
+      <div className="absolute -z-10 hidden h-[400px] w-full sm:block">
+        <Image
+          src={`/logbook/card/${content.image}`}
+          alt="My Image"
+          fill
+          className="object-cover"
+        />
+
+        <div className="relative h-full w-full bg-black/60 text-center align-middle ">
+          <div className="relative top-40 font-serif text-6xl text-blue-200">
+            {content.title}
+          </div>
+        </div>
+      </div>
+      <div className="rounded-full border-4 border-solid border-accent-800 bg-blue-200 sm:mt-[335px]">
+        <Star star={content.star as STAR} />
+      </div>
+      <Mdx code={content.body.code} />
+
+      <div className="relative bottom-0 -z-10 hidden h-[125px] w-[100vw]  sm:block">
+        <Image
+          alt="sea wave a the bottom of the page"
+          src="/wave/animated-wave.svg"
+          fill
+          className="object-cover"
+        />
+      </div>
+    </main>
+  )
+}
