@@ -1,6 +1,6 @@
 "use client"
 
-import Link from "next/link"
+import Link, { LinkProps } from "next/link"
 import { usePathname } from "next/navigation"
 
 const NAVIGATION = {
@@ -12,6 +12,14 @@ const NAVIGATION = {
   },
 } as const
 
+type pathname = (typeof NAVIGATION)[keyof typeof NAVIGATION]["pathname"]
+
+function isActivePathname(pathname: string, navigationPathname: pathname) {
+  const regex = new RegExp("\\" + navigationPathname)
+
+  return regex.test(pathname)
+}
+
 export function Navigation() {
   const pathname = usePathname()
 
@@ -20,8 +28,8 @@ export function Navigation() {
       <Link
         href={NAVIGATION.LOGBOOK.pathname}
         className={
-          pathname === NAVIGATION.LOGBOOK.pathname
-            ? "underline decoration-double"
+          isActivePathname(pathname, NAVIGATION.LOGBOOK.pathname)
+            ? "underline decoration-accent-500 decoration-dotted"
             : ""
         }
       >
