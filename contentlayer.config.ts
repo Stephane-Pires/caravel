@@ -1,4 +1,6 @@
 import { defineDocumentType, makeSource } from "contentlayer/source-files"
+import rehypeKatex from "rehype-katex"
+import remarkMath from "remark-math"
 
 export const Content = defineDocumentType(() => ({
   name: "Content",
@@ -48,7 +50,7 @@ export default makeSource({
   contentDirPath: "content",
   documentTypes: [Content],
   mdx: {
-    rehypePlugins: [],
-    remarkPlugins: [],
+    rehypePlugins: [rehypeKatex],
+    remarkPlugins: [remarkMath],
   },
 })

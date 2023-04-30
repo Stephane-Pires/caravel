@@ -10,7 +10,7 @@ interface Quote {
 function Quote({ quote, author }: Quote) {
   return (
     <div className="m-2 flex flex-col">
-      <div className="mx-2 my-4 font-script text-2xl italic leading-relaxed text-blue-100">
+      <div className="mx-2 my-4 font-script text-xl italic leading-relaxed text-blue-100">
         {quote}
       </div>
       <div className="mx-2 self-end font-script text-lg italic text-blue-100 underline underline-offset-2">

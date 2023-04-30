@@ -25,3 +25,18 @@ body {
     )
     rgb(var(--background-start-rgb));
 }
+
+/* Styling - rehypeKatex & remarkMath */
+span.katex-html {
+  display: none;
+}
+
+/* Styling - rehypeKatex & remarkMath */
+span.katex-mathml {
+  @apply text-xl text-blue-100;
+}
+
+/* Styling - rehypeKatex & remarkMath */
+math {
+  @apply m-4;
+}
