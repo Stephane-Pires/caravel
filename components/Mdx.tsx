@@ -10,8 +10,10 @@ interface Quote {
 function Quote({ quote, author }: Quote) {
   return (
     <div className="m-2 flex flex-col">
-      <div className="mx-2 my-4 text-2xl italic leading-relaxed">{quote}</div>
-      <div className="mx-2 self-end text-lg italic underline underline-offset-2">
+      <div className="mx-2 my-4 font-script text-2xl italic leading-relaxed text-blue-100">
+        {quote}
+      </div>
+      <div className="mx-2 self-end font-script text-lg italic text-blue-100 underline underline-offset-2">
         &quot;{author}&quot;
       </div>
     </div>
@@ -20,7 +22,7 @@ function Quote({ quote, author }: Quote) {
 
 function h1({ children }: HTMLProps<HTMLHeadingElement>) {
   return (
-    <h1 className="m-8  text-center font-serif text-4xl text-blue-200">
+    <h1 className="m-8  text-center font-script text-4xl text-blue-300">
       {children}
     </h1>
   )
@@ -28,7 +30,7 @@ function h1({ children }: HTMLProps<HTMLHeadingElement>) {
 
 function h2({ children }: HTMLProps<HTMLHeadingElement>) {
   return (
-    <h2 className="m-6 text-center font-sans text-3xl text-blue-200">
+    <h2 className="m-6 text-center font-script text-3xl text-blue-300">
       {children}
     </h2>
   )
@@ -36,22 +38,28 @@ function h2({ children }: HTMLProps<HTMLHeadingElement>) {
 
 function h3({ children }: HTMLProps<HTMLHeadingElement>) {
   return (
-    <h3 className=" m-4 text-center font-sans text-2xl text-blue-200">
+    <h3 className=" m-4 text-center font-script text-2xl text-blue-300">
       {children}
     </h3>
   )
 }
 
 function h4({ children }: HTMLProps<HTMLHeadingElement>) {
-  return <h4 className=" m-2 text-center text-xl text-blue-200">{children}</h4>
+  return (
+    <h4 className=" m-2 text-center font-script text-xl text-blue-300">
+      {children}
+    </h4>
+  )
 }
 
 function p({ children }: HTMLProps<HTMLParagraphElement>) {
-  return <p className="m-2 font-sans text-xl text-blue-200">{children}</p>
+  return <p className="m-2 font-sans text-xl text-blue-100">{children}</p>
 }
 
 function li({ children }: HTMLProps<HTMLLIElement>) {
-  return <li className="list-item font-mono text-lg">{children}</li>
+  return (
+    <li className="list-item font-sans text-lg text-blue-100">{children}</li>
+  )
 }
 
 function ul({ children }: HTMLProps<HTMLUListElement>) {

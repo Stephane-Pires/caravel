@@ -30,18 +30,6 @@ export default function Blog() {
     })
   )
 
-  const COLORS_TEST = [
-    "100",
-    "200",
-    "300",
-    "400",
-    "500",
-    "600",
-    "700",
-    "800",
-    "900",
-  ]
-
   return (
     <main className="flex min-h-screen flex-col items-center  p-10">
       <div className="mb-8 mt-4 flex flex-row items-center gap-8 align-middle font-serif text-4xl text-emerald-200 underline decoration-double decoration-2 sm:text-6xl ">
@@ -50,7 +38,7 @@ export default function Blog() {
         </div>
       </div>
 
-      <div className="grid gap-8 p-10 lg:grid-cols-2 2xl:grid-cols-4">
+      <div className="grid gap-8 p-10 lg:grid-cols-4 xl:grid-cols-8">
         <div className={`m-4 h-40 w-40 rounded-xl bg-primary-100`}></div>
         <div className={`m-4 h-40 w-40 rounded-xl bg-primary-200`}></div>
         <div className={`m-4 h-40 w-40 rounded-xl bg-primary-300`}></div>
@@ -87,7 +75,6 @@ export default function Blog() {
         <div className={`m-4 h-40 w-40 rounded-xl bg-slate-700`}></div>
         <div className={`m-4 h-40 w-40 rounded-xl bg-slate-800`}></div>
         <div className={`m-4 h-40 w-40 rounded-xl bg-slate-900`}></div>
-        <Button />
       </div>
     </main>
   )

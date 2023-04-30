@@ -4,17 +4,29 @@ import { STAR } from "@/enums/stars"
 import { Content, allContents } from "contentlayer/generated"
 import Image from "next/image"
 
+export const generateMetadata = ({ params }: BlogContentProps) => {
+  const content = allContents.find(
+    (content) => content._raw.flattenedPath === params.slug
+  )
+
+  if (content) {
+    return { title: content.title }
+  }
+}
+
 export async function generateStaticParams() {
   return allContents.map((content) => ({
     slug: content.url,
   }))
 }
 
-export default function BlogContent({
-  params: { slug },
-}: {
-  params: { slug: Content["url"] }
-}) {
+interface BlogContentProps {
+  params: {
+    slug: Content["url"]
+  }
+}
+
+export default function BlogContent({ params: { slug } }: BlogContentProps) {
   const findContent = (slug: Content["url"]) => {
     const resultat = allContents.find((content) => content.url === slug)
 
@@ -28,7 +40,7 @@ export default function BlogContent({
   const content = findContent(slug)
 
   return (
-    <main className="flex min-h-screen flex-col items-center px-10 sm:justify-between">
+    <main className="flex min-h-screen flex-col items-center px-10 pt-20 sm:justify-between">
       <div className="absolute -z-10 hidden h-[400px] w-full sm:block">
         <Image
           src={`/logbook/card/${content.image}`}
@@ -38,12 +50,12 @@ export default function BlogContent({
         />
 
         <div className="relative h-full w-full bg-black/60 text-center align-middle ">
-          <div className="relative top-40 font-serif text-6xl text-blue-200">
+          <div className="relative top-40 font-script text-6xl text-blue-300">
             {content.title}
           </div>
         </div>
       </div>
-      <div className="rounded-full border-4 border-solid border-accent-800 bg-blue-200 sm:mt-[335px]">
+      <div className="rounded-full border-4 border-solid border-primary-800 bg-blue-300 sm:mt-[335px]">
         <Star star={content.star as STAR} />
       </div>
       <Mdx code={content.body.code} />
