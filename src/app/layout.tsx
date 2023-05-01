@@ -1,6 +1,7 @@
 import { Navigation } from "@/components/Navigation"
 import type { Metadata } from "next"
-import { Merienda, Open_Sans, Roboto_Mono } from "next/font/google"
+import { Merienda, Open_Sans } from "next/font/google"
+import localFont from "next/font/local"
 import Image from "next/image"
 import Link from "next/link"
 
@@ -11,15 +12,15 @@ export const metadata: Metadata = {
   description: "The adventure blog of Stéphane Pires",
 }
 
-const open_sans = Open_Sans({
-  subsets: ["latin"],
-  variable: "--font-open-sans",
+const mono_lisa_regular = localFont({
+  src: "./MonoLisa-Regular.ttf",
+  variable: "--font-mono-lisa-regular",
   display: "swap",
 })
 
-const roboto_mono = Roboto_Mono({
+const open_sans = Open_Sans({
   subsets: ["latin"],
-  variable: "--font-roboto-mono",
+  variable: "--font-open-sans",
   display: "swap",
 })
 
@@ -37,7 +38,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${open_sans.variable} ${roboto_mono.variable} ${merienda.variable}`}
+      className={`${open_sans.variable} ${merienda.variable} ${mono_lisa_regular.variable}`}
     >
       <body>
         <header className="fixed z-50 grid h-20 w-full grid-cols-3 gap-4 bg-slate-900 p-2">

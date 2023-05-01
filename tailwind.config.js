@@ -43,8 +43,8 @@ module.exports = {
       },
       fontFamily: {
         sans: ["var(--font-open-sans)"],
-        mono: ["var(--font-roboto-mono)"],
         script: ["var(--font-merienda)"],
+        code: ["var(--font-mono-lisa-regular)"],
       },
     },
   },
