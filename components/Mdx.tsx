@@ -1,5 +1,6 @@
 import { CheckIcon, ChevronRightIcon } from "@heroicons/react/24/solid"
 import { useMDXComponent } from "next-contentlayer/hooks"
+import Image from "next/image"
 import { HTMLProps } from "react"
 
 interface Quote {
@@ -70,6 +71,26 @@ function ul({ children }: HTMLProps<HTMLUListElement>) {
   )
 }
 
+function ImageMdx({ src, alt }: HTMLProps<HTMLImageElement>) {
+  if (!src) {
+    throw new Error("You can not create an image with an undefined src")
+  }
+
+  if (!alt) {
+    throw new Error(
+      "You can not create an image with an undefined alt (due to next-web-vitals rules)"
+    )
+  }
+
+  return (
+    <div className="flex flex-row justify-center">
+      <div className={`relative my-4  h-[50vh] w-[90vw] md:w-full`}>
+        <Image src={src} alt={alt} fill className="rounded-md object-cover" />
+      </div>
+    </div>
+  )
+}
+
 const mdxHTMLComponents = {
   h1,
   h2,
@@ -85,7 +106,7 @@ export function Mdx({ code }: { code: string }) {
 
   return (
     <div className="flex flex-col sm:max-w-3xl">
-      <MDXContent components={{ Quote, ...mdxHTMLComponents }} />
+      <MDXContent components={{ Quote, ImageMdx, ...mdxHTMLComponents }} />
     </div>
   )
 }
