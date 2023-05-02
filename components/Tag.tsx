@@ -9,24 +9,24 @@ interface TagProps {
 function getColor(tag: SUBJECT | CATEGORY) {
   switch (tag) {
     case "CODE":
-      return "bg-teal-300"
+      return "bg-primary-200"
     case "MOVIE":
-      return "bg-cyan-300"
+      return "bg-primary-200"
     case "GAME_BOARD":
-      return "bg-sky-300"
+      return "bg-primary-200"
     case "GAME_VIDEO":
-      return "bg-indigo-300"
+      return "bg-primary-200"
     case "TEAMS":
-      return "bg-violet-300"
+      return "bg-primary-200"
     case "FUTUR":
-      return "bg-purple-300"
+      return "bg-primary-200"
     case "BOOK_FICTIONNAL":
     case "BOOK_NON_FICTIONNAL":
-      return "bg-stone-300"
+      return "bg-primary-200"
     case "THOUGH":
-      return "bg-pink-300"
+      return "bg-primary-200"
     case "INSPIRATION":
-      return "bg-rose-300"
+      return "bg-primary-200"
   }
 }
 
@@ -56,7 +56,11 @@ function getLabel(tag: SUBJECT | CATEGORY) {
 
 export function Tag({ tag }: TagProps) {
   return (
-    <div className={`${getColor(tag)} my-2 rounded-lg px-2 py-1`}>
+    <div
+      className={`${getColor(
+        tag
+      )} my-2 rounded-lg border-2 border-primary-900 px-2 py-1 font-sans text-blue-900`}
+    >
       {getLabel(tag)}
     </div>
   )

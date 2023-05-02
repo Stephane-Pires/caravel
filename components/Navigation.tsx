@@ -39,7 +39,7 @@ export function Navigation() {
             : ""
         }`}
       >
-        {NAVIGATION.LOGBOOK.name}
+        📔 {NAVIGATION.LOGBOOK.name}
       </Link>
 
       <Link
@@ -50,7 +50,7 @@ export function Navigation() {
             : ""
         }`}
       >
-        {NAVIGATION.SANDBOX.name}
+        🏖️ {NAVIGATION.SANDBOX.name}
       </Link>
     </nav>
   )
