@@ -71,6 +71,17 @@ function ul({ children }: HTMLProps<HTMLUListElement>) {
   )
 }
 
+function a({ children, href }: HTMLProps<HTMLAnchorElement>) {
+  return (
+    <a
+      href={href}
+      className="cursor-pointer text-accent-600 visited:text-accent-100 hover:underline hover:decoration-accent-600 visited:hover:decoration-accent-100"
+    >
+      {children}
+    </a>
+  )
+}
+
 function ImageMdx({ src, alt }: HTMLProps<HTMLImageElement>) {
   if (!src) {
     throw new Error("You can not create an image with an undefined src")
@@ -99,6 +110,7 @@ const mdxHTMLComponents = {
   p,
   li,
   ul,
+  a,
 }
 
 export function Mdx({ code }: { code: string }) {

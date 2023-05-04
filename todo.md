@@ -1,12 +1,12 @@
 # TODO
 
-- [ ] : Architecture
+- [x] : Architecture
 
   - [x] : Blog => (dynamique) inspiration-articles ==> (logbook)
 
-  - [ ] : Landing page
+  - [x] : Landing page
 
-  - [ ] : Navbar
+  - [x] : Navbar
 
 - [ ] : Find assets for Star components
 
@@ -20,11 +20,11 @@
 
   - [x] : Define Fonts to use (Font for Header, font for Text, font for Code)
 
-  - [ ] : Define Colors
+  - [x] : Define Colors
 
   - [ ] : Define Spacing
 
-- [ ] : Add linting rules (tailwind, mdx)
+- [x] : Add linting rules (tailwind, mdx)
 
 - [x] : Customize Markdown HTML balises
 

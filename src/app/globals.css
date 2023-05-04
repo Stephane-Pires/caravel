@@ -41,12 +41,16 @@ math {
   @apply m-4;
 }
 
+ul > li > ul > li {
+  @apply list-image-[url(/logbook/mdx/minus-small.svg)];
+}
+
 /* Voir pour remplacer par ue implementation MDX avec les balises pre & code */
 /* https://rehype-pretty-code.netlify.app/ */
 pre {
   /* margin: 100px; */
   /* width: 90vw; */
-  @apply w-[90vw] md:w-full;
+  @apply m-4 w-[90vw] md:w-full;
 }
 
 /* https://rehype-pretty-code.netlify.app/ */
