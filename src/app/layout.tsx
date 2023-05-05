@@ -1,4 +1,4 @@
-import { Navigation } from "@/components/Navigation"
+import { Navigation, NavigationMobile } from "@/components/Navigation"
 import type { Metadata } from "next"
 import { Merienda, Open_Sans } from "next/font/google"
 import localFont from "next/font/local"
@@ -41,18 +41,9 @@ export default function RootLayout({
       className={`${open_sans.variable} ${merienda.variable} ${mono_lisa_regular.variable}`}
     >
       <body>
-        <header className="fixed z-50 grid h-20 w-full grid-cols-3 gap-4 bg-slate-900 p-2">
-          <div className="col-span-1 ml-4  font-script text-4xl">
-            <Link href="/">
-              <Image
-                src="/logbook/logbook.png"
-                alt="logo caravel"
-                width={60}
-                height={60}
-              />
-            </Link>
-          </div>
+        <header className="fixed z-50 h-20 w-full bg-slate-900 ">
           <Navigation />
+          <NavigationMobile />
         </header>
 
         {children}
