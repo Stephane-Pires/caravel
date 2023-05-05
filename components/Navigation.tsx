@@ -112,7 +112,8 @@ export function NavigationMobile() {
       </div>
 
       {showLinks && (
-        <div className=" mt-28 flex flex-col justify-around gap-14 ">
+        <div className=" mt-28 flex flex-col justify-around gap-14">
+          <div>Some changes to trigger vercel</div>
           <Link
             href={NAVIGATION.LOGBOOK.pathname}
             className={`m-2 rounded-lg p-4 font-sans text-4xl ${
