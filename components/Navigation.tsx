@@ -34,7 +34,7 @@ export function Navigation() {
 
   return (
     // grid-cols-3 gap-4 grid
-    <nav className="m-2 hidden sm:col-span-2 sm:flex sm:flex-row sm:items-center sm:justify-center sm:gap-8">
+    <nav className="m-2 hidden sm:col-span-2 sm:flex sm:flex-row sm:items-center sm:justify-between sm:gap-8">
       <div className="col-span-1 ml-4">
         <Link href="/">
           <Image
@@ -46,27 +46,29 @@ export function Navigation() {
         </Link>
       </div>
 
-      <Link
-        href={NAVIGATION.LOGBOOK.pathname}
-        className={`font-sans text-2xl text-primary-600 hover:text-primary-300 ${
-          isActivePathname(pathname, NAVIGATION.LOGBOOK.pathname)
-            ? "underline decoration-accent-500 decoration-dotted"
-            : ""
-        }`}
-      >
-        📔 {NAVIGATION.LOGBOOK.name}
-      </Link>
+      <div className="mx-4 flex flex-row gap-8">
+        <Link
+          href={NAVIGATION.LOGBOOK.pathname}
+          className={`font-sans text-2xl text-primary-600 hover:text-primary-300 ${
+            isActivePathname(pathname, NAVIGATION.LOGBOOK.pathname)
+              ? "underline decoration-accent-500 decoration-dotted"
+              : ""
+          }`}
+        >
+          📔 {NAVIGATION.LOGBOOK.name}
+        </Link>
 
-      <Link
-        href={NAVIGATION.SANDBOX.pathname}
-        className={`font-sans text-2xl text-primary-600 hover:text-primary-300 ${
-          isActivePathname(pathname, NAVIGATION.SANDBOX.pathname)
-            ? "underline decoration-accent-500 decoration-dotted"
-            : ""
-        }`}
-      >
-        🏖️ {NAVIGATION.SANDBOX.name}
-      </Link>
+        <Link
+          href={NAVIGATION.SANDBOX.pathname}
+          className={`font-sans text-2xl text-primary-600 hover:text-primary-300 ${
+            isActivePathname(pathname, NAVIGATION.SANDBOX.pathname)
+              ? "underline decoration-accent-500 decoration-dotted"
+              : ""
+          }`}
+        >
+          🏖️ {NAVIGATION.SANDBOX.name}
+        </Link>
+      </div>
     </nav>
   )
 }
@@ -84,9 +86,8 @@ export function NavigationMobile() {
   }, [pathname])
 
   return (
-    //  BASE CASE
     <nav
-      className={`flex flex-row   ${
+      className={`flex flex-row sm:hidden   ${
         showLinks
           ? "h-screen w-screen flex-col items-start bg-transparent/90 backdrop-blur-md"
           : "items-center justify-between"
@@ -113,7 +114,6 @@ export function NavigationMobile() {
 
       {showLinks && (
         <div className=" mt-28 flex flex-col justify-around gap-14">
-          <div>Some changes to trigger vercel</div>
           <Link
             href={NAVIGATION.LOGBOOK.pathname}
             className={`m-2 rounded-lg p-4 font-sans text-4xl ${
