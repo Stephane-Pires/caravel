@@ -2,10 +2,28 @@
 @tailwind components;
 @tailwind utilities;
 
+/* HACK UNTIL I MANAGE PROPERLY LIGHT-MODE using Tailwind */
+/* If the user prefers dark mode, 
+we of course apply color-scheme: dark, as usual */
+@media (prefers-color-scheme: dark) {
+  html {
+    color-scheme: dark;
+  }
+}
+
+/* HACK UNTIL I MANAGE PROPERLY LIGHT-MODE using Tailwind */
+/* If the user prefers light mode, 
+we still enforce color-scheme: dark, despite the user preference */
+@media (prefers-color-scheme: light) {
+  html {
+    color-scheme: dark;
+  }
+}
+
 :root {
-  --foreground-rgb: 0, 0, 0;
-  --background-start-rgb: 214, 219, 220;
-  --background-end-rgb: 255, 255, 255;
+  --foreground-rgb: 255, 255, 255;
+  --background-start-rgb: 15, 23, 42;
+  --background-end-rgb: 15, 23, 42;
 }
 
 @media (prefers-color-scheme: dark) {
