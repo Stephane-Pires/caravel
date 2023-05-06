@@ -1,6 +1,6 @@
 "use client"
 
-import { Bars4Icon, XMarkIcon } from "@heroicons/react/24/solid"
+import { Bars2Icon, Bars4Icon, XMarkIcon } from "@heroicons/react/24/solid"
 import Image from "next/image"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
@@ -49,10 +49,10 @@ export function Navigation() {
       <div className="mx-4 flex flex-row gap-8">
         <Link
           href={NAVIGATION.LOGBOOK.pathname}
-          className={`font-sans text-2xl text-primary-600 hover:text-primary-300 ${
+          className={`font-sans text-2xl hover:text-primary-300 ${
             isActivePathname(pathname, NAVIGATION.LOGBOOK.pathname)
-              ? "underline decoration-accent-500 decoration-dotted"
-              : ""
+              ? "text-accent-500"
+              : "text-primary-600"
           }`}
         >
           📔 {NAVIGATION.LOGBOOK.name}
@@ -60,10 +60,10 @@ export function Navigation() {
 
         <Link
           href={NAVIGATION.SANDBOX.pathname}
-          className={`font-sans text-2xl text-primary-600 hover:text-primary-300 ${
+          className={`font-sans text-2xl hover:text-primary-300 ${
             isActivePathname(pathname, NAVIGATION.SANDBOX.pathname)
-              ? "underline decoration-accent-500 decoration-dotted"
-              : ""
+              ? "text-accent-500"
+              : "text-primary-600"
           }`}
         >
           🏖️ {NAVIGATION.SANDBOX.name}
@@ -108,17 +108,17 @@ export function NavigationMobile() {
         {showLinks ? (
           <XMarkIcon className="m-2 h-10 w-10" onClick={handleClickIcon} />
         ) : (
-          <Bars4Icon className="m-2 h-10 w-10" onClick={handleClickIcon} />
+          <Bars2Icon className="m-2 h-10 w-10" onClick={handleClickIcon} />
         )}
       </div>
 
       {showLinks && (
-        <div className=" mt-28 flex flex-col justify-around gap-14">
+        <div className=" mt-28 flex flex-col justify-around gap-8">
           <Link
             href={NAVIGATION.LOGBOOK.pathname}
-            className={`m-2 rounded-lg p-4 font-sans text-4xl ${
+            className={`m-2 rounded-lg p-4 font-sans text-2xl ${
               isActivePathname(pathname, NAVIGATION.LOGBOOK.pathname)
-                ? "text-accent-500 underline decoration-accent-500 decoration-dotted"
+                ? "text-accent-500"
                 : "text-primary-600"
             }`}
           >
@@ -127,9 +127,9 @@ export function NavigationMobile() {
 
           <Link
             href={NAVIGATION.SANDBOX.pathname}
-            className={`m-2 rounded-lg p-4 font-sans text-4xl ${
+            className={`m-2 rounded-lg p-4 font-sans text-2xl ${
               isActivePathname(pathname, NAVIGATION.SANDBOX.pathname)
-                ? "text-accent-500 underline decoration-accent-500 decoration-dotted"
+                ? "text-accent-500"
                 : "text-primary-600"
             }`}
           >

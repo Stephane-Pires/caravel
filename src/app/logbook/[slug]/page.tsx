@@ -55,9 +55,7 @@ export default function BlogContent({ params: { slug } }: BlogContentProps) {
           </div>
         </div>
       </div>
-      <div className="rounded-full border-4 border-solid border-primary-800 bg-blue-300 sm:mt-[335px]">
-        <Star star={content.star as STAR} />
-      </div>
+      <Star star={content.star as STAR} />
       <Mdx code={content.body.code} />
 
       <div className="relative bottom-0 -z-10 hidden h-[125px] w-[100vw]  sm:block">
