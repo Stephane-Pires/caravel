@@ -1,10 +1,6 @@
 import { allContents } from "@/.contentlayer/generated"
-import { Button } from "@/components/Button"
-import { Card } from "@/components/Card"
-import { CATEGORY, SUBJECT } from "@/enums/tag"
 import { compareDesc } from "date-fns"
 import Image from "next/image"
-import Link from "next/link"
 
 // export const generateMetadata = ({ params }) => {
 //   const content = allContents.find(
