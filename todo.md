@@ -29,3 +29,5 @@
 - [x] : Customize Markdown HTML balises
 
 - [x] : Try [contentLayer](https://www.contentlayer.dev/) or [next-mdx-remote](https://github.com/hashicorp/next-mdx-remote)
+
+- [ ] : Consider using a Storybook pour elements (card, typography, spacing, navigation, links, colors, header, footer, tooltip, etc...)

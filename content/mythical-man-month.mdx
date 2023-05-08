@@ -7,7 +7,7 @@ category: "THOUGH"
 star: "ONE"
 ---
 
-# Review of "Mythical Man Month" by **Fred Brooks**
+# Notes on "Mythical Man Month" by **Fred Brooks**
 
 ## Personal Notes
 
@@ -39,41 +39,43 @@ The Mythical Man-Month: Essays on Software Engineering is a book on software eng
   quote="Any organization that designs a system (defined broadly) will produce a design whose structure is a copy of the organization's communication structure."
 />
 
-{/* - Number of communication canal = n(n+1)/2. N is the number of people in a team. */}
-
 - As the team grows the number of communication canal grow too.
 
 $$
 Number\ of\ canal = \frac{n\ (n+1)}{2}
 $$
 
-- One way to address this problem is to split teams, and interface them by managers.
+- One way to mitigate this problem is to split teams, and interface them by managers.
 
 ### Teams
 
 - Senior technical & managerial man (the surgon)
 - Diverse people (stacking people with similar skills won't work)
 - Relatively small around or less than 10 people
+- You should separate the role of Architect and Product Manager if your team is equal or above 4 members
 
 ### Gouvernance
 
-- Since software projects are knowledge and experience based they tend to be either directed by "Aristocracy" or "Democratie"
+- Since software projects are knowledge and experience based they tend to be directed by "Aristocracy"
 
 ### Second system effect
 
 - The architect on his first design will not anticipate issues but respond to them.
 - On his second design, due to his first experience the architect might overthink the second system
 
-### Documents
+### Documentation
 
 - In their essence documents should answer to "What, When, How much, Where, Who"
 - The Architectural choices should be documented and versionned
 - Documents are a way to formalize the intention
+- Code should be self-documentated, meaningful names and comments
+- Having "persona" is important
 
 ### Entropy
 
 - As the time pass the entropy of a project grows.
 - It grows to the point where moving one step forward makes you move two step backward.
+- You should resist the urge to add feature compulsively.
 
 ### High level language & compiler
 
@@ -81,10 +83,30 @@ $$
 - Compiler catch bugs and optimitize.
 - I think, in some extend the same logic could be applied to GPT trend, it's a new tool that will reduce friction between the "WHAT" and the "HOW" to do something
 
+### Tests
+
+- Test has soon has possible
+- Test each pieces independently, but you must also test the whole system and revalidate each time you add a new piece to the system
+- You should test from functionnal (Unit test) to integration (End to End)
+- Tests are documentation that don't lie, it either works or doesn't
+- You should test : Mainline, valid expections, invalid exceptions
+
+### Schedule
+
+- You should have a schedule made of concrete milestones (Event such as "debugged version passes all test cases")
+- The milestones should be unambigious and sharp-edged
+- Chronic schedule slippage is a morale-killer
+- Projects gets late one day at a time
+- A PERT is usefull to visualize schedule dependencies
+- A day to day status is important to detect slippage
+
 ## Key take-aways
 
 - Beware time estimation, in your estimate think about the testing that it implies
+- Having an Architect that enforce the "conceptual integrity" is essential
+- Communication & Documentation are keys
+- Not "Write", not "Build", we "Grow" software
 
-- TODO TEST 1
+## Next read :
 
-- TODO TEST 2
+- Peopleware
