@@ -37,7 +37,7 @@ export default function Blog() {
         </div>
       </div>
 
-      <div className="grid gap-8 p-10 lg:grid-cols-2 2xl:grid-cols-4">
+      <div className="grid gap-8 p-4 lg:grid-cols-2 2xl:grid-cols-4">
         {allFontmatter.map(
           ({ title, image, date, subject, category, url, id }) => {
             return (

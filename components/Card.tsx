@@ -14,7 +14,7 @@ interface Card {
 
 export function Card({ title, date, subject, category, image }: Card) {
   return (
-    <div className="my-3 flex h-[400px] w-[320px] flex-col justify-between rounded-lg   border-l-4  border-primary-900 bg-primary-700 p-2 shadow-sm transition delay-100 ease-in-out hover:bg-primary-500 active:scale-105 active:bg-primary-500">
+    <div className="my-3 flex h-[400px] w-[320px] flex-col justify-between rounded-lg border-l-4  border-primary-900 bg-primary-700 p-2 shadow-sm transition delay-100 ease-in-out hover:bg-primary-500 active:scale-105 active:bg-primary-500">
       <h3 className="m-4 py-2 text-center font-script text-2xl text-blue-900 underline decoration-dotted underline-offset-2">
         {title}
       </h3>
