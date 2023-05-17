@@ -2,6 +2,11 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Coupled to header height */
+* {
+  scroll-margin-top: 80px;
+}
+
 /* HACK UNTIL I MANAGE PROPERLY LIGHT-MODE using Tailwind */
 /* If the user prefers dark mode, 
 we of course apply color-scheme: dark, as usual */
