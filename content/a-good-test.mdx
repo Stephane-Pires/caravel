@@ -1,0 +1,32 @@
+---
+title: "A Good Test"
+image: "mythical-man-month.jpeg"
+date: "05-17-23"
+subject: "CODE"
+category: "THOUGH"
+star: "THREE"
+---
+
+# "Could you make a postal code Input ?"
+
+## Input
+
+« Could you build and input from which i can select French postal code »
+
+## Output
+
+<img src="gifs/postal-code.gif" />
+
+## Keys Takeaways
+
+- You MUST dimension the feature and the problem, which granularity (postalcode or city) there is almost a x10 between the number of postcode/cities. Scaling WILL break things if you didn’t plan for it.
+- Consider Worst, Best, Average case
+- Choose your data structure & algorithm wisely, going from Array to Map/Set helped me a lot.
+- Consider the types of the data. Types will help you structure your code and modelize the problem
+- Don’t hesitate to split your code and use standard design pattern for component (React)
+- Problem is not to know if your Database can handle those 35000 lines INSERTION. The problem will more likely be « Will i be able to SEARCH the data efficiently »
+- If you can abstract things at a point, do it, it will save you tones of sweat if done properly. In this case, considering the data has a TREE with NODE/ROOT/LEAF helped me a lot. Mind that a bad abstract is worst than no abstract though.
+- The client will change his mind about what he wants and break the code you built. It’s your responsibility to plan ahead of time for it. Makes sure that the client understand that he demands a bicycle, plan to bulld a car, challenge him when he changes his mind and ask for a spaceship.
+- An iteration is not changing things on a daily basis. Iteration is about agreeing upon a small set of things to do and doing it in a relatively short time frame (a week for exemple). At the end of the iteration, reconsider what to agreed upon.
+- Just, dont duplicate information (DRY)
+- There is nothing worst than jumping into the solution, without truly understanding the problem.
