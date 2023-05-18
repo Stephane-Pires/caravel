@@ -1,0 +1,88 @@
+---
+title: "Code me an Input"
+image: "petit-prince.png"
+date: "05-17-23"
+subject: "CODE"
+category: "THOUGH"
+star: "THREE"
+---
+
+# "Code me an Input"
+
+## Input
+
+- It should be homemade, no external dependencies
+- You can't rely on any API at runtime
+- Data is saved inside a SQL database, you can't use JSONB
+- We must be able to restraint any subset of the tree.
+
+## Output
+
+<img src="gifs/postal-code.gif" />
+
+## Keys Takeaways
+
+- Isolate "rules" & "specificity" about the data you consider
+
+  - [Weird french rules](https://fr.wikipedia.org/wiki/Liste_des_communes_de_France_dont_le_code_postal_ne_correspond_pas_au_d%C3%A9partement)
+
+- You MUST dimension the feature and the problem. Which granularity (postalcode or city) there is almost a x10 between the number of postcode/cities. Scaling WILL break things if you didn’t plan for it.
+
+- Consider Worst, Best, Average case :
+
+  - Best one city is added
+
+  - Worst 34000 cities are added to database at a time
+
+- Analyzing performance is really useful :
+
+  - [Performance panel](https://developer.chrome.com/docs/devtools/performance/)
+
+- Choose your data structure & algorithm wisely, using Map/Set helped me a lot.
+
+- Consider the types of the data. Types will help you structure your code and modelize the problem/solution :
+
+  - [Parse don't Validate](https://lexi-lambda.github.io/blog/2019/11/05/parse-don-t-validate/)
+
+- Don’t hesitate to split your code and use standard design pattern for component :
+
+  - [Flyweight](https://www.patterns.dev/posts/flyweight-pattern)
+  - [Compound](https://www.patterns.dev/posts/compound-pattern)
+  - [Debounce](<https://dmitripavlutin.com/react-throttle-debounce/#:~:text=You%20have%202%20options%20to,()%20or%20useMemo()%20hooks.>)
+
+- Consider how you will search your datastructure ahead of time, database & indexing might help you.
+
+- If you can abstract things, do it, it will save you tones of sweat if done properly. In this case, considering the data as a TREE with NODE/ROOT/LEAF helped me a lot. Mind that a bad abstraction is worst than no abstract though :
+
+  - [The wrong abstraction](https://sandimetz.com/blog/2016/1/20/the-wrong-abstraction)
+
+```ts
+function isRoot(node: Node<Data>) {
+  return !node.hasOwnProperty("parent")
+}
+
+function isLeaf(node: Node<Data>) {
+  return !node.hasOwnProperty("children")
+}
+
+function findLeafs(tree: Tree<Data>): Array<Node<Data>> {
+  const leafSet = new Set<Node["id"]>()
+  const leafArray: Array<Node<Data>> = []
+
+  tree.forEach((node) => {
+    if (!leafSet.has(node) && isLeaf(node)) {
+      leafSet.add(node.id)
+      leafArray.push(node)
+    }
+  })
+
+  return leafArray
+}
+```
+
+- The client will change his mind about what he wants and break the code you built. It’s your responsibility to plan ahead of time for it. Makes sure that the client understand that he demands a bicycle, plan to build a car, challenge him when he changes his mind and ask for a spaceship.
+
+- An iteration is not changing things on a daily basis. Iteration is about agreeing upon a small set of things to do and doing it in a relatively short time frame (a week for exemple). At the end of the iteration, consider what to agreed upon for the next iteration.
+
+- Just, dont duplicate information :
+  - [DRY](https://en.wikipedia.org/wiki/Don%27t_repeat_yourself)

@@ -64,8 +64,12 @@ math {
   @apply m-4;
 }
 
+ul > li > ul > li > p {
+  @apply !m-0;
+}
+
 ul > li > ul > li {
-  @apply list-image-[url(/logbook/mdx/minus-small.svg)];
+  @apply ml-2 list-image-[url(/logbook/mdx/minus-small.svg)] sm:ml-4;
 }
 
 /* Voir pour remplacer par ue implementation MDX avec les balises pre & code */
@@ -82,7 +86,7 @@ pre > code {
   overflow-x: scroll;
   overflow-y: scroll;
   padding: 10px;
-  @apply font-code;
+  @apply font-code text-sm sm:text-base;
 }
 
 /* https://rehype-pretty-code.netlify.app/ */

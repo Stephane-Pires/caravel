@@ -54,18 +54,24 @@ function h4({ children }: HTMLProps<HTMLHeadingElement>) {
 }
 
 function p({ children }: HTMLProps<HTMLParagraphElement>) {
-  return <p className="m-2 font-sans text-xl text-blue-100">{children}</p>
+  return (
+    <p className="m-2 font-sans text-base text-blue-100 sm:text-lg ">
+      {children}
+    </p>
+  )
 }
 
 function li({ children }: HTMLProps<HTMLLIElement>) {
   return (
-    <li className="list-item font-sans text-lg text-blue-100">{children}</li>
+    <li className="list-item font-sans text-base text-blue-100 sm:text-lg">
+      {children}
+    </li>
   )
 }
 
 function ul({ children }: HTMLProps<HTMLUListElement>) {
   return (
-    <ul className="m-2 my-4 flex list-outside list-disc list-image-[url(/logbook/mdx/chevron-right.svg)] flex-col gap-2">
+    <ul className="m-2 my-4 flex  list-outside list-none flex-col gap-2 sm:list-disc sm:list-image-[url(/logbook/mdx/chevron-right.svg)]">
       {children}
     </ul>
   )
@@ -75,7 +81,7 @@ function a({ children, href }: HTMLProps<HTMLAnchorElement>) {
   return (
     <a
       href={href}
-      className="cursor-pointer text-accent-600 visited:text-accent-100 hover:underline hover:decoration-accent-600 visited:hover:decoration-accent-100"
+      className="cursor-pointer text-base text-accent-600  visited:text-accent-100 hover:underline hover:decoration-accent-600 visited:hover:decoration-accent-100 sm:text-lg"
     >
       {children}
     </a>
