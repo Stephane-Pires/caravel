@@ -1,7 +1,8 @@
 "use client"
 
 import { TimelineCurriculumVitae } from "@/components/clients/TimelineCurriculumVitae"
-import { useRef } from "react"
+import { CURRICULUM_VITAE, Section } from "@/content/curriculum-vitae/cv"
+import { useEffect, useRef, useState } from "react"
 
 // export const generateMetadata = ({ params }) => {
 //   const content = allContents.find(
@@ -10,72 +11,160 @@ import { useRef } from "react"
 //   return { title: content.title }
 // }
 
-export default function Me() {
-  const ref_1 = useRef(null)
-  const ref_2 = useRef(null)
-  const ref_3 = useRef(null)
-  const ref_4 = useRef(null)
-  const ref_5 = useRef(null)
-  const ref_6 = useRef(null)
-  const ref_7 = useRef(null)
+export default function AboutMe() {
+  let itemsRef = useRef(new Map<string, HTMLDivElement>())
+
+  let [mapDom, setMapDom] = useState(new Map<string, HTMLDivElement>())
+
+  const setRef = (section: Section) => {
+    return (node: HTMLDivElement | null) => {
+      if (node) {
+        itemsRef.current.set(CURRICULUM_VITAE[section].id, node)
+      } else {
+        itemsRef.current.delete(CURRICULUM_VITAE[section].id)
+      }
+    }
+  }
+
+  // Find a way to replace this useEffect + useState
+  // by a way to forwarding itemsRef (with the Map) only when the component is Mounted
+  useEffect(() => {
+    setMapDom(itemsRef.current)
+  }, [])
 
   return (
     <main className="flex min-h-screen flex-col items-center  p-10 pt-20">
-      <div className="mb-8 mt-4 flex flex-row items-center gap-8 align-middle font-serif ">
-        <div className="flex flex-row items-center">
-          <div className=" mt-10 font-script text-4xl text-blue-300 sm:text-6xl">
+      <div className="mb-8 mt-4 flex flex-row items-center gap-10 align-middle font-serif ">
+        <div className="sticky top-20 mt-[30vh] basis-2/12 self-start">
+          <div className="flex justify-center">
+            <TimelineCurriculumVitae sectionDom={mapDom} />
+          </div>
+        </div>
+        <div className="flex basis-10/12 flex-col items-center">
+          <div className=" my-10 font-script text-4xl font-bold text-blue-300 sm:text-6xl">
             Me, myself & I ❤️
           </div>
-
-          <TimelineCurriculumVitae
-            refs={[ref_1, ref_2, ref_3, ref_4, ref_5, ref_6, ref_7]}
-          />
           <div className="flex flex-col gap-10">
-            <div ref={ref_1}>
-              DIV-1 Ipsum is simply dummy text of the printing and typesetting
-              industry. Lorem Ipsum has been the standard dummy text ever since
-              the 1500s, when an unknown printer took a galley of type and
-              scrambled it to make a type specimen book. It has survived not
-              only five centuries, but also the leap into electronic
-              typesetting, remaining essentially unchanged. It was popularised
-              in the 1960s with the release of Letraset sheets containing Lorem
-              Ipsum passages, and more recently with desktop publishing software
-              like Aldus PageMaker including versions of Lorem Ipsum.
+            <div ref={setRef("FORMATION")}>
+              <h2 className="m-6 text-center font-script text-3xl font-bold text-blue-300">
+                {CURRICULUM_VITAE.FORMATION.label}
+              </h2>
+              <div>
+                DIV-2 is simply dummy text of the printing and typesetting
+                industry. Lorem Ipsum has been the standard dummy text ever
+                since the 1500s, when an unknown printer took a galley of type
+                and scrambled it to make a type specimen book. It has survived
+                not only five centuries, but also the leap into electronic
+                typesetting, remaining essentially unchanged. It was popularised
+                in the 1960s with the release of Letraset sheets containing
+                Lorem Ipsum passages, and more recently with desktop publishing
+                software like Aldus PageMaker including versions of Lorem Ipsum.
+              </div>
+              <div>
+                DIV-3 Ipsum is simply dummy text of the printing and typesetting
+                industry. Lorem Ipsum has been the standard dummy text ever
+                since the 1500s, when an unknown printer took a galley of type
+                and scrambled it to make a type specimen book. It has survived
+                not only five centuries, but also the leap into electronic
+                typesetting, remaining essentially unchanged. It was popularised
+                in the 1960s with the release of Letraset sheets containing
+                Lorem Ipsum passages, and more recently with desktop publishing
+                software like Aldus PageMaker including versions of Lorem Ipsum.
+              </div>
             </div>
-            <div ref={ref_2}>
-              DIV-2 is simply dummy text of the printing and typesetting
-              industry. Lorem Ipsum has been the standard dummy text ever since
-              the 1500s, when an unknown printer took a galley of type and
-              scrambled it to make a type specimen book. It has survived not
-              only five centuries, but also the leap into electronic
-              typesetting, remaining essentially unchanged. It was popularised
-              in the 1960s with the release of Letraset sheets containing Lorem
-              Ipsum passages, and more recently with desktop publishing software
-              like Aldus PageMaker including versions of Lorem Ipsum.
-            </div>
-            <div ref={ref_3}>
-              DIV-3 Ipsum is simply dummy text of the printing and typesetting
-              industry. Lorem Ipsum has been the standard dummy text ever since
-              the 1500s, when an unknown printer took a galley of type and
-              scrambled it to make a type specimen book. It has survived not
-              only five centuries, but also the leap into electronic
-              typesetting, remaining essentially unchanged. It was popularised
-              in the 1960s with the release of Letraset sheets containing Lorem
-              Ipsum passages, and more recently with desktop publishing software
-              like Aldus PageMaker including versions of Lorem Ipsum.
-            </div>
-            <div ref={ref_4}>
-              DIV-4 Ipsum is simply dummy text of the printing and typesetting
-              industry. Lorem Ipsum has been the standard dummy text ever since
-              the 1500s, when an unknown printer took a galley of type and
-              scrambled it to make a type specimen book. It has survived not
-              only five centuries, but also the leap into electronic
-              typesetting, remaining essentially unchanged. It was popularised
-              in the 1960s with the release of Letraset sheets containing Lorem
-              Ipsum passages, and more recently with desktop publishing software
-              like Aldus PageMaker including versions of Lorem Ipsum.
-            </div>
-            <div ref={ref_5}>
+
+            <div ref={setRef("EXPERIENCE")}>
+              <h2 className="m-6 text-center font-script text-3xl font-bold text-blue-300">
+                {CURRICULUM_VITAE.EXPERIENCE.label}
+              </h2>
+              <div>
+                DIV-4 Ipsum is simply dummy text of the printing and typesetting
+                industry. Lorem Ipsum has been the standard dummy text ever
+                since the 1500s, when an unknown printer took a galley of type
+                and scrambled it to make a type specimen book. It has survived
+                not only five centuries, but also the leap into electronic
+                typesetting, remaining essentially unchanged. It was popularised
+                in the 1960s with the release of Letraset sheets containing
+                Lorem Ipsum passages, and more recently with desktop publishing
+                software like Aldus PageMaker including versions of Lorem Ipsum.
+              </div>
+              <div>
+                DIV-4 Ipsum is simply dummy text of the printing and typesetting
+                industry. Lorem Ipsum has been the standard dummy text ever
+                since the 1500s, when an unknown printer took a galley of type
+                and scrambled it to make a type specimen book. It has survived
+                not only five centuries, but also the leap into electronic
+                typesetting, remaining essentially unchanged. It was popularised
+                in the 1960s with the release of Letraset sheets containing
+                Lorem Ipsum passages, and more recently with desktop publishing
+                software like Aldus PageMaker including versions of Lorem Ipsum.
+              </div>
+              <div>
+                DIV-4 Ipsum is simply dummy text of the printing and typesetting
+                industry. Lorem Ipsum has been the standard dummy text ever
+                since the 1500s, when an unknown printer took a galley of type
+                and scrambled it to make a type specimen book. It has survived
+                not only five centuries, but also the leap into electronic
+                typesetting, remaining essentially unchanged. It was popularised
+                in the 1960s with the release of Letraset sheets containing
+                Lorem Ipsum passages, and more recently with desktop publishing
+                software like Aldus PageMaker including versions of Lorem Ipsum.
+              </div>
+              <div>
+                DIV-4 Ipsum is simply dummy text of the printing and typesetting
+                industry. Lorem Ipsum has been the standard dummy text ever
+                since the 1500s, when an unknown printer took a galley of type
+                and scrambled it to make a type specimen book. It has survived
+                not only five centuries, but also the leap into electronic
+                typesetting, remaining essentially unchanged. It was popularised
+                in the 1960s with the release of Letraset sheets containing
+                Lorem Ipsum passages, and more recently with desktop publishing
+                software like Aldus PageMaker including versions of Lorem Ipsum.
+              </div>
+              <div>
+                DIV-4 Ipsum is simply dummy text of the printing and typesetting
+                industry. Lorem Ipsum has been the standard dummy text ever
+                since the 1500s, when an unknown printer took a galley of type
+                and scrambled it to make a type specimen book. It has survived
+                not only five centuries, but also the leap into electronic
+                typesetting, remaining essentially unchanged. It was popularised
+                in the 1960s with the release of Letraset sheets containing
+                Lorem Ipsum passages, and more recently with desktop publishing
+                software like Aldus PageMaker including versions of Lorem Ipsum.
+              </div>
+              <div>
+                DIV-4 Ipsum is simply dummy text of the printing and typesetting
+                industry. Lorem Ipsum has been the standard dummy text ever
+                since the 1500s, when an unknown printer took a galley of type
+                and scrambled it to make a type specimen book. It has survived
+                not only five centuries, but also the leap into electronic
+                typesetting, remaining essentially unchanged. It was popularised
+                in the 1960s with the release of Letraset sheets containing
+                Lorem Ipsum passages, and more recently with desktop publishing
+                software like Aldus PageMaker including versions of Lorem Ipsum.
+              </div>
+              <div>
+                DIV-4 Ipsum is simply dummy text of the printing and typesetting
+                industry. Lorem Ipsum has been the standard dummy text ever
+                since the 1500s, when an unknown printer took a galley of type
+                and scrambled it to make a type specimen book. It has survived
+                not only five centuries, but also the leap into electronic
+                typesetting, remaining essentially unchanged. It was popularised
+                in the 1960s with the release of Letraset sheets containing
+                Lorem Ipsum passages, and more recently with desktop publishing
+                software like Aldus PageMaker including versions of Lorem Ipsum.
+              </div>
+              <div>
+                DIV-4 Ipsum is simply dummy text of the printing and typesetting
+                industry. Lorem Ipsum has been the standard dummy text ever
+                since the 1500s, when an unknown printer took a galley of type
+                and scrambled it to make a type specimen book. It has survived
+                not only five centuries, but also the leap into electronic
+                typesetting, remaining essentially unchanged. It was popularised
+                in the 1960s with the release of Letraset sheets containing
+                Lorem Ipsum passages, and more recently with desktop publishing
+                software like Aldus PageMaker including versions of Lorem Ipsum.
+              </div>
               DIV-5 Ipsum is simply dummy text of the printing and typesetting
               industry. Lorem Ipsum has been the standard dummy text ever since
               the 1500s, when an unknown printer took a galley of type and
@@ -86,8 +175,12 @@ export default function Me() {
               Ipsum passages, and more recently with desktop publishing software
               like Aldus PageMaker including versions of Lorem Ipsum.
             </div>
-            <div ref={ref_6}>
-              DIV-6 Ipsum is simply dummy text of the printing and typesetting
+
+            <div ref={setRef("LOISIR")}>
+              <h2 className="m-6 text-center font-script text-3xl font-bold text-blue-300">
+                {CURRICULUM_VITAE.LOISIR.label}
+              </h2>
+              DIV-7 Ipsum is simply dummy text of the printing and typesetting
               industry. Lorem Ipsum has been the standard dummy text ever since
               the 1500s, when an unknown printer took a galley of type and
               scrambled it to make a type specimen book. It has survived not
@@ -97,8 +190,8 @@ export default function Me() {
               Ipsum passages, and more recently with desktop publishing software
               like Aldus PageMaker including versions of Lorem Ipsum.
             </div>
-            <div ref={ref_7}>
-              DIV-7 Ipsum is simply dummy text of the printing and typesetting
+            <div>
+              DIV-6 Ipsum is simply dummy text of the printing and typesetting
               industry. Lorem Ipsum has been the standard dummy text ever since
               the 1500s, when an unknown printer took a galley of type and
               scrambled it to make a type specimen book. It has survived not

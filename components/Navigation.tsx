@@ -19,6 +19,10 @@ const NAVIGATION = {
     pathname: "/sandbox",
     name: "Sandbox",
   },
+  ABOUT_ME: {
+    pathname: "/about-me",
+    name: "About Me",
+  },
 } as const
 
 type pathname = (typeof NAVIGATION)[keyof typeof NAVIGATION]["pathname"]
@@ -48,8 +52,18 @@ export function Navigation() {
 
       <div className="mx-4 flex flex-row gap-8">
         <Link
+          href={NAVIGATION.ABOUT_ME.pathname}
+          className={`font-sans text-2xl font-bold hover:text-primary-300 ${
+            isActivePathname(pathname, NAVIGATION.ABOUT_ME.pathname)
+              ? "text-accent-500"
+              : "text-primary-600"
+          }`}
+        >
+          📔 {NAVIGATION.ABOUT_ME.name}
+        </Link>
+        <Link
           href={NAVIGATION.LOGBOOK.pathname}
-          className={`font-sans text-2xl hover:text-primary-300 ${
+          className={`font-sans text-2xl font-bold hover:text-primary-300 ${
             isActivePathname(pathname, NAVIGATION.LOGBOOK.pathname)
               ? "text-accent-500"
               : "text-primary-600"
@@ -60,7 +74,7 @@ export function Navigation() {
 
         <Link
           href={NAVIGATION.SANDBOX.pathname}
-          className={`font-sans text-2xl hover:text-primary-300 ${
+          className={`font-sans text-2xl font-bold hover:text-primary-300 ${
             isActivePathname(pathname, NAVIGATION.SANDBOX.pathname)
               ? "text-accent-500"
               : "text-primary-600"
@@ -87,7 +101,7 @@ export function NavigationMobile() {
 
   return (
     <nav
-      className={`flex flex-row sm:hidden   ${
+      className={`flex flex-row sm:hidden ${
         showLinks
           ? "h-screen w-screen flex-col items-start bg-transparent/90 backdrop-blur-md"
           : "items-center justify-between"
@@ -115,8 +129,18 @@ export function NavigationMobile() {
       {showLinks && (
         <div className=" mt-28 flex flex-col justify-around gap-8">
           <Link
+            href={NAVIGATION.ABOUT_ME.pathname}
+            className={`m-2 rounded-lg p-4 font-sans text-2xl font-bold ${
+              isActivePathname(pathname, NAVIGATION.ABOUT_ME.pathname)
+                ? "text-accent-500"
+                : "text-primary-600"
+            }`}
+          >
+            📔 {NAVIGATION.ABOUT_ME.name}
+          </Link>
+          <Link
             href={NAVIGATION.LOGBOOK.pathname}
-            className={`m-2 rounded-lg p-4 font-sans text-2xl ${
+            className={`m-2 rounded-lg p-4 font-sans text-2xl font-bold ${
               isActivePathname(pathname, NAVIGATION.LOGBOOK.pathname)
                 ? "text-accent-500"
                 : "text-primary-600"
@@ -127,7 +151,7 @@ export function NavigationMobile() {
 
           <Link
             href={NAVIGATION.SANDBOX.pathname}
-            className={`m-2 rounded-lg p-4 font-sans text-2xl ${
+            className={`m-2 rounded-lg p-4 font-sans text-2xl font-bold ${
               isActivePathname(pathname, NAVIGATION.SANDBOX.pathname)
                 ? "text-accent-500"
                 : "text-primary-600"

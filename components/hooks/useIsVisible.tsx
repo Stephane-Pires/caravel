@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react"
 
-export function useIsVisible(ref: any) {
+export function useIsVisible(domElement: HTMLElement) {
   const [isIntersecting, setIntersecting] = useState(false)
 
   useEffect(() => {
@@ -14,11 +14,11 @@ export function useIsVisible(ref: any) {
       }
     )
 
-    observer.observe(ref.current)
+    observer.observe(domElement)
     return () => {
       observer.disconnect()
     }
-  }, [ref])
+  }, [domElement])
 
   return isIntersecting
 }

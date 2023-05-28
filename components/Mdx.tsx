@@ -1,4 +1,3 @@
-import { CheckIcon, ChevronRightIcon } from "@heroicons/react/24/solid"
 import { useMDXComponent } from "next-contentlayer/hooks"
 import Image from "next/image"
 import { HTMLProps } from "react"

@@ -76,7 +76,7 @@ const options = {
 }
 
 export default makeSource({
-  contentDirPath: "content",
+  contentDirPath: "content/devlog",
   documentTypes: [Content],
   mdx: {
     rehypePlugins: [rehypeKatex, [rehypePrettyCode, options]],
