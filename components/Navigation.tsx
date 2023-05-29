@@ -1,6 +1,6 @@
 "use client"
 
-import { Bars2Icon, Bars4Icon, XMarkIcon } from "@heroicons/react/24/solid"
+import { Bars2Icon, XMarkIcon } from "@heroicons/react/24/solid"
 import Image from "next/image"
 import Link from "next/link"
 import { usePathname } from "next/navigation"

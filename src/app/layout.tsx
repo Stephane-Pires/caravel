@@ -2,8 +2,6 @@ import { Navigation, NavigationMobile } from "@/components/Navigation"
 import type { Metadata } from "next"
 import { Merienda, Open_Sans } from "next/font/google"
 import localFont from "next/font/local"
-import Image from "next/image"
-import Link from "next/link"
 
 import "./globals.css"
 
