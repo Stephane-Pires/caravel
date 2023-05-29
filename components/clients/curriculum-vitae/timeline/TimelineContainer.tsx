@@ -22,13 +22,13 @@ export function TimelineContainer({
     )
 
     let stepPosition = 0
-    const stepGap = 40
+    const stepGap = 56
 
     return (
       <nav
         className=" absolute -z-10 w-[1px] flex-col rounded-lg border-2 border-dashed border-primary-600 "
         style={{
-          top: firstSectionDom?.offsetTop,
+          top: firstSectionDom?.offsetTop! - stepGap,
           // Relying on Typescript : https://dev.to/tmaximini/typescript-bang-operator-considered-harmful-3hhi
           height:
             lastSectionDom?.offsetTop! +
@@ -49,18 +49,17 @@ export function TimelineContainer({
 
                 // Calculate new stepPosition (start)
                 stepPosition =
-                  previousDomElementReferenced?.clientHeight! + stepGap
+                  previousDomElementReferenced?.clientHeight! + stepGap * 0.5
               }
 
-              if (index === ArrayOfSection.length - 1) {
-                const previousDomElementReferenced = sectionDom.get(
-                  ArrayOfSection[index - 1].id
-                )
+              // if (index === ArrayOfSection.length - 1) {
+              //   const previousDomElementReferenced = sectionDom.get(
+              //     ArrayOfSection[index - 1].id + stepGap * index
+              //   )
 
-                stepPosition =
-                  previousDomElementReferenced?.clientHeight! +
-                  domElementReferenced?.clientHeight!
-              }
+              //   stepPosition = previousDomElementReferenced?.clientHeight!
+              // domElementReferenced?.clientHeight!
+              // }
               return (
                 <Fragment key={content.id}>
                   <div
