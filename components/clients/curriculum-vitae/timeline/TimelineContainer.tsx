@@ -1,7 +1,3 @@
-import {
-  NavigationButton,
-  NavigationButtonMobile,
-} from "@/components/clients/curriculum-vitae/navigation/NavigationButton"
 import { CURRICULUM_VITAE } from "@/content/curriculum-vitae/cv"
 import { Fragment } from "react"
 
@@ -20,26 +16,18 @@ export function TimelineContainer({ sectionDom }: PropsTimelineContainer) {
       ArrayOfSection[ArrayOfSection.length - 1].id
     )
 
-    // console.log("firstSection", firstSectionDom)
-    console.log("firstSection : clientHeight", firstSectionDom?.clientHeight)
-    // console.log("firstSection : clientTop", firstSectionDom?.clientTop)
-    // console.log("firstSection : offsetTop", firstSectionDom?.offsetTop)
-    // console.log("lastSection", lastSectionDom)
-    // console.log("lastSectionDom : clientHeight", lastSectionDom?.clientHeight)
-    // console.log("lastSectionDom : clientTop", lastSectionDom?.clientTop)
-    // console.log("lastSectionDom : offsetTop", lastSectionDom?.offsetTop)
-
     let stepPosition = -5
 
     return (
       <nav
-        className="absolute w-[1px] flex-col rounded-lg border-2 border-dashed border-primary-600 "
+        className=" absolute -z-10 w-[1px] flex-col rounded-lg border-2 border-dashed border-primary-600 "
         style={{
           top: firstSectionDom?.offsetTop,
+          // Relying on Typescript : https://dev.to/tmaximini/typescript-bang-operator-considered-harmful-3hhi
           height:
-            lastSectionDom?.offsetTop +
-            lastSectionDom?.clientHeight -
-            firstSectionDom?.offsetTop,
+            lastSectionDom?.offsetTop! +
+            lastSectionDom?.clientHeight! -
+            firstSectionDom?.offsetTop!,
         }}
       >
         {Array.from(Object.values(CURRICULUM_VITAE.EXPERIENCE.section)).map(
@@ -88,15 +76,3 @@ export function TimelineContainer({ sectionDom }: PropsTimelineContainer) {
   }
   return <div>{"CAN NOT SHOW TIMELINE"}</div>
 }
-
-// Container
-// A (icon)
-// |  - Text
-// |  - Text
-// B (icon)
-// |  - Text
-// |  - Text
-// C (icon)
-
-// - Container
-// - Item + Icon + Text
