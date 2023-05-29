@@ -33,7 +33,7 @@ export function TimelineContainer({ sectionDom }: PropsTimelineContainer) {
 
     return (
       <nav
-        className="absolute w-0 flex-col rounded-lg border-2 border-dashed border-primary-600 "
+        className="absolute w-[1px] flex-col rounded-lg border-2 border-dashed border-primary-600 "
         style={{
           top: firstSectionDom?.offsetTop,
           height:
@@ -53,29 +53,30 @@ export function TimelineContainer({ sectionDom }: PropsTimelineContainer) {
                   ArrayOfSection[index - 1].id
                 )
 
-                stepPosition += previousDomElementReferenced?.scrollHeight! + 70
+                stepPosition += previousDomElementReferenced?.clientHeight!
               }
 
               if (index === ArrayOfSection.length - 1) {
-                stepPosition += domElementReferenced.scrollHeight - 1 * index
+                stepPosition -= index * 55
               }
               return (
                 <Fragment key={content.id}>
                   <div
-                    className="absolute"
+                    className="sticky flex min-w-fit -translate-x-5"
                     style={{
-                      top: stepPosition,
-                      left: -20,
+                      top: 100,
+                      right: 100,
+                      marginTop: stepPosition,
                     }}
                   >
-                    {/* <div className="sticky top-[40%] h-full w-full"> */}
-                    <div className="flex flex-row items-center justify-center gap-4">
-                      <div className="flex h-10 w-10 items-center justify-center bg-red-400 font-mono text-accent-900 ">
+                    <div className="flex h-full w-40 flex-row items-center justify-center gap-4 bg-slate-900">
+                      <div className="flex h-10 w-10 basis-2/12 items-center justify-center rounded-full bg-primary-700 p-4 font-mono text-accent-900 ">
                         {index}
                       </div>
-                      <div> sometext</div>
+                      <p className="basis-10/12 break-normal">
+                        {content.label}
+                      </p>
                     </div>
-                    {/* </div> */}
                   </div>
                 </Fragment>
               )
