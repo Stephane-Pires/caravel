@@ -1,14 +1,19 @@
-import { CURRICULUM_VITAE } from "@/content/curriculum-vitae/cv"
+import { Article, CURRICULUM_VITAE } from "@/content/curriculum-vitae/cv"
 import { Fragment } from "react"
 
 interface PropsTimelineContainer {
   sectionDom: Map<string, HTMLDivElement>
+  article: Article
 }
 
-export function TimelineContainer({ sectionDom }: PropsTimelineContainer) {
+// The performance is terrible, since this component is re-rendering on each scrollbar event
+export function TimelineContainer({
+  sectionDom,
+  article,
+}: PropsTimelineContainer) {
   if (sectionDom) {
     const ArrayOfSection = Array.from(
-      Object.values(CURRICULUM_VITAE.EXPERIENCE.section)
+      Object.values(CURRICULUM_VITAE[article].section)
     )
 
     const firstSectionDom = sectionDom.get(ArrayOfSection[0].id)
@@ -31,11 +36,9 @@ export function TimelineContainer({ sectionDom }: PropsTimelineContainer) {
             firstSectionDom?.offsetTop!,
         }}
       >
-        {Array.from(Object.values(CURRICULUM_VITAE.EXPERIENCE.section)).map(
+        {Array.from(Object.values(CURRICULUM_VITAE[article].section)).map(
           (content, index) => {
             const domElementReferenced = sectionDom.get(content.id)
-
-            console.log("content.id", content.id)
 
             if (domElementReferenced) {
               // This code smell sorry
@@ -61,7 +64,7 @@ export function TimelineContainer({ sectionDom }: PropsTimelineContainer) {
               return (
                 <Fragment key={content.id}>
                   <div
-                    className="sticky flex min-w-fit -translate-x-5"
+                    className="sticky flex min-w-fit -translate-x-6"
                     style={{
                       top: 100,
                       right: 100,
@@ -69,8 +72,8 @@ export function TimelineContainer({ sectionDom }: PropsTimelineContainer) {
                     }}
                   >
                     <div className="flex h-full w-40 flex-row items-center justify-center gap-4 bg-slate-900">
-                      <div className="flex h-10 w-10 basis-2/12 items-center justify-center rounded-full border-2 border-primary-700 bg-blue-950 p-4 font-mono ">
-                        {index + 1}
+                      <div className="flex h-12 w-12 basis-2/12 items-center justify-center rounded-full border-2 border-primary-700 bg-blue-950 p-4 font-mono ">
+                        <content.icon className="h-10 w-10 scale-150" />
                       </div>
                       <p className="basis-10/12 break-normal font-sans">
                         {content.label}

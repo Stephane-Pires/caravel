@@ -7,6 +7,7 @@ import {
   Article,
   CURRICULUM_VITAE,
   Section,
+  SectionKey,
 } from "@/content/curriculum-vitae/cv"
 import { useEffect, useRef, useState } from "react"
 
@@ -19,15 +20,19 @@ import { useEffect, useRef, useState } from "react"
 
 export default function AboutMe() {
   let articleRef = useRef(new Map<string, HTMLDivElement>())
-  let sectionRef = useRef(new Map<string, HTMLDivElement>())
+  let sectionExperienceRef = useRef(new Map<string, HTMLDivElement>())
+  let sectionLoisirRef = useRef(new Map<string, HTMLDivElement>())
 
   const percentScrolled = usePercentScrolled()
 
   let [mapDom, setMapDom] = useState(new Map<string, HTMLDivElement>())
-  let [mapSectionDom, setMapSectionDom] = useState(
+  let [mapSectionExperienceDom, setMapSectionExperienceDom] = useState(
     new Map<string, HTMLDivElement>()
   )
 
+  let [mapSectionLoisirDom, setMapSectionLoisirDom] = useState(
+    new Map<string, HTMLDivElement>()
+  )
   const setRefArticle = (article: Article) => {
     return (node: HTMLDivElement | null) => {
       if (node) {
@@ -38,16 +43,32 @@ export default function AboutMe() {
     }
   }
 
-  function setRefSection(section: Section<"EXPERIENCE">) {
+  // Should be generic setRefSectionExperience & setRefSectionLoisir should be one function setRefSection
+  function setRefSectionExperience(section: SectionKey<"EXPERIENCE">) {
     return (node: HTMLDivElement | null) => {
       if (node) {
-        sectionRef.current.set(
+        sectionExperienceRef.current.set(
           CURRICULUM_VITAE["EXPERIENCE"].section[section].id,
           node
         )
       } else {
-        sectionRef.current.delete(
+        sectionExperienceRef.current.delete(
           CURRICULUM_VITAE["EXPERIENCE"].section[section].id
+        )
+      }
+    }
+  }
+
+  function setRefSectionLoisir(section: SectionKey<"LOISIR">) {
+    return (node: HTMLDivElement | null) => {
+      if (node) {
+        sectionLoisirRef.current.set(
+          CURRICULUM_VITAE["LOISIR"].section[section].id,
+          node
+        )
+      } else {
+        sectionLoisirRef.current.delete(
+          CURRICULUM_VITAE["LOISIR"].section[section].id
         )
       }
     }
@@ -57,7 +78,8 @@ export default function AboutMe() {
   // by a way to forwarding articleRef (with the Map) only when the component is Mounted
   useEffect(() => {
     setMapDom(articleRef.current)
-    setMapSectionDom(sectionRef.current)
+    setMapSectionExperienceDom(sectionExperienceRef.current)
+    setMapSectionLoisirDom(sectionLoisirRef.current)
   }, [])
 
   return (
@@ -76,7 +98,7 @@ export default function AboutMe() {
           </div>
         </div>
         <div className="mx-auto flex max-w-prose  basis-11/12  flex-col items-center sm:basis-8/12">
-          <div className=" my-10 hidden font-script text-4xl font-bold text-blue-300 lg:flex lg:text-6xl">
+          <div className=" my-10 hidden font-script text-4xl font-bold text-blue-300 md:flex md:text-6xl">
             Me, myself & I ❤️
           </div>
           <div className="flex flex-col gap-4 sm:gap-10">
@@ -117,7 +139,7 @@ export default function AboutMe() {
               <h3 className="m-6 text-center font-sans text-2xl font-bold text-blue-300">
                 {CURRICULUM_VITAE.EXPERIENCE.section.ANALOG_WAY.label}
               </h3>
-              <section ref={setRefSection("ANALOG_WAY")}>
+              <section ref={setRefSectionExperience("ANALOG_WAY")}>
                 DIV-4 Ipsum is simply dummy text of the printing and typesetting
                 industry. Lorem Ipsum has been the standard dummy text ever
                 since the 1500s, when an unknown printer took a galley of type
@@ -179,7 +201,7 @@ export default function AboutMe() {
               <h3 className="m-6 text-center font-sans text-2xl font-bold text-blue-300">
                 {CURRICULUM_VITAE.EXPERIENCE.section.IZICREDIT.label}
               </h3>
-              <section ref={setRefSection("IZICREDIT")}>
+              <section ref={setRefSectionExperience("IZICREDIT")}>
                 section-4 Ipsum is simply dummy text of the printing and
                 typesetting industry. Lorem Ipsum has been the standard dummy
                 text ever since the 1500s, when an unknown printer took a galley
@@ -278,7 +300,7 @@ export default function AboutMe() {
               <h3 className="m-6 text-center font-sans text-2xl font-bold text-blue-300">
                 {CURRICULUM_VITAE.EXPERIENCE.section.NAWAK.label}
               </h3>
-              <section ref={setRefSection("NAWAK")}>
+              <section ref={setRefSectionExperience("NAWAK")}>
                 section-4 Ipsum is simply dummy text of the printing and
                 typesetting industry. Lorem Ipsum has been the standard dummy
                 text ever since the 1500s, when an unknown printer took a galley
@@ -329,7 +351,7 @@ export default function AboutMe() {
               <h3 className="m-6 text-center font-sans text-2xl font-bold text-blue-300">
                 {CURRICULUM_VITAE.EXPERIENCE.section.GIGAWAK.label}
               </h3>
-              <section ref={setRefSection("GIGAWAK")}>
+              <section ref={setRefSectionExperience("GIGAWAK")}>
                 section-4 Ipsum is simply dummy text of the printing and
                 typesetting industry. Lorem Ipsum has been the standard dummy
                 text ever since the 1500s, when an unknown printer took a galley
@@ -383,17 +405,10 @@ export default function AboutMe() {
               <h2 className="m-6 text-center font-sans text-3xl font-bold text-blue-300 underline underline-offset-4">
                 {CURRICULUM_VITAE.LOISIR.label}
               </h2>
-              section-7 Ipsum is simply dummy text of the printing and
-              typesetting industry. Lorem Ipsum has been the standard dummy text
-              ever since the 1500s, when an unknown printer took a galley of
-              type and scrambled it to make a type specimen book. It has
-              survived not only five centuries, but also the leap into
-              electronic typesetting, remaining essentially unchanged. It was
-              popularised in the 1960s with the release of Letraset sheets
-              containing Lorem Ipsum passages, and more recently with desktop
-              publishing software like Aldus PageMaker including versions of
-              Lorem Ipsum.
-              <section>
+              <h3 className="m-6 text-center font-sans text-2xl font-bold text-blue-300">
+                {CURRICULUM_VITAE.LOISIR.section.VIDEO_GAME.label}
+              </h3>
+              <section ref={setRefSectionLoisir("VIDEO_GAME")}>
                 section-6 Ipsum is simply dummy text of the printing and
                 typesetting industry. Lorem Ipsum has been the standard dummy
                 text ever since the 1500s, when an unknown printer took a galley
@@ -405,7 +420,10 @@ export default function AboutMe() {
                 publishing software like Aldus PageMaker including versions of
                 Lorem Ipsum.
               </section>
-              <section>
+              <h3 className="m-6 text-center font-sans text-2xl font-bold text-blue-300">
+                {CURRICULUM_VITAE.LOISIR.section.CLIMBING.label}
+              </h3>
+              <section ref={setRefSectionLoisir("CLIMBING")}>
                 section-6 Ipsum is simply dummy text of the printing and
                 typesetting industry. Lorem Ipsum has been the standard dummy
                 text ever since the 1500s, when an unknown printer took a galley
@@ -417,7 +435,34 @@ export default function AboutMe() {
                 publishing software like Aldus PageMaker including versions of
                 Lorem Ipsum.
               </section>
-              <section>
+              <h3 className="m-6 text-center font-sans text-2xl font-bold text-blue-300">
+                {CURRICULUM_VITAE.LOISIR.section.BIKING.label}
+              </h3>
+              <section ref={setRefSectionLoisir("BIKING")}>
+                <section>
+                  section-6 Ipsum is simply dummy text of the printing and
+                  typesetting industry. Lorem Ipsum has been the standard dummy
+                  text ever since the 1500s, when an unknown printer took a
+                  galley of type and scrambled it to make a type specimen book.
+                  It has survived not only five centuries, but also the leap
+                  into electronic typesetting, remaining essentially unchanged.
+                  It was popularised in the 1960s with the release of Letraset
+                  sheets containing Lorem Ipsum passages, and more recently with
+                  desktop publishing software like Aldus PageMaker including
+                  versions of Lorem Ipsum.
+                </section>
+                <section>
+                  section-6 Ipsum is simply dummy text of the printing and
+                  typesetting industry. Lorem Ipsum has been the standard dummy
+                  text ever since the 1500s, when an unknown printer took a
+                  galley of type and scrambled it to make a type specimen book.
+                  It has survived not only five centuries, but also the leap
+                  into electronic typesetting, remaining essentially unchanged.
+                  It was popularised in the 1960s with the release of Letraset
+                  sheets containing Lorem Ipsum passages, and more recently with
+                  desktop publishing software like Aldus PageMaker including
+                  versions of Lorem Ipsum.
+                </section>
                 section-6 Ipsum is simply dummy text of the printing and
                 typesetting industry. Lorem Ipsum has been the standard dummy
                 text ever since the 1500s, when an unknown printer took a galley
@@ -429,31 +474,10 @@ export default function AboutMe() {
                 publishing software like Aldus PageMaker including versions of
                 Lorem Ipsum.
               </section>
-              <section>
-                section-6 Ipsum is simply dummy text of the printing and
-                typesetting industry. Lorem Ipsum has been the standard dummy
-                text ever since the 1500s, when an unknown printer took a galley
-                of type and scrambled it to make a type specimen book. It has
-                survived not only five centuries, but also the leap into
-                electronic typesetting, remaining essentially unchanged. It was
-                popularised in the 1960s with the release of Letraset sheets
-                containing Lorem Ipsum passages, and more recently with desktop
-                publishing software like Aldus PageMaker including versions of
-                Lorem Ipsum.
-              </section>
-              <section>
-                section-6 Ipsum is simply dummy text of the printing and
-                typesetting industry. Lorem Ipsum has been the standard dummy
-                text ever since the 1500s, when an unknown printer took a galley
-                of type and scrambled it to make a type specimen book. It has
-                survived not only five centuries, but also the leap into
-                electronic typesetting, remaining essentially unchanged. It was
-                popularised in the 1960s with the release of Letraset sheets
-                containing Lorem Ipsum passages, and more recently with desktop
-                publishing software like Aldus PageMaker including versions of
-                Lorem Ipsum.
-              </section>
-              <section>
+              <h3 className="m-6 text-center font-sans text-2xl font-bold text-blue-300">
+                {CURRICULUM_VITAE.LOISIR.section.BOARD_GAME.label}
+              </h3>
+              <section ref={setRefSectionLoisir("BOARD_GAME")}>
                 section-6 Ipsum is simply dummy text of the printing and
                 typesetting industry. Lorem Ipsum has been the standard dummy
                 text ever since the 1500s, when an unknown printer took a galley
@@ -468,8 +492,16 @@ export default function AboutMe() {
             </article>
           </div>
         </div>
+        {/* Should not be included in the JS bundle when the screen is mobile. */}
         <div className="hidden lg:flex lg:basis-2/12">
-          <TimelineContainer sectionDom={mapSectionDom} />
+          <TimelineContainer
+            sectionDom={mapSectionLoisirDom}
+            article="LOISIR"
+          />
+          <TimelineContainer
+            sectionDom={mapSectionExperienceDom}
+            article="EXPERIENCE"
+          />
         </div>
       </div>
     </main>
