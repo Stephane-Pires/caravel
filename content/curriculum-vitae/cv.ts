@@ -43,6 +43,10 @@ export const CURRICULUM_VITAE = {
         id: "NAWAK",
         label: "nawak",
       },
+      GIGAWAK: {
+        id: "GIGAWAK",
+        label: "gigawak",
+      },
     },
   },
 

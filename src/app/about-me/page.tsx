@@ -76,12 +76,12 @@ export default function AboutMe() {
           </div>
         </div>
         <div className="mx-auto flex max-w-prose  basis-11/12  flex-col items-center sm:basis-8/12">
-          <div className=" my-10 hidden font-script text-4xl font-bold text-blue-300 sm:flex sm:text-6xl">
+          <div className=" my-10 hidden font-script text-4xl font-bold text-blue-300 lg:flex lg:text-6xl">
             Me, myself & I ❤️
           </div>
           <div className="flex flex-col gap-4 sm:gap-10">
             <article ref={setRefArticle("FORMATION")}>
-              <h2 className="m-6 text-center font-script text-3xl font-bold text-blue-300">
+              <h2 className="m-6 text-center font-sans text-3xl font-bold text-blue-300 underline underline-offset-4">
                 {CURRICULUM_VITAE.FORMATION.label}
               </h2>
               <section>
@@ -110,11 +110,11 @@ export default function AboutMe() {
             </article>
 
             <article ref={setRefArticle("EXPERIENCE")}>
-              <h2 className="m-6 text-center font-script text-3xl font-bold text-blue-300">
+              <h2 className="m-6 text-center font-sans text-3xl font-bold text-blue-300 underline underline-offset-4">
                 {CURRICULUM_VITAE.EXPERIENCE.label}
               </h2>
 
-              <h3 className="m-6 text-center font-script text-3xl font-bold text-blue-300">
+              <h3 className="m-6 text-center font-sans text-2xl font-bold text-blue-300">
                 {CURRICULUM_VITAE.EXPERIENCE.section.ANALOG_WAY.label}
               </h3>
               <section ref={setRefSection("ANALOG_WAY")}>
@@ -176,7 +176,7 @@ export default function AboutMe() {
                   versions of Lorem Ipsum.
                 </section>
               </section>
-              <h3 className="m-6 text-center font-script text-3xl font-bold text-blue-300">
+              <h3 className="m-6 text-center font-sans text-2xl font-bold text-blue-300">
                 {CURRICULUM_VITAE.EXPERIENCE.section.IZICREDIT.label}
               </h3>
               <section ref={setRefSection("IZICREDIT")}>
@@ -275,7 +275,7 @@ export default function AboutMe() {
                   versions of Lorem Ipsum.
                 </section>
               </section>
-              <h3 className="m-6 text-center font-script text-3xl font-bold text-blue-300">
+              <h3 className="m-6 text-center font-sans text-2xl font-bold text-blue-300">
                 {CURRICULUM_VITAE.EXPERIENCE.section.NAWAK.label}
               </h3>
               <section ref={setRefSection("NAWAK")}>
@@ -326,10 +326,61 @@ export default function AboutMe() {
                   versions of Lorem Ipsum.
                 </section>
               </section>
+              <h3 className="m-6 text-center font-sans text-2xl font-bold text-blue-300">
+                {CURRICULUM_VITAE.EXPERIENCE.section.GIGAWAK.label}
+              </h3>
+              <section ref={setRefSection("GIGAWAK")}>
+                section-4 Ipsum is simply dummy text of the printing and
+                typesetting industry. Lorem Ipsum has been the standard dummy
+                text ever since the 1500s, when an unknown printer took a galley
+                of type and scrambled it to make a type specimen book. It has
+                survived not only five centuries, but also the leap into
+                electronic typesetting, remaining essentially unchanged. It was
+                popularised in the 1960s with the release of Letraset sheets
+                containing Lorem Ipsum passages, and more recently with desktop
+                publishing software like Aldus PageMaker including versions of
+                Lorem Ipsum.
+                <section>
+                  section-4 Ipsum is simply dummy text of the printing and
+                  typesetting industry. Lorem Ipsum has been the standard dummy
+                  text ever since the 1500s, when an unknown printer took a
+                  galley of type and scrambled it to make a type specimen book.
+                  It has survived not only five centuries, but also the leap
+                  into electronic typesetting, remaining essentially unchanged.
+                  It was popularised in the 1960s with the release of Letraset
+                  sheets containing Lorem Ipsum passages, and more recently with
+                  desktop publishing software like Aldus PageMaker including
+                  versions of Lorem Ipsum.
+                </section>
+                <section>
+                  section-4 Ipsum is simply dummy text of the printing and
+                  typesetting industry. Lorem Ipsum has been the standard dummy
+                  text ever since the 1500s, when an unknown printer took a
+                  galley of type and scrambled it to make a type specimen book.
+                  It has survived not only five centuries, but also the leap
+                  into electronic typesetting, remaining essentially unchanged.
+                  It was popularised in the 1960s with the release of Letraset
+                  sheets containing Lorem Ipsum passages, and more recently with
+                  desktop publishing software like Aldus PageMaker including
+                  versions of Lorem Ipsum.
+                </section>
+                <section>
+                  section-4 Ipsum is simply dummy text of the printing and
+                  typesetting industry. Lorem Ipsum has been the standard dummy
+                  text ever since the 1500s, when an unknown printer took a
+                  galley of type and scrambled it to make a type specimen book.
+                  It has survived not only five centuries, but also the leap
+                  into electronic typesetting, remaining essentially unchanged.
+                  It was popularised in the 1960s with the release of Letraset
+                  sheets containing Lorem Ipsum passages, and more recently with
+                  desktop publishing software like Aldus PageMaker including
+                  versions of Lorem Ipsum.
+                </section>
+              </section>
             </article>
 
             <article ref={setRefArticle("LOISIR")}>
-              <h2 className="m-6 text-center font-script text-3xl font-bold text-blue-300">
+              <h2 className="m-6 text-center font-sans text-3xl font-bold text-blue-300 underline underline-offset-4">
                 {CURRICULUM_VITAE.LOISIR.label}
               </h2>
               section-7 Ipsum is simply dummy text of the printing and
@@ -417,7 +468,7 @@ export default function AboutMe() {
             </article>
           </div>
         </div>
-        <div className="hidden sm:flex sm:basis-2/12">
+        <div className="hidden lg:flex lg:basis-2/12">
           <TimelineContainer sectionDom={mapSectionDom} />
         </div>
       </div>

@@ -16,7 +16,8 @@ export function TimelineContainer({ sectionDom }: PropsTimelineContainer) {
       ArrayOfSection[ArrayOfSection.length - 1].id
     )
 
-    let stepPosition = -5
+    let stepPosition = 0
+    const stepGap = 40
 
     return (
       <nav
@@ -34,6 +35,8 @@ export function TimelineContainer({ sectionDom }: PropsTimelineContainer) {
           (content, index) => {
             const domElementReferenced = sectionDom.get(content.id)
 
+            console.log("content.id", content.id)
+
             if (domElementReferenced) {
               // This code smell sorry
               if (index !== 0) {
@@ -41,11 +44,19 @@ export function TimelineContainer({ sectionDom }: PropsTimelineContainer) {
                   ArrayOfSection[index - 1].id
                 )
 
-                stepPosition += previousDomElementReferenced?.clientHeight!
+                // Calculate new stepPosition (start)
+                stepPosition =
+                  previousDomElementReferenced?.clientHeight! + stepGap
               }
 
               if (index === ArrayOfSection.length - 1) {
-                stepPosition -= index * 55
+                const previousDomElementReferenced = sectionDom.get(
+                  ArrayOfSection[index - 1].id
+                )
+
+                stepPosition =
+                  previousDomElementReferenced?.clientHeight! +
+                  domElementReferenced?.clientHeight!
               }
               return (
                 <Fragment key={content.id}>
@@ -58,10 +69,10 @@ export function TimelineContainer({ sectionDom }: PropsTimelineContainer) {
                     }}
                   >
                     <div className="flex h-full w-40 flex-row items-center justify-center gap-4 bg-slate-900">
-                      <div className="flex h-10 w-10 basis-2/12 items-center justify-center rounded-full bg-primary-700 p-4 font-mono text-accent-900 ">
-                        {index}
+                      <div className="flex h-10 w-10 basis-2/12 items-center justify-center rounded-full border-2 border-primary-700 bg-blue-950 p-4 font-mono ">
+                        {index + 1}
                       </div>
-                      <p className="basis-10/12 break-normal">
+                      <p className="basis-10/12 break-normal font-sans">
                         {content.label}
                       </p>
                     </div>
