@@ -14,7 +14,6 @@ export function usePercentScrolled() {
     let ScrollHeight = el.scrollHeight || document.body.scrollHeight
 
     let percent = (ScrollTop / (ScrollHeight - el.clientHeight)) * 100
-    console.log("el", el)
 
     setPercentScrolled(percent)
   }

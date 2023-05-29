@@ -59,7 +59,7 @@ export function Navigation() {
               : "text-primary-600"
           }`}
         >
-          📔 {NAVIGATION.ABOUT_ME.name}
+          👋 {NAVIGATION.ABOUT_ME.name}
         </Link>
         <Link
           href={NAVIGATION.LOGBOOK.pathname}
@@ -136,7 +136,7 @@ export function NavigationMobile() {
                 : "text-primary-600"
             }`}
           >
-            📔 {NAVIGATION.ABOUT_ME.name}
+            👋 {NAVIGATION.ABOUT_ME.name}
           </Link>
           <Link
             href={NAVIGATION.LOGBOOK.pathname}

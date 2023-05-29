@@ -1,5 +1,4 @@
 import { useIsVisible } from "@/components/hooks/useIsVisible"
-import { CURRICULUM_VITAE } from "@/content/curriculum-vitae/cv"
 
 interface PropsTimelineButton {
   label?: string
@@ -8,7 +7,7 @@ interface PropsTimelineButton {
   icon?: React.ReactNode
 }
 
-export function TimelineButton({
+export function NavigationButton({
   domElementReferenced,
   label,
   icon,
@@ -34,7 +33,7 @@ export function TimelineButton({
   )
 }
 
-export function TimelineButtonMobile({
+export function NavigationButtonMobile({
   domElementReferenced,
   icon,
 }: PropsTimelineButton) {

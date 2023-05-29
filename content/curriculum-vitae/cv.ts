@@ -39,6 +39,10 @@ export const CURRICULUM_VITAE = {
         id: "IZICREDIT",
         label: "Izicrédit",
       },
+      NAWAK: {
+        id: "NAWAK",
+        label: "nawak",
+      },
     },
   },
 
