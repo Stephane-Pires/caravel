@@ -1,35 +1,36 @@
 import {
-  TimelineButton,
-  TimelineButtonMobile,
-} from "@/components/clients/TimelineButton"
+  NavigationButton,
+  NavigationButtonMobile,
+} from "@/components/clients/curriculum-vitae/navigation/NavigationButton"
 import { CURRICULUM_VITAE } from "@/content/curriculum-vitae/cv"
+import { Fragment } from "react"
 
-interface PropsTimelineCurriculumVitae {
-  sectionDom: Map<string, HTMLDivElement>
+interface PropsNavigationCurriculumVitae {
+  articleDom: Map<string, HTMLDivElement>
 }
 
-export function TimelineSection({ sectionDom }: PropsTimelineCurriculumVitae) {
-  if (sectionDom) {
+export function NavigationCurriculumVitae({
+  articleDom,
+}: PropsNavigationCurriculumVitae) {
+  if (articleDom) {
     return (
       <nav className="flex flex-col items-center   rounded-lg bg-primary-600 p-1 sm:border-l-4 sm:border-t-4 sm:border-primary-900 sm:p-2">
         {Array.from(Object.values(CURRICULUM_VITAE)).map((content) => {
-          const domElementReferenced = sectionDom.get(content.id)
+          const domElementReferenced = articleDom.get(content.id)
 
           if (domElementReferenced) {
             return (
-              <>
-                <TimelineButton
-                  key={content.id}
+              <Fragment key={content.id}>
+                <NavigationButton
                   label={content.label}
                   icon={<content.icon className="h-8 w-8" />}
                   domElementReferenced={domElementReferenced}
                 />
-                <TimelineButtonMobile
-                  key={content.id}
+                <NavigationButtonMobile
                   icon={<content.icon className="h-8 w-8" />}
                   domElementReferenced={domElementReferenced}
                 />
-              </>
+              </Fragment>
             )
           }
         })}
