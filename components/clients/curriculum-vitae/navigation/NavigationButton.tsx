@@ -50,7 +50,7 @@ export function NavigationButtonMobile({
         isVisible ? "bg-accent-500/80 text-blue-900" : "bg-blue-950"
       } 
     
- m-1 flex h-12 w-12 items-center justify-center rounded-full border-2 border-red-600 p-1 font-sans font-bold hover:bg-blue-900 hover:text-white sm:visible sm:hidden`}
+ m-1 flex h-12 w-12 items-center justify-center rounded-full border-2 border-red-950 p-1 font-sans font-bold hover:bg-blue-900 hover:text-white sm:visible sm:hidden`}
     >
       {icon}
     </button>
