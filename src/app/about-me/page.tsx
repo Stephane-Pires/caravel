@@ -83,7 +83,7 @@ export default function AboutMe() {
   }, [])
 
   return (
-    <main className="flex min-h-screen flex-col items-center p-4 pt-20 sm:p-10">
+    <main className="flex min-h-screen flex-col items-center p-4 pt-20 sm:p-10 sm:py-20">
       {/* progress bar */}
       <div
         className={`fixed left-0 top-20 hidden h-1 bg-gradient-to-r from-accent-500 to-accent-300 sm:flex `}

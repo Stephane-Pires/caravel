@@ -70,13 +70,18 @@ export function TimelineContainer({
                       marginTop: stepPosition,
                     }}
                   >
-                    <div className="flex h-full w-40 flex-row items-center justify-center gap-4 bg-slate-900">
-                      <div className="flex h-12 w-12 basis-2/12 items-center justify-center rounded-full border-2 border-primary-700 bg-blue-950 p-4 font-mono ">
-                        <content.icon className="h-10 w-10 scale-150" />
+                    <div className="flex flex-col">
+                      <div className="flex h-full w-40 flex-row items-center justify-center gap-4 bg-slate-900">
+                        <div className="flex h-12 w-12 basis-2/12 items-center justify-center rounded-full border-2 border-primary-700 bg-blue-950 p-4 font-mono ">
+                          <content.icon className="h-10 w-10 scale-150" />
+                        </div>
+                        <p className="basis-10/12 break-normal font-sans">
+                          {content.label}
+                        </p>
                       </div>
-                      <p className="basis-10/12 break-normal font-sans">
-                        {content.label}
-                      </p>
+                      <div className="w-20 translate-x-10 break-words bg-slate-900 font-mono text-slate-400">
+                        4 months blabla bli
+                      </div>
                     </div>
                   </div>
                 </Fragment>
