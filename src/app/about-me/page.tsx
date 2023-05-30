@@ -1,5 +1,6 @@
 "use client"
 
+import { Tag } from "@/components/Tag"
 import { NavigationCurriculumVitae } from "@/components/clients/curriculum-vitae/navigation/NavigationCurriculumVitae"
 import { TimelineContainer } from "@/components/clients/curriculum-vitae/timeline/TimelineContainer"
 import { usePercentScrolled } from "@/components/hooks/usePercentIntersection"
@@ -98,9 +99,9 @@ export default function AboutMe() {
           </div>
         </div>
         <div className="mx-auto flex max-w-prose  basis-11/12  flex-col items-center sm:basis-8/12">
-          <div className=" my-10 hidden font-script text-4xl font-bold text-blue-300 md:flex md:text-6xl">
+          {/* <div className=" my-10 hidden font-script text-4xl font-bold text-blue-300 md:flex md:text-6xl">
             Me, myself & I ❤️
-          </div>
+          </div> */}
           <div className="flex flex-col gap-4 sm:gap-10">
             <article ref={setRefArticle("FORMATION")}>
               <h2 className="m-6 text-center font-sans text-3xl font-bold text-blue-300 underline underline-offset-4">
@@ -139,6 +140,17 @@ export default function AboutMe() {
               <h3 className="m-6 text-center font-sans text-2xl font-bold text-blue-300">
                 {CURRICULUM_VITAE.EXPERIENCE.section.ANALOG_WAY.label}
               </h3>
+
+              <div
+                className="flex flex-row flex-wrap items-center justify-center gap-2
+              "
+              >
+                <Tag tag="NODEJS" />
+                <Tag tag="TYPESCRIPT" />
+                <Tag tag="REDUX" />
+                <Tag tag="REACT" />
+              </div>
+
               <section ref={setRefSectionExperience("ANALOG_WAY")}>
                 DIV-4 Ipsum is simply dummy text of the printing and typesetting
                 industry. Lorem Ipsum has been the standard dummy text ever
@@ -202,6 +214,17 @@ export default function AboutMe() {
                 {CURRICULUM_VITAE.EXPERIENCE.section.IZICREDIT.label}
               </h3>
               <section ref={setRefSectionExperience("IZICREDIT")}>
+                <div
+                  className="flex flex-row flex-wrap items-center justify-center gap-2
+              "
+                >
+                  <Tag tag="NODEJS" />
+                  <Tag tag="TYPESCRIPT" />
+                  <Tag tag="REACT" />
+                  <Tag tag="GRAPHQL" />
+                  <Tag tag="NEXTJS" />
+                  <Tag tag="POSTGRESQL" />
+                </div>
                 section-4 Ipsum is simply dummy text of the printing and
                 typesetting industry. Lorem Ipsum has been the standard dummy
                 text ever since the 1500s, when an unknown printer took a galley

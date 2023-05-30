@@ -1,12 +1,12 @@
-import { CATEGORY, SUBJECT } from "@/enums/tag"
+import { CATEGORY, SUBJECT, TECHNO } from "@/enums/tag"
 
-type Tag = SUBJECT | CATEGORY
+type Tag = SUBJECT | CATEGORY | TECHNO
 
 interface TagProps {
   tag: Tag
 }
 
-function getColor(tag: SUBJECT | CATEGORY) {
+function getColor(tag: SUBJECT | CATEGORY | TECHNO) {
   switch (tag) {
     case "CODE":
       return "bg-primary-200"
@@ -27,10 +27,21 @@ function getColor(tag: SUBJECT | CATEGORY) {
       return "bg-primary-200"
     case "INSPIRATION":
       return "bg-primary-200"
+    case "REACT":
+    case "TYPESCRIPT":
+    case "SQL":
+    case "GRAPHQL":
+    case "POSTGRESQL":
+    case "REDUX":
+    case "NEXTJS":
+    case "SVELTE":
+    case "SVELTEKIT":
+    case "NODEJS":
+      return "bg-accent-200"
   }
 }
 
-function getLabel(tag: SUBJECT | CATEGORY) {
+function getLabel(tag: SUBJECT | CATEGORY | TECHNO) {
   switch (tag) {
     case "CODE":
       return "Code 🧑‍💻"
@@ -51,6 +62,26 @@ function getLabel(tag: SUBJECT | CATEGORY) {
       return "Though 💭"
     case "INSPIRATION":
       return "Inspiration 🤩"
+    case "GRAPHQL":
+      return "GraphQL 🏴‍☠️"
+    case "REACT":
+      return "React 🚀"
+    case "TYPESCRIPT":
+      return "Typescript"
+    case "SQL":
+      return "SQL"
+    case "POSTGRESQL":
+      return "PostgreSQL"
+    case "REDUX":
+      return "Redux"
+    case "NEXTJS":
+      return "NextJS"
+    case "SVELTE":
+      return "Svelte"
+    case "SVELTEKIT":
+      return "SvelteKit"
+    case "NODEJS":
+      return "NodeJS"
   }
 }
 
@@ -59,7 +90,7 @@ export function Tag({ tag }: TagProps) {
     <div
       className={`${getColor(
         tag
-      )} my-2 rounded-lg border-2 border-primary-900 px-2 py-1 font-sans text-blue-900`}
+      )} my-2 max-w-fit rounded-lg border-2 border-primary-900 px-2 py-1 font-sans text-blue-900`}
     >
       {getLabel(tag)}
     </div>

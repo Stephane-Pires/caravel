@@ -49,7 +49,7 @@ export function TimelineContainer({
 
                 // Calculate new stepPosition (start)
                 stepPosition =
-                  previousDomElementReferenced?.clientHeight! + stepGap * 0.5
+                  previousDomElementReferenced?.clientHeight! - stepGap * 0.8
               }
 
               // if (index === ArrayOfSection.length - 1) {

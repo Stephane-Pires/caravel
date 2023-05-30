@@ -17,3 +17,18 @@ export const CATEGORY = {
 }
 
 export type CATEGORY = keyof typeof CATEGORY
+
+export const TECHNO = {
+  REACT: "REACT",
+  TYPESCRIPT: "TYPESCRIPT",
+  SQL: "SQL",
+  GRAPHQL: "GRAPHQL",
+  POSTGRESQL: "POSTGRESQL",
+  REDUX: "REDUX",
+  NEXTJS: "NEXTJS",
+  SVELTE: "SVELTE",
+  SVELTEKIT: "SVELTEKIT",
+  NODEJS: "NODEJS",
+}
+
+export type TECHNO = keyof typeof TECHNO
