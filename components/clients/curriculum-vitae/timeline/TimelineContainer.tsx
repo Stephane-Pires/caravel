@@ -5,12 +5,14 @@ import { Fragment } from "react"
 interface PropsTimelineContainer {
   sectionDom: Map<string, HTMLDivElement>
   article: Article
+  withTag: boolean
 }
 
 // The performance is terrible, since this component is re-rendering on each scrollbar event
 export function TimelineContainer({
   sectionDom,
   article,
+  withTag,
 }: PropsTimelineContainer) {
   if (sectionDom) {
     const ArrayOfSection = Array.from(
@@ -23,13 +25,13 @@ export function TimelineContainer({
     )
 
     let stepPosition = 0
-    const stepGap = 56
+    const stepGap = withTag ? 108 : 80
 
     return (
-      <nav
+      <div
         className=" absolute -z-10 w-[1px] flex-col rounded-lg border-2 border-dashed border-primary-600 "
         style={{
-          top: firstSectionDom?.offsetTop! - stepGap,
+          top: firstSectionDom?.offsetTop!,
           // Relying on Typescript : https://dev.to/tmaximini/typescript-bang-operator-considered-harmful-3hhi
           height:
             lastSectionDom?.offsetTop! +
@@ -50,7 +52,7 @@ export function TimelineContainer({
 
                 // Calculate new stepPosition (start)
                 stepPosition =
-                  previousDomElementReferenced?.clientHeight! - stepGap * 0.8
+                  previousDomElementReferenced?.clientHeight! - stepGap
               }
 
               // if (index === ArrayOfSection.length - 1) {
@@ -103,7 +105,7 @@ export function TimelineContainer({
             }
           }
         )}
-      </nav>
+      </div>
     )
   }
   return <div>{"CAN NOT SHOW TIMELINE"}</div>

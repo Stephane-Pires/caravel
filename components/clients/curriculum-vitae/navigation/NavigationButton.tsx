@@ -32,7 +32,7 @@ export function NavigationButton({
         <Image
           height={30}
           width={30}
-          src={icon}
+          src={isVisible ? icon.split(".svg").join("-blue.svg") : icon}
           alt="icon of the navigation button"
         />
       </div>

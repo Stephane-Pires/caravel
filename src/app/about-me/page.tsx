@@ -240,30 +240,21 @@ export default function AboutMe() {
                 {CURRICULUM_VITAE.EXPERIENCE.label}
               </h2>
 
-              <h3 className="m-6 text-center font-sans text-2xl font-bold text-blue-300">
-                {CURRICULUM_VITAE.EXPERIENCE.section.ANALOG_WAY.label}
-              </h3>
-
-              <div
-                className="flex flex-row flex-wrap items-center justify-center gap-2
-              "
-              >
-                <Tag tag="NODEJS" />
-                <Tag tag="TYPESCRIPT" />
-                <Tag tag="REDUX" />
-                <Tag tag="REACT" />
-              </div>
-
               <section ref={setRefSectionExperience("ANALOG_WAY")}>
-                DIV-4 Ipsum is simply dummy text of the printing and typesetting
-                industry. Lorem Ipsum has been the standard dummy text ever
-                since the 1500s, when an unknown printer took a galley of type
-                and scrambled it to make a type specimen book. It has survived
-                not only five centuries, but also the leap into electronic
-                typesetting, remaining essentially unchanged. It was popularised
-                in the 1960s with the release of Letraset sheets containing
-                Lorem Ipsum passages, and more recently with desktop publishing
-                software like Aldus PageMaker including versions of Lorem Ipsum.
+                <h3 className="m-6 text-center font-sans text-2xl font-bold text-blue-300">
+                  {CURRICULUM_VITAE.EXPERIENCE.section.ANALOG_WAY.label}
+                </h3>
+
+                <div
+                  className="flex flex-row flex-wrap items-center justify-center gap-2
+              "
+                >
+                  <Tag tag="NODEJS" />
+                  <Tag tag="TYPESCRIPT" />
+                  <Tag tag="REDUX" />
+                  <Tag tag="REACT" />
+                </div>
+
                 <section>
                   section-4 Ipsum is simply dummy text of the printing and
                   typesetting industry. Lorem Ipsum has been the standard dummy
@@ -313,10 +304,11 @@ export default function AboutMe() {
                   versions of Lorem Ipsum.
                 </section>
               </section>
-              <h3 className="m-6 text-center font-sans text-2xl font-bold text-blue-300">
-                {CURRICULUM_VITAE.EXPERIENCE.section.IZICREDIT.label}
-              </h3>
+
               <section ref={setRefSectionExperience("IZICREDIT")}>
+                <h3 className="m-6 text-center font-sans text-2xl font-bold text-blue-300">
+                  {CURRICULUM_VITAE.EXPERIENCE.section.IZICREDIT.label}
+                </h3>
                 <div
                   className="flex flex-row flex-wrap items-center justify-center gap-2
               "
@@ -429,10 +421,11 @@ export default function AboutMe() {
               <h2 className="m-6 text-center font-sans text-3xl font-bold text-blue-300 underline underline-offset-4">
                 {CURRICULUM_VITAE.LOISIR.label}
               </h2>
-              <h3 className="m-6 text-center font-sans text-2xl font-bold text-blue-300">
-                {CURRICULUM_VITAE.LOISIR.section.VIDEO_GAME.label}
-              </h3>
+
               <section ref={setRefSectionLoisir("VIDEO_GAME")}>
+                <h3 className="m-6 text-center font-sans text-2xl font-bold text-blue-300">
+                  {CURRICULUM_VITAE.LOISIR.section.VIDEO_GAME.label}
+                </h3>
                 section-6 Ipsum is simply dummy text of the printing and
                 typesetting industry. Lorem Ipsum has been the standard dummy
                 text ever since the 1500s, when an unknown printer took a galley
@@ -444,10 +437,11 @@ export default function AboutMe() {
                 publishing software like Aldus PageMaker including versions of
                 Lorem Ipsum.
               </section>
-              <h3 className="m-6 text-center font-sans text-2xl font-bold text-blue-300">
-                {CURRICULUM_VITAE.LOISIR.section.CLIMBING.label}
-              </h3>
+
               <section ref={setRefSectionLoisir("CLIMBING")}>
+                <h3 className="m-6 text-center font-sans text-2xl font-bold text-blue-300">
+                  {CURRICULUM_VITAE.LOISIR.section.CLIMBING.label}
+                </h3>
                 section-6 Ipsum is simply dummy text of the printing and
                 typesetting industry. Lorem Ipsum has been the standard dummy
                 text ever since the 1500s, when an unknown printer took a galley
@@ -459,10 +453,11 @@ export default function AboutMe() {
                 publishing software like Aldus PageMaker including versions of
                 Lorem Ipsum.
               </section>
-              <h3 className="m-6 text-center font-sans text-2xl font-bold text-blue-300">
-                {CURRICULUM_VITAE.LOISIR.section.BIKING.label}
-              </h3>
+
               <section ref={setRefSectionLoisir("BIKING")}>
+                <h3 className="m-6 text-center font-sans text-2xl font-bold text-blue-300">
+                  {CURRICULUM_VITAE.LOISIR.section.BIKING.label}
+                </h3>
                 <section>
                   section-6 Ipsum is simply dummy text of the printing and
                   typesetting industry. Lorem Ipsum has been the standard dummy
@@ -498,10 +493,11 @@ export default function AboutMe() {
                 publishing software like Aldus PageMaker including versions of
                 Lorem Ipsum.
               </section>
-              <h3 className="m-6 text-center font-sans text-2xl font-bold text-blue-300">
-                {CURRICULUM_VITAE.LOISIR.section.BOARD_GAME.label}
-              </h3>
+
               <section ref={setRefSectionLoisir("BOARD_GAME")}>
+                <h3 className="m-6 text-center font-sans text-2xl font-bold text-blue-300">
+                  {CURRICULUM_VITAE.LOISIR.section.BOARD_GAME.label}
+                </h3>
                 section-6 Ipsum is simply dummy text of the printing and
                 typesetting industry. Lorem Ipsum has been the standard dummy
                 text ever since the 1500s, when an unknown printer took a galley
@@ -521,10 +517,12 @@ export default function AboutMe() {
           <TimelineContainer
             sectionDom={mapSectionLoisirDom}
             article="LOISIR"
+            withTag={false}
           />
           <TimelineContainer
             sectionDom={mapSectionExperienceDom}
             article="EXPERIENCE"
+            withTag={true}
           />
         </div>
       </div>
