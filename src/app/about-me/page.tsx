@@ -22,7 +22,8 @@ import { useEffect, useRef, useState } from "react"
 export default function AboutMe() {
   let articleRef = useRef(new Map<string, HTMLDivElement>())
   let sectionExperienceRef = useRef(new Map<string, HTMLDivElement>())
-  let sectionLoisirRef = useRef(new Map<string, HTMLDivElement>())
+  let sectionHobbiesRef = useRef(new Map<string, HTMLDivElement>())
+  let sectionEducationRef = useRef(new Map<string, HTMLDivElement>())
 
   const percentScrolled = usePercentScrolled()
 
@@ -30,10 +31,13 @@ export default function AboutMe() {
   let [mapSectionExperienceDom, setMapSectionExperienceDom] = useState(
     new Map<string, HTMLDivElement>()
   )
-
-  let [mapSectionLoisirDom, setMapSectionLoisirDom] = useState(
+  let [mapSectionHobbiesDom, setMapSectionHobbiesDom] = useState(
     new Map<string, HTMLDivElement>()
   )
+  let [mapSectionEducationDom, setMapSectionEducationDom] = useState(
+    new Map<string, HTMLDivElement>()
+  )
+
   const setRefArticle = (article: Article) => {
     return (node: HTMLDivElement | null) => {
       if (node) {
@@ -44,7 +48,7 @@ export default function AboutMe() {
     }
   }
 
-  // Should be generic setRefSectionExperience & setRefSectionLoisir should be one function setRefSection
+  // Should be generic setRefSectionExperience & setRefSectionHobbies should be one function setRefSection
   function setRefSectionExperience(section: SectionKey<"EXPERIENCE">) {
     return (node: HTMLDivElement | null) => {
       if (node) {
@@ -60,16 +64,31 @@ export default function AboutMe() {
     }
   }
 
-  function setRefSectionLoisir(section: SectionKey<"LOISIR">) {
+  function setRefSectionHobbies(section: SectionKey<"LOISIR">) {
     return (node: HTMLDivElement | null) => {
       if (node) {
-        sectionLoisirRef.current.set(
+        sectionHobbiesRef.current.set(
           CURRICULUM_VITAE["LOISIR"].section[section].id,
           node
         )
       } else {
-        sectionLoisirRef.current.delete(
+        sectionHobbiesRef.current.delete(
           CURRICULUM_VITAE["LOISIR"].section[section].id
+        )
+      }
+    }
+  }
+
+  function setRefSectionEducation(section: SectionKey<"EDUCATION">) {
+    return (node: HTMLDivElement | null) => {
+      if (node) {
+        sectionEducationRef.current.set(
+          CURRICULUM_VITAE["EDUCATION"].section[section].id,
+          node
+        )
+      } else {
+        sectionEducationRef.current.delete(
+          CURRICULUM_VITAE["EDUCATION"].section[section].id
         )
       }
     }
@@ -80,7 +99,8 @@ export default function AboutMe() {
   useEffect(() => {
     setMapDom(articleRef.current)
     setMapSectionExperienceDom(sectionExperienceRef.current)
-    setMapSectionLoisirDom(sectionLoisirRef.current)
+    setMapSectionHobbiesDom(sectionHobbiesRef.current)
+    setMapSectionEducationDom(sectionEducationRef.current)
   }, [])
 
   return (
@@ -99,9 +119,9 @@ export default function AboutMe() {
           </div>
         </div>
         <div className=" mx-auto flex  max-w-prose  flex-col items-center md:basis-8/12">
-          {/* <div className=" my-10 hidden font-script text-4xl font-bold text-blue-300 md:flex md:text-6xl">
+          <div className=" my-10 hidden font-script text-4xl font-bold text-blue-300 md:flex md:text-6xl">
             Me, myself & I ❤️
-          </div> */}
+          </div>
           <div className="flex flex-col gap-4 md:gap-10">
             {/* <h3 className="m-6 text-center font-sans text-2xl font-bold text-blue-300">
                 {CURRICULUM_VITAE.EXPERIENCE.section.NAWAK.label}
@@ -206,11 +226,14 @@ export default function AboutMe() {
                 </section>
               </section> */}
 
-            <article ref={setRefArticle("FORMATION")}>
+            <article ref={setRefArticle("EDUCATION")}>
               <h2 className="m-6 text-center font-sans text-3xl font-bold text-blue-300 underline underline-offset-4">
-                {CURRICULUM_VITAE.FORMATION.label}
+                {CURRICULUM_VITAE.EDUCATION.label}
               </h2>
-              <section>
+              <section ref={setRefSectionEducation("ISEP")}>
+                <h3 className="m-6 text-center font-sans text-2xl font-bold text-blue-300">
+                  {CURRICULUM_VITAE.EDUCATION.section.ISEP.label}
+                </h3>
                 section-2 is simply dummy text of the printing and typesetting
                 industry. Lorem Ipsum has been the standard dummy text ever
                 since the 1500s, when an unknown printer took a galley of type
@@ -221,7 +244,10 @@ export default function AboutMe() {
                 Lorem Ipsum passages, and more recently with desktop publishing
                 software like Aldus PageMaker including versions of Lorem Ipsum.
               </section>
-              <section>
+              <section ref={setRefSectionEducation("AUDENCIA")}>
+                <h3 className="m-6 text-center font-sans text-2xl font-bold text-blue-300">
+                  {CURRICULUM_VITAE.EDUCATION.section.AUDENCIA.label}
+                </h3>
                 section-3 Ipsum is simply dummy text of the printing and
                 typesetting industry. Lorem Ipsum has been the standard dummy
                 text ever since the 1500s, when an unknown printer took a galley
@@ -422,7 +448,7 @@ export default function AboutMe() {
                 {CURRICULUM_VITAE.LOISIR.label}
               </h2>
 
-              <section ref={setRefSectionLoisir("VIDEO_GAME")}>
+              <section ref={setRefSectionHobbies("VIDEO_GAME")}>
                 <h3 className="m-6 text-center font-sans text-2xl font-bold text-blue-300">
                   {CURRICULUM_VITAE.LOISIR.section.VIDEO_GAME.label}
                 </h3>
@@ -438,7 +464,7 @@ export default function AboutMe() {
                 Lorem Ipsum.
               </section>
 
-              <section ref={setRefSectionLoisir("CLIMBING")}>
+              <section ref={setRefSectionHobbies("CLIMBING")}>
                 <h3 className="m-6 text-center font-sans text-2xl font-bold text-blue-300">
                   {CURRICULUM_VITAE.LOISIR.section.CLIMBING.label}
                 </h3>
@@ -454,7 +480,7 @@ export default function AboutMe() {
                 Lorem Ipsum.
               </section>
 
-              <section ref={setRefSectionLoisir("BIKING")}>
+              <section ref={setRefSectionHobbies("BIKING")}>
                 <h3 className="m-6 text-center font-sans text-2xl font-bold text-blue-300">
                   {CURRICULUM_VITAE.LOISIR.section.BIKING.label}
                 </h3>
@@ -494,7 +520,7 @@ export default function AboutMe() {
                 Lorem Ipsum.
               </section>
 
-              <section ref={setRefSectionLoisir("BOARD_GAME")}>
+              <section ref={setRefSectionHobbies("BOARD_GAME")}>
                 <h3 className="m-6 text-center font-sans text-2xl font-bold text-blue-300">
                   {CURRICULUM_VITAE.LOISIR.section.BOARD_GAME.label}
                 </h3>
@@ -515,7 +541,12 @@ export default function AboutMe() {
         {/* Should not be included in the JS bundle when the screen is mobile. */}
         <div className="hidden lg:flex lg:basis-2/12">
           <TimelineContainer
-            sectionDom={mapSectionLoisirDom}
+            sectionDom={mapSectionEducationDom}
+            article="EDUCATION"
+            withTag={false}
+          />
+          <TimelineContainer
+            sectionDom={mapSectionHobbiesDom}
             article="LOISIR"
             withTag={false}
           />

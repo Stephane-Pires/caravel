@@ -14,6 +14,9 @@ export function TimelineContainer({
   article,
   withTag,
 }: PropsTimelineContainer) {
+  console.log("article", article)
+  console.log("sectionDom", sectionDom)
+
   if (sectionDom) {
     const ArrayOfSection = Array.from(
       Object.values(CURRICULUM_VITAE[article].section)
@@ -75,7 +78,7 @@ export function TimelineContainer({
                   >
                     <div className="flex flex-col">
                       <div className="flex h-full w-40 flex-row items-center justify-center gap-4 bg-slate-900">
-                        <div className="flex h-12 w-12 basis-2/12 items-center justify-center rounded-full border-2 border-primary-700 bg-blue-950 p-3 font-mono ">
+                        <div className="flex h-12 w-12 basis-2/12 items-center justify-center rounded-full border-2 border-primary-700 bg-primary-500 p-3 font-mono ">
                           {/* <content.icon className="h-10 w-10 scale-150" /> */}
                           <div className=" flex h-10 w-10 scale-150 items-center justify-center">
                             <Image

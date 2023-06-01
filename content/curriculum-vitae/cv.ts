@@ -8,7 +8,7 @@ import {
 } from "@heroicons/react/24/solid"
 
 export const CURRICULUM_VITAE = {
-  FORMATION: {
+  EDUCATION: {
     id: "EDUCATION",
     label: "Education",
     // icon: AcademicCapIcon,
@@ -18,15 +18,23 @@ export const CURRICULUM_VITAE = {
       // CLASSES_PREPARATOIRE: {},
       ISEP: {
         id: "ISEP",
-        label: "Institut supérieur d'électronique de Paris",
+        label: "Isep",
+        icon: "/about-me/isep-logo.png",
+        duration: {
+          start: "Sep 2016",
+          end: "Jun 2018",
+          difference: "2 years",
+        },
       },
       AUDENCIA: {
         id: "AUDENCIA",
         label: "Audencia",
-      },
-      ISCTE: {
-        id: "ISCTE",
-        label: "Instituto Universitário de Lisboa",
+        icon: "/about-me/audencia-logo.png",
+        duration: {
+          start: "Sep 2018",
+          end: "Aug 2019",
+          difference: "1 year",
+        },
       },
     },
   },
@@ -81,7 +89,7 @@ export const CURRICULUM_VITAE = {
       VIDEO_GAME: {
         id: "VIDEO_GAME",
         label: "Video games",
-        icon: "/about-me/puzzle-piece.svg",
+        icon: "/about-me/power-blue.svg",
         duration: {
           start: "1998",
           end: "today",
@@ -90,7 +98,7 @@ export const CURRICULUM_VITAE = {
       CLIMBING: {
         id: "CLIMBING",
         label: "Climbing",
-        icon: "/about-me/arrow-up-down.svg",
+        icon: "/about-me/arrow-up-down-blue.svg",
         duration: {
           start: "2022",
           end: "today",
@@ -100,7 +108,7 @@ export const CURRICULUM_VITAE = {
         id: "BIKING",
         label: "Biking",
         // icon: MapIcon,
-        icon: "/about-me/map.svg",
+        icon: "/about-me/map-blue.svg",
         duration: {
           start: "2018",
           end: "today",
@@ -110,7 +118,7 @@ export const CURRICULUM_VITAE = {
         id: "BOARD_GAME",
         label: "Board game",
         // icon: PuzzlePieceIcon,
-        icon: "/about-me/puzzle-piece.svg",
+        icon: "/about-me/puzzle-piece-blue.svg",
 
         duration: {
           start: "2018",
