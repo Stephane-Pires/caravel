@@ -9,9 +9,10 @@ import {
 
 export const CURRICULUM_VITAE = {
   FORMATION: {
-    id: "FORMATION",
-    label: "Formation",
-    icon: AcademicCapIcon,
+    id: "EDUCATION",
+    label: "Education",
+    // icon: AcademicCapIcon,
+    icon: "/about-me/academic.svg",
     section: {
       // LYCEE: {},
       // CLASSES_PREPARATOIRE: {},
@@ -32,55 +33,89 @@ export const CURRICULUM_VITAE = {
   EXPERIENCE: {
     id: "EXPERIENCE",
     label: "Experience",
-    icon: ComputerDesktopIcon,
+    // icon: ComputerDesktopIcon,
+    icon: "/about-me/computer-desktop.svg",
     section: {
       ANALOG_WAY: {
         id: "ANALOG_WAY",
         label: "Analog Way",
-        icon: EyeSlashIcon,
+        // icon: EyeSlashIcon,
+        icon: "/about-me/analogway-logoo.png",
+        duration: {
+          start: "Sep 2019",
+          end: "Feb 2023",
+          difference: "3+ years",
+        },
       },
       IZICREDIT: {
         id: "IZICREDIT",
         label: "Izicrédit",
-        icon: EyeSlashIcon,
+        // icon: EyeSlashIcon,
+        icon: "/about-me/izicredit-logo.png",
+
+        duration: {
+          start: "Feb 2023",
+          end: "Jun 2023",
+          difference: "4 month",
+        },
       },
-      NAWAK: {
-        id: "NAWAK",
-        label: "nawak",
-        icon: EyeSlashIcon,
-      },
-      GIGAWAK: {
-        id: "GIGAWAK",
-        label: "gigawak",
-        icon: EyeSlashIcon,
-      },
+      // NAWAK: {
+      //   id: "NAWAK",
+      //   label: "nawak",
+      //   icon: EyeSlashIcon,
+      // },
+      // GIGAWAK: {
+      //   id: "GIGAWAK",
+      //   label: "gigawak",
+      //   icon: EyeSlashIcon,
+      // },
     },
   },
 
   LOISIR: {
-    id: "LOISIR",
-    label: "Loisir",
-    icon: PuzzlePieceIcon,
+    id: "HOBBIES",
+    label: "Hobbies",
+    // icon: PuzzlePieceIcon,
+    icon: "/about-me/puzzle-piece.svg",
     section: {
       VIDEO_GAME: {
         id: "VIDEO_GAME",
         label: "Video games",
-        icon: PuzzlePieceIcon,
+        icon: "/about-me/puzzle-piece.svg",
+        duration: {
+          start: "1998",
+          end: "today",
+        },
       },
       CLIMBING: {
         id: "CLIMBING",
         label: "Climbing",
-        icon: ArrowsUpDownIcon,
+        icon: "/about-me/arrow-up-down.svg",
+        duration: {
+          start: "2022",
+          end: "today",
+        },
       },
       BIKING: {
         id: "BIKING",
         label: "Biking",
-        icon: MapIcon,
+        // icon: MapIcon,
+        icon: "/about-me/map.svg",
+        duration: {
+          start: "2018",
+          end: "today",
+        },
       },
       BOARD_GAME: {
         id: "BOARD_GAME",
         label: "Board game",
-        icon: PuzzlePieceIcon,
+        // icon: PuzzlePieceIcon,
+        icon: "/about-me/puzzle-piece.svg",
+
+        duration: {
+          start: "2018",
+          end: "today",
+        },
       },
     },
   },

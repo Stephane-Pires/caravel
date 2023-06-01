@@ -1,6 +1,5 @@
 import {
-  NavigationButton,
-  NavigationButtonMobile,
+  NavigationButton, // NavigationButtonMobile,
 } from "@/components/clients/curriculum-vitae/navigation/NavigationButton"
 import { CURRICULUM_VITAE } from "@/content/curriculum-vitae/cv"
 import { Fragment } from "react"
@@ -23,13 +22,13 @@ export function NavigationCurriculumVitae({
               <Fragment key={content.id}>
                 <NavigationButton
                   label={content.label}
-                  icon={<content.icon className="h-8 w-8" />}
+                  icon={content.icon}
                   domElementReferenced={domElementReferenced}
                 />
-                <NavigationButtonMobile
+                {/* <NavigationButtonMobile
                   icon={<content.icon className="h-8 w-8" />}
                   domElementReferenced={domElementReferenced}
-                />
+                /> */}
               </Fragment>
             )
           }

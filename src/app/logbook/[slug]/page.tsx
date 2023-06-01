@@ -40,7 +40,7 @@ export default function BlogContent({ params: { slug } }: BlogContentProps) {
   const content = findContent(slug)
 
   return (
-    <main className="flex min-h-screen flex-col items-center px-10 pt-20 sm:justify-between">
+    <main className="flex min-h-screen flex-col items-center gap-10 px-10 pt-20 sm:justify-between">
       <div className="absolute -z-10 hidden h-[400px] w-full sm:block">
         <Image
           src={`/logbook/card/${content.image}`}

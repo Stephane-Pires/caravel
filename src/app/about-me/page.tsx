@@ -84,25 +84,128 @@ export default function AboutMe() {
   }, [])
 
   return (
-    <main className="flex min-h-screen flex-col items-center p-4 pt-20 sm:p-10 sm:py-20">
+    <main className="flex min-h-screen flex-col items-center p-4 pt-20 md:p-10 md:py-20">
       {/* progress bar */}
       <div
-        className={`fixed left-0 top-20 hidden h-1 bg-gradient-to-r from-accent-500 to-accent-300 sm:flex `}
+        className={`fixed left-0 top-20 hidden h-1 bg-gradient-to-r from-accent-500 to-accent-300 md:flex `}
         style={{
           width: `calc((${percentScrolled} * 100vw) / 100)`,
         }}
       />
-      <div className="mb-8 mt-4 flex w-full flex-row items-center gap-4 font-serif sm:gap-10">
-        <div className="sticky top-[40%] basis-1/12 self-start sm:basis-2/12">
-          <div className="flex justify-end">
+      <div className="mb-8 mt-4 flex w-full flex-row items-center gap-4 font-serif md:gap-10">
+        <div className="sticky top-[40%]  self-start md:basis-2/12">
+          <div className="hidden justify-end md:flex">
             <NavigationCurriculumVitae articleDom={mapDom} />
           </div>
         </div>
-        <div className="mx-auto flex max-w-prose  basis-11/12  flex-col items-center sm:basis-8/12">
+        <div className=" mx-auto flex  max-w-prose  flex-col items-center md:basis-8/12">
           {/* <div className=" my-10 hidden font-script text-4xl font-bold text-blue-300 md:flex md:text-6xl">
             Me, myself & I ❤️
           </div> */}
-          <div className="flex flex-col gap-4 sm:gap-10">
+          <div className="flex flex-col gap-4 md:gap-10">
+            {/* <h3 className="m-6 text-center font-sans text-2xl font-bold text-blue-300">
+                {CURRICULUM_VITAE.EXPERIENCE.section.NAWAK.label}
+              </h3>
+              <section ref={setRefSectionExperience("NAWAK")}>
+                section-4 Ipsum is simply dummy text of the printing and
+                typesetting industry. Lorem Ipsum has been the standard dummy
+                text ever since the 1500s, when an unknown printer took a galley
+                of type and scrambled it to make a type specimen book. It has
+                survived not only five centuries, but also the leap into
+                electronic typesetting, remaining essentially unchanged. It was
+                popularised in the 1960s with the release of Letraset sheets
+                containing Lorem Ipsum passages, and more recently with desktop
+                publishing software like Aldus PageMaker including versions of
+                Lorem Ipsum.
+                <section>
+                  section-4 Ipsum is simply dummy text of the printing and
+                  typesetting industry. Lorem Ipsum has been the standard dummy
+                  text ever since the 1500s, when an unknown printer took a
+                  galley of type and scrambled it to make a type specimen book.
+                  It has survived not only five centuries, but also the leap
+                  into electronic typesetting, remaining essentially unchanged.
+                  It was popularised in the 1960s with the release of Letraset
+                  sheets containing Lorem Ipsum passages, and more recently with
+                  desktop publishing software like Aldus PageMaker including
+                  versions of Lorem Ipsum.
+                </section>
+                <section>
+                  section-4 Ipsum is simply dummy text of the printing and
+                  typesetting industry. Lorem Ipsum has been the standard dummy
+                  text ever since the 1500s, when an unknown printer took a
+                  galley of type and scrambled it to make a type specimen book.
+                  It has survived not only five centuries, but also the leap
+                  into electronic typesetting, remaining essentially unchanged.
+                  It was popularised in the 1960s with the release of Letraset
+                  sheets containing Lorem Ipsum passages, and more recently with
+                  desktop publishing software like Aldus PageMaker including
+                  versions of Lorem Ipsum.
+                </section>
+                <section>
+                  section-4 Ipsum is simply dummy text of the printing and
+                  typesetting industry. Lorem Ipsum has been the standard dummy
+                  text ever since the 1500s, when an unknown printer took a
+                  galley of type and scrambled it to make a type specimen book.
+                  It has survived not only five centuries, but also the leap
+                  into electronic typesetting, remaining essentially unchanged.
+                  It was popularised in the 1960s with the release of Letraset
+                  sheets containing Lorem Ipsum passages, and more recently with
+                  desktop publishing software like Aldus PageMaker including
+                  versions of Lorem Ipsum.
+                </section>
+              </section>
+              <h3 className="m-6 text-center font-sans text-2xl font-bold text-blue-300">
+                {CURRICULUM_VITAE.EXPERIENCE.section.GIGAWAK.label}
+              </h3>
+              <section ref={setRefSectionExperience("GIGAWAK")}>
+                section-4 Ipsum is simply dummy text of the printing and
+                typesetting industry. Lorem Ipsum has been the standard dummy
+                text ever since the 1500s, when an unknown printer took a galley
+                of type and scrambled it to make a type specimen book. It has
+                survived not only five centuries, but also the leap into
+                electronic typesetting, remaining essentially unchanged. It was
+                popularised in the 1960s with the release of Letraset sheets
+                containing Lorem Ipsum passages, and more recently with desktop
+                publishing software like Aldus PageMaker including versions of
+                Lorem Ipsum.
+                <section>
+                  section-4 Ipsum is simply dummy text of the printing and
+                  typesetting industry. Lorem Ipsum has been the standard dummy
+                  text ever since the 1500s, when an unknown printer took a
+                  galley of type and scrambled it to make a type specimen book.
+                  It has survived not only five centuries, but also the leap
+                  into electronic typesetting, remaining essentially unchanged.
+                  It was popularised in the 1960s with the release of Letraset
+                  sheets containing Lorem Ipsum passages, and more recently with
+                  desktop publishing software like Aldus PageMaker including
+                  versions of Lorem Ipsum.
+                </section>
+                <section>
+                  section-4 Ipsum is simply dummy text of the printing and
+                  typesetting industry. Lorem Ipsum has been the standard dummy
+                  text ever since the 1500s, when an unknown printer took a
+                  galley of type and scrambled it to make a type specimen book.
+                  It has survived not only five centuries, but also the leap
+                  into electronic typesetting, remaining essentially unchanged.
+                  It was popularised in the 1960s with the release of Letraset
+                  sheets containing Lorem Ipsum passages, and more recently with
+                  desktop publishing software like Aldus PageMaker including
+                  versions of Lorem Ipsum.
+                </section>
+                <section>
+                  section-4 Ipsum is simply dummy text of the printing and
+                  typesetting industry. Lorem Ipsum has been the standard dummy
+                  text ever since the 1500s, when an unknown printer took a
+                  galley of type and scrambled it to make a type specimen book.
+                  It has survived not only five centuries, but also the leap
+                  into electronic typesetting, remaining essentially unchanged.
+                  It was popularised in the 1960s with the release of Letraset
+                  sheets containing Lorem Ipsum passages, and more recently with
+                  desktop publishing software like Aldus PageMaker including
+                  versions of Lorem Ipsum.
+                </section>
+              </section> */}
+
             <article ref={setRefArticle("FORMATION")}>
               <h2 className="m-6 text-center font-sans text-3xl font-bold text-blue-300 underline underline-offset-4">
                 {CURRICULUM_VITAE.FORMATION.label}
@@ -283,108 +386,6 @@ export default function AboutMe() {
                   desktop publishing software like Aldus PageMaker including
                   versions of Lorem Ipsum.
                 </section>
-                <section>
-                  section-4 Ipsum is simply dummy text of the printing and
-                  typesetting industry. Lorem Ipsum has been the standard dummy
-                  text ever since the 1500s, when an unknown printer took a
-                  galley of type and scrambled it to make a type specimen book.
-                  It has survived not only five centuries, but also the leap
-                  into electronic typesetting, remaining essentially unchanged.
-                  It was popularised in the 1960s with the release of Letraset
-                  sheets containing Lorem Ipsum passages, and more recently with
-                  desktop publishing software like Aldus PageMaker including
-                  versions of Lorem Ipsum.
-                </section>
-                <section>
-                  section-4 Ipsum is simply dummy text of the printing and
-                  typesetting industry. Lorem Ipsum has been the standard dummy
-                  text ever since the 1500s, when an unknown printer took a
-                  galley of type and scrambled it to make a type specimen book.
-                  It has survived not only five centuries, but also the leap
-                  into electronic typesetting, remaining essentially unchanged.
-                  It was popularised in the 1960s with the release of Letraset
-                  sheets containing Lorem Ipsum passages, and more recently with
-                  desktop publishing software like Aldus PageMaker including
-                  versions of Lorem Ipsum.
-                </section>
-                <section>
-                  section-4 Ipsum is simply dummy text of the printing and
-                  typesetting industry. Lorem Ipsum has been the standard dummy
-                  text ever since the 1500s, when an unknown printer took a
-                  galley of type and scrambled it to make a type specimen book.
-                  It has survived not only five centuries, but also the leap
-                  into electronic typesetting, remaining essentially unchanged.
-                  It was popularised in the 1960s with the release of Letraset
-                  sheets containing Lorem Ipsum passages, and more recently with
-                  desktop publishing software like Aldus PageMaker including
-                  versions of Lorem Ipsum.
-                </section>
-              </section>
-              <h3 className="m-6 text-center font-sans text-2xl font-bold text-blue-300">
-                {CURRICULUM_VITAE.EXPERIENCE.section.NAWAK.label}
-              </h3>
-              <section ref={setRefSectionExperience("NAWAK")}>
-                section-4 Ipsum is simply dummy text of the printing and
-                typesetting industry. Lorem Ipsum has been the standard dummy
-                text ever since the 1500s, when an unknown printer took a galley
-                of type and scrambled it to make a type specimen book. It has
-                survived not only five centuries, but also the leap into
-                electronic typesetting, remaining essentially unchanged. It was
-                popularised in the 1960s with the release of Letraset sheets
-                containing Lorem Ipsum passages, and more recently with desktop
-                publishing software like Aldus PageMaker including versions of
-                Lorem Ipsum.
-                <section>
-                  section-4 Ipsum is simply dummy text of the printing and
-                  typesetting industry. Lorem Ipsum has been the standard dummy
-                  text ever since the 1500s, when an unknown printer took a
-                  galley of type and scrambled it to make a type specimen book.
-                  It has survived not only five centuries, but also the leap
-                  into electronic typesetting, remaining essentially unchanged.
-                  It was popularised in the 1960s with the release of Letraset
-                  sheets containing Lorem Ipsum passages, and more recently with
-                  desktop publishing software like Aldus PageMaker including
-                  versions of Lorem Ipsum.
-                </section>
-                <section>
-                  section-4 Ipsum is simply dummy text of the printing and
-                  typesetting industry. Lorem Ipsum has been the standard dummy
-                  text ever since the 1500s, when an unknown printer took a
-                  galley of type and scrambled it to make a type specimen book.
-                  It has survived not only five centuries, but also the leap
-                  into electronic typesetting, remaining essentially unchanged.
-                  It was popularised in the 1960s with the release of Letraset
-                  sheets containing Lorem Ipsum passages, and more recently with
-                  desktop publishing software like Aldus PageMaker including
-                  versions of Lorem Ipsum.
-                </section>
-                <section>
-                  section-4 Ipsum is simply dummy text of the printing and
-                  typesetting industry. Lorem Ipsum has been the standard dummy
-                  text ever since the 1500s, when an unknown printer took a
-                  galley of type and scrambled it to make a type specimen book.
-                  It has survived not only five centuries, but also the leap
-                  into electronic typesetting, remaining essentially unchanged.
-                  It was popularised in the 1960s with the release of Letraset
-                  sheets containing Lorem Ipsum passages, and more recently with
-                  desktop publishing software like Aldus PageMaker including
-                  versions of Lorem Ipsum.
-                </section>
-              </section>
-              <h3 className="m-6 text-center font-sans text-2xl font-bold text-blue-300">
-                {CURRICULUM_VITAE.EXPERIENCE.section.GIGAWAK.label}
-              </h3>
-              <section ref={setRefSectionExperience("GIGAWAK")}>
-                section-4 Ipsum is simply dummy text of the printing and
-                typesetting industry. Lorem Ipsum has been the standard dummy
-                text ever since the 1500s, when an unknown printer took a galley
-                of type and scrambled it to make a type specimen book. It has
-                survived not only five centuries, but also the leap into
-                electronic typesetting, remaining essentially unchanged. It was
-                popularised in the 1960s with the release of Letraset sheets
-                containing Lorem Ipsum passages, and more recently with desktop
-                publishing software like Aldus PageMaker including versions of
-                Lorem Ipsum.
                 <section>
                   section-4 Ipsum is simply dummy text of the printing and
                   typesetting industry. Lorem Ipsum has been the standard dummy

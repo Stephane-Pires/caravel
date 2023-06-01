@@ -1,4 +1,5 @@
 import { Article, CURRICULUM_VITAE } from "@/content/curriculum-vitae/cv"
+import Image from "next/image"
 import { Fragment } from "react"
 
 interface PropsTimelineContainer {
@@ -72,15 +73,28 @@ export function TimelineContainer({
                   >
                     <div className="flex flex-col">
                       <div className="flex h-full w-40 flex-row items-center justify-center gap-4 bg-slate-900">
-                        <div className="flex h-12 w-12 basis-2/12 items-center justify-center rounded-full border-2 border-primary-700 bg-blue-950 p-4 font-mono ">
-                          <content.icon className="h-10 w-10 scale-150" />
+                        <div className="flex h-12 w-12 basis-2/12 items-center justify-center rounded-full border-2 border-primary-700 bg-blue-950 p-3 font-mono ">
+                          {/* <content.icon className="h-10 w-10 scale-150" /> */}
+                          <div className=" flex h-10 w-10 scale-150 items-center justify-center">
+                            <Image
+                              height={30}
+                              width={30}
+                              src={content.icon}
+                              className="rounded-full"
+                              alt="Icon that represent the section"
+                            />
+                          </div>
                         </div>
                         <p className="basis-10/12 break-normal font-sans">
                           {content.label}
                         </p>
                       </div>
-                      <div className="w-20 translate-x-10 break-words bg-slate-900 font-mono text-slate-400">
-                        4 months blabla bli
+                      <div className="flex w-36 translate-x-10 flex-col items-start justify-start break-words bg-slate-900 font-mono text-slate-400">
+                        <div className="flex flex-row justify-between">{`from: ${content.duration.start}`}</div>
+                        <div className="flex flex-row justify-between">{`to: ${content.duration.end}`}</div>
+                        {content.duration?.difference && (
+                          <div className="flex flex-row justify-between">{`(${content.duration.difference})`}</div>
+                        )}
                       </div>
                     </div>
                   </div>
