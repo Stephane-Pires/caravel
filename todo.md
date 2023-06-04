@@ -8,6 +8,8 @@
 
   - [x] : Navbar
 
+- [ ] : Create intermediary component for the "about-me" for exemple "Section"
+
 - [ ] : Find assets for Star components
 
 - [ ] : Find a logo
@@ -31,3 +33,9 @@
 - [x] : Try [contentLayer](https://www.contentlayer.dev/) or [next-mdx-remote](https://github.com/hashicorp/next-mdx-remote)
 
 - [ ] : Consider using a Storybook pour elements (card, typography, spacing, navigation, links, colors, header, footer, tooltip, etc...)
+
+- [ ] : Restrein access to "Sandbox" with authentification (check what can be done with nextJS)
+
+- [ ] : Consider using https://pdfme.com/docs/getting-started for pdf manipulation and generation
+
+- [ ] : Create a root on the API to serve the pdf.

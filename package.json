@@ -10,6 +10,8 @@
   },
   "dependencies": {
     "@heroicons/react": "^2.0.17",
+    "@pdfme/generator": "^1.1.10",
+    "@pdfme/ui": "^1.1.10",
     "autoprefixer": "10.4.14",
     "contentlayer": "^0.3.2",
     "date-fns": "^2.29.3",
