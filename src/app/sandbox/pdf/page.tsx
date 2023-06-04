@@ -169,7 +169,7 @@ export default function Blog() {
       console.log("coucou")
       window.open(URL.createObjectURL(pdfBlob))
     }
-  }, [])
+  }, [pdfBlob])
 
   return (
     // <main className="flex min-h-screen flex-col items-center  p-10">
