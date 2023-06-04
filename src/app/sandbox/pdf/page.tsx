@@ -100,7 +100,6 @@ export default function Blog() {
         SAVE TEMPLATE BUTTON
       </button>
 
-      {console.log("templateee", templateee)}
       <textarea value={JSON.stringify(templateee, null, 4)} />
     </div>
   )
