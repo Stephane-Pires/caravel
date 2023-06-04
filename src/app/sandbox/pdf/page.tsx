@@ -83,7 +83,6 @@ const template: Template = {
         },
         width: 30,
         height: 30,
-        input: "https://caravel-mocha.vercel.app/",
       },
       field3: {
         type: "image",
@@ -93,10 +92,6 @@ const template: Template = {
         },
         width: 41.35,
         height: 46.63,
-        alignment: "left",
-        fontSize: 13,
-        characterSpacing: 0,
-        lineHeight: 1,
       },
       field5: {
         type: "text",
