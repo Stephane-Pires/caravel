@@ -145,10 +145,6 @@ const template: Template = {
         },
         width: 30,
         height: 30,
-        alignment: "left",
-        fontSize: 13,
-        characterSpacing: 0,
-        lineHeight: 1,
       },
       field10: {
         type: "text",
