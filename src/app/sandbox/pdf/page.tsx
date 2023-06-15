@@ -41,8 +41,8 @@ const template: Template = {
       background: {
         type: "text",
         position: {
-          x: 10.01,
-          y: 0.34,
+          x: 0,
+          y: 0,
         },
         width: 210.68,
         height: 296.97,
@@ -54,8 +54,8 @@ const template: Template = {
       header: {
         type: "text",
         position: {
-          x: 2.0746799999997734,
-          y: 0,
+          x: 0,
+          y: 10,
         },
         width: 210.15,
         height: 56.21,
@@ -68,8 +68,8 @@ const template: Template = {
       sidebar: {
         type: "text",
         position: {
-          x: 2.75,
-          y: 0,
+          x: 5.24,
+          y: 0.08,
         },
         width: 60.04,
         height: 296.8,
@@ -78,8 +78,8 @@ const template: Template = {
       photo: {
         type: "image",
         position: {
-          x: 12.44,
-          y: 9.58,
+          x: 12.18,
+          y: 9.84,
         },
         width: 41.35,
         height: 46.63,
@@ -114,8 +114,8 @@ const template: Template = {
       hobbies: {
         type: "text",
         position: {
-          x: 16.09,
-          y: 219.07,
+          x: 14.77,
+          y: 236.53,
         },
         width: 35,
         height: 7,
@@ -137,7 +137,7 @@ const template: Template = {
         characterSpacing: 0,
         lineHeight: 1,
       },
-      field9: {
+      qrcode: {
         type: "qrcode",
         position: {
           x: 17.99,
@@ -146,7 +146,7 @@ const template: Template = {
         width: 30,
         height: 30,
       },
-      field10: {
+      catch: {
         type: "text",
         position: {
           x: 67.74,
@@ -159,7 +159,7 @@ const template: Template = {
         characterSpacing: 0,
         lineHeight: 1,
       },
-      education: {
+      education_title: {
         type: "text",
         position: {
           x: 68.25,
@@ -175,8 +175,8 @@ const template: Template = {
       work_experience: {
         type: "text",
         position: {
-          x: 67.68,
-          y: 144.44,
+          x: 68.21,
+          y: 146.29,
         },
         width: 63.05,
         height: 7,
@@ -185,11 +185,11 @@ const template: Template = {
         characterSpacing: 0,
         lineHeight: 1,
       },
-      audencia: {
+      audencia_title: {
         type: "text",
         position: {
-          x: 68.52,
-          y: 86.3,
+          x: 69.57,
+          y: 81,
         },
         width: 83.95,
         height: 7,
@@ -198,7 +198,7 @@ const template: Template = {
         characterSpacing: 0,
         lineHeight: 1,
       },
-      "isepAUDENCIA BUSINESS SCHOOL": {
+      isep_title: {
         type: "text",
         position: {
           x: 68.2,
@@ -263,16 +263,81 @@ const template: Template = {
         characterSpacing: 0,
         lineHeight: 1,
       },
-      hobbies_text: {
+      hobbies_content: {
         type: "text",
         position: {
-          x: 16.4,
-          y: 230.24,
+          x: 15.62,
+          y: 247.7,
         },
         width: 35,
-        height: 41.12,
+        height: 44.56,
         alignment: "left",
         fontSize: 13,
+        characterSpacing: 0,
+        lineHeight: 1,
+      },
+      audencia_content: {
+        type: "text",
+        position: {
+          x: 69.22,
+          y: 93.38,
+        },
+        width: 140.04,
+        height: 15.47,
+        alignment: "left",
+        fontSize: 11,
+        characterSpacing: 0,
+        lineHeight: 1,
+      },
+      isep_content: {
+        type: "text",
+        position: {
+          x: 68.92493599999997,
+          y: 124.35,
+        },
+        width: 141.36,
+        height: 22.61,
+        alignment: "left",
+        fontSize: 11,
+        characterSpacing: 0,
+        lineHeight: 1,
+      },
+      skills_content: {
+        type: "text",
+        position: {
+          x: 15.3,
+          y: 150.81,
+        },
+        width: 35,
+        height: 75.52,
+        alignment: "left",
+        fontSize: 13,
+        characterSpacing: 0,
+        lineHeight: 1,
+      },
+      "isep_content copy": {
+        type: "text",
+        position: {
+          x: 67.06,
+          y: 230.12,
+        },
+        width: 141.36,
+        height: 31.07,
+        alignment: "left",
+        fontSize: 11,
+        characterSpacing: 0,
+        lineHeight: 1,
+      },
+      izicredit_content: {
+        type: "text",
+        position: {
+          x: 69.44493599999996,
+          y: 180.46,
+        },
+        width: 141.36,
+        height: 32.93,
+        alignment: "left",
+        fontSize: 11,
         characterSpacing: 0,
         lineHeight: 1,
       },
@@ -287,17 +352,22 @@ const template: Template = {
     "contact",
     "hobbies",
     "skills",
-    "field9",
-    "field10",
-    "education",
+    "qrcode",
+    "catch",
+    "education_title",
     "work_experience",
-    "audencia",
-    "isepAUDENCIA BUSINESS SCHOOL",
+    "audencia_title",
+    "isep_title",
     "izicredit",
     "analogway",
     "phone",
     "mail",
-    "hobbies_text",
+    "hobbies_content",
+    "audencia_content",
+    "isep_content",
+    "skills_content",
+    "isep_content copy",
+    "izicredit_content",
   ],
   sampledata: [
     {
@@ -310,18 +380,29 @@ const template: Template = {
       contact: "Contact",
       hobbies: "Hobbies",
       skills: "Skills",
-      field9: "https://caravel-mocha.vercel.app/",
-      field10: "subtitle blabla\nblabla\nblabla\nblabla",
-      education: "Education",
+      qrcode: "https://caravel-mocha.vercel.app/",
+      catch:
+        "I'm a fullstack developper looking for challenges and adventures.\n\nI'm seeking the next place to growth.",
+      education_title: "Education",
       work_experience: "Work experience",
-      audencia: "AUDENCIA BUSINESS SCHOOL",
-      "isepAUDENCIA BUSINESS SCHOOL": "ISEP",
+      audencia_title: "Audencia Business School",
+      isep_title: "ISEP",
       izicredit: "Izicrédit",
       analogway: "AnalogWay",
       phone: "06 74 76 04 90",
       mail: "pires.stephane.pro@gmail.com",
-      hobbies_text:
+      hobbies_content:
         "\n- Biking\n\n- Climbing\n\n- Board games\n\n- Video games",
+      audencia_content:
+        "- Semester in management in english\n\n- Semester in Business Developement",
+      isep_content:
+        "- Second year : Architect SI specialization\n\n - First year : Computing and programmation courses",
+      skills_content:
+        "- React\n\n- Redux\n\n- NodeJS\n\n- NextJS\n\n- GraphQL\n\n- Typescript\n\n- PostgreSQL\n\n- Tailwind\n\n",
+      "isep_content copy":
+        "- Building of UI features using React/Redux\n\n- Prototyping of a feature using WebRTC\n\n- Implementation of an Authentification module to restrain access to the platform\n\n- Implementation and promotion of agile practicies (Scrum & Kanban)",
+      izicredit_content:
+        '- Added relation to database using Postgraphil (PostgreSQL+ GraphQL)\n\n- UI / Algorithm : Building of an Input managing "catchment area"\n\n- Development from A to Z of an Admin Dashboard and Bank Dashboard\n\n- Development of a CRON server using NodeJS\n\n',
     },
   ],
 }
@@ -360,18 +441,18 @@ export default function Blog() {
   let designer = useRef<Designer>()
 
   useEffect(() => {
-    // if (pdfBlob === null && inputs) {
-    //   generate({ template, inputs }).then((pdf) => {
-    //     setPdfBlob(new Blob([pdf.buffer], { type: "application/pdf" }))
-    //   })
-    // }
+    if (pdfBlob === null && inputs) {
+      generate({ template, inputs }).then((pdf) => {
+        setPdfBlob(new Blob([pdf.buffer], { type: "application/pdf" }))
+      })
+    }
     const domContainer = document.getElementById("container")!
     // const viewer = new Viewer({ domContainer, template, inputs })
-    designer.current = new Designer({ domContainer, template })
-    // if (pdfBlob !== null) {
-    //   console.log("coucou")
-    //   window.open(URL.createObjectURL(pdfBlob))
-    // }
+    // designer.current = new Designer({ domContainer, template })
+    if (pdfBlob !== null) {
+      console.log("coucou")
+      window.open(URL.createObjectURL(pdfBlob))
+    }
   }, [pdfBlob])
 
   return (

@@ -27,7 +27,7 @@ export default function AboutMe() {
 
   const percentScrolled = usePercentScrolled()
 
-  let [mapDom, setMapDom] = useState(new Map<string, HTMLDivElement>())
+  // let [mapDom, setMapDom] = useState(new Map<string, HTMLDivElement>())
   let [mapSectionExperienceDom, setMapSectionExperienceDom] = useState(
     new Map<string, HTMLDivElement>()
   )
@@ -97,7 +97,7 @@ export default function AboutMe() {
   // Find a way to replace this useEffect + useState
   // by a way to forwarding articleRef (with the Map) only when the component is Mounted
   useEffect(() => {
-    setMapDom(articleRef.current)
+    // setMapDom(articleRef.current)
     setMapSectionExperienceDom(sectionExperienceRef.current)
     setMapSectionHobbiesDom(sectionHobbiesRef.current)
     setMapSectionEducationDom(sectionEducationRef.current)
@@ -115,7 +115,7 @@ export default function AboutMe() {
       <div className="mb-8 mt-4 flex w-full flex-row items-center gap-4 font-serif md:gap-10">
         <div className="sticky top-[40%]  self-start md:basis-2/12">
           <div className="hidden justify-end md:flex">
-            <NavigationCurriculumVitae articleDom={mapDom} />
+            {/* <NavigationCurriculumVitae articleDom={mapDom} /> */}
           </div>
         </div>
         <div className=" mx-auto flex  max-w-prose  flex-col items-center md:basis-8/12">
