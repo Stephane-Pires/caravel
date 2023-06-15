@@ -49,7 +49,7 @@ const template: Template = {
         fontSize: 1,
         characterSpacing: 0,
         lineHeight: 0,
-        backgroundColor: "#bb9dc3",
+        backgroundColor: "#edf8f3",
       },
       header: {
         type: "text",
@@ -57,29 +57,29 @@ const template: Template = {
           x: 0,
           y: 10,
         },
-        width: 210.15,
-        height: 56.21,
+        width: 210,
+        height: 56,
         alignment: "center",
         fontSize: 13,
         characterSpacing: 0,
         lineHeight: 1,
-        backgroundColor: "#c39d9d",
+        backgroundColor: "#6da2be",
       },
       sidebar: {
         type: "text",
         position: {
-          x: 5.24,
-          y: 0.08,
+          x: 5,
+          y: 0,
         },
         width: 60.04,
         height: 296.8,
-        backgroundColor: "#c0aaaa",
+        backgroundColor: "#302c3c",
       },
       photo: {
         type: "image",
         position: {
-          x: 12.18,
-          y: 9.84,
+          x: 15,
+          y: 14,
         },
         width: 41.35,
         height: 46.63,
@@ -87,8 +87,8 @@ const template: Template = {
       titre: {
         type: "text",
         position: {
-          x: 83.34,
-          y: 14.07,
+          x: 90,
+          y: 14,
         },
         width: 83.42,
         height: 10.17,
@@ -96,13 +96,12 @@ const template: Template = {
         fontSize: 24,
         characterSpacing: 0,
         lineHeight: 1,
-        backgroundColor: "#ffffff",
       },
       contact: {
         type: "text",
         position: {
-          x: 15.35,
-          y: 70.69,
+          x: 17.47,
+          y: 66.99,
         },
         width: 35,
         height: 7,
@@ -110,12 +109,13 @@ const template: Template = {
         fontSize: 16,
         characterSpacing: 0,
         lineHeight: 1,
+        fontColor: "#6a9fba",
       },
       hobbies: {
         type: "text",
         position: {
-          x: 14.77,
-          y: 236.53,
+          x: 16.89,
+          y: 232.83,
         },
         width: 35,
         height: 7,
@@ -123,12 +123,13 @@ const template: Template = {
         fontSize: 16,
         characterSpacing: 0,
         lineHeight: 1,
+        fontColor: "#6a9fba",
       },
       skills: {
         type: "text",
         position: {
-          x: 15.24,
-          y: 140.7,
+          x: 17.36,
+          y: 137,
         },
         width: 35,
         height: 7,
@@ -136,12 +137,23 @@ const template: Template = {
         fontSize: 16,
         characterSpacing: 0,
         lineHeight: 1,
+        fontColor: "#6a9fba",
+      },
+      qrcode_background: {
+        type: "text",
+        position: {
+          x: 20,
+          y: 100,
+        },
+        width: 30,
+        height: 30,
+        backgroundColor: "#edf8f3",
       },
       qrcode: {
         type: "qrcode",
         position: {
-          x: 17.99,
-          y: 103.49,
+          x: 20,
+          y: 100,
         },
         width: 30,
         height: 30,
@@ -149,7 +161,7 @@ const template: Template = {
       catch: {
         type: "text",
         position: {
-          x: 67.74,
+          x: 75,
           y: 30.74,
         },
         width: 114.64,
@@ -162,7 +174,7 @@ const template: Template = {
       education_title: {
         type: "text",
         position: {
-          x: 68.25,
+          x: 70,
           y: 70.68,
         },
         width: 35,
@@ -171,12 +183,13 @@ const template: Template = {
         fontSize: 16,
         characterSpacing: 0,
         lineHeight: 1,
+        fontColor: "#6a9fba",
       },
       work_experience: {
         type: "text",
         position: {
-          x: 68.21,
-          y: 146.29,
+          x: 70,
+          y: 160,
         },
         width: 63.05,
         height: 7,
@@ -184,11 +197,12 @@ const template: Template = {
         fontSize: 16,
         characterSpacing: 0,
         lineHeight: 1,
+        fontColor: "#6a9fba",
       },
       audencia_title: {
         type: "text",
         position: {
-          x: 69.57,
+          x: 72,
           y: 81,
         },
         width: 83.95,
@@ -201,7 +215,7 @@ const template: Template = {
       isep_title: {
         type: "text",
         position: {
-          x: 68.2,
+          x: 72,
           y: 114.03,
         },
         width: 83.95,
@@ -214,7 +228,7 @@ const template: Template = {
       izicredit: {
         type: "text",
         position: {
-          x: 67.35,
+          x: 72,
           y: 170.33,
         },
         width: 83.95,
@@ -227,7 +241,7 @@ const template: Template = {
       analogway: {
         type: "text",
         position: {
-          x: 68.36,
+          x: 72,
           y: 217.37,
         },
         width: 83.95,
@@ -240,8 +254,8 @@ const template: Template = {
       phone: {
         type: "text",
         position: {
-          x: 8.89,
-          y: 81.96,
+          x: 11.01,
+          y: 78.26,
         },
         width: 48.23,
         height: 5.14,
@@ -249,12 +263,13 @@ const template: Template = {
         fontSize: 12,
         characterSpacing: 0,
         lineHeight: 1,
+        fontColor: "#ffffff",
       },
       mail: {
         type: "text",
         position: {
-          x: 0.63,
-          y: 92.85,
+          x: 2.75,
+          y: 89.15,
         },
         width: 65.16,
         height: 5.4,
@@ -262,12 +277,13 @@ const template: Template = {
         fontSize: 12,
         characterSpacing: 0,
         lineHeight: 1,
+        fontColor: "#ffffff",
       },
       hobbies_content: {
         type: "text",
         position: {
-          x: 15.62,
-          y: 247.7,
+          x: 17.74,
+          y: 244,
         },
         width: 35,
         height: 44.56,
@@ -275,11 +291,12 @@ const template: Template = {
         fontSize: 13,
         characterSpacing: 0,
         lineHeight: 1,
+        fontColor: "#ffffff",
       },
       audencia_content: {
         type: "text",
         position: {
-          x: 69.22,
+          x: 72,
           y: 93.38,
         },
         width: 140.04,
@@ -292,7 +309,7 @@ const template: Template = {
       isep_content: {
         type: "text",
         position: {
-          x: 68.92493599999997,
+          x: 72,
           y: 124.35,
         },
         width: 141.36,
@@ -305,8 +322,8 @@ const template: Template = {
       skills_content: {
         type: "text",
         position: {
-          x: 15.3,
-          y: 150.81,
+          x: 17.42,
+          y: 147.11,
         },
         width: 35,
         height: 75.52,
@@ -314,11 +331,12 @@ const template: Template = {
         fontSize: 13,
         characterSpacing: 0,
         lineHeight: 1,
+        fontColor: "#ffffff",
       },
-      "isep_content copy": {
+      analogway_content: {
         type: "text",
         position: {
-          x: 67.06,
+          x: 72,
           y: 230.12,
         },
         width: 141.36,
@@ -331,7 +349,7 @@ const template: Template = {
       izicredit_content: {
         type: "text",
         position: {
-          x: 69.44493599999996,
+          x: 72,
           y: 180.46,
         },
         width: 141.36,
@@ -353,6 +371,7 @@ const template: Template = {
     "hobbies",
     "skills",
     "qrcode",
+    "qrcode_background",
     "catch",
     "education_title",
     "work_experience",
@@ -366,7 +385,7 @@ const template: Template = {
     "audencia_content",
     "isep_content",
     "skills_content",
-    "isep_content copy",
+    "analogway_content",
     "izicredit_content",
   ],
   sampledata: [
@@ -380,6 +399,7 @@ const template: Template = {
       contact: "Contact",
       hobbies: "Hobbies",
       skills: "Skills",
+      qrcode_background: " ",
       qrcode: "https://caravel-mocha.vercel.app/",
       catch:
         "I'm a fullstack developper looking for challenges and adventures.\n\nI'm seeking the next place to growth.",
@@ -399,7 +419,7 @@ const template: Template = {
         "- Second year : Architect SI specialization\n\n - First year : Computing and programmation courses",
       skills_content:
         "- React\n\n- Redux\n\n- NodeJS\n\n- NextJS\n\n- GraphQL\n\n- Typescript\n\n- PostgreSQL\n\n- Tailwind\n\n",
-      "isep_content copy":
+      analogway_content:
         "- Building of UI features using React/Redux\n\n- Prototyping of a feature using WebRTC\n\n- Implementation of an Authentification module to restrain access to the platform\n\n- Implementation and promotion of agile practicies (Scrum & Kanban)",
       izicredit_content:
         '- Added relation to database using Postgraphil (PostgreSQL+ GraphQL)\n\n- UI / Algorithm : Building of an Input managing "catchment area"\n\n- Development from A to Z of an Admin Dashboard and Bank Dashboard\n\n- Development of a CRON server using NodeJS\n\n',
