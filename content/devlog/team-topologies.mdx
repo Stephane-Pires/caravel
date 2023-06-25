@@ -1,7 +1,7 @@
 ---
 title: "Team Topologies"
 image: "microservices.avif"
-date: "05-08-23"
+date: "06-25-23"
 subject: "BOOK_NON_FICTIONNAL"
 category: "THOUGH"
 star: "ONE"
@@ -101,8 +101,107 @@ star: "ONE"
 
 - A product is like a feature team but for all features of a production
 
+- DevOps is a philosophy not a team, each Dev teams should have DevOps capabilities
+
 #### Team antipattern
 
 - Team adhoc, that respond to a production issue, for example : A database crash, then you create a database team to respond to this issue
 
 - Teams with a short lifespan
+
+### The four fondamental team topologies
+
+- Stream aligned
+
+- Enabling
+
+- Complicated subsystem
+
+- Platform
+
+#### Stream aligned
+
+- No depenciencies to other teams
+
+- Work on a product / service / domain.
+
+- Has full responsability on the _flow_ from A to Z (Research UI/UX - Dev - Production / Monitoring / etc..)
+
+#### Enabling team
+
+- A cross team that help stream aligned teams on specific problematic
+
+- These team make possible for stream aligned teams to learn things they empower them and shorten the time needed to resolve a problematic.
+
+- For exemple they could evangelise the TDD methodology, or the IaC.
+
+- They are always at the state of the art helping other team achieve and resolve blocking point
+
+#### Complicated subsystem
+
+- Take responsability for a particularly complicated topic, for example video codec.
+
+- Help reduce cognitive load on stream aligned teams
+
+#### Platform
+
+- Help stream aligned team to deliver work
+
+- Create and maintain platform abstraction
+
+- A platform is composed of other types of teams
+
+### Choose Team-First Boundaries
+
+- Find where the monolith and coupling are : Application, database, release, model, etc..
+
+- Find fractures plan you can apply : Bounded context, regulatory, change cadence, performance, user persona, etc..
+
+- A fracture plan is a delimitation that will help you divide the monolith
+
+## Evolving Team Interactions for Innovation and Rapid delivery
+
+### Team Interaction Modes
+
+- Collaboration
+- X-as-a-service
+- Facilitating
+
+#### Collaboration
+
+- The collaboration mode is when two teams (A & B) works close to each other to solve a problem.
+
+- They might book a meeting room, Team B open PR on a repository own by team A, etc..
+
+- Collaboration requires high communication & high trust.
+
+- Collaboration is good for innovation and discovery
+
+- Collaboration is bad for clear Boundaries
+
+- Collaboration is a 1 to 1 relationship
+
+#### X-as-a-service
+
+- The x-as-a-service is when a team provide a service via an interface (API, UI, Platform, etc..) to n teams
+
+- X-as-a-service has a low comunication. slower innovation.
+
+- X-as-a-service should be treated has a product (the service). Therfore there is a promise ("SemVer") that things won't get broken (Major, minor, patch).
+
+- The boundaries (and interface) are clear in this mode a communication
+
+- Cognitive load is reduced for team that consume the service, (thank to clear interfaces)
+
+#### Facilitating
+
+- The facilitating should be viewed has active mentoring
+
+- Helps team aligned to best-practices, and discovers new ways of doing things
+
+## Conclusion
+
+You should aim for a long lived "Team first" approach. When you design teams, have in mind the topologies and the communication they will used.
+Teams should adapt, exactly as a code that can't evolve and adapt is a dead codebase, a teams that can't adapt his topology or communication is a dead team.
+You can refactor code, you can also refactor teams. Have in mind your team API ("documentation, onboarding, methodologies, "way to organize", etc..").
+Make the Conway's law work at the company advantage
