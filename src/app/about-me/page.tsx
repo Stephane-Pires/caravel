@@ -11,6 +11,7 @@ import {
   SectionKey,
 } from "@/content/curriculum-vitae/cv"
 import Image from "next/image"
+import Link from "next/link"
 import { useEffect, useRef, useState } from "react"
 
 // export const generateMetadata = ({ params }) => {
@@ -113,13 +114,21 @@ export default function AboutMe() {
           width: `calc((${percentScrolled} * 100vw) / 100)`,
         }}
       />
-      <div className="mb-8 mt-4 flex w-full flex-row items-center gap-4 font-serif md:gap-10">
-        <div className="sticky top-[40%]  self-start md:basis-2/12">
+      <div className="mb-8 mt-4 flex w-full flex-col items-center gap-4 font-serif md:flex-row md:gap-10">
+        {/* <div className="sticky top-[40%] self-start md:basis-2/12">
           <div className="hidden justify-end md:flex">
-            {/* <NavigationCurriculumVitae articleDom={mapDom} /> */}
+            <NavigationCurriculumVitae articleDom={mapDom} />
           </div>
+        </div> */}
+        {/* The button looks like too much like the <Tag /> component */}
+        <div className="order-last my-10 md:sticky md:top-[90%] md:order-first md:basis-2/12 md:self-start">
+          <Link href="/api/download/curriculum">
+            <button className="mx-auto rounded-md bg-accent-200 p-3 font-sans  text-base font-bold text-blue-900  transition delay-75 hover:bg-accent-400 active:scale-105 active:bg-accent-400 md:flex">
+              Download CV{" "}
+            </button>
+          </Link>
         </div>
-        <div className=" mx-auto flex  max-w-prose  flex-col items-center md:basis-8/12">
+        <div className=" mx-auto flex max-w-prose flex-col items-center md:basis-8/12">
           <div className=" my-10 hidden font-script text-4xl font-bold text-blue-300 md:flex md:text-6xl">
             Me, myself & I ❤️
           </div>

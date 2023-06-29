@@ -8,6 +8,8 @@
 
   - [x] : Navbar
 
+- [ ] : Add/Create a storybook - it should be a separated projet called "Compass" this storybook will act has a Design system tool
+
 - [ ] : Create intermediary component for the "about-me" for exemple "Section"
 
 - [ ] : Find assets for Star components
@@ -36,6 +38,8 @@
 
 - [ ] : Restrein access to "Sandbox" with authentification (check what can be done with nextJS)
 
-- [ ] : Consider using https://pdfme.com/docs/getting-started for pdf manipulation and generation
+- [x] : Consider using https://pdfme.com/docs/getting-started for pdf manipulation and generation
 
-- [ ] : Create a root on the API to serve the pdf.
+- [x] : Create a route on the API to serve the pdf.
+
+- [ ] : Make the 404 page mobile friendly

@@ -11,14 +11,7 @@ export default function Home() {
       <div className="row-span-2 flex flex-row items-center justify-around">
         <div className="flex flex-col">
           <h1 className="bg-gradient-to-r from-primary-700 to-primary-300 bg-clip-text font-script text-6xl  font-bold  text-transparent sm:text-8xl">
-            <Typewriter
-              options={{
-                strings: ["Caravel"],
-                autoStart: true,
-                loop: false,
-                deleteSpeed: Infinity,
-              }}
-            />
+            Caravel
           </h1>
           <h2 className="font-script text-xl text-primary-200 sm:text-2xl">
             <Typewriter
