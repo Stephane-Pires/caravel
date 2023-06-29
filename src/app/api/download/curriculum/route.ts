@@ -3,8 +3,7 @@ import { generate } from "@pdfme/generator"
 // export an async GET function. This is a convention in NextJS
 export async function GET(req: Request) {
   // external file URL
-  const CURRICULUM_RESOURCES_URL =
-    "http://localhost:3000/api/resources/curriculum"
+  const CURRICULUM_RESOURCES_URL = `${process.env.HOST}/api/resources/curriculum`
 
   // TODO : Response is not typed
   const response = await fetch(CURRICULUM_RESOURCES_URL)
