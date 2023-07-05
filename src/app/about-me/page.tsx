@@ -66,16 +66,16 @@ export default function AboutMe() {
     }
   }
 
-  function setRefSectionHobbies(section: SectionKey<"LOISIR">) {
+  function setRefSectionHobbies(section: SectionKey<"HOBBIES">) {
     return (node: HTMLDivElement | null) => {
       if (node) {
         sectionHobbiesRef.current.set(
-          CURRICULUM_VITAE["LOISIR"].section[section].id,
+          CURRICULUM_VITAE["HOBBIES"].section[section].id,
           node
         )
       } else {
         sectionHobbiesRef.current.delete(
-          CURRICULUM_VITAE["LOISIR"].section[section].id
+          CURRICULUM_VITAE["HOBBIES"].section[section].id
         )
       }
     }
@@ -114,14 +114,14 @@ export default function AboutMe() {
           width: `calc((${percentScrolled} * 100vw) / 100)`,
         }}
       />
-      <div className="mb-8 mt-4 flex w-full flex-col items-center gap-4 font-serif md:flex-row md:gap-10">
+      <div className="mb-8 mt-4 flex w-full flex-col items-center gap-4 font-serif lg:flex-row lg:gap-10">
         {/* <div className="sticky top-[40%] self-start md:basis-2/12">
           <div className="hidden justify-end md:flex">
             <NavigationCurriculumVitae articleDom={mapDom} />
           </div>
         </div> */}
         {/* The button looks like too much like the <Tag /> component */}
-        <div className="order-last my-10 md:sticky md:top-[90%] md:order-first md:basis-2/12 md:self-start">
+        <div className="order-last my-10 lg:sticky lg:top-[90%] lg:order-first lg:basis-2/12 lg:self-start">
           <Link href="/api/download/curriculum">
             <button className="mx-auto rounded-md bg-accent-200 p-3 font-sans  text-base font-bold text-blue-900  transition delay-75 hover:bg-accent-400 active:scale-105 active:bg-accent-400 md:flex">
               Download CV{" "}
@@ -262,22 +262,25 @@ export default function AboutMe() {
               </section>
             </article>
 
-            <article ref={setRefArticle("LOISIR")}>
+            <article ref={setRefArticle("HOBBIES")}>
               <h2 className="my-16 text-center font-sans text-3xl font-bold text-blue-300 underline underline-offset-4">
-                {CURRICULUM_VITAE.LOISIR.label}
+                {CURRICULUM_VITAE.HOBBIES.label}
               </h2>
 
               <section ref={setRefSectionHobbies("VIDEO_GAME")}>
                 <h3 className="my-10 text-center font-sans text-2xl font-bold text-blue-300">
-                  {CURRICULUM_VITAE.LOISIR.section.VIDEO_GAME.label}
+                  {CURRICULUM_VITAE.HOBBIES.section.VIDEO_GAME.label}
                 </h3>
 
                 <div className="my-10 indent-8">
-                  {CURRICULUM_VITAE.LOISIR.section.VIDEO_GAME.content.paragraph}
+                  {
+                    CURRICULUM_VITAE.HOBBIES.section.VIDEO_GAME.content
+                      .paragraph
+                  }
                 </div>
 
                 <ul className="mx-6 flex w-full list-outside list-disc list-image-[url(/logbook/mdx/paper-airplane.svg)] flex-col justify-center gap-4">
-                  {CURRICULUM_VITAE.LOISIR.section.VIDEO_GAME.content.missions.map(
+                  {CURRICULUM_VITAE.HOBBIES.section.VIDEO_GAME.content.missions.map(
                     (mission) => (
                       <li key={mission}>{mission}</li>
                     )
@@ -287,10 +290,10 @@ export default function AboutMe() {
 
               <section ref={setRefSectionHobbies("CLIMBING")}>
                 <h3 className="my-10 text-center font-sans text-2xl font-bold text-blue-300">
-                  {CURRICULUM_VITAE.LOISIR.section.CLIMBING.label}
+                  {CURRICULUM_VITAE.HOBBIES.section.CLIMBING.label}
                 </h3>
                 <div className="my-10 indent-8">
-                  {CURRICULUM_VITAE.LOISIR.section.CLIMBING.content.paragraph}
+                  {CURRICULUM_VITAE.HOBBIES.section.CLIMBING.content.paragraph}
                 </div>
 
                 <div className="relative -z-20 h-[600px] ">
@@ -305,11 +308,11 @@ export default function AboutMe() {
 
               <section ref={setRefSectionHobbies("BIKING")}>
                 <h3 className="my-10 text-center font-sans text-2xl font-bold text-blue-300">
-                  {CURRICULUM_VITAE.LOISIR.section.BIKING.label}
+                  {CURRICULUM_VITAE.HOBBIES.section.BIKING.label}
                 </h3>
 
                 <div className="my-10 indent-8">
-                  {CURRICULUM_VITAE.LOISIR.section.BIKING.content.paragraph}
+                  {CURRICULUM_VITAE.HOBBIES.section.BIKING.content.paragraph}
                 </div>
 
                 <div className="relative -z-20 my-10 h-[600px] ">
@@ -333,15 +336,18 @@ export default function AboutMe() {
 
               <section ref={setRefSectionHobbies("BOARD_GAME")}>
                 <h3 className="my-10 text-center font-sans text-2xl font-bold text-blue-300">
-                  {CURRICULUM_VITAE.LOISIR.section.BOARD_GAME.label}
+                  {CURRICULUM_VITAE.HOBBIES.section.BOARD_GAME.label}
                 </h3>
 
                 <div className="my-10 indent-8">
-                  {CURRICULUM_VITAE.LOISIR.section.BOARD_GAME.content.paragraph}
+                  {
+                    CURRICULUM_VITAE.HOBBIES.section.BOARD_GAME.content
+                      .paragraph
+                  }
                 </div>
 
                 <ul className="mx-6 flex w-full list-outside list-disc list-image-[url(/logbook/mdx/paper-airplane.svg)] flex-col justify-center gap-4">
-                  {CURRICULUM_VITAE.LOISIR.section.BOARD_GAME.content.missions.map(
+                  {CURRICULUM_VITAE.HOBBIES.section.BOARD_GAME.content.missions.map(
                     (mission) => (
                       <li key={mission}>{mission}</li>
                     )
@@ -360,7 +366,7 @@ export default function AboutMe() {
           />
           <TimelineContainer
             sectionDom={mapSectionHobbiesDom}
-            article="LOISIR"
+            article="HOBBIES"
             withTag={false}
           />
           <TimelineContainer
