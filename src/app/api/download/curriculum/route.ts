@@ -7,7 +7,7 @@ export async function GET(req: Request) {
 
   // TODO : Response is not typed
   const response = await fetch(CURRICULUM_RESOURCES_URL, {
-    next: { revalidate: 10 },
+    cache: "no-cache",
   })
     .then((res) => res.json())
     .catch((error) => console.log("error handle it properly : ", error))
