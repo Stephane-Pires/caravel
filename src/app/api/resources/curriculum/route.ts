@@ -1,4 +1,5 @@
 // should be pdfme/generator
+import { CURRICULUM_VITAE } from "@/content/curriculum-vitae/cv"
 import { Template } from "@pdfme/generator"
 
 const template: Template = {
@@ -9,15 +10,15 @@ const template: Template = {
       background: {
         type: "text",
         position: {
-          x: 0,
-          y: 0,
+          x: 2.0083119999999735,
+          y: 0.06481600000002573,
         },
         width: 210.68,
         height: 296.97,
         fontSize: 1,
         characterSpacing: 0,
         lineHeight: 0,
-        backgroundColor: "#edf8f3",
+        backgroundColor: "#fdf7e9",
       },
       header: {
         type: "text",
@@ -31,7 +32,7 @@ const template: Template = {
         fontSize: 13,
         characterSpacing: 0,
         lineHeight: 1,
-        backgroundColor: "#6da2be",
+        backgroundColor: "#0f172a",
       },
       sidebar: {
         type: "text",
@@ -41,7 +42,7 @@ const template: Template = {
         },
         width: 60.04,
         height: 296.8,
-        backgroundColor: "#302c3c",
+        backgroundColor: "#334155",
       },
       photo: {
         type: "image",
@@ -64,6 +65,8 @@ const template: Template = {
         fontSize: 24,
         characterSpacing: 0,
         lineHeight: 1,
+        fontColor: "#8dc5fd",
+        backgroundColor: "#0f172a",
       },
       contact: {
         type: "text",
@@ -77,7 +80,8 @@ const template: Template = {
         fontSize: 16,
         characterSpacing: 0,
         lineHeight: 1,
-        fontColor: "#6a9fba",
+        fontColor: "#92c5fd",
+        backgroundColor: "#3d4155",
       },
       hobbies: {
         type: "text",
@@ -91,7 +95,7 @@ const template: Template = {
         fontSize: 16,
         characterSpacing: 0,
         lineHeight: 1,
-        fontColor: "#6a9fba",
+        fontColor: "#92c5fd",
       },
       skills: {
         type: "text",
@@ -105,7 +109,7 @@ const template: Template = {
         fontSize: 16,
         characterSpacing: 0,
         lineHeight: 1,
-        fontColor: "#6a9fba",
+        fontColor: "#92c5fd",
       },
       qrcode_background: {
         type: "text",
@@ -115,13 +119,13 @@ const template: Template = {
         },
         width: 30,
         height: 30,
-        backgroundColor: "#edf8f3",
+        backgroundColor: "#fdf7e9",
       },
       qrcode: {
         type: "qrcode",
         position: {
           x: 20,
-          y: 100,
+          y: 100.27,
         },
         width: 30,
         height: 30,
@@ -138,6 +142,8 @@ const template: Template = {
         fontSize: 14,
         characterSpacing: 0,
         lineHeight: 1,
+        fontColor: "#ffffff",
+        backgroundColor: "#0f172a",
       },
       education_title: {
         type: "text",
@@ -151,7 +157,7 @@ const template: Template = {
         fontSize: 16,
         characterSpacing: 0,
         lineHeight: 1,
-        fontColor: "#6a9fba",
+        fontColor: "#82c5fd",
       },
       work_experience: {
         type: "text",
@@ -165,7 +171,7 @@ const template: Template = {
         fontSize: 16,
         characterSpacing: 0,
         lineHeight: 1,
-        fontColor: "#6a9fba",
+        fontColor: "#92c5fd",
       },
       audencia_title: {
         type: "text",
@@ -179,6 +185,7 @@ const template: Template = {
         fontSize: 13,
         characterSpacing: 0,
         lineHeight: 1,
+        backgroundColor: "",
       },
       isep_title: {
         type: "text",
@@ -264,7 +271,7 @@ const template: Template = {
       audencia_content: {
         type: "text",
         position: {
-          x: 72,
+          x: 78.08493599999991,
           y: 93.38,
         },
         width: 140.04,
@@ -277,7 +284,7 @@ const template: Template = {
       isep_content: {
         type: "text",
         position: {
-          x: 72,
+          x: 82.04493599999998,
           y: 124.35,
         },
         width: 141.36,
@@ -304,7 +311,7 @@ const template: Template = {
       analogway_content: {
         type: "text",
         position: {
-          x: 72,
+          x: 82.04493599999998,
           y: 230.12,
         },
         width: 141.36,
@@ -317,7 +324,7 @@ const template: Template = {
       izicredit_content: {
         type: "text",
         position: {
-          x: 72,
+          x: 82.04493599999998,
           y: 180.46,
         },
         width: 141.36,
@@ -338,8 +345,8 @@ const template: Template = {
     "contact",
     "hobbies",
     "skills",
-    "qrcode",
     "qrcode_background",
+    "qrcode",
     "catch",
     "education_title",
     "work_experience",
@@ -370,29 +377,37 @@ const template: Template = {
       qrcode_background: " ",
       qrcode: "https://caravel-mocha.vercel.app/",
       catch:
-        "I'm a fullstack developper looking for challenges and adventures.\n\nI'm seeking the next place to growth.",
-      education_title: "Education",
-      work_experience: "Work experience",
-      audencia_title: "Audencia Business School",
-      isep_title: "ISEP",
-      izicredit: "Izicrédit",
-      analogway: "AnalogWay",
+        "I'm a fullstack developper looking for challenges and adventures.\n I'm seeking the next place to growth.",
+      education_title: CURRICULUM_VITAE.EDUCATION.label,
+      work_experience: CURRICULUM_VITAE.EXPERIENCE.label,
+      audencia_title: CURRICULUM_VITAE.EDUCATION.section.AUDENCIA.label,
+      isep_title: CURRICULUM_VITAE.EDUCATION.section.ISEP.label,
+      izicredit: CURRICULUM_VITAE.EXPERIENCE.section.IZICREDIT.label,
+      analogway: CURRICULUM_VITAE.EXPERIENCE.section.ANALOG_WAY.label,
       phone: "06 74 76 04 90",
       mail: "pires.stephane.pro@gmail.com",
       hobbies_content:
-        "\n- Biking\n\n- Climbing\n\n- Board games\n\n- Video games",
-      audencia_content:
-        "- Semester in management in english\n\n- Semester in Business Developement",
-      isep_content:
-        "- Second year : Architect SI specialization\n\n - First year : Computing and programmation courses",
+        "- Biking\n\n- Climbing\n\n - Board games\n\n- Video games",
+      audencia_content: formatMissions(
+        CURRICULUM_VITAE.EDUCATION.section.AUDENCIA.content.missions
+      ),
+      isep_content: formatMissions(
+        CURRICULUM_VITAE.EDUCATION.section.ISEP.content.missions
+      ),
       skills_content:
         "- React\n\n- Redux\n\n- NodeJS\n\n- NextJS\n\n- GraphQL\n\n- Typescript\n\n- PostgreSQL\n\n- Tailwind\n\n",
-      analogway_content:
-        "- Building of UI features using React/Redux\n\n- Prototyping of a feature using WebRTC\n\n- Implementation of an Authentification module to restrain access to the platform\n\n- Implementation and promotion of agile practicies (Scrum & Kanban)",
-      izicredit_content:
-        '- Added relation to database using Postgraphil (PostgreSQL+ GraphQL)\n\n- UI / Algorithm : Building of an Input managing "catchment area"\n\n- Development from A to Z of an Admin Dashboard and Bank Dashboard\n\n- Development of a CRON server using NodeJS\n\n',
+      analogway_content: formatMissions(
+        CURRICULUM_VITAE.EXPERIENCE.section.ANALOG_WAY.content.missions
+      ),
+      izicredit_content: formatMissions(
+        CURRICULUM_VITAE.EXPERIENCE.section.IZICREDIT.content.missions
+      ),
     },
   ],
+}
+
+function formatMissions<T>(missions: readonly T[]): string {
+  return missions.map((mission) => "- " + mission).join("\n\n")
 }
 
 // Send the curriculum template
@@ -402,6 +417,7 @@ export async function GET() {
   return new Response(body, {
     headers: {
       "Content-Type": "application/json",
+      "Cache-Control": "no-cache",
     },
   })
 }

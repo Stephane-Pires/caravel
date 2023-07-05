@@ -95,7 +95,7 @@ export const CURRICULUM_VITAE = {
             "Added relation to database using Postgraphil (PostgreSQL+ GraphQL)",
             "UI / Algorithm : Building of an Input managing catchment area",
             "Development from A to Z of an Admin Dashboard and Bank Dashboard",
-            " Development of a CRON server using NodeJS",
+            "Development of a CRON server using NodeJS",
           ],
           skills: [
             "NODEJS",
@@ -110,7 +110,7 @@ export const CURRICULUM_VITAE = {
     },
   },
 
-  LOISIR: {
+  HOBBIES: {
     id: "HOBBIES",
     label: "Hobbies",
     icon: "/about-me/puzzle-piece.svg",
