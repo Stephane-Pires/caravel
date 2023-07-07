@@ -9,10 +9,14 @@ import {
   CURRICULUM_VITAE,
   Section,
   SectionKey,
-} from "@/content/curriculum-vitae/cv"
+} from "@/content/curriculum-vitae/english"
+import { LOCAL_SUPPORTED } from "@/utils/local"
+import { Dialog, Transition } from "@headlessui/react"
+import { RadioGroup } from "@headlessui/react"
+import { CheckIcon } from "@heroicons/react/24/solid"
 import Image from "next/image"
 import Link from "next/link"
-import { useEffect, useRef, useState } from "react"
+import { Fragment, useEffect, useRef, useState } from "react"
 
 // export const generateMetadata = ({ params }) => {
 //   const content = allContents.find(
@@ -26,6 +30,10 @@ export default function AboutMe() {
   let sectionExperienceRef = useRef(new Map<string, HTMLDivElement>())
   let sectionHobbiesRef = useRef(new Map<string, HTMLDivElement>())
   let sectionEducationRef = useRef(new Map<string, HTMLDivElement>())
+
+  let [showLanguageModal, setShowLanguageModal] = useState(false)
+
+  let [local, setLocal] = useState<LOCAL_SUPPORTED>(LOCAL_SUPPORTED.ENGLISH)
 
   const percentScrolled = usePercentScrolled()
 
@@ -122,11 +130,17 @@ export default function AboutMe() {
         </div> */}
         {/* The button looks like too much like the <Tag /> component */}
         <div className="order-last my-10 lg:sticky lg:top-[90%] lg:order-first lg:basis-2/12 lg:self-start">
-          <Link href="/api/download/curriculum">
-            <button className="mx-auto rounded-md bg-accent-200 p-3 font-sans  text-base font-bold text-blue-900  transition delay-75 hover:bg-accent-400 active:scale-105 active:bg-accent-400 md:flex">
+          {/* <Link href="/api/download/curriculum">
+            <button className="mx-auto rounded-md bg-accent-200 p-3 font-sans text-base font-bold text-blue-900  transition delay-75 hover:bg-accent-400 active:scale-105 active:bg-accent-400 md:flex">
               Download CV{" "}
             </button>
-          </Link>
+          </Link> */}
+          <button
+            onClick={() => setShowLanguageModal(true)}
+            className="mx-auto rounded-md bg-accent-200 p-3 font-sans text-base font-bold text-blue-900  transition delay-75 hover:bg-accent-400 active:scale-105 active:bg-accent-400 md:flex"
+          >
+            Download CV{" "}
+          </button>
         </div>
         <div className=" mx-auto flex max-w-prose flex-col items-center md:basis-8/12">
           <div className=" my-10 hidden font-script text-4xl font-bold text-blue-300 md:flex md:text-6xl">
@@ -376,6 +390,118 @@ export default function AboutMe() {
           />
         </div>
       </div>
+
+      <Transition appear show={showLanguageModal} as={Fragment}>
+        <Dialog
+          as="div"
+          className="relative z-10"
+          onClose={() => setShowLanguageModal(false)}
+        >
+          <Transition.Child
+            as={Fragment}
+            enter="ease-out duration-300"
+            enterFrom="opacity-0"
+            enterTo="opacity-100"
+            leave="ease-in duration-200"
+            leaveFrom="opacity-100"
+            leaveTo="opacity-0"
+          >
+            <div className="fixed inset-0 bg-black/25" />
+          </Transition.Child>
+
+          <div className="fixed inset-0 overflow-y-auto">
+            <div className="flex min-h-full items-center justify-center p-4 text-center">
+              <Transition.Child
+                as={Fragment}
+                enter="ease-out duration-300"
+                enterFrom="opacity-0 scale-95"
+                enterTo="opacity-100 scale-100"
+                leave="ease-in duration-200"
+                leaveFrom="opacity-100 scale-100"
+                leaveTo="opacity-0 scale-95"
+              >
+                <Dialog.Panel className="w-full max-w-md overflow-hidden rounded-2xl bg-slate-800 p-6 text-left align-middle shadow-xl transition-all">
+                  <Dialog.Title
+                    as="h3"
+                    className="text-lg font-medium leading-6 text-blue-300"
+                  >
+                    Choose language
+                  </Dialog.Title>
+                  <div className="mt-2">
+                    <p className="text-sm text-blue-100">
+                      My curriculum vitae will be translated in the language you
+                      choose
+                    </p>
+                  </div>
+                  <div className="w-full px-4 py-8">
+                    <div className="mx-auto w-full max-w-md">
+                      <RadioGroup value={local} onChange={setLocal}>
+                        <div className="space-y-2">
+                          {Object.values(LOCAL_SUPPORTED).map(
+                            (local_supported) => {
+                              return (
+                                <RadioGroup.Option
+                                  key={local_supported}
+                                  value={local_supported}
+                                  className={({ active, checked }) =>
+                                    `${
+                                      active
+                                        ? "ring-2 ring-primary-900 ring-opacity-60 ring-offset-2 ring-offset-primary-300"
+                                        : ""
+                                    }
+                  ${checked ? "bg-primary-600" : "bg-slate-800"}
+                    relative flex cursor-pointer rounded-lg px-5 py-4 focus:outline-none`
+                                  }
+                                >
+                                  {({ checked }) => (
+                                    <div className="flex w-full items-center justify-between">
+                                      <div className="flex items-center">
+                                        <div className="text-sm">
+                                          <RadioGroup.Label
+                                            as="p"
+                                            className={`font-bold capitalize  ${
+                                              checked
+                                                ? "text-blue-900"
+                                                : "text-blue-100"
+                                            }`}
+                                          >
+                                            {local_supported}
+                                          </RadioGroup.Label>
+                                        </div>
+                                      </div>
+                                      {checked && (
+                                        <div className="shrink-0 text-blue-900">
+                                          <CheckIcon className="h-6 w-6" />
+                                        </div>
+                                      )}
+                                    </div>
+                                  )}
+                                </RadioGroup.Option>
+                              )
+                            }
+                          )}
+                        </div>
+                      </RadioGroup>
+                    </div>
+                  </div>
+
+                  <div className="mt-4">
+                    <Link href={`/api/download/curriculum?language=${local}`}>
+                      <button
+                        type="button"
+                        className="inline-flex justify-center rounded-md border border-transparent  bg-accent-200 px-4  py-2 font-sans text-base font-bold
+                      text-blue-900  transition delay-75 hover:bg-accent-400 focus:outline-none  focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 active:scale-105 active:bg-accent-400"
+                      >
+                        Download
+                      </button>
+                    </Link>
+                  </div>
+                </Dialog.Panel>
+              </Transition.Child>
+            </div>
+          </div>
+        </Dialog>
+      </Transition>
     </main>
   )
 }

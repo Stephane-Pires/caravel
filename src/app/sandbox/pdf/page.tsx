@@ -6,7 +6,7 @@ import { useEffect, useRef, useState } from "react"
 export default function Blog() {
   const [template, setTemplate] = useState<any>(null)
 
-  const CURRICULUM_RESOURCES_URL = "/api/resources/curriculum"
+  const CURRICULUM_RESOURCES_URL = "/api/resources/curriculum?language=english"
 
   let designer = useRef<Designer>()
 

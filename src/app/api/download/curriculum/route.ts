@@ -1,9 +1,13 @@
 import { generate } from "@pdfme/generator"
+import { NextRequest } from "next/server"
 
 // export an async GET function. This is a convention in NextJS
-export async function GET(req: Request) {
+export async function GET(req: NextRequest) {
   // external file URL
-  const CURRICULUM_RESOURCES_URL = `${process.env.HOST}/api/resources/curriculum`
+
+  const language = req.nextUrl.searchParams.get("language")
+
+  const CURRICULUM_RESOURCES_URL = `${process.env.HOST}/api/resources/curriculum?language=${language}`
 
   // TODO : Response is not typed
   const response = await fetch(CURRICULUM_RESOURCES_URL, {

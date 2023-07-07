@@ -1,4 +1,4 @@
-import { Article, CURRICULUM_VITAE } from "@/content/curriculum-vitae/cv"
+import { Article, CURRICULUM_VITAE } from "@/content/curriculum-vitae/english"
 import Image from "next/image"
 import { Fragment } from "react"
 

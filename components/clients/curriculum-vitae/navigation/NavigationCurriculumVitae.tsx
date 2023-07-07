@@ -1,7 +1,7 @@
 import {
   NavigationButton, // NavigationButtonMobile,
 } from "@/components/clients/curriculum-vitae/navigation/NavigationButton"
-import { CURRICULUM_VITAE } from "@/content/curriculum-vitae/cv"
+import { CURRICULUM_VITAE } from "@/content/curriculum-vitae/english"
 import { Fragment } from "react"
 
 interface PropsNavigationCurriculumVitae {
