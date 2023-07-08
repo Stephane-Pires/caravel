@@ -2,6 +2,8 @@ export const CURRICULUM_VITAE = {
   ME: {
     id: "ME",
     label: "A propos de moi",
+    // icon is to delete once NavigationButton & NavigationCurriculumVitae are deleted
+    icon: "TMP-no-icon",
     section: {
       DESCRIPTION: {
         id: "DESCRIPTION",
