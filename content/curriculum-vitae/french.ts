@@ -1,4 +1,29 @@
 export const CURRICULUM_VITAE = {
+  ME: {
+    id: "ME",
+    label: "A propos de moi",
+    section: {
+      DESCRIPTION: {
+        id: "DESCRIPTION",
+        label: "Description",
+        content: {
+          catch_phrases: [
+            `Je suis un developpeur fullstack qui cherche à approfondir ses compétences backend et infra.`,
+            `Je recherche une entreprise qui sera challenger mes compétences`,
+          ],
+        },
+      },
+      CONTACT: {
+        id: "CONTACT",
+        label: "Contact",
+        content: {
+          phone: "06 74 76 04 90",
+          email: "pires.stephane.pro@gmail.com",
+          site: "https://caravel-mocha.vercel.app/",
+        },
+      },
+    },
+  },
   EDUCATION: {
     id: "EDUCATION",
     label: "Education",
@@ -10,15 +35,15 @@ export const CURRICULUM_VITAE = {
         icon: "/about-me/isep-logo.png",
         duration: {
           start: "Sep 2016",
-          end: "Jun 2018",
-          difference: "2 years",
+          end: "Juin 2018",
+          difference: "2 ans",
         },
         content: {
           paragraph:
             "After successfully passing the CPGE selection (Classes préparatoires aux grandes écoles), I made the deliberate choice to join ISEP, driven by my profound passion for programming and an unwavering interest in the realm of computers. During my time at ISEP, I delved into various subjects, including computer science, algorithms, project management, networking, and Systems Architecture. The experience proved to be truly captivating and further fueled my enthusiasm for this field.",
           missions: [
-            "First year : Computing and programing courses (To translate in French)",
-            "Second year : Architect SI specialization (To translate in French)",
+            "Première année: Informatique générale",
+            "Deuxième année: Spécialisation SI",
           ],
 
           skills: ["JAVA", "HTML", "CSS", "JAVASCRIPT", "SQL"],
@@ -37,8 +62,8 @@ export const CURRICULUM_VITAE = {
           paragraph:
             "I had the privilege of being selected as one of the few participants in the esteemed double diploma program in Engineering and Management. For my final year of studies, I attended Audencia Business School in Nantes, where I gained extensive knowledge in management-related skills such as finance, accounting, and corporate strategy. This invaluable experience provided me with a comprehensive understanding of corporate perspectives. However, upon graduating, I realized my true passion lay in utilizing my technical expertise. Hence, I decided to follow my heart back to my initial love for computer programming. Since then, I have diligently pursued continuous learning, immersing myself in literature on management practices applied specifically to knowledge-based organizations.",
           missions: [
-            "Semester in management in english (To translate in French)",
-            "Semester in Business Developement (To translate in French)",
+            "Semestre de management en anglais",
+            "Semestre en Business development",
           ],
           skills: [
             "NEGOCIATION",
@@ -70,10 +95,10 @@ export const CURRICULUM_VITAE = {
           paragraph:
             "I embarked on my professional journey as a Software Engineer at AnalogWay, where I joined a dynamic team of nine developers. Together, we were entrusted with the development and maintenance of the Web Application that controlled the hardware. My time at AnalogWay proved to be an immensely fulfilling experience, primarily due to the company's robust research and development (R&D) culture. In my first year, I had the privilege of spearheading the implementation and adoption of agile methodologies, revolutionizing our development processes.Throughout my tenure, I actively contributed to the evolution and refinement of these methodologies, continuously seeking ways to improve our efficiency and effectiveness. One notable accomplishment was the successful implementation of an authentication module, enabling controlled access to the Web Application. This endeavor required navigating complex challenges related to real-time communication and screen UI interaction, which significantly enhanced my technical prowess and deepened my understanding of web technologies.",
           missions: [
-            "Building of UI features using React/Redux with realtime constrain (To translate in French)",
-            "Prototyping of a feature using WebRTC (To translate in French)",
-            "Implementation of an Authentification module to restrain access to the platform (To translate in French)",
-            "Implementation and promotion of agile practicies (Scrum & Kanban) (To translate in French)",
+            "Participation à l'évolution de la WebApp",
+            "Protypage d'une fonctionnalité de streaming (WebRTC)",
+            "Implémentation d'un module d'authentification",
+            "Implémentation et promotion des méthodes agiles (Scrum/Kanban)",
           ],
           skills: ["NODEJS", "TYPESCRIPT", "REACT", "REDUX"],
         },
@@ -92,10 +117,10 @@ export const CURRICULUM_VITAE = {
           paragraph:
             "During my tenure at Izicrédit, I served as a Fullstack Engineer, working alongside a small team of two developers. Our primary focus was to construct a platform catering to lead bank professionals. Additionally, we undertook the development of an Admin dashboard, empowering the product and marketing teams with valuable insights derived from the collected data. Working at Izicrédit presented both intense and captivating challenges. I engaged with a diverse set of technologies, including GraphQL, REST API, E2E Testing, and SQL, in order to deliver new features and develop innovative products. Operating within a startup environment provided me with invaluable experience in rapidly building products from scratch within tight timeframes. This period significantly broadened my perspective on effective project execution and reinforced my ability to transform ideas into reality.",
           missions: [
-            "Added relation to database using Postgraphil (PostgreSQL+ GraphQL) (To translate in French)",
-            "UI / Algorithm : Building of an Input managing catchment area (To translate in French)",
-            "Development from A to Z of an Admin Dashboard and Bank Dashboard (To translate in French)",
-            "Development of a CRON server using NodeJS (To translate in French)",
+            "Modélisation via Postgraphil (PostgreSQL + GraphQL)",
+            "UI / Algorithmique - Ajout d'un composant traitant les zones de chalandise",
+            "Développement de deux dashboard bancaire et administrateur",
+            "Développement d'un server de CRON (NodeJS)",
           ],
           skills: [
             "NODEJS",
@@ -112,12 +137,12 @@ export const CURRICULUM_VITAE = {
 
   HOBBIES: {
     id: "HOBBIES",
-    label: "Hobbies",
+    label: "Loisirs",
     icon: "/about-me/puzzle-piece.svg",
     section: {
       VIDEO_GAME: {
         id: "VIDEO_GAME",
-        label: "Video games",
+        label: "Art vidéoludique",
         icon: "/about-me/power-blue.svg",
         duration: {
           start: "1998",
@@ -137,7 +162,7 @@ export const CURRICULUM_VITAE = {
       },
       CLIMBING: {
         id: "CLIMBING",
-        label: "Climbing",
+        label: "Escalade",
         icon: "/about-me/arrow-up-down-blue.svg",
         duration: {
           start: "2022",
@@ -150,7 +175,7 @@ export const CURRICULUM_VITAE = {
       },
       BIKING: {
         id: "BIKING",
-        label: "Biking",
+        label: "Cyclisme",
         icon: "/about-me/map-blue.svg",
         duration: {
           start: "2018",
@@ -164,7 +189,7 @@ export const CURRICULUM_VITAE = {
       },
       BOARD_GAME: {
         id: "BOARD_GAME",
-        label: "Board game",
+        label: "Jeux de société",
         icon: "/about-me/puzzle-piece-blue.svg",
         duration: {
           start: "2018",

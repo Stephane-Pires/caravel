@@ -1,4 +1,29 @@
 export const CURRICULUM_VITAE = {
+  ME: {
+    id: "ME",
+    label: "About me",
+    section: {
+      DESCRIPTION: {
+        id: "DESCRIPTION",
+        label: "Description",
+        content: {
+          catch_phrases: [
+            `I'm a fullstack developper looking for challenges and adventures`,
+            `I'm seeking the next place to growth.`,
+          ],
+        },
+      },
+      CONTACT: {
+        id: "CONTACT",
+        label: "Contact",
+        content: {
+          phone: "06 74 76 04 90",
+          email: "pires.stephane.pro@gmail.com",
+          site: "https://caravel-mocha.vercel.app/",
+        },
+      },
+    },
+  },
   EDUCATION: {
     id: "EDUCATION",
     label: "Education",
@@ -72,7 +97,7 @@ export const CURRICULUM_VITAE = {
           missions: [
             "Building of UI features using React/Redux with realtime constrain",
             "Prototyping of a feature using WebRTC",
-            "Implementation of an Authentification module to restrain access to the platform",
+            "Implementation of an Authentification module to restrain platform access",
             "Implementation and promotion of agile practicies (Scrum & Kanban)",
           ],
           skills: ["NODEJS", "TYPESCRIPT", "REACT", "REDUX"],

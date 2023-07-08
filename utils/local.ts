@@ -5,8 +5,8 @@ export type LOCAL_SUPPORTED =
   (typeof LOCAL_SUPPORTED)[keyof typeof LOCAL_SUPPORTED]
 
 export const LOCAL_SUPPORTED = {
-  FRENCH: "french",
   ENGLISH: "english",
+  FRENCH: "french",
 } as const
 
 export function reduceLocal(
