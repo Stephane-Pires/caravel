@@ -43,3 +43,9 @@
 - [x] : Create a route on the API to serve the pdf.
 
 - [ ] : Make the 404 page mobile friendly
+
+- [ ] : Use Error Boundary (error.ts in NextJS)
+
+- [ ] : Use Loading (loading.ts in NextJS)
+
+- [ ] : Reactivate the cache for the PDF once PDF is stabilased

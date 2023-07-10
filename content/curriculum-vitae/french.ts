@@ -10,8 +10,8 @@ export const CURRICULUM_VITAE = {
         label: "Description",
         content: {
           catch_phrases: [
-            `Je suis un developpeur fullstack qui cherche à approfondir ses compétences backend et infra.`,
-            `Je recherche une entreprise qui sera challenger mes compétences`,
+            `Je suis un développeur fullstack qui cherche à approfondir ses compétences backend et infra.`,
+            `Je recherche une entreprise qui saura challenger mes compétences`,
           ],
         },
       },
@@ -121,7 +121,7 @@ export const CURRICULUM_VITAE = {
           missions: [
             "Modélisation via Postgraphil (PostgreSQL + GraphQL)",
             "UI / Algorithmique - Ajout d'un composant traitant les zones de chalandise",
-            "Développement de deux dashboard bancaire et administrateur",
+            "Développement de deux dashboards bancaire et administrateur",
             "Développement d'un server de CRON (NodeJS)",
           ],
           skills: [

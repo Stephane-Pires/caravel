@@ -367,6 +367,7 @@ const getTemplate = (local: LOCAL_SUPPORTED): Template =>
           catch: formatMissions(
             curriculum.ME.section.DESCRIPTION.content.catch_phrases
           ),
+          education_title: curriculum.EDUCATION.label,
           work_experience: curriculum.EXPERIENCE.label,
 
           audencia_title: curriculum.EDUCATION.section.AUDENCIA.label,
