@@ -10,7 +10,7 @@
 
 - [ ] : Add/Create a storybook - it should be a separated projet called "Compass" this storybook will act has a Design system tool
 
-- [ ] : Create intermediary component for the "about-me" for exemple "Section"
+- [x] : Create intermediary component for the "about-me" for exemple "Section"
 
 - [ ] : Find assets for Star components
 
@@ -49,3 +49,5 @@
 - [ ] : Use Loading (loading.ts in NextJS)
 
 - [ ] : Reactivate the cache for the PDF once PDF is stabilased
+
+- [ ] : Investigate Typing for "SectionContent" explicitly the missmatch between the curriculum model "as const | readonly" and the Props of the component

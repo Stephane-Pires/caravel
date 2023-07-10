@@ -173,6 +173,7 @@ export const CURRICULUM_VITAE = {
         content: {
           paragraph:
             "In the wake of the Covid pandemic, I felt a strong urge to engage in a physical activity that would not only challenge me but also provide a much-needed escape. It was during this time that I discovered my passion for climbing. Joining the 'Aspala' club in Antony city for a year was an immensely enjoyable experience. The sport captivated me, and I found great fulfillment in pushing my limits and conquering new heights. Currently, I am eagerly seeking a climbing partner who shares my enthusiasm and drive to further excel in this sport. Whether it's bouldering or route climbing, I am open to exploring various aspects of climbing and honing my skills.",
+          photos: ["/about-me/climbing.jpeg"],
         },
       },
       BIKING: {
@@ -187,6 +188,7 @@ export const CURRICULUM_VITAE = {
         content: {
           paragraph:
             "During my time at Nantes city while studying at Audencia Business School, I discovered a newfound love for biking. I found immense pleasure in commuting to school using my bicycle, relishing the freedom and efficiency it provided. Since then, I have continued to incorporate biking into my daily routine, using it as my preferred mode of transportation. From the chilly snow-covered winters to the scorching summers, I have embraced the elements while pedaling through rain, wind, and sunshine. This experience has reinforced my belief that biking is not only an economical choice but also a remarkably healthy and sustainable means of travel. The physical activity and fresh air that come with biking contribute to both my well-being and environmental consciousness. I am genuinely passionate about promoting biking as an accessible and eco-friendly form of commuting.",
+          photos: ["/about-me/bike.jpeg", "/about-me/bike-treasure.jpeg"],
         },
       },
       BOARD_GAME: {
