@@ -48,19 +48,17 @@ export function SectionContent({ section }: SectionProps) {
         </ul>
       )}
 
-      {section.content.photos && (
-        <div className="relative -z-20 my-10 h-[600px] ">
-          {section.content.photos.map((photo: string) => (
+      {section.content.photos &&
+        section.content.photos.map((photo: string) => (
+          <div key={photo} className="relative -z-20 my-10 h-[600px] ">
             <Image
-              key={photo}
               src={photo}
               alt="My Image"
               fill
               className="rounded-md object-cover"
             />
-          ))}
-        </div>
-      )}
+          </div>
+        ))}
     </>
   )
 }
