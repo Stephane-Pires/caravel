@@ -1,13 +1,11 @@
+import { Metadata } from "next"
 import Image from "next/image"
 
-// export const generateMetadata = ({ params }) => {
-//   const content = allContents.find(
-//     (content) => content._raw.flattenedPath === params.slug
-//   )
-//   return { title: content.title }
-// }
+export const metadata: Metadata = {
+  title: "Typography",
+}
 
-export default function Blog() {
+export default function Typography() {
   return (
     <main className="flex min-h-screen flex-col items-center  p-10">
       <div className="mb-8 mt-4 flex flex-row items-center gap-8 align-middle font-serif text-4xl sm:text-6xl ">

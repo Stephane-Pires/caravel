@@ -7,21 +7,17 @@ import { usePathname } from "next/navigation"
 import { useEffect, useState } from "react"
 
 const NAVIGATION = {
+  ABOUT_ME: {
+    pathname: "/about-me",
+    name: "👋 About Me",
+  },
   LOGBOOK: {
     pathname: "/logbook",
-    name: "Logbook",
-  },
-  LANDING_PAGE: {
-    pathname: "/",
-    name: "Landing page",
+    name: "📔 Logbook",
   },
   SANDBOX: {
     pathname: "/sandbox",
-    name: "Sandbox",
-  },
-  ABOUT_ME: {
-    pathname: "/about-me",
-    name: "About Me",
+    name: "🏖️ Sandbox",
   },
 } as const
 
@@ -37,7 +33,6 @@ export function Navigation() {
   const pathname = usePathname()
 
   return (
-    // grid-cols-3 gap-4 grid
     <nav className="m-2 hidden sm:col-span-2 sm:flex sm:flex-row sm:items-center sm:justify-between sm:gap-8">
       <div className="col-span-1 ml-4">
         <Link href="/">
@@ -51,37 +46,19 @@ export function Navigation() {
       </div>
 
       <div className="mx-4 flex flex-row gap-8">
-        <Link
-          href={NAVIGATION.ABOUT_ME.pathname}
-          className={`font-sans text-2xl font-bold hover:text-primary-300 ${
-            isActivePathname(pathname, NAVIGATION.ABOUT_ME.pathname)
-              ? "text-accent-500"
-              : "text-primary-600"
-          }`}
-        >
-          👋 {NAVIGATION.ABOUT_ME.name}
-        </Link>
-        <Link
-          href={NAVIGATION.LOGBOOK.pathname}
-          className={`font-sans text-2xl font-bold hover:text-primary-300 ${
-            isActivePathname(pathname, NAVIGATION.LOGBOOK.pathname)
-              ? "text-accent-500"
-              : "text-primary-600"
-          }`}
-        >
-          📔 {NAVIGATION.LOGBOOK.name}
-        </Link>
-
-        <Link
-          href={NAVIGATION.SANDBOX.pathname}
-          className={`font-sans text-2xl font-bold hover:text-primary-300 ${
-            isActivePathname(pathname, NAVIGATION.SANDBOX.pathname)
-              ? "text-accent-500"
-              : "text-primary-600"
-          }`}
-        >
-          🏖️ {NAVIGATION.SANDBOX.name}
-        </Link>
+        {Object.values(NAVIGATION).map((navigation) => (
+          <Link
+            key={navigation.name}
+            href={navigation.pathname}
+            className={`font-sans text-2xl font-bold hover:text-primary-300 ${
+              isActivePathname(pathname, navigation.pathname)
+                ? "text-accent-500"
+                : "text-primary-600"
+            }`}
+          >
+            {navigation.name}
+          </Link>
+        ))}
       </div>
     </nav>
   )
@@ -128,37 +105,19 @@ export function NavigationMobile() {
 
       {showLinks && (
         <div className=" mt-28 flex flex-col justify-around gap-8">
-          <Link
-            href={NAVIGATION.ABOUT_ME.pathname}
-            className={`m-2 rounded-lg p-4 font-sans text-2xl font-bold ${
-              isActivePathname(pathname, NAVIGATION.ABOUT_ME.pathname)
-                ? "text-accent-500"
-                : "text-primary-600"
-            }`}
-          >
-            👋 {NAVIGATION.ABOUT_ME.name}
-          </Link>
-          <Link
-            href={NAVIGATION.LOGBOOK.pathname}
-            className={`m-2 rounded-lg p-4 font-sans text-2xl font-bold ${
-              isActivePathname(pathname, NAVIGATION.LOGBOOK.pathname)
-                ? "text-accent-500"
-                : "text-primary-600"
-            }`}
-          >
-            📔 {NAVIGATION.LOGBOOK.name}
-          </Link>
-
-          <Link
-            href={NAVIGATION.SANDBOX.pathname}
-            className={`m-2 rounded-lg p-4 font-sans text-2xl font-bold ${
-              isActivePathname(pathname, NAVIGATION.SANDBOX.pathname)
-                ? "text-accent-500"
-                : "text-primary-600"
-            }`}
-          >
-            🏖️ {NAVIGATION.SANDBOX.name}
-          </Link>
+          {Object.values(NAVIGATION).map((navigation) => (
+            <Link
+              key={navigation.name}
+              href={navigation.pathname}
+              className={`m-2 rounded-lg p-4 font-sans text-2xl font-bold ${
+                isActivePathname(pathname, navigation.pathname)
+                  ? "text-accent-500"
+                  : "text-primary-600"
+              }`}
+            >
+              {navigation.name}
+            </Link>
+          ))}
         </div>
       )}
     </nav>

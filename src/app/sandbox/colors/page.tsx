@@ -1,15 +1,12 @@
 import { allContents } from "@/.contentlayer/generated"
 import { compareDesc } from "date-fns"
+import { Metadata } from "next"
 import Image from "next/image"
 
-// export const generateMetadata = ({ params }) => {
-//   const content = allContents.find(
-//     (content) => content._raw.flattenedPath === params.slug
-//   )
-//   return { title: content.title }
-// }
-
-export default function Blog() {
+export const metadata: Metadata = {
+  title: "Colors",
+}
+export default function Colors() {
   const allContentSortedByDateDesc = allContents.sort((a, b) =>
     compareDesc(new Date(a.date), new Date(b.date))
   )

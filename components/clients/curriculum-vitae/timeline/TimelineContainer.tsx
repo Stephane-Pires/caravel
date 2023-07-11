@@ -55,14 +55,6 @@ export function TimelineContainer({
                   previousDomElementReferenced?.clientHeight! - stepGap
               }
 
-              // if (index === ArrayOfSection.length - 1) {
-              //   const previousDomElementReferenced = sectionDom.get(
-              //     ArrayOfSection[index - 1].id + stepGap * index
-              //   )
-
-              //   stepPosition = previousDomElementReferenced?.clientHeight!
-              // domElementReferenced?.clientHeight!
-              // }
               return (
                 <Fragment key={content.id}>
                   <div

@@ -3,7 +3,7 @@
 import { Designer } from "@pdfme/ui"
 import { useEffect, useRef, useState } from "react"
 
-export default function Blog() {
+export default function PdfManipulator() {
   const [template, setTemplate] = useState<any>(null)
 
   const CURRICULUM_RESOURCES_URL = "/api/resources/curriculum?language=english"

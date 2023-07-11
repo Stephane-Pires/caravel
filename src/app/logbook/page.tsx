@@ -2,17 +2,15 @@ import { allContents } from "@/.contentlayer/generated"
 import { Card } from "@/components/Card"
 import { CATEGORY, SUBJECT } from "@/enums/tag"
 import { compareDesc } from "date-fns"
+import { Metadata } from "next"
 import Image from "next/image"
 import Link from "next/link"
 
-// export const generateMetadata = ({ params }) => {
-//   const content = allContents.find(
-//     (content) => content._raw.flattenedPath === params.slug
-//   )
-//   return { title: content.title }
-// }
+export const metadata: Metadata = {
+  title: "Logbook",
+}
 
-export default function Blog() {
+export default function Logbook() {
   const allContentSortedByDateDesc = allContents.sort((a, b) =>
     compareDesc(new Date(a.date), new Date(b.date))
   )
