@@ -44,10 +44,16 @@
 
 - [ ] : Make the 404 page mobile friendly
 
-- [ ] : Use Error Boundary (error.ts in NextJS)
+  - [ ] : 404 page makes navigation un-interactive fix it
+
+- [x] : Use Error Boundary (error.ts in NextJS)
+
+  - [ ] : A feature with error Boundary is available in a Stash, sadly it's inconsistant. Wait for futur version of nextjs to retry it. (Errors doesn't seems to be catched properly has of versio of today 13.3.x)
 
 - [ ] : Use Loading (loading.ts in NextJS)
 
 - [ ] : Reactivate the cache for the PDF once PDF is stabilased
 
 - [ ] : Investigate Typing for "SectionContent" explicitly the missmatch between the curriculum model "as const | readonly" and the Props of the component
+
+- [ ] : Update dependencies to solve various problems (not-found.tsx that don't redirect with Link, error.tsx that doesn't trigger on throw error, contentlayer that brings vulnaribility, etc...)
