@@ -1,5 +1,3 @@
-import { allContents } from "@/.contentlayer/generated"
-import { compareDesc } from "date-fns"
 import { Metadata } from "next"
 import Image from "next/image"
 
@@ -7,22 +5,6 @@ export const metadata: Metadata = {
   title: "Colors",
 }
 export default function Colors() {
-  const allContentSortedByDateDesc = allContents.sort((a, b) =>
-    compareDesc(new Date(a.date), new Date(b.date))
-  )
-
-  const allFontmatter = allContentSortedByDateDesc.map(
-    ({ title, image, date, subject, category, url, _id }) => ({
-      title,
-      image,
-      date,
-      subject,
-      category,
-      url,
-      id: _id,
-    })
-  )
-
   return (
     <main className="flex min-h-screen flex-col items-center  p-10">
       <div className="mb-8 mt-4 flex flex-row items-center gap-8 align-middle font-serif text-4xl text-emerald-200 underline decoration-double decoration-2 sm:text-6xl ">

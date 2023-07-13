@@ -1,9 +1,6 @@
 "use client"
 
-import Image from "next/image"
 import Typewriter from "typewriter-effect"
-
-// const inter = Inter({ subsets: ["latin"] })
 
 export default function Home() {
   return (
@@ -31,9 +28,6 @@ export default function Home() {
             />
           </h2>
         </div>
-        {/* <div className="mr-20 hidden sm:block">
-          <Image src="/logo.png" alt="logo" width={500} height={500}></Image>
-        </div> */}
       </div>
     </main>
   )
