@@ -3,6 +3,7 @@ import { Star } from "@/components/Star"
 import { STAR } from "@/enums/stars"
 import { Content, allContents } from "contentlayer/generated"
 import Image from "next/image"
+import { notFound } from "next/navigation"
 
 export const generateMetadata = ({ params }: BlogContentProps) => {
   const content = allContents.find(
@@ -33,7 +34,7 @@ export default function BlogContent({ params: { slug } }: BlogContentProps) {
     if (resultat) {
       return resultat
     } else {
-      throw new Error("Unable to retrieve this content URL")
+      notFound()
     }
   }
 
