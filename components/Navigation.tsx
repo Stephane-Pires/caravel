@@ -15,6 +15,10 @@ const NAVIGATION = {
     pathname: "/logbook",
     name: "📔 Logbook",
   },
+  PROJECTS: {
+    pathname: "/projects",
+    name: "⛵️ Projects",
+  },
   SANDBOX: {
     pathname: "/sandbox",
     name: "🏖️ Sandbox",
