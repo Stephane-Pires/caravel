@@ -213,6 +213,39 @@ export const CURRICULUM_VITAE = {
       },
     },
   },
+  PROJECTS: {
+    id: "PROJECTS",
+    label: "Projects",
+    icon: "no-icon-for-now",
+    section: {
+      CARAVEL: {
+        id: "CARAVEL",
+        label: "Caravel",
+        icon: "/projects/caravel.png",
+        url: "https://caravel-mocha.vercel.app/",
+        duration: {
+          start: "19 April 2023",
+          end: "On going",
+        },
+        content: {
+          skills: ["NEXTJS", "REACT", "TAILWIND", "NODEJS"],
+        },
+      },
+      VENTUS: {
+        id: "Ventus",
+        label: "Ventus",
+        icon: "/projects/ventus.png",
+        url: "https://ventus-jade.vercel.app/1",
+        duration: {
+          start: "7 September 2022",
+          end: "24 July 2023",
+        },
+        content: {
+          skills: ["VUE", "VITE", "WINDICSS"],
+        },
+      },
+    },
+  },
 } as const
 
 export type Article = keyof typeof CURRICULUM_VITAE

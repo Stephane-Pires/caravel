@@ -15,6 +15,10 @@ const NAVIGATION = {
     pathname: "/logbook",
     name: "📔 Logbook",
   },
+  PROJECTS: {
+    pathname: "/projects",
+    name: "⛵️ Projects",
+  },
   SANDBOX: {
     pathname: "/sandbox",
     name: "🏖️ Sandbox",
@@ -33,7 +37,7 @@ export function Navigation() {
   const pathname = usePathname()
 
   return (
-    <nav className="m-2 hidden sm:col-span-2 sm:flex sm:flex-row sm:items-center sm:justify-between sm:gap-8">
+    <nav className="m-2 hidden md:col-span-2 md:flex md:flex-row md:items-center md:justify-between md:gap-8">
       <div className="col-span-1 ml-4">
         <Link href="/">
           <Image
@@ -78,7 +82,7 @@ export function NavigationMobile() {
 
   return (
     <nav
-      className={`flex flex-row sm:hidden ${
+      className={`flex flex-row md:hidden ${
         showLinks
           ? "h-screen w-screen flex-col items-start bg-transparent/90 backdrop-blur-md"
           : "items-center justify-between"

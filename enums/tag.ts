@@ -33,6 +33,10 @@ export const TECHNO = {
   JAVA: "JAVA",
   HTML: "HTML",
   CSS: "CSS",
+  TAILWIND: "TAILWIND",
+  VUE: "VUE",
+  VITE: "VITE",
+  WINDICSS: "WINDICSS",
 }
 
 export type TECHNO = keyof typeof TECHNO
