@@ -108,7 +108,7 @@ export function NavigationMobile() {
       </div>
 
       {showLinks && (
-        <div className=" mt-28 flex flex-col justify-around gap-8">
+        <div className=" mt-14 flex flex-col justify-around gap-8">
           {Object.values(NAVIGATION).map((navigation) => (
             <Link
               key={navigation.name}
