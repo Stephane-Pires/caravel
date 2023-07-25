@@ -1,4 +1,4 @@
-import { BoardingCard } from "@/components/BoardingCard"
+import { BoardingCard, BoardingCardMobile } from "@/components/BoardingCard"
 import { CURRICULUM_VITAE } from "@/content/curriculum-vitae/english"
 import { Metadata } from "next"
 
@@ -15,19 +15,19 @@ export default function Projects() {
 
       <div className="grid gap-16 p-4 lg:grid-cols-1 2xl:grid-cols-2">
         <BoardingCard
-          title={CURRICULUM_VITAE.PROJECTS.section.CARAVEL.label}
-          duration={CURRICULUM_VITAE.PROJECTS.section.CARAVEL.duration}
-          url={CURRICULUM_VITAE.PROJECTS.section.CARAVEL.url}
-          skills={CURRICULUM_VITAE.PROJECTS.section.CARAVEL.content.skills}
-          image={CURRICULUM_VITAE.PROJECTS.section.CARAVEL.icon}
-        />
-
-        <BoardingCard
           title={CURRICULUM_VITAE.PROJECTS.section.VENTUS.label}
           duration={CURRICULUM_VITAE.PROJECTS.section.VENTUS.duration}
           url={CURRICULUM_VITAE.PROJECTS.section.VENTUS.url}
           skills={CURRICULUM_VITAE.PROJECTS.section.VENTUS.content.skills}
           image={CURRICULUM_VITAE.PROJECTS.section.VENTUS.icon}
+        />
+
+        <BoardingCard
+          title={CURRICULUM_VITAE.PROJECTS.section.CARAVEL.label}
+          duration={CURRICULUM_VITAE.PROJECTS.section.CARAVEL.duration}
+          url={CURRICULUM_VITAE.PROJECTS.section.CARAVEL.url}
+          skills={CURRICULUM_VITAE.PROJECTS.section.CARAVEL.content.skills}
+          image={CURRICULUM_VITAE.PROJECTS.section.CARAVEL.icon}
         />
       </div>
     </main>
