@@ -1,3 +1,4 @@
+import { unreachable } from "@/content/curriculum-vitae/english"
 import { CATEGORY, SOFT_SKILLS, SUBJECT, TECHNO } from "@/enums/tag"
 
 type Tag = SUBJECT | CATEGORY | TECHNO | SOFT_SKILLS
@@ -39,7 +40,13 @@ function getColor(tag: SUBJECT | CATEGORY | TECHNO | SOFT_SKILLS) {
     case "ACCOUNTING":
     case "CHANGE_MANAGMENT":
     case "BUSINESS_DEVELOPMENT":
+    case "TAILWIND":
+    case "VUE":
+    case "VITE":
+    case "WINDICSS":
       return "bg-accent-200"
+    default:
+      return unreachable(tag)
   }
 }
 
@@ -77,7 +84,7 @@ function getLabel(tag: SUBJECT | CATEGORY | TECHNO | SOFT_SKILLS) {
     case "REDUX":
       return "Redux"
     case "NEXTJS":
-      return "NextJS"
+      return "NextJS 🚀"
     case "SVELTE":
       return "Svelte"
     case "SVELTEKIT":
@@ -104,6 +111,16 @@ function getLabel(tag: SUBJECT | CATEGORY | TECHNO | SOFT_SKILLS) {
       return "Change Managment"
     case "BUSINESS_DEVELOPMENT":
       return "Business Development"
+    case "TAILWIND":
+      return "Tailwind 🚀"
+    case "VUE":
+      return "Vue"
+    case "VITE":
+      return "Vite 🚀"
+    case "WINDICSS":
+      return "Windicss"
+    default:
+      return unreachable(tag)
   }
 }
 
