@@ -9,19 +9,23 @@ import { useEffect, useState } from "react"
 const NAVIGATION = {
   ABOUT_ME: {
     pathname: "/about-me",
-    name: "👋 About Me",
+    name: "About Me",
+    icon: "person",
   },
   LOGBOOK: {
     pathname: "/logbook",
-    name: "📔 Logbook",
+    name: "Logbook",
+    icon: "sticky-note",
   },
   PROJECTS: {
     pathname: "/projects",
-    name: "⛵️ Projects",
+    name: "Projects",
+    icon: "code",
   },
   SANDBOX: {
     pathname: "/sandbox",
-    name: "🏖️ Sandbox",
+    name: "Sandbox",
+    icon: "bike",
   },
 } as const
 
@@ -52,15 +56,27 @@ export function Navigation() {
       <div className="mx-4 flex flex-row gap-8">
         {Object.values(NAVIGATION).map((navigation) => (
           <Link
-            key={navigation.name}
             href={navigation.pathname}
+            key={navigation.name}
             className={`font-sans text-2xl font-bold hover:text-primary-300 ${
               isActivePathname(pathname, navigation.pathname)
                 ? "text-accent-500"
                 : "text-primary-600"
             }`}
           >
-            {navigation.name}
+            <div className="flex flex-row gap-2">
+              <Image
+                src={`/handraw/${
+                  isActivePathname(pathname, navigation.pathname)
+                    ? "accent"
+                    : "primary"
+                }/${navigation.icon}.svg`}
+                alt="logo caravel"
+                width={20}
+                height={20}
+              />
+              {navigation.name}
+            </div>
           </Link>
         ))}
       </div>
@@ -119,7 +135,19 @@ export function NavigationMobile() {
                   : "text-primary-600"
               }`}
             >
-              {navigation.name}
+              <div className="flex flex-row gap-2">
+                <Image
+                  src={`/handraw/${
+                    isActivePathname(pathname, navigation.pathname)
+                      ? "accent"
+                      : "primary"
+                  }/${navigation.icon}.svg`}
+                  alt="logo caravel"
+                  width={20}
+                  height={20}
+                />
+                {navigation.name}
+              </div>
             </Link>
           ))}
         </div>
