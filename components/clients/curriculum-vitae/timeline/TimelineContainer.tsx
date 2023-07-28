@@ -2,6 +2,8 @@ import { Article, CURRICULUM_VITAE } from "@/content/curriculum-vitae/english"
 import Image from "next/image"
 import { Fragment } from "react"
 
+import { TimelineIcon } from "./TimelineIcon"
+
 interface PropsTimelineContainer {
   sectionDom: Map<string, HTMLDivElement>
   article: Article
@@ -29,7 +31,7 @@ export function TimelineContainer({
 
     return (
       <div
-        className=" absolute -z-10 w-[1px] flex-col rounded-lg border-2 border-dashed border-primary-600 "
+        className="absolute z-20 w-[1px] flex-col rounded-lg border-2 border-dashed border-primary-600 "
         style={{
           top: firstSectionDom?.offsetTop!,
           // Relying on Typescript : https://dev.to/tmaximini/typescript-bang-operator-considered-harmful-3hhi
@@ -67,17 +69,7 @@ export function TimelineContainer({
                   >
                     <div className="flex flex-col">
                       <div className="flex h-full w-40 flex-row items-center justify-center gap-4 bg-slate-900">
-                        <div className="flex h-12 w-12 basis-2/12 items-center justify-center rounded-full border-2 border-primary-700 bg-primary-500 p-3 font-mono ">
-                          <div className=" flex h-10 w-10 scale-150 items-center justify-center">
-                            <Image
-                              height={30}
-                              width={30}
-                              src={content.icon}
-                              className="rounded-full"
-                              alt="Icon that represent the section"
-                            />
-                          </div>
-                        </div>
+                        <TimelineIcon icon={content.icon} link={content.link} />
                         <p className="basis-10/12 break-normal font-sans">
                           {content.label}
                         </p>

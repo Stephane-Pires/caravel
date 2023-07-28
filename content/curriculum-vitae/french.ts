@@ -30,6 +30,7 @@ export const CURRICULUM_VITAE = {
     id: "EDUCATION",
     label: "Education",
     icon: "/about-me/academic.svg",
+    link: "https://www.isep.fr/",
     section: {
       ISEP: {
         id: "ISEP",
@@ -55,6 +56,7 @@ export const CURRICULUM_VITAE = {
         id: "AUDENCIA",
         label: "Audencia",
         icon: "/about-me/audencia-logo.png",
+        link: "https://www.audencia.com/",
         duration: {
           start: "Sep 2018",
           end: "Aug 2019",
@@ -88,6 +90,7 @@ export const CURRICULUM_VITAE = {
         id: "ANALOG_WAY",
         label: "Analog Way",
         icon: "/about-me/analogway-logoo.png",
+        link: "https://www.analogway.com/fr/",
         duration: {
           start: "Sep 2019",
           end: "Feb 2023",
@@ -109,7 +112,7 @@ export const CURRICULUM_VITAE = {
         id: "IZICREDIT",
         label: "Izicrédit",
         icon: "/about-me/izicredit-logo.png",
-
+        link: "https://www.izicredit.com/",
         duration: {
           start: "Feb 2023",
           end: "Jun 2023",
