@@ -46,6 +46,28 @@ star: "ONE"
 - [WebVitals](https://web.dev/vitals/)
 - [Measuring performance](https://developer.mozilla.org/en-US/docs/Learn/Performance/Measuring_performance)
 
+- Browser centric metrics (Load Page, TTFB) VS User centric metrics (FCP, LCP, CLS, FIP)
+
+- TTI (TimeToInteractive) : The time it takes for a user to have a first interaction, times between the content loading (HTTP - REQUEST/RESPONSE) + time it takes to the browser to paint (DOM + HTML + CSS) and make interactive the page (JS)
+
+- TTFB (Time To First Byte) : Time for the client to receive the first byte of data from the network
+
+- FCP (First contentful paint) : Time it takes for the browser to render the first element after a navigation
+
+- LCP (Largest content paint) : Time it takes to load and render the main page content
+
+- CLS (Cumulative Layout shift) : Measure visual stability to avoid layout/element shift
+
+- FID (First Input Delay) : Times between the user interaction and the event + handler being treated by javascript
+
+- INP (Interaction next paint) : [link](https://web.dev/inp/)
+
+- Latency : Time between a packet is sent and when it is received in (ms)
+
+- Speed index % : How much of the final rendering was happend at each point of a timeline
+
+- RUM (Real User Metrics) : The metrics of the users, opposed to labs metrics
+
 ### Frontend Security :
 
 - XSS : Inject some malicous script, that will get executed on target clients. [Owasp XSS](https://owasp.org/www-community/attacks/xss/)
