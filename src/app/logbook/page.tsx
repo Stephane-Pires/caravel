@@ -44,7 +44,10 @@ export default function Logbook() {
         {allFontmatter.map(
           ({ title, image, date, subject, category, url, id }) => {
             return (
-              <Link key={id} href={`/logbook/${url}`}>
+              <Link
+                key={id}
+                href={`/logbook/${url}`}
+              >
                 <Card
                   title={title}
                   image={image}

@@ -101,7 +101,12 @@ function ImageMdx({ src, alt }: HTMLProps<HTMLImageElement>) {
   return (
     <div className="flex flex-row justify-center">
       <div className={`relative my-4  h-[50vh] w-[90vw] md:w-full`}>
-        <Image src={src} alt={alt} fill className="rounded-md object-cover" />
+        <Image
+          src={src}
+          alt={alt}
+          fill
+          className="rounded-md object-cover"
+        />
       </div>
     </div>
   )

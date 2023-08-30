@@ -9,7 +9,11 @@ export default function Colors() {
     <main className="flex min-h-screen flex-col items-center  p-10">
       <div className="mb-8 mt-4 flex flex-row items-center gap-8 align-middle font-serif text-4xl text-emerald-200 underline decoration-double decoration-2 sm:text-6xl ">
         <div className="relative h-[150px] w-[150px] ">
-          <Image src="/logbook/logbook.png" alt="Icon logbook" fill />
+          <Image
+            src="/logbook/logbook.png"
+            alt="Icon logbook"
+            fill
+          />
         </div>
       </div>
 

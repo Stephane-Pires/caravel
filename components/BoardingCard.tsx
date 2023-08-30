@@ -69,7 +69,10 @@ export function BoardingCardDesktop({
           </div>
           <div className="flex flex-row flex-wrap items-center justify-center gap-2">
             {skills.map((skill: SOFT_SKILLS | TECHNO) => (
-              <Tag tag={skill} key={skill} />
+              <Tag
+                tag={skill}
+                key={skill}
+              />
             ))}
           </div>
         </div>
@@ -127,7 +130,10 @@ export function BoardingCardMobile({
         </div>
         <div className="flex flex-row flex-wrap items-center justify-center gap-2">
           {skills.map((skill: SOFT_SKILLS | TECHNO) => (
-            <Tag tag={skill} key={skill} />
+            <Tag
+              tag={skill}
+              key={skill}
+            />
           ))}
         </div>
       </div>

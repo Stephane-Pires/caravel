@@ -13,7 +13,11 @@ interface DownloadModalProps {
 export function DownloadModal({ isShow, setIsShow }: DownloadModalProps) {
   let [local, setLocal] = useState<LOCAL_SUPPORTED>(LOCAL_SUPPORTED.ENGLISH)
   return (
-    <Transition appear show={isShow} as={Fragment}>
+    <Transition
+      appear
+      show={isShow}
+      as={Fragment}
+    >
       <Dialog
         as="div"
         className="relative z-10"
@@ -57,7 +61,10 @@ export function DownloadModal({ isShow, setIsShow }: DownloadModalProps) {
                 </div>
                 <div className="w-full px-4 py-8">
                   <div className="mx-auto w-full max-w-md">
-                    <RadioGroup value={local} onChange={setLocal}>
+                    <RadioGroup
+                      value={local}
+                      onChange={setLocal}
+                    >
                       <div className="space-y-2">
                         {Object.values(LOCAL_SUPPORTED).map(
                           (local_supported) => {

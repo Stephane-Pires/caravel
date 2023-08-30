@@ -33,7 +33,10 @@ export function SectionContent({ section }: SectionProps) {
         >
           {/* // WORKAROUND DUE TO READONLY (because curriculum is readonly)  */}
           {section.content.skills.map((skill: SOFT_SKILLS | TECHNO) => (
-            <Tag tag={skill} key={skill} />
+            <Tag
+              tag={skill}
+              key={skill}
+            />
           ))}
         </div>
       )}
@@ -50,7 +53,10 @@ export function SectionContent({ section }: SectionProps) {
 
       {section.content.photos &&
         section.content.photos.map((photo: string) => (
-          <div key={photo} className="relative -z-20 my-10 h-[600px] ">
+          <div
+            key={photo}
+            className="relative -z-20 my-10 h-[600px] "
+          >
             <Image
               src={photo}
               alt="My Image"

@@ -1,5 +1,6 @@
 module.exports = {
   semi: false,
+  singleAttributePerLine: true,
   importOrder: [
     "<THIRD_PARTY_MODULES>",
     "^@components/(.*)$",

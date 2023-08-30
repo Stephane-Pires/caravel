@@ -69,7 +69,10 @@ export function TimelineContainer({
                   >
                     <div className="flex flex-col">
                       <div className="flex h-full w-40 flex-row items-center justify-center gap-4 bg-slate-900">
-                        <TimelineIcon icon={content.icon} link={content.link} />
+                        <TimelineIcon
+                          icon={content.icon}
+                          link={content.link}
+                        />
                         <p className="basis-10/12 break-normal font-sans">
                           {content.label}
                         </p>

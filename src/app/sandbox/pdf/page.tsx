@@ -28,7 +28,10 @@ export default function PdfManipulator() {
 
   return (
     <div className="flex flex-col pt-20">
-      <div id="container" className="flex max-h-screen basis-2/12" />
+      <div
+        id="container"
+        className="flex max-h-screen basis-2/12"
+      />
       <div className="flex flex-row items-center justify-around">
         <button
           className="m-2 h-full bg-blue-800  p-2"
