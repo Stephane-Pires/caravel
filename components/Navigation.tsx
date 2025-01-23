@@ -22,11 +22,6 @@ const NAVIGATION = {
     name: "Projects",
     icon: "code",
   },
-  SANDBOX: {
-    pathname: "/sandbox",
-    name: "Sandbox",
-    icon: "bike",
-  },
 } as const
 
 type pathname = (typeof NAVIGATION)[keyof typeof NAVIGATION]["pathname"]
