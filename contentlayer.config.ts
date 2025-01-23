@@ -1,4 +1,4 @@
-import { defineDocumentType, makeSource } from "contentlayer2/source-files"
+import { defineDocumentType, makeSource } from "contentlayer/source-files"
 import rehypeKatex from "rehype-katex"
 import rehypePrettyCode from "rehype-pretty-code"
 import remarkMath from "remark-math"

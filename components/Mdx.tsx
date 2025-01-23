@@ -1,4 +1,4 @@
-import { useMDXComponent } from "next-contentlayer2/hooks"
+import { useMDXComponent } from "next-contentlayer/hooks"
 import Image from "next/image"
 import { HTMLProps } from "react"
 
