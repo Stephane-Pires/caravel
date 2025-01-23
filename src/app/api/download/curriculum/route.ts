@@ -1,6 +1,6 @@
 import { LOCAL_SUPPORTED, getCurriculumPDFFilename } from "@/utils/local"
 import fs from "fs"
-import { NextRequest, NextResponse } from "next/server"
+import { NextRequest, NextResponse } from "next/server";
 import path from "path"
 
 const CACHE_WEEK = 604800
