@@ -27,23 +27,23 @@ export function BoardingCardDesktop({
         <div className="m-2 flex flex-row">
           <h2 className="mr-8 font-script text-blue-900">{title}</h2>
           <div className="flex translate-y-1 flex-row gap-4">
-            <div className="h-4 w-4 rotate-45 -skew-y-[45deg] bg-accent-300" />
-            <div className="h-4 w-4 rotate-45 -skew-y-[45deg] bg-accent-300" />
-            <div className="h-4 w-4 rotate-45 -skew-y-[45deg] bg-accent-300" />
-            <div className="h-4 w-4 rotate-45 -skew-y-[45deg] bg-accent-300" />
-            <div className="h-4 w-4 rotate-45 -skew-y-[45deg] bg-accent-300" />
-            <div className="h-4 w-4 rotate-45 -skew-y-[45deg] bg-accent-300" />
-            <div className="h-4 w-4 rotate-45 -skew-y-[45deg] bg-accent-300" />
-            <div className="h-4 w-4 rotate-45 -skew-y-[45deg] bg-accent-300" />
-            <div className="h-4 w-4 rotate-45 -skew-y-[45deg] bg-accent-300" />
-            <div className="h-4 w-4 rotate-45 -skew-y-[45deg] bg-accent-300" />
-            <div className="h-4 w-4 rotate-45 -skew-y-[45deg] bg-accent-300" />
-            <div className="h-4 w-4 rotate-45 -skew-y-[45deg] bg-accent-300" />
-            <div className="h-4 w-4 rotate-45 -skew-y-[45deg] bg-accent-300" />
-            <div className="h-4 w-4 rotate-45 -skew-y-[45deg] bg-accent-300" />
-            <div className="h-4 w-4 rotate-45 -skew-y-[45deg] bg-accent-300" />
-            <div className="h-4 w-4 rotate-45 -skew-y-[45deg] bg-accent-300" />
-            <div className="h-4 w-4 rotate-45 -skew-y-[45deg] bg-accent-300" />
+            <div className="size-4 rotate-45 skew-y-[-45deg] bg-accent-300" />
+            <div className="size-4 rotate-45 skew-y-[-45deg] bg-accent-300" />
+            <div className="size-4 rotate-45 skew-y-[-45deg] bg-accent-300" />
+            <div className="size-4 rotate-45 skew-y-[-45deg] bg-accent-300" />
+            <div className="size-4 rotate-45 skew-y-[-45deg] bg-accent-300" />
+            <div className="size-4 rotate-45 skew-y-[-45deg] bg-accent-300" />
+            <div className="size-4 rotate-45 skew-y-[-45deg] bg-accent-300" />
+            <div className="size-4 rotate-45 skew-y-[-45deg] bg-accent-300" />
+            <div className="size-4 rotate-45 skew-y-[-45deg] bg-accent-300" />
+            <div className="size-4 rotate-45 skew-y-[-45deg] bg-accent-300" />
+            <div className="size-4 rotate-45 skew-y-[-45deg] bg-accent-300" />
+            <div className="size-4 rotate-45 skew-y-[-45deg] bg-accent-300" />
+            <div className="size-4 rotate-45 skew-y-[-45deg] bg-accent-300" />
+            <div className="size-4 rotate-45 skew-y-[-45deg] bg-accent-300" />
+            <div className="size-4 rotate-45 skew-y-[-45deg] bg-accent-300" />
+            <div className="size-4 rotate-45 skew-y-[-45deg] bg-accent-300" />
+            <div className="size-4 rotate-45 skew-y-[-45deg] bg-accent-300" />
           </div>
         </div>
         <div className="m-2 mt-4 flex flex-row justify-between">
@@ -93,16 +93,16 @@ export function BoardingCardMobile({
       <div className="h-auto min-w-[350px] max-w-[350px] rounded-lg border-l-4 border-t-4 border-primary-900 bg-primary-700 p-2 transition delay-100 ease-in-out hover:bg-primary-500 active:scale-105 active:bg-primary-500">
         <div className="m-2 flex flex-row">
           <div className="flex translate-y-1 flex-row gap-4">
-            <div className="h-4 w-4 rotate-45 -skew-y-[45deg] bg-accent-300" />
-            <div className="h-4 w-4 rotate-45 -skew-y-[45deg] bg-accent-300" />
-            <div className="h-4 w-4 rotate-45 -skew-y-[45deg] bg-accent-300" />
-            <div className="h-4 w-4 rotate-45 -skew-y-[45deg] bg-accent-300" />
-            <div className="h-4 w-4 rotate-45 -skew-y-[45deg] bg-accent-300" />
-            <div className="h-4 w-4 rotate-45 -skew-y-[45deg] bg-accent-300" />
-            <div className="h-4 w-4 rotate-45 -skew-y-[45deg] bg-accent-300" />
-            <div className="h-4 w-4 rotate-45 -skew-y-[45deg] bg-accent-300" />
-            <div className="h-4 w-4 rotate-45 -skew-y-[45deg] bg-accent-300" />
-            <div className="h-4 w-4 rotate-45 -skew-y-[45deg] bg-accent-300" />
+            <div className="size-4 rotate-45 skew-y-[-45deg] bg-accent-300" />
+            <div className="size-4 rotate-45 skew-y-[-45deg] bg-accent-300" />
+            <div className="size-4 rotate-45 skew-y-[-45deg] bg-accent-300" />
+            <div className="size-4 rotate-45 skew-y-[-45deg] bg-accent-300" />
+            <div className="size-4 rotate-45 skew-y-[-45deg] bg-accent-300" />
+            <div className="size-4 rotate-45 skew-y-[-45deg] bg-accent-300" />
+            <div className="size-4 rotate-45 skew-y-[-45deg] bg-accent-300" />
+            <div className="size-4 rotate-45 skew-y-[-45deg] bg-accent-300" />
+            <div className="size-4 rotate-45 skew-y-[-45deg] bg-accent-300" />
+            <div className="size-4 rotate-45 skew-y-[-45deg] bg-accent-300" />
           </div>
         </div>
         <div className="m-2 flex w-auto flex-row justify-center">

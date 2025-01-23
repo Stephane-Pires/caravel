@@ -30,7 +30,7 @@ export default function Logbook() {
   return (
     <main className="flex min-h-screen flex-col items-center  p-10 py-20">
       <div className="mb-8 mt-4 flex flex-row items-center gap-8 align-middle font-serif text-4xl text-emerald-200 underline decoration-double decoration-2 sm:text-6xl ">
-        <div className="mt-10 flex h-[150px] w-[150px] items-center justify-center">
+        <div className="mt-10 flex size-[150px] items-center justify-center">
           <Image
             src="/handraw/primary/sticky-note.svg"
             alt="logo caravel"

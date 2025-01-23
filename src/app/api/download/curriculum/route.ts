@@ -7,7 +7,7 @@ const CACHE_WEEK = 604800
 
 export async function GET(req: NextRequest) {
   // should be checked by zod via a controller.
-  const language: LOCAL_SUPPORTED = req.nextUrl.searchParams.get("language")
+  const language: LOCAL_SUPPORTED  = req.nextUrl.searchParams.get("language") as LOCAL_SUPPORTED
 
   const pdfPath = path.resolve(
     "./public/about-me",

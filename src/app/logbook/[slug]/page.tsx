@@ -23,9 +23,9 @@ export async function generateStaticParams() {
 }
 
 interface BlogContentProps {
-  params: {
+  params: Promise<{
     slug: Content["url"]
-  }
+  }>
 }
 
 export default async function BlogContent({ params }: BlogContentProps) {
@@ -53,7 +53,7 @@ export default async function BlogContent({ params }: BlogContentProps) {
           className="object-cover"
         />
 
-        <div className="relative h-full w-full bg-black/60 text-center align-middle">
+        <div className="relative size-full bg-black/60 text-center align-middle">
           <div className="relative top-40 font-script text-6xl text-blue-300">
             {content.title}
           </div>
@@ -62,7 +62,7 @@ export default async function BlogContent({ params }: BlogContentProps) {
       <Star star={content.star as STAR} />
       <Mdx code={content.body.code} />
 
-      <div className="relative bottom-0 -z-10 hidden h-[125px] w-[100vw] sm:block">
+      <div className="relative bottom-0 -z-10 hidden h-[125px] w-screen sm:block">
         <Image
           alt="sea wave a the bottom of the page"
           src="/wave/animated-wave.svg"

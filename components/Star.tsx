@@ -36,7 +36,7 @@ export function Star({ star }: StarProps) {
       <div className="invisible absolute left-[calc(50%-56px)] z-10 flex w-28 justify-center rounded-lg px-3 py-2 text-sm font-medium text-blue-900 delay-100 duration-100 ease-in-out group-hover:visible group-hover:transition-all dark:bg-accent-500">
         {tooltip}
         <div
-          className="absolute -top-1 left-[calc(50%-5px)] h-0 w-0
+          className="absolute -top-1 left-[calc(50%-5px)] size-0
   border-x-[5px] 
   border-b-[6px] 
   border-x-transparent border-b-accent-500"

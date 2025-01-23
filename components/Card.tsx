@@ -29,7 +29,7 @@ export function Card({ title, date, subject, category, image }: Card) {
       </div>
 
       <div className="flex flex-row py-2 font-code text-blue-900">
-        <CalendarDaysIcon className="mr-2 h-6 w-6 italic text-blue-900" />{" "}
+        <CalendarDaysIcon className="mr-2 size-6 italic text-blue-900" />{" "}
         {dayjs(date).format("dddd D MMMM YYYY")}
       </div>
 

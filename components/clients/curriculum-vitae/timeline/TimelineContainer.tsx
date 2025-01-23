@@ -1,5 +1,4 @@
 import { Article, CURRICULUM_VITAE } from "@/content/curriculum-vitae/english"
-import Image from "next/image"
 import { Fragment } from "react"
 
 import { TimelineIcon } from "./TimelineIcon"
@@ -31,7 +30,7 @@ export function TimelineContainer({
 
     return (
       <div
-        className="absolute z-20 w-[1px] flex-col rounded-lg border-2 border-dashed border-primary-600 "
+        className="absolute z-20 w-px flex-col rounded-lg border-2 border-dashed border-primary-600 "
         style={{
           top: firstSectionDom?.offsetTop!,
           // Relying on Typescript : https://dev.to/tmaximini/typescript-bang-operator-considered-harmful-3hhi
