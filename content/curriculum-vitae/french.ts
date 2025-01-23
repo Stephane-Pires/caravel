@@ -259,6 +259,6 @@ export type Section<T extends Article> = (typeof CURRICULUM_VITAE)[T]["section"]
 
 export function unreachable(x: never): never {
   throw new Error(
-    `This codepath is not reachable this variable: ${x} should be handled`
+    `This codepath is not reachable this variable: ${x} should be handled`,
   )
 }

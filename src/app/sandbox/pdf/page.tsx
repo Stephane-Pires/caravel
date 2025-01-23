@@ -1,12 +1,13 @@
 "use client"
 
+import { LOCAL_SUPPORTED } from "@/utils/local"
 import { Designer } from "@pdfme/ui"
 import { useEffect, useRef, useState } from "react"
 
 export default function PdfManipulator() {
   const [template, setTemplate] = useState<any>(null)
 
-  const CURRICULUM_RESOURCES_URL = "/api/resources/curriculum?language=english"
+  const CURRICULUM_RESOURCES_URL = `/api/resources/curriculum?language=${LOCAL_SUPPORTED.ENGLISH}`
 
   let designer = useRef<Designer>()
 
@@ -20,7 +21,7 @@ export default function PdfManipulator() {
             designer.current = new Designer({ domContainer, template })
           })
           .catch((error) =>
-            console.log("error while parsing the template json : ", error)
+            console.log("error while parsing the template json : ", error),
           )
       })
       .catch((error) => console.log("error handle it properly : ", error))
@@ -34,7 +35,7 @@ export default function PdfManipulator() {
       />
       <div className="flex flex-row items-center justify-around">
         <button
-          className="m-2 h-full bg-blue-800  p-2"
+          className="m-2 h-full bg-blue-800 p-2"
           onClick={() => {
             console.log(designer.current?.getTemplate())
 
