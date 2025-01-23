@@ -1,0 +1,171 @@
+---
+title: "Functional Notes"
+image: "half-life-lambda.jpeg"
+date: "09-07-23"
+subject: "CODE"
+category: "THOUGH"
+star: "ONE"
+---
+
+# What is functionnal programming ?
+
+- Side effect : Is "something", that the function modify, that is not part the return value of the function
+
+- Pure function : Pure function are function that can with the same inputs give the same outputs. It has no side effects
+
+- Immutability : Data is immutable if you can't change it. In functional programming having immutable data protects from side effects
+
+- Deterministic: A pure function is deterministic, that mean for a same input, it gives the same outputs
+
+- Procedure function : A procedure is "function" that has side effect.
+
+Example :
+
+```ts
+// multiply is pure
+function multiply(x: number, y: number): number {
+  return x * y
+}
+// Same inputs give same outputs at each function execution
+multiply(1, 3) // 3
+multiply(1, 3) // 3
+
+let a: number = 1
+
+// add is impure, it has a side effect, therefore it's a procedure
+function add(x: number): number {
+  a = x + a
+  return a
+}
+
+add(3) // 4
+add(3) // 7
+```
+
+- Arity : A function arity is the number of parameter a function has
+
+- Unary : A unary function is a function with only one parameter. So his arity is 1
+
+Example :
+
+```ts
+// addOne is a unary function
+function addOne(x: number): number {
+  return x + 1
+}
+
+addOne(1) // 2
+```
+
+- Higher order functions : Are functions that takes other functions has inputs
+
+Example:
+
+```ts
+function filter<T>(
+  predicate: (value: T) => boolean,
+  array: Array<T>
+): Array<T> {
+  if (array.length === 0) return []
+
+  const [head, ...tail] = array
+
+  const filtered = predicate(head) ? [head] : []
+
+  return filtered.concat(filter(predicate, tail))
+}
+```
+
+```ts
+function map<T, U>(applyFunction: (value: T) => U, array: Array<T>): Array<U> {
+  if (array.length === 0) return []
+
+  const [head, ...tail] = array
+
+  return [applyFunction(head)].concat(map(applyFunction, tail))
+}
+```
+
+```ts
+function reduce<T, U>(
+  accumulator: U,
+  applyFunction: (accumulator: U, value: T) => U,
+  array: Array<T>
+): U {
+  if (array.length === 0) return accumulator
+
+  let [head, ...tails] = array
+
+  return reduce(applyFunction(accumulator, head), applyFunction, tails)
+}
+```
+
+- Composition : You compose function when the output of a function is the input of another function
+
+Example :
+
+```ts
+const pokemons = ["pikachu", "pichu", "tortank", "carapuce", "salameche"]
+
+function toLength(string: string) {
+  return string.length
+}
+
+function aboveSeven(number: number) {
+  return number > 7
+}
+
+pokemons.map(toLength).filter(aboveSeven)
+```
+
+- Referential transparency : You achieve referencial transparency if you can take a function call and replace it with it's evaluated values, and it doesn't break your code
+
+- Point free : You have a point free composition, when you don't specify the arguments of the functions you compose with.
+
+For exemple :
+
+```ts
+const addTwentyTwo = (x: number) => x + 22
+const substractThree = (x: number) => x - 3
+
+// result = 19
+const result = [addTwentyTwo, substractThree].reduce(
+  (acc, func) => func(acc),
+  0
+)
+```
+
+# Functional programming optimization
+
+# Functional programming patterns
+
+## Currying
+
+- Currying is the transformation of a function with multiple parameters in a composition of multiple unary function
+
+Example:
+
+```ts
+function quote(author: string, year: number, text: string): string {
+  return `The author ${author} in the year ${year} said : ${text}`
+}
+
+const curriedQuote = (author: string) => (year: number) => (text: string) =>
+  quote(author, year, text)
+
+// Theses function are partial application of quote
+const frankHerbertQuote = curriedQuote("Frank Herbert")
+const frankHerbertQuoteIn1964 = frankHerbertQuote(1964)
+const frankHerbertQuoteIn1964FromDune = frankHerbertQuoteIn1964(
+  "“I must not fear. Fear is the mind-killer. Fear is the little-death that brings total obliteration. I will face my fear. I will permit it to pass over me and through me. And when it has gone past I will turn the inner eye to see its path. Where the fear has gone there will be nothing. Only I will remain.”"
+)
+
+console.log(frankHerbertQuoteIn1964FromDune)
+// The author Frank Herbert in the year 1964 said : “I must not fear. Fear is the mind-killer.
+// Fear is the little-death that brings total obliteration. I will face my fear. I will permit it to pass over me and through me.
+// And when it has gone past I will turn the inner eye to see its path. Where the fear has gone there will be nothing. Only I will remain.”'
+```
+
+## Partial application
+
+- Partial application is the application of `n` parameter of a function. To transform a function of arity `x` to a new function of arity `x - n`.

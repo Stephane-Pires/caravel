@@ -1,0 +1,157 @@
+---
+title: "Time Bang"
+image: "miss-minutes.png"
+date: "2023-09-21"
+subject: "CODE"
+category: "THOUGH"
+star: "ONE"
+---
+
+# PROBLEM : Not all "TIMESTAMP" are created equals
+
+At start, the problem was "simple". The date we were entering in our system (let's say 2023-09-01) was not retreive has 2023-09-01 but instead i got 2023-08-31...
+
+## We need literature about this...
+
+- OK so what is the common pattern to handle time in our world
+  - [ISO 8601](https://fr.wikipedia.org/wiki/ISO_8601)
+  - [UTC](https://fr.wikipedia.org/wiki/Temps_universel_coordonn%C3%A9)
+  - [TIMEZONE](https://en.wikipedia.org/wiki/Time_zone)
+  - THE NOT 1:1 relationship
+
+_Let heard what ChatGPT has to say about it_
+
+### Question : What is an UTC date ?
+
+UTC stands for Coordinated Universal Time. It is a time standard that is often used as the basis for timekeeping and synchronization of clocks worldwide. UTC is sometimes referred to as GMT (Greenwich Mean Time), although GMT is technically an older time standard that has been largely replaced by UTC.
+
+An UTC date refers to a date and time expressed in the UTC time zone without any adjustments for daylight saving time or time zone offsets. UTC is used as a reference point because it does not observe daylight saving time changes, and it provides a consistent timekeeping reference for different regions around the world.
+
+For example, if you have an event scheduled for "2023-09-30 12:00:00 UTC," it means that the event is scheduled to occur at noon on September 30, 2023, according to the Coordinated Universal Time standard, and it doesn't change with seasonal shifts in time.
+
+UTC is often used in various fields such as aviation, computing, and telecommunications to ensure consistent and synchronized timekeeping across different regions and systems. It's especially important in situations where precise timing is crucial, such as in global financial transactions, satellite communication, and international travel.
+
+---
+
+- Ok, so basicaly it's a date that can be used everywhere in the world to identify a instant in time. It's the Zulu (Z) time.
+
+### Question : What is an ISO 8601 date ?
+
+ISO 8601 is an international standard for representing dates and times in a way that is both human-readable and unambiguous. It defines a format for date and time representations, making it easier to exchange date and time information between different systems and countries. The ISO 8601 date format has the following general structure:
+
+```ruby
+YYYY-MM-DDThh:mm:ss.sssZ
+```
+
+Here's what each part of the format represents:
+
+- YYYY: Represents the year in a four-digit format (e.g., 2023 for the year 2023).
+- MM: Represents the month in a two-digit format (01 for January, 02 for February, and so on, up to 12).
+- DD: Represents the day of the month in a two-digit format (01 through 31).
+- T: Separates the date part from the time part.
+- hh: Represents the hour of the day in a two-digit format (00 through 23) in a 24-hour clock.
+- mm: Represents the minute of the hour in a two-digit format (00 through 59).
+- ss: Represents the second of the minute in a two-digit format (00 through 59).
+- .sss: Represents fractions of a second (milliseconds) if needed.
+- Z: Represents the time zone offset, where "Z" indicates Coordinated Universal Time (UTC). If a specific time zone offset is needed, it can be represented as +hh:mm or -hh:mm (e.g., +02:00 for two hours ahead of UTC or -05:00 for five hours behind UTC).
+
+Here are a few examples of ISO 8601 date and time representations:
+
+- 2023-09-30T12:00:00Z: September 30, 2023, at 12:00:00 PM UTC.
+- 2023-09-30T18:30:45.123Z: September 30, 2023, at 6:30:45.123 PM UTC.
+- 2023-09-30T08:15:00-05:00: September 30, 2023, at 8:15:00 AM in a time zone with a 5-hour offset behind UTC.
+
+ISO 8601 is widely used in various industries and applications, including computer programming, data exchange, and international standards for document and information representation, because of its clarity and consistency in representing dates and times.
+
+---
+
+- This is an universal and unambiguous way of representing time as a string.
+
+- I can have ISO 8601 "date" that are UTC and ISO 8601 that are not UTC. Those two conventions are orthogonal
+
+### Question : What is a Timezone ?
+
+A time zone is a region of the Earth that has the same standard time. It is a way to keep track of time by dividing the world into segments, each of which observes the same local time throughout the year. Time zones are necessary because the Earth is divided into 24 longitudinal sections, each 15 degrees of longitude apart, and as the Earth rotates, different parts of the world experience daylight and darkness at different times.
+
+Key points about time zones include:
+
+- Standard Time: Each time zone is associated with a specific standard time offset from Coordinated Universal Time (UTC). UTC is often used as a reference point because it provides a consistent and precise time standard that does not observe daylight saving time changes. Time zones are typically expressed as an offset from UTC, either as a positive or negative value. For example, UTC+02:00 means a 2-hour time difference ahead of UTC, while UTC-05:00 means a 5-hour time difference behind UTC.
+
+- Daylight Saving Time (DST): Some regions and countries have a practice known as daylight saving time, where the local time is adjusted forward by one hour during certain periods of the year to make better use of daylight during the longer days of summer. When DST is in effect, the time zone offset temporarily changes. For example, a location in UTC-05:00 might switch to UTC-04:00 during DST.
+
+- Time Zone Boundaries: Time zone boundaries are not always strictly based on lines of longitude. They can be adjusted to accommodate political boundaries, geographical features, and convenience. This can lead to irregularly shaped time zones.
+
+- Time Zone Names: Time zones often have names in addition to their numerical offsets. For example, UTC+01:00 is commonly referred to as Central European Time (CET), and UTC-08:00 is referred to as Pacific Standard Time (PST).
+
+- International Date Line: The International Date Line is an imaginary line located in the Pacific Ocean, roughly along the 180th meridian. Crossing this line can result in a change of date. When traveling west across the line, you typically subtract a day from the current date, and when traveling east, you add a day.
+
+Time zones are essential for coordinating activities, scheduling events, and maintaining a standardized way of measuring time across the world. They help ensure that people in different parts of the globe can communicate and work together effectively, despite the Earth's rotation causing variations in local time.
+
+---
+
+- Ok, so i should take the timzone into account if i want to be sure of where the date came from.
+
+### Question : Why do we say there is not a 1:1 relationship between a Timezone and the Date ?
+
+There is not a 1:1 relationship between a timezone and the date because timezones are not static; they can change over time due to various factors, including political decisions, regional preferences, and adjustments for daylight saving time (DST). This lack of a 1:1 relationship means that a specific timezone can have different offsets from Coordinated Universal Time (UTC) at different points in time, which in turn affects the local date and time.
+
+Here are some reasons why timezones are not fixed and why their relationship with the date can change:
+
+- Daylight Saving Time (DST): Many regions around the world, but not all, observe DST, where the local time is adjusted forward by one hour during the summer months to make better use of daylight. When DST begins, the timezone offset changes, effectively advancing the local time by one hour. When DST ends, the offset reverts to its standard value. This means that the same timezone can have two different offsets and local times during the year.
+
+- Political Decisions: Governments and authorities can change the timezone boundaries or the rules for observing DST. For example, a country may decide to abolish DST, adopt it for the first time, or change the start and end dates. These political decisions can lead to shifts in the relationship between the timezone and the date.
+
+- Historical Changes: Timezones have evolved over time. In the past, there were fewer standardized timezones, and local mean time was often used. The modern system of timezones and UTC offsets is a relatively recent development, and historical records may need to be adjusted when dealing with dates from different eras.
+
+- Timezone Boundaries: Timezone boundaries are not always strictly based on lines of longitude. They can be adjusted to accommodate political and administrative boundaries, which can lead to irregularly shaped timezones. This can result in neighboring regions having different timezone offsets.
+
+- Leap Seconds: Occasionally, leap seconds are added to UTC to account for irregularities in Earth's rotation. These adjustments can affect the relationship between UTC and local timezones.
+
+Due to these factors, it's important to consider the historical and current rules for a specific timezone when working with date and time information. This complexity can make date and time calculations challenging, especially when dealing with international or historical data. To ensure accurate and reliable date and time handling, it's often recommended to use well-established libraries and tools that account for timezone changes and DST transitions.
+
+---
+
+- Having a "Timestamp" for example "2023-09-30T12:00:00Z" and a Timezone for example "CET" i can't be sure at 100% the time it is in the zone. I need to be sure the "DST" was taken into account.
+
+# IMPLICATION : Know what you want
+
+### Due to business requierements
+
+<img
+  src="datebomb/business-requirement.jpeg"
+  class="my-10"
+/>
+
+### After a huge modelisation of what we want (DRAWING)
+
+<img
+  class="my-10"
+  src="datebomb/tahiti-drawing.jpg"
+/>
+
+- We should know if we want a local date or an UTC date
+
+If the event is tangible/material and linked to a geographical point in space. We should store a local date.
+
+For exemple :
+
+The Leakfinder in Tahiti, found the leak at 19h01. So using our system we should vizualize in Paris that he found it at 19h01 (and not 7h01).
+
+If the event is untangible/immaterial and not bound to a geographical point in space. We should store an UTC date.
+
+For exemple :
+
+The network index was updated at 22h07 in Paris. So using our system the Leakfinder should vizualize in tahiti that the index was updated at 10h07 (and not 22h07). Because the leakfinder don't give a shit about the hour the system was updated in Paris.
+
+---
+
+- We should think of who will vizualize the date and in which context to know how we should store/show the date.
+
+# "SOLUTION" : Touch it with a stick
+
+- By default Store in ISO 8601 (it's easier)
+- To dodge any ambiguitity we need a timestamp + timezone
+- Store a local date, when it's tangible
+- Store an UTC date when it's intangible
+- If you can don't use javascript Date, it's broken there is a proposal for a Temporal API at TC39 for the futur
+- Keep in mind that a date in postgres is a date it doesn't store any information related to the timezone.
