@@ -5,9 +5,10 @@ import { Content, allContents } from "contentlayer/generated"
 import Image from "next/image"
 import { notFound } from "next/navigation"
 
-export const generateMetadata = ({ params }: BlogContentProps) => {
+export const generateMetadata = async ({ params }: BlogContentProps) => {
+  const { slug } = await params
   const content = allContents.find(
-    (content) => content._raw.flattenedPath === params.slug
+    (content) => content._raw.flattenedPath === slug,
   )
 
   if (content) {
@@ -22,12 +23,14 @@ export async function generateStaticParams() {
 }
 
 interface BlogContentProps {
-  params: {
+  params: Promise<{
     slug: Content["url"]
-  }
+  }>
 }
 
-export default function BlogContent({ params: { slug } }: BlogContentProps) {
+export default async function BlogContent({ params }: BlogContentProps) {
+  const { slug } = await params
+
   const findContent = (slug: Content["url"]) => {
     const resultat = allContents.find((content) => content.url === slug)
 
@@ -50,7 +53,7 @@ export default function BlogContent({ params: { slug } }: BlogContentProps) {
           className="object-cover"
         />
 
-        <div className="relative h-full w-full bg-black/60 text-center align-middle ">
+        <div className="relative size-full bg-black/60 text-center align-middle">
           <div className="relative top-40 font-script text-6xl text-blue-300">
             {content.title}
           </div>
@@ -59,7 +62,7 @@ export default function BlogContent({ params: { slug } }: BlogContentProps) {
       <Star star={content.star as STAR} />
       <Mdx code={content.body.code} />
 
-      <div className="relative bottom-0 -z-10 hidden h-[125px] w-[100vw]  sm:block">
+      <div className="relative bottom-0 -z-10 hidden h-[125px] w-screen sm:block">
         <Image
           alt="sea wave a the bottom of the page"
           src="/wave/animated-wave.svg"

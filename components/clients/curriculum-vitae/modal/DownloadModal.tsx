@@ -100,7 +100,7 @@ export function DownloadModal({ isShow, setIsShow }: DownloadModalProps) {
                                     </div>
                                     {checked && (
                                       <div className="shrink-0 text-blue-900">
-                                        <CheckIcon className="h-6 w-6" />
+                                        <CheckIcon className="size-6" />
                                       </div>
                                     )}
                                   </div>

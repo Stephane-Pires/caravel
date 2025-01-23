@@ -1,32 +1,25 @@
-import { generate } from "@pdfme/generator"
-import { NextRequest } from "next/server"
+import { LOCAL_SUPPORTED, getCurriculumPDFFilename } from "@/utils/local"
+import fs from "fs"
+import { NextRequest, NextResponse } from "next/server";
+import path from "path"
 
-// export an async GET function. This is a convention in NextJS
+const CACHE_WEEK = 604800
+
 export async function GET(req: NextRequest) {
-  // external file URL
+  // should be checked by zod via a controller.
+  const language: LOCAL_SUPPORTED  = req.nextUrl.searchParams.get("language") as LOCAL_SUPPORTED
 
-  const language = req.nextUrl.searchParams.get("language")
+  const pdfPath = path.resolve(
+    "./public/about-me",
+    getCurriculumPDFFilename(language),
+  )
+  const pdfFile = fs.readFileSync(pdfPath)
 
-  const CURRICULUM_RESOURCES_URL = `${process.env.HOST}/api/resources/curriculum?language=${language}`
-
-  // TODO : Response is not typed
-  const response = await fetch(CURRICULUM_RESOURCES_URL, {
-    cache: "no-cache",
-  })
-    .then((res) => res.json())
-    .catch((error) => console.log("error handle it properly : ", error))
-
-  const maybePdf = new Promise<Uint8Array>((resolve, reject) => {
-    generate({ template: response, inputs: response.sampledata })
-      .then((pdf) => resolve(pdf))
-      .catch((error) => reject(error))
-  })
-
-  return new Response(await maybePdf, {
+  return new NextResponse(await pdfFile, {
     headers: {
       "Content-Type": "application/pdf",
       "Content-Disposition": "filename=cv-stephane-pires",
-      "Cache-control": "no-cache",
+      "Cache-control": `public, max-age=${CACHE_WEEK}`,
     },
   })
 }

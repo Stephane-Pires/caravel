@@ -2,7 +2,7 @@ import Image from "next/image"
 
 export default function NotFound() {
   return (
-    <main className="z-50 flex h-[100vh] min-h-screen w-full flex-col items-center justify-center p-4">
+    <main className="z-50 flex h-screen min-h-screen w-full flex-col items-center justify-center p-4">
       <h1 className="mb-8 font-sans text-8xl text-primary-700">
         404 Not found
       </h1>

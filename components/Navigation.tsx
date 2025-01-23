@@ -22,11 +22,6 @@ const NAVIGATION = {
     name: "Projects",
     icon: "code",
   },
-  SANDBOX: {
-    pathname: "/sandbox",
-    name: "Sandbox",
-    icon: "bike",
-  },
 } as const
 
 type pathname = (typeof NAVIGATION)[keyof typeof NAVIGATION]["pathname"]
@@ -118,12 +113,12 @@ export function NavigationMobile() {
 
         {showLinks ? (
           <XMarkIcon
-            className="m-2 h-10 w-10"
+            className="m-2 size-10"
             onClick={handleClickIcon}
           />
         ) : (
           <Bars2Icon
-            className="m-2 h-10 w-10"
+            className="m-2 size-10"
             onClick={handleClickIcon}
           />
         )}
