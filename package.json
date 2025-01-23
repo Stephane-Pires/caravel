@@ -11,8 +11,6 @@
   "dependencies": {
     "@headlessui/react": "^1.7.15",
     "@heroicons/react": "^2.0.17",
-    "@pdfme/generator": "^1.1.10",
-    "@pdfme/ui": "^1.1.10",
     "autoprefixer": "10.4.14",
     "contentlayer": "^0.3.2",
     "date-fns": "^2.29.3",
@@ -39,6 +37,5 @@
     "eslint-plugin-tailwindcss": "^3.11.0",
     "prettier": "^2.8.7",
     "prettier-plugin-tailwindcss": "^0.2.7"
-
   }
 }

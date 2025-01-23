@@ -25,14 +25,6 @@ export default function Sandbox() {
             Typography
           </div>
         </Link>
-        <Link
-          className="m-auto flex h-40 w-40 items-center justify-center rounded-xl border-4 border-accent-100 bg-primary-600 hover:bg-primary-300"
-          href="/sandbox/pdf"
-        >
-          <div className="text-center font-sans text-xl text-blue-900">
-            Pdf generator
-          </div>
-        </Link>
       </div>
     </main>
   )
