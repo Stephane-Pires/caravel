@@ -79,7 +79,7 @@ export function DownloadModal({ isShow, setIsShow }: DownloadModalProps) {
                                       : ""
                                   }
                   ${checked ? "bg-primary-600" : "bg-slate-800"}
-                    relative flex cursor-pointer rounded-lg px-5 py-4 focus:outline-none`
+                    relative flex cursor-pointer rounded-lg px-5 py-4 focus:outline-hidden`
                                 }
                               >
                                 {({ checked }) => (
@@ -119,7 +119,7 @@ export function DownloadModal({ isShow, setIsShow }: DownloadModalProps) {
                     <button
                       type="button"
                       className="inline-flex justify-center rounded-md border border-transparent  bg-accent-200 px-4  py-2 font-sans text-base font-bold
-                      text-blue-900  transition delay-75 hover:bg-accent-400 focus:outline-none  focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 active:scale-105 active:bg-accent-400"
+                      text-blue-900  transition delay-75 hover:bg-accent-400 focus:outline-hidden  focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 active:scale-105 active:bg-accent-400"
                     >
                       Download
                     </button>
