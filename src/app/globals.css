@@ -1,6 +1,54 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
+
+@theme {
+  --background-image-gradient-radial: radial-gradient(var(--tw-gradient-stops));
+  --background-image-gradient-conic: conic-gradient(
+    from 180deg at 50% 50%,
+    var(--tw-gradient-stops)
+  );
+
+  --color-primary-100: #fdf7e9;
+  --color-primary-200: #fcf5e2;
+  --color-primary-300: #fbf2db;
+  --color-primary-400: #fbf0d3;
+  --color-primary-500: #faedcd;
+  --color-primary-600: #f1ce73;
+  --color-primary-700: #eec356;
+  --color-primary-800: #e8ae1b;
+  --color-primary-900: #b18412;
+
+  --color-accent-100: #d3f9e1;
+  --color-accent-200: #c2f7d6;
+  --color-accent-300: #b1f5ca;
+  --color-accent-400: #9ff3be;
+  --color-accent-500: #86efac;
+  --color-accent-600: #3fe67c;
+  --color-accent-700: #1cd45f;
+  --color-accent-800: #15a54a;
+  --color-accent-900: #0f7635;
+
+  --font-sans: var(--font-open-sans);
+  --font-script: var(--font-merienda);
+  --font-code: var(--font-mono-lisa-regular);
+}
+
+/*
+  The default border color has changed to `currentColor` in Tailwind CSS v4,
+  so we've added these compatibility styles to make sure everything still
+  looks the same as it did with Tailwind CSS v3.
+
+  If we ever want to remove these styles, we need to add an explicit border
+  color utility to any element that depends on these defaults.
+*/
+@layer base {
+  *,
+  ::after,
+  ::before,
+  ::backdrop,
+  ::file-selector-button {
+    border-color: var(--color-gray-200, currentColor);
+  }
+}
 
 /* Coupled to header height */
 * {
@@ -65,7 +113,7 @@ math {
 }
 
 ul > li > ul > li > p {
-  @apply !m-0;
+  @apply m-0!;
 }
 
 ul > li > ul > li {

@@ -24,7 +24,7 @@ export default function Home() {
     <main className="grid min-h-screen grid-rows-2 p-8 sm:p-24">
       <div className="row-span-2 flex flex-row items-center justify-around">
         <div className="flex flex-col">
-          <h1 className="bg-gradient-to-r from-primary-700 to-primary-300 bg-clip-text font-script text-6xl font-bold text-transparent sm:text-8xl">
+          <h1 className="bg-linear-to-r from-primary-700 to-primary-300 bg-clip-text font-script text-6xl font-bold text-transparent sm:text-8xl">
             Caravel
           </h1>
 
