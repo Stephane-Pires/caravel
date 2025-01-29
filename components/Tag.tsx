@@ -44,6 +44,11 @@ function getColor(tag: SUBJECT | CATEGORY | TECHNO | SOFT_SKILLS) {
     case "VUE":
     case "VITE":
     case "WINDICSS":
+    case "STORYBOOK":
+    case "AWS":
+    case "VERCEL":
+    case "ETL":
+    case "PYTHON":
       return "bg-accent-200"
     default:
       return unreachable(tag)
@@ -77,6 +82,10 @@ function getLabel(tag: SUBJECT | CATEGORY | TECHNO | SOFT_SKILLS) {
       return "React 🚀"
     case "TYPESCRIPT":
       return "Typescript"
+    case "STORYBOOK":
+      return "Storybook"
+    case "AWS":
+      return "Amazon Web Service"
     case "SQL":
       return "SQL"
     case "POSTGRESQL":
@@ -86,9 +95,9 @@ function getLabel(tag: SUBJECT | CATEGORY | TECHNO | SOFT_SKILLS) {
     case "NEXTJS":
       return "NextJS 🚀"
     case "SVELTE":
-      return "Svelte"
+      return "Svelte 🚀"
     case "SVELTEKIT":
-      return "SvelteKit"
+      return "SvelteKit 🚀"
     case "NODEJS":
       return "NodeJS"
     case "JAVASCRIPT":
@@ -119,6 +128,12 @@ function getLabel(tag: SUBJECT | CATEGORY | TECHNO | SOFT_SKILLS) {
       return "Vite 🚀"
     case "WINDICSS":
       return "Windicss"
+    case "VERCEL":
+      return "Vercel"
+    case "ETL":
+      return "ETL"
+    case "PYTHON":
+      return "Python"
     default:
       return unreachable(tag)
   }
@@ -128,8 +143,8 @@ export function Tag({ tag }: TagProps) {
   return (
     <div
       className={`${getColor(
-        tag
-      )} my-2 max-w-fit rounded-lg border-2 border-primary-900 px-2 py-1 font-sans font-semibold text-blue-900`}
+        tag,
+      )} border-primary-900 my-2 max-w-fit rounded-lg border-2 px-2 py-1 font-sans font-semibold text-blue-900`}
     >
       {getLabel(tag)}
     </div>

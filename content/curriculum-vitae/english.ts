@@ -137,6 +137,41 @@ export const CURRICULUM_VITAE = {
           ],
         },
       },
+      LEAKMITED: {
+        id: "LEAKMITED",
+        label: "Leakmited",
+        icon: "/about-me/leakmited-logo.png",
+        link: "https://www.leakmited.com/",
+        duration: {
+          start: "Sep 2023",
+          end: "today",
+          difference: "N/A",
+        },
+        content: {
+          paragraph: `At Leakmited, I joined a small team of seven people, including a Tech/Product team of three, and contributed significantly to the company’s growth journey. During my tenure, the company expanded to over 20 employees and successfully raised €5 million in a Series A funding round. Working in an international environment with colleagues from over five countries, I adapted quickly and embraced diverse perspectives to drive the development of impactful software solutions.
+          I played a central role in building and industrializing three major products, including SENTINEL, a tool designed to monitor District Metered Areas (DMA) in potable water networks and optimize leak searcher allocation. To ensure the product met real-world operational needs, I conducted client visits to map customer journeys and integrate insights from field teams. Additionally, I enhanced the TWIN platform by introducing key features, such as identifying high-opportunity areas, managing network renovations, and estimating water savings.
+          To improve software scalability and maintainability, I implemented best engineering practices, including design documentation, schema validation using tools like Zod and Pydantic, and the creation of an internal component library with Storybook. I also designed ETL pipelines in Databricks to ingest network data into the data warehouse, enabling advanced visualizations for better decision-making. Collaborating with data scientists, data engineers, and software developers, I contributed to the success of flagship products like SENTINEL and TWIN.
+          Throughout this journey, I developed expertise in web mapping technologies, such as Mapbox and PostGIS, which were integral to the products I worked on. My technical stack included modern frontend tools like Svelte, SvelteKit, MeltUI, and Tailwind, paired with backend technologies like FastAPI, AWS Lambda, and Elasticsearch. I also leveraged cloud platforms like AWS and Vercel, alongside PostgreSQL and Apache Spark for database and data processing needs. This experience allowed me to deliver scalable, innovative solutions that addressed complex challenges in water network management`,
+          missions: [
+            `Worked from Scratch on a new Project "Sentinel"`,
+            "Built multiples features (Map, Renovation, Dashboard, Matrices, etc..)",
+            "Worked on ETL pipeline to ingest data on the system",
+            "Handled multiples client interview to understand product needs",
+          ],
+          skills: [
+            "NODEJS",
+            "TYPESCRIPT",
+            "SVELTE",
+            "SVELTEKIT",
+            "STORYBOOK",
+            "AWS",
+            "VERCEL",
+            "ETL",
+            "PYTHON",
+            "POSTGRESQL",
+          ],
+        },
+      },
     },
   },
 
@@ -260,6 +295,6 @@ export type Sections<T extends Article> =
 
 export function unreachable(x: never): never {
   throw new Error(
-    `This codepath is not reachable this variable: ${x} should be handled`
+    `This codepath is not reachable this variable: ${x} should be handled`,
   )
 }

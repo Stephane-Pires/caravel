@@ -24,13 +24,13 @@ export default function AboutMe() {
 
   // let [mapDom, setMapDom] = useState(new Map<string, HTMLDivElement>())
   let [mapSectionExperienceDom, setMapSectionExperienceDom] = useState(
-    new Map<string, HTMLDivElement>()
+    new Map<string, HTMLDivElement>(),
   )
   let [mapSectionHobbiesDom, setMapSectionHobbiesDom] = useState(
-    new Map<string, HTMLDivElement>()
+    new Map<string, HTMLDivElement>(),
   )
   let [mapSectionEducationDom, setMapSectionEducationDom] = useState(
-    new Map<string, HTMLDivElement>()
+    new Map<string, HTMLDivElement>(),
   )
 
   const setRefArticle = (article: Article) => {
@@ -49,11 +49,11 @@ export default function AboutMe() {
       if (node) {
         sectionExperienceRef.current.set(
           CURRICULUM_VITAE["EXPERIENCE"].section[section].id,
-          node
+          node,
         )
       } else {
         sectionExperienceRef.current.delete(
-          CURRICULUM_VITAE["EXPERIENCE"].section[section].id
+          CURRICULUM_VITAE["EXPERIENCE"].section[section].id,
         )
       }
     }
@@ -64,11 +64,11 @@ export default function AboutMe() {
       if (node) {
         sectionHobbiesRef.current.set(
           CURRICULUM_VITAE["HOBBIES"].section[section].id,
-          node
+          node,
         )
       } else {
         sectionHobbiesRef.current.delete(
-          CURRICULUM_VITAE["HOBBIES"].section[section].id
+          CURRICULUM_VITAE["HOBBIES"].section[section].id,
         )
       }
     }
@@ -79,11 +79,11 @@ export default function AboutMe() {
       if (node) {
         sectionEducationRef.current.set(
           CURRICULUM_VITAE["EDUCATION"].section[section].id,
-          node
+          node,
         )
       } else {
         sectionEducationRef.current.delete(
-          CURRICULUM_VITAE["EDUCATION"].section[section].id
+          CURRICULUM_VITAE["EDUCATION"].section[section].id,
         )
       }
     }
@@ -102,12 +102,12 @@ export default function AboutMe() {
     <main className="flex min-h-screen flex-col items-center p-4 pt-20 md:p-10 md:py-20">
       {/* progress bar */}
       <div
-        className={`fixed left-0 top-20 z-30 flex h-1 bg-linear-to-r from-accent-500 to-accent-300 `}
+        className={`from-accent-500 to-accent-300 fixed top-20 left-0 z-30 flex h-1 bg-linear-to-r`}
         style={{
           width: `calc((${percentScrolled} * 100vw) / 100)`,
         }}
       />
-      <div className="mb-8 mt-4 flex w-full flex-col items-center gap-4 font-serif lg:flex-row lg:gap-10">
+      <div className="mt-4 mb-8 flex w-full flex-col items-center gap-4 font-serif lg:flex-row lg:gap-10">
         {/* <div className="sticky top-[40%] self-start md:basis-2/12">
           <div className="hidden justify-end md:flex">
             <NavigationCurriculumVitae articleDom={mapDom} />
@@ -117,13 +117,13 @@ export default function AboutMe() {
         <div className="order-last my-10 lg:sticky lg:top-[90%] lg:order-first lg:basis-2/12 lg:self-start">
           <button
             onClick={() => setShowLanguageModal(true)}
-            className="mx-auto rounded-md bg-accent-200 p-3 font-sans text-base font-bold text-blue-900  transition delay-75 hover:bg-accent-400 active:scale-105 active:bg-accent-400 md:flex"
+            className="bg-accent-200 hover:bg-accent-400 active:bg-accent-400 mx-auto rounded-md p-3 font-sans text-base font-bold text-blue-900 transition delay-75 active:scale-105 md:flex"
           >
             Download CV{" "}
           </button>
         </div>
-        <div className=" mx-auto flex max-w-prose flex-col items-center md:basis-8/12">
-          <div className=" my-10 hidden font-script text-4xl font-bold text-blue-300 md:flex md:text-6xl">
+        <div className="mx-auto flex max-w-prose flex-col items-center md:basis-8/12">
+          <div className="font-script my-10 hidden text-4xl font-bold text-blue-300 md:flex md:text-6xl">
             Me, myself & I ❤️
           </div>
           <div className="flex flex-col gap-4 font-sans md:gap-10">
@@ -158,6 +158,12 @@ export default function AboutMe() {
               <section ref={setRefSectionExperience("IZICREDIT")}>
                 <SectionContent
                   section={CURRICULUM_VITAE.EXPERIENCE.section.IZICREDIT}
+                />
+              </section>
+
+              <section ref={setRefSectionExperience("LEAKMITED")}>
+                <SectionContent
+                  section={CURRICULUM_VITAE.EXPERIENCE.section.LEAKMITED}
                 />
               </section>
             </article>
