@@ -67,6 +67,27 @@ const BirdAnimation = () => {
           }}
         ></motion.div>
       </div>
+
+      <motion.div
+        animate={{
+          rotate: [0, -1],
+        }}
+        transition={{
+          delay: 0.5,
+          duration: 1.5,
+          repeat: Infinity,
+          repeatType: "mirror",
+        }}
+      >
+        <Image
+          alt="sea wave a the bottom of the page"
+          src="/logbook/colorized-logo.png"
+          width={250}
+          height={250}
+          className="transla absolute mt-32 transition-transform duration-300 ease-in-out"
+        />
+      </motion.div>
+
       <Image
         alt="sea wave a the bottom of the page"
         src="/wave/animated-wave.svg"

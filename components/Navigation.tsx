@@ -40,7 +40,7 @@ export function Navigation() {
       <div className="col-span-1 ml-4">
         <Link href="/">
           <Image
-            src="/logbook/logbook.png"
+            src="/logbook/colorized-logo.png"
             alt="logo caravel"
             width={60}
             height={60}
@@ -53,7 +53,7 @@ export function Navigation() {
           <Link
             href={navigation.pathname}
             key={navigation.name}
-            className={`font-sans text-2xl font-bold hover:text-primary-300 ${
+            className={`hover:text-primary-300 font-sans text-2xl font-bold ${
               isActivePathname(pathname, navigation.pathname)
                 ? "text-accent-500"
                 : "text-primary-600"
@@ -125,7 +125,7 @@ export function NavigationMobile() {
       </div>
 
       {showLinks && (
-        <div className=" mt-14 flex flex-col justify-around gap-8">
+        <div className="mt-14 flex flex-col justify-around gap-8">
           {Object.values(NAVIGATION).map((navigation) => (
             <Link
               key={navigation.name}
