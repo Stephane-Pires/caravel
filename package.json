@@ -7,7 +7,8 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint && npm run type-check",
-    "type-check": "tsc"
+    "type-check": "tsc",
+    "prepare": "husky"
   },
   "dependencies": {
     "@headlessui/react": "^2.2.0",
@@ -30,13 +31,18 @@
     "typescript": "^5.7.3"
   },
   "devDependencies": {
+    "@commitlint/cli": "^19.6.1",
+    "@commitlint/config-conventional": "^19.6.0",
     "@trivago/prettier-plugin-sort-imports": "^5.2.1",
     "@types/react": "^19.0.8",
     "@types/react-dom": "^19.0.3",
     "eslint": "^9.18.0",
     "eslint-config-next": "^15.1.6",
-    "eslint-plugin-tailwindcss": "^3.18.0",
+    "husky": "^9.1.7",
     "prettier": "^3.4.2",
     "prettier-plugin-tailwindcss": "^0.6.11"
+  },
+  "volta": {
+    "node": "23.7.0"
   }
 }
