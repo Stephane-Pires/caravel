@@ -23,27 +23,25 @@ export function BoardingCardDesktop({
 }: BoardingCard) {
   return (
     <a href={url}>
-      <div className=" h-80 min-w-[660px] max-w-[660px] -rotate-6 rounded-xl border-l-4 border-t-4 border-primary-900 bg-primary-700 p-2 transition delay-100 ease-in-out hover:rotate-0 hover:bg-primary-500 active:scale-105 active:bg-primary-500">
+      <div className="border-primary-900 bg-primary-700 hover:bg-primary-500 active:bg-primary-500 h-80 max-w-[660px] min-w-[660px] -rotate-6 rounded-xl border-t-4 border-l-4 p-2 transition delay-100 ease-in-out hover:rotate-0 active:scale-105">
         <div className="m-2 flex flex-row">
-          <h2 className="mr-8 font-script text-blue-900">{title}</h2>
+          <h2 className="font-script mr-8 text-blue-900">{title}</h2>
           <div className="flex translate-y-1 flex-row gap-4">
-            <div className="size-4 rotate-45 skew-y-[-45deg] bg-accent-300" />
-            <div className="size-4 rotate-45 skew-y-[-45deg] bg-accent-300" />
-            <div className="size-4 rotate-45 skew-y-[-45deg] bg-accent-300" />
-            <div className="size-4 rotate-45 skew-y-[-45deg] bg-accent-300" />
-            <div className="size-4 rotate-45 skew-y-[-45deg] bg-accent-300" />
-            <div className="size-4 rotate-45 skew-y-[-45deg] bg-accent-300" />
-            <div className="size-4 rotate-45 skew-y-[-45deg] bg-accent-300" />
-            <div className="size-4 rotate-45 skew-y-[-45deg] bg-accent-300" />
-            <div className="size-4 rotate-45 skew-y-[-45deg] bg-accent-300" />
-            <div className="size-4 rotate-45 skew-y-[-45deg] bg-accent-300" />
-            <div className="size-4 rotate-45 skew-y-[-45deg] bg-accent-300" />
-            <div className="size-4 rotate-45 skew-y-[-45deg] bg-accent-300" />
-            <div className="size-4 rotate-45 skew-y-[-45deg] bg-accent-300" />
-            <div className="size-4 rotate-45 skew-y-[-45deg] bg-accent-300" />
-            <div className="size-4 rotate-45 skew-y-[-45deg] bg-accent-300" />
-            <div className="size-4 rotate-45 skew-y-[-45deg] bg-accent-300" />
-            <div className="size-4 rotate-45 skew-y-[-45deg] bg-accent-300" />
+            <div className="bg-accent-300 size-4 rotate-45 skew-y-[-45deg]" />
+            <div className="bg-accent-300 size-4 rotate-45 skew-y-[-45deg]" />
+            <div className="bg-accent-300 size-4 rotate-45 skew-y-[-45deg]" />
+            <div className="bg-accent-300 size-4 rotate-45 skew-y-[-45deg]" />
+            <div className="bg-accent-300 size-4 rotate-45 skew-y-[-45deg]" />
+            <div className="bg-accent-300 size-4 rotate-45 skew-y-[-45deg]" />
+            <div className="bg-accent-300 size-4 rotate-45 skew-y-[-45deg]" />
+            <div className="bg-accent-300 size-4 rotate-45 skew-y-[-45deg]" />
+            <div className="bg-accent-300 size-4 rotate-45 skew-y-[-45deg]" />
+            <div className="bg-accent-300 size-4 rotate-45 skew-y-[-45deg]" />
+            <div className="bg-accent-300 size-4 rotate-45 skew-y-[-45deg]" />
+            <div className="bg-accent-300 size-4 rotate-45 skew-y-[-45deg]" />
+            <div className="bg-accent-300 size-4 rotate-45 skew-y-[-45deg]" />
+            <div className="bg-accent-300 size-4 rotate-45 skew-y-[-45deg]" />
+            <div className="bg-accent-300 size-4 rotate-45 skew-y-[-45deg]" />
           </div>
         </div>
         <div className="m-2 mt-4 flex flex-row justify-between">
@@ -51,15 +49,15 @@ export function BoardingCardDesktop({
           <div className="font-script text-blue-900/70">Arrival Date :</div>
         </div>
         <div className="m-2 flex flex-row justify-between">
-          <div className="border-b-2 border-primary-900  font-mono text-blue-900">
+          <div className="border-primary-900 border-b-2 font-mono text-blue-900">
             {duration.start}
           </div>
-          <div className="border-b-2 border-primary-900 font-mono text-blue-900">
+          <div className="border-primary-900 border-b-2 font-mono text-blue-900">
             {duration.end}
           </div>
         </div>
         <div className="flex flex-row justify-between gap-2 p-2">
-          <div className="relative h-[172px] min-w-[300px] ">
+          <div className="relative h-[172px] min-w-[300px]">
             <Image
               src={image}
               alt="My Image"
@@ -90,37 +88,37 @@ export function BoardingCardMobile({
 }: BoardingCard) {
   return (
     <a href={url}>
-      <div className="h-auto min-w-[350px] max-w-[350px] rounded-lg border-l-4 border-t-4 border-primary-900 bg-primary-700 p-2 transition delay-100 ease-in-out hover:bg-primary-500 active:scale-105 active:bg-primary-500">
+      <div className="border-primary-900 bg-primary-700 hover:bg-primary-500 active:bg-primary-500 h-auto max-w-[350px] min-w-[350px] rounded-lg border-t-4 border-l-4 p-2 transition delay-100 ease-in-out active:scale-105">
         <div className="m-2 flex flex-row">
           <div className="flex translate-y-1 flex-row gap-4">
-            <div className="size-4 rotate-45 skew-y-[-45deg] bg-accent-300" />
-            <div className="size-4 rotate-45 skew-y-[-45deg] bg-accent-300" />
-            <div className="size-4 rotate-45 skew-y-[-45deg] bg-accent-300" />
-            <div className="size-4 rotate-45 skew-y-[-45deg] bg-accent-300" />
-            <div className="size-4 rotate-45 skew-y-[-45deg] bg-accent-300" />
-            <div className="size-4 rotate-45 skew-y-[-45deg] bg-accent-300" />
-            <div className="size-4 rotate-45 skew-y-[-45deg] bg-accent-300" />
-            <div className="size-4 rotate-45 skew-y-[-45deg] bg-accent-300" />
-            <div className="size-4 rotate-45 skew-y-[-45deg] bg-accent-300" />
-            <div className="size-4 rotate-45 skew-y-[-45deg] bg-accent-300" />
+            <div className="bg-accent-300 size-4 rotate-45 skew-y-[-45deg]" />
+            <div className="bg-accent-300 size-4 rotate-45 skew-y-[-45deg]" />
+            <div className="bg-accent-300 size-4 rotate-45 skew-y-[-45deg]" />
+            <div className="bg-accent-300 size-4 rotate-45 skew-y-[-45deg]" />
+            <div className="bg-accent-300 size-4 rotate-45 skew-y-[-45deg]" />
+            <div className="bg-accent-300 size-4 rotate-45 skew-y-[-45deg]" />
+            <div className="bg-accent-300 size-4 rotate-45 skew-y-[-45deg]" />
+            <div className="bg-accent-300 size-4 rotate-45 skew-y-[-45deg]" />
+            <div className="bg-accent-300 size-4 rotate-45 skew-y-[-45deg]" />
+            <div className="bg-accent-300 size-4 rotate-45 skew-y-[-45deg]" />
           </div>
         </div>
         <div className="m-2 flex w-auto flex-row justify-center">
-          <h2 className="mt-2 font-script text-xl text-blue-900">{title}</h2>
+          <h2 className="font-script mt-2 text-xl text-blue-900">{title}</h2>
         </div>
         <div className="m-2 mt-4 flex flex-row justify-between">
           <div className="font-script text-blue-900/70">Beginning Date :</div>
           <div className="font-script text-blue-900/70">Arrival Date :</div>
         </div>
         <div className="m-2 flex flex-row justify-between">
-          <div className="border-b-2 border-primary-900  font-mono text-blue-900">
+          <div className="border-primary-900 border-b-2 font-mono text-blue-900">
             {duration.start}
           </div>
-          <div className="border-b-2 border-primary-900 font-mono text-blue-900">
+          <div className="border-primary-900 border-b-2 font-mono text-blue-900">
             {duration.end}
           </div>
         </div>
-        <div className="relative h-[172px] min-w-[300px] ">
+        <div className="relative h-[172px] min-w-[300px]">
           <Image
             src={image}
             alt="My Image"

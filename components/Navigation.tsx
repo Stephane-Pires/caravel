@@ -42,8 +42,8 @@ export function Navigation() {
           <Image
             src="/logbook/colorized-logo.png"
             alt="logo caravel"
-            width={120}
-            height={120}
+            width={80}
+            height={80}
           />
         </Link>
       </div>

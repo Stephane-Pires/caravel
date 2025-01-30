@@ -42,6 +42,9 @@ export const TECHNO = {
   VERCEL: "VERCEL",
   ETL: "ETL",
   PYTHON: "PYTHON",
+  TERMINAL: "TERMINAL",
+  ANSIBLE: "ANSIBLE",
+  LINUX: "LINUX",
 }
 
 export type TECHNO = keyof typeof TECHNO

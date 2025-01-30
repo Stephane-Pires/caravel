@@ -49,6 +49,9 @@ function getColor(tag: SUBJECT | CATEGORY | TECHNO | SOFT_SKILLS) {
     case "VERCEL":
     case "ETL":
     case "PYTHON":
+    case "ANSIBLE":
+    case "LINUX":
+    case "TERMINAL":
       return "bg-accent-200"
     default:
       return unreachable(tag)
@@ -134,6 +137,12 @@ function getLabel(tag: SUBJECT | CATEGORY | TECHNO | SOFT_SKILLS) {
       return "ETL"
     case "PYTHON":
       return "Python"
+    case "ANSIBLE":
+      return "Ansible 🚀"
+    case "TERMINAL":
+      return "Terminal"
+    case "LINUX":
+      return "Linux 🚀"
     default:
       return unreachable(tag)
   }

@@ -9,8 +9,8 @@ export const metadata: Metadata = {
 
 export default function Projects() {
   return (
-    <main className="flex min-h-screen flex-col items-center  p-10 py-20">
-      <div className="mb-8 mt-4 flex flex-row items-center gap-8 align-middle font-serif text-4xl sm:text-6xl ">
+    <main className="flex min-h-screen flex-col items-center p-10 py-20">
+      <div className="mt-4 mb-8 flex flex-row items-center gap-8 align-middle font-serif text-4xl sm:text-6xl">
         <div className="mt-10 flex h-[150px] items-center justify-center">
           <Image
             src="/handraw/primary/code.svg"
@@ -36,6 +36,14 @@ export default function Projects() {
           url={CURRICULUM_VITAE.PROJECTS.section.CARAVEL.url}
           skills={CURRICULUM_VITAE.PROJECTS.section.CARAVEL.content.skills}
           image={CURRICULUM_VITAE.PROJECTS.section.CARAVEL.icon}
+        />
+
+        <BoardingCard
+          title={CURRICULUM_VITAE.PROJECTS.section.ABRACADABRA.label}
+          duration={CURRICULUM_VITAE.PROJECTS.section.ABRACADABRA.duration}
+          url={CURRICULUM_VITAE.PROJECTS.section.ABRACADABRA.url}
+          skills={CURRICULUM_VITAE.PROJECTS.section.ABRACADABRA.content.skills}
+          image={CURRICULUM_VITAE.PROJECTS.section.ABRACADABRA.icon}
         />
       </div>
     </main>

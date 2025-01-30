@@ -282,6 +282,19 @@ export const CURRICULUM_VITAE = {
           skills: ["VUE", "VITE", "WINDICSS"],
         },
       },
+      ABRACADABRA: {
+        id: "Abracadabra",
+        label: "Abracadabra",
+        icon: "/projects/abracadabra.jpg",
+        url: "https://github.com/Stephane-Pires/abracadabra",
+        duration: {
+          start: "Novembre 2024",
+          end: "On going",
+        },
+        content: {
+          skills: ["ANSIBLE", "LINUX", "TERMINAL"],
+        },
+      },
     },
   },
 } as const
