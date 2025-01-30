@@ -57,3 +57,5 @@
 - [ ] : Investigate Typing for "SectionContent" explicitly the missmatch between the curriculum model "as const | readonly" and the Props of the component
 
 - [ ] : Update dependencies to solve various problems (not-found.tsx that don't redirect with Link, error.tsx that doesn't trigger on throw error, contentlayer that brings vulnaribility, etc...)
+
+- [ ] : pin with volta

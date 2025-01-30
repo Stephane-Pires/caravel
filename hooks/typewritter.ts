@@ -6,7 +6,7 @@ function wait(ms: number) {
 
 export function useTypewriter(
   //   element: HTMLSpanElement,
-  phrases: Array<String>,
+  phrases: Array<string>,
   options: {
     speed: number
     waitBetween: number
@@ -26,8 +26,8 @@ export function useTypewriter(
         setPhraseIndex(phIndex)
 
         setIsTyping(true)
-        for (const letterIndex in phrase) {
-          setText((prev) => prev + phrase[letterIndex])
+        for (const letter of phrase) {
+          setText((prev) => prev + letter)
 
           await wait(options.speed)
         }
@@ -36,7 +36,7 @@ export function useTypewriter(
         await wait(options.waitEnd)
 
         setIsTyping(true)
-        for (const _ in phrase) {
+        for (const _ of phrase) {
           setText((prev) => prev.slice(0, prev.length - 1))
 
           await wait(options.speed)

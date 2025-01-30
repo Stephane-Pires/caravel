@@ -1,10 +1,6 @@
 import { motion } from "framer-motion"
 import Image from "next/image"
 
-interface PolaroidProps {
-  image: string
-}
-
 const BirdAnimation = () => {
   return (
     <div className="h-96 w-96 overflow-hidden bg-sky-200">
@@ -97,14 +93,14 @@ const BirdAnimation = () => {
         style={{
           width: "100%",
           height: "auto",
-        }} // optional
+        }}
         className="mt-56"
       />
     </div>
   )
 }
 
-export function Polaroid({ image }: PolaroidProps) {
+export function Polaroid() {
   return (
     <div className="container w-fit -rotate-6 transition-transform duration-300 ease-in-out hover:-rotate-4">
       <div className="rounded-lg bg-white p-10 shadow-lg">
