@@ -37,6 +37,11 @@ export const TECHNO = {
   VUE: "VUE",
   VITE: "VITE",
   WINDICSS: "WINDICSS",
+  STORYBOOK: "STORYBOOK",
+  AWS: "AWS",
+  VERCEL: "VERCEL",
+  ETL: "ETL",
+  PYTHON: "PYTHON",
 }
 
 export type TECHNO = keyof typeof TECHNO
