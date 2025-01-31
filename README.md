@@ -1,3 +1,5 @@
+![u7161273191_Boat_Ocean_blog_book_bright_colors_cheerful_carav_78754917-23a2-4af1-98de-ff0b23f580e0_0](https://github.com/user-attachments/assets/df74f3b9-a5b7-4a97-b915-4e3856172973)
+
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
 ## Getting Started
