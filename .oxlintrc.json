@@ -1,0 +1,19 @@
+{
+  "$schema": "./node_modules/oxlint/configuration_schema.json",
+  "categories": {
+    "correctness": "error",
+    "suspicious": "error",
+    "perf": "error",
+    "style": "error",
+    "restriction": "warn",
+    "pedantic": "warn"
+  },
+  "plugins": ["eslint-plugin-next"],
+  "rules": {
+    "no-null": "off",
+    "explicit-function-return-type": "off"
+  },
+  "env": {
+    "browser": true
+  }
+}
