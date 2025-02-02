@@ -53,7 +53,7 @@ export function useTypewriter(
       setCursor("|")
       await wait(500)
 
-      console.log("CURSOR")
+      
       setCursor("")
       await wait(500)
     }
@@ -63,7 +63,7 @@ export function useTypewriter(
   // if is not deleting
 
   useEffect(() => {
-    console.log("SHOULD EXECUTE ONLY ONCE ON MOUNT")
+    
     type()
     typeCursor()
   }, [])
