@@ -46,7 +46,7 @@ export function TimelineContainer({
 
             if (domElementReferenced) {
               // This code smell sorry
-              if (index !== 0) {
+              if (0 !== index) {
                 const previousDomElementReferenced = sectionDom.get(
                   ArrayOfSection[index - 1].id
                 )

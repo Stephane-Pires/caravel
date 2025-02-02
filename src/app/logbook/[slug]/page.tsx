@@ -36,9 +36,8 @@ export default async function BlogContent({ params }: BlogContentProps) {
 
     if (resultat) {
       return resultat
-    } else {
-      notFound()
     }
+      notFound()
   }
 
   const content = findContent(slug)

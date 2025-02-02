@@ -61,7 +61,7 @@ const options = {
   onVisitLine(node: any) {
     // Prevent lines from collapsing in `display: grid` mode, and
     // allow empty lines to be copy/pasted
-    if (node.children.length === 0) {
+    if (0 === node.children.length) {
       node.children = [{ type: "text", value: " " }]
     }
   },
