@@ -1,5 +1,6 @@
 {
   "$schema": "./node_modules/oxlint/configuration_schema.json",
+  "plugins": ["next", "react-perf", "import", "jsx-a11y", "promise", "node"],
   "categories": {
     "correctness": "error",
     "suspicious": "error",
@@ -8,10 +9,16 @@
     "restriction": "warn",
     "pedantic": "warn"
   },
-  "plugins": ["eslint-plugin-next"],
   "rules": {
+    "no-magic-numbers": "warn",
     "no-null": "off",
-    "explicit-function-return-type": "off"
+    "explicit-function-return-type": "off",
+    "sort-imports": "off",
+    "no-ternary": "off",
+    "no-redeclare": "off",
+    "max-dependencies": "off",
+    "no-default-export": "off",
+    "unambiguous": "off"
   },
   "env": {
     "browser": true
