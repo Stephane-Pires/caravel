@@ -1,4 +1,4 @@
-import { BoardingCard, BoardingCardMobile } from "@/components/BoardingCard"
+import { BoardingCard } from "@/components/BoardingCard"
 import { CURRICULUM_VITAE } from "@/content/curriculum-vitae/english"
 import { Metadata } from "next"
 import Image from "next/image"

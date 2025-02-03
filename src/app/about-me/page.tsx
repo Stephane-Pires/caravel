@@ -1,7 +1,7 @@
 "use client"
 
 import { DownloadModal } from "@/components/clients/curriculum-vitae/modal/DownloadModal"
-import { NavigationCurriculumVitae } from "@/components/clients/curriculum-vitae/navigation/NavigationCurriculumVitae"
+// import { NavigationCurriculumVitae } from "@/components/clients/curriculum-vitae/navigation/NavigationCurriculumVitae"
 import { SectionContent } from "@/components/clients/curriculum-vitae/section/SectionContent"
 import { TimelineContainer } from "@/components/clients/curriculum-vitae/timeline/TimelineContainer"
 import { usePercentScrolled } from "@/components/hooks/usePercentIntersection"
@@ -10,7 +10,7 @@ import {
   CURRICULUM_VITAE,
   SectionKey,
 } from "@/content/curriculum-vitae/english"
-import { useEffect, useRef, useState } from "react"
+import { useCallback, useEffect, useMemo, useRef, useState } from "react"
 
 export default function AboutMe() {
   let articleRef = useRef(new Map<string, HTMLDivElement>())
@@ -89,6 +89,10 @@ export default function AboutMe() {
     }
   }
 
+  const handleDownloadCVClick = useCallback(() => {
+    setShowLanguageModal(true)
+  }, [])
+
   // Find a way to replace this useEffect + useState
   // by a way to forwarding articleRef (with the Map) only when the component is Mounted
   useEffect(() => {
@@ -98,14 +102,19 @@ export default function AboutMe() {
     setMapSectionEducationDom(sectionEducationRef.current)
   }, [])
 
+  const scrollableDivStyle = useMemo(
+    () => ({
+      width: `calc((${percentScrolled} * 100vw) / 100)`,
+    }),
+    [percentScrolled],
+  )
+
   return (
     <main className="flex min-h-screen flex-col items-center p-4 pt-20 md:p-10 md:py-20">
       {/* progress bar */}
       <div
         className={`from-accent-500 to-accent-300 fixed top-20 left-0 z-30 flex h-1 bg-linear-to-r`}
-        style={{
-          width: `calc((${percentScrolled} * 100vw) / 100)`,
-        }}
+        style={scrollableDivStyle}
       />
       <div className="mt-4 mb-8 flex w-full flex-col items-center gap-4 font-serif lg:flex-row lg:gap-10">
         {/* <div className="sticky top-[40%] self-start md:basis-2/12">
@@ -116,7 +125,7 @@ export default function AboutMe() {
         {/* The button looks like too much like the <Tag /> component */}
         <div className="order-last my-10 lg:sticky lg:top-[90%] lg:order-first lg:basis-2/12 lg:self-start">
           <button
-            onClick={() => setShowLanguageModal(true)}
+            onClick={handleDownloadCVClick}
             className="bg-accent-200 hover:bg-accent-400 active:bg-accent-400 mx-auto rounded-md p-3 font-sans text-base font-bold text-blue-900 transition delay-75 active:scale-105 md:flex"
           >
             Download CV{" "}

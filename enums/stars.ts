@@ -1,3 +1,4 @@
+/* eslint-disable sort-keys */
 export const STARS = {
   ONE: "ONE",
   TWO: "TWO",

@@ -36,5 +36,7 @@ export function reduceLocal(
       return toApply(CURRICULUM_VITAE_FRENCH)
     case LOCAL_SUPPORTED.ENGLISH:
       return toApply(CURRICULUM_VITAE_ENGLISH)
+    default:
+      return unreachable(local)
   }
 }

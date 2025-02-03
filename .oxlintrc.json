@@ -18,7 +18,8 @@
     "no-redeclare": "off",
     "max-dependencies": "off",
     "no-default-export": "off",
-    "unambiguous": "off"
+    "unambiguous": "off",
+    "avoid-new": "off"
   },
   "env": {
     "browser": true

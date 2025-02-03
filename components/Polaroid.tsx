@@ -1,79 +1,85 @@
 import { motion } from "framer-motion"
 import Image from "next/image"
 
+const WING_START_ROTATION = 0
+const WING_END_ROTATION = 50
+
+const BOAT_START_ROTATION = 0
+const BOAT_END_ROTATION = 1
+
+const ANIMATE_LEFT_WING = {
+  rotate: [WING_START_ROTATION, -WING_END_ROTATION],
+}
+const ANIMATE_RIGHT_WING = {
+  rotate: [WING_START_ROTATION, WING_END_ROTATION],
+}
+
+const ANIMATE_BOAT = {
+  rotate: [BOAT_START_ROTATION, -BOAT_END_ROTATION],
+}
+
+const TRANSITION_SLOW = {
+  delay: 0.5,
+  duration: 1.5,
+  repeat: Infinity,
+  repeatType: "mirror",
+} as const
+
+const TRANSITION = {
+  duration: 1,
+  repeat: Infinity,
+  repeatType: "mirror",
+} as const
+
+const STYLE_CLIP = {
+  clipPath: "polygon(0% 0%, 100% 0%, 100% 50%, 0% 50%)",
+}
+
+const STYLE_WAVE = {
+  height: "auto",
+  width: "100%",
+}
+
 const BirdAnimation = () => {
   return (
     <div className="h-96 w-96 overflow-hidden bg-sky-200">
       {/* Bird container */}
       <div className="relative rotate-12">
-        {/* Right wing */}
-        <motion.div
-          className="absolute right-10 h-12 w-[2px] rounded-br-full bg-black"
-          animate={{
-            rotate: [0, -50], // Start straight, then rotate to form part of V
-          }}
-          transition={{ duration: 1, repeat: Infinity, repeatType: "mirror" }}
-          style={{
-            clipPath: "polygon(0% 0%, 100% 0%, 100% 50%, 0% 50%)", // Hides the bottom half of the bar
-          }}
-        ></motion.div>
-
         {/* Left wing */}
         <motion.div
+          className="absolute right-10 h-12 w-[2px] rounded-br-full bg-black"
+          animate={ANIMATE_LEFT_WING}
+          transition={TRANSITION}
+          style={STYLE_CLIP}
+        ></motion.div>
+
+        {/* Right wing */}
+        <motion.div
           className="absolute right-10 h-12 w-[2px] rounded-bl-full bg-black"
-          animate={{
-            rotate: [0, 50], // Start straight, then rotate to form the other part of V
-          }}
-          transition={{ duration: 1, repeat: Infinity, repeatType: "mirror" }}
-          style={{
-            clipPath: "polygon(0% 0%, 100% 0%, 100% 50%, 0% 50%)", // Hides the bottom half of the bar
-          }}
+          animate={ANIMATE_RIGHT_WING}
+          transition={TRANSITION}
+          style={STYLE_CLIP}
         ></motion.div>
 
         <motion.div
           className="absolute top-8 right-16 h-14 w-[2px] rounded-br-full bg-black"
-          animate={{
-            rotate: [0, -50], // Start straight, then rotate to form part of V
-          }}
-          transition={{
-            delay: 0.5,
-            duration: 1.5,
-            repeat: Infinity,
-            repeatType: "mirror",
-          }}
-          style={{
-            clipPath: "polygon(0% 0%, 100% 0%, 100% 50%, 0% 50%)", // Hides the bottom half of the bar
-          }}
+          animate={ANIMATE_LEFT_WING}
+          transition={TRANSITION_SLOW}
+          style={STYLE_CLIP}
         ></motion.div>
 
         {/* Left wing */}
         <motion.div
           className="absolute top-8 right-16 h-14 w-[2px] rounded-bl-full bg-black"
-          animate={{
-            rotate: [0, 50], // Start straight, then rotate to form the other part of V
-          }}
-          transition={{
-            delay: 0.5,
-            duration: 1.5,
-            repeat: Infinity,
-            repeatType: "mirror",
-          }}
-          style={{
-            clipPath: "polygon(0% 0%, 100% 0%, 100% 50%, 0% 50%)", // Hides the bottom half of the bar
-          }}
+          animate={ANIMATE_RIGHT_WING}
+          transition={TRANSITION_SLOW}
+          style={STYLE_CLIP}
         ></motion.div>
       </div>
 
       <motion.div
-        animate={{
-          rotate: [0, -1],
-        }}
-        transition={{
-          delay: 0.5,
-          duration: 1.5,
-          repeat: Infinity,
-          repeatType: "mirror",
-        }}
+        animate={ANIMATE_BOAT}
+        transition={TRANSITION_SLOW}
       >
         <Image
           alt="sea wave a the bottom of the page"
@@ -90,10 +96,7 @@ const BirdAnimation = () => {
         width={0}
         height={0}
         sizes="100vw"
-        style={{
-          width: "100%",
-          height: "auto",
-        }}
+        style={STYLE_WAVE}
         className="mt-56"
       />
     </div>

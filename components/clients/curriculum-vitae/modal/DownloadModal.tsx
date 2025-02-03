@@ -1,9 +1,14 @@
 import { LOCAL_SUPPORTED } from "@/utils/local"
-import { Dialog, Transition } from "@headlessui/react"
-import { RadioGroup } from "@headlessui/react"
+import { Dialog, RadioGroup, Transition } from "@headlessui/react"
 import { CheckIcon } from "@heroicons/react/24/solid"
 import Link from "next/link"
-import { Dispatch, Fragment, SetStateAction, useState } from "react"
+import {
+  Dispatch,
+  Fragment,
+  SetStateAction,
+  useCallback,
+  useState,
+} from "react"
 
 interface DownloadModalProps {
   isShow: boolean
@@ -12,6 +17,9 @@ interface DownloadModalProps {
 
 export function DownloadModal({ isShow, setIsShow }: DownloadModalProps) {
   let [local, setLocal] = useState<LOCAL_SUPPORTED>(LOCAL_SUPPORTED.ENGLISH)
+
+  const handleDialogClose = useCallback(() => setIsShow(false), [setIsShow])
+
   return (
     <Transition
       appear
@@ -21,7 +29,7 @@ export function DownloadModal({ isShow, setIsShow }: DownloadModalProps) {
       <Dialog
         as="div"
         className="relative z-10"
-        onClose={() => setIsShow(false)}
+        onClose={handleDialogClose}
       >
         <Transition.Child
           as={Fragment}
@@ -49,7 +57,7 @@ export function DownloadModal({ isShow, setIsShow }: DownloadModalProps) {
               <Dialog.Panel className="w-full max-w-md overflow-hidden rounded-2xl bg-slate-800 p-6 text-left align-middle shadow-xl transition-all">
                 <Dialog.Title
                   as="h3"
-                  className="text-lg font-medium leading-6 text-blue-300"
+                  className="text-lg leading-6 font-medium text-blue-300"
                 >
                   Choose language
                 </Dialog.Title>
@@ -75,11 +83,9 @@ export function DownloadModal({ isShow, setIsShow }: DownloadModalProps) {
                                 className={({ active, checked }) =>
                                   `${
                                     active
-                                      ? "ring-2 ring-primary-900 ring-opacity-60 ring-offset-2 ring-offset-primary-300"
+                                      ? "ring-primary-900 ring-opacity-60 ring-offset-primary-300 ring-2 ring-offset-2"
                                       : ""
-                                  }
-                  ${checked ? "bg-primary-600" : "bg-slate-800"}
-                    relative flex cursor-pointer rounded-lg px-5 py-4 focus:outline-hidden`
+                                  } ${checked ? "bg-primary-600" : "bg-slate-800"} relative flex cursor-pointer rounded-lg px-5 py-4 focus:outline-hidden`
                                 }
                               >
                                 {({ checked }) => (
@@ -88,7 +94,7 @@ export function DownloadModal({ isShow, setIsShow }: DownloadModalProps) {
                                       <div className="text-sm">
                                         <RadioGroup.Label
                                           as="p"
-                                          className={`font-bold capitalize  ${
+                                          className={`font-bold capitalize ${
                                             checked
                                               ? "text-blue-900"
                                               : "text-blue-100"
@@ -107,7 +113,7 @@ export function DownloadModal({ isShow, setIsShow }: DownloadModalProps) {
                                 )}
                               </RadioGroup.Option>
                             )
-                          }
+                          },
                         )}
                       </div>
                     </RadioGroup>
@@ -118,8 +124,7 @@ export function DownloadModal({ isShow, setIsShow }: DownloadModalProps) {
                   <Link href={`/api/download/curriculum?language=${local}`}>
                     <button
                       type="button"
-                      className="inline-flex justify-center rounded-md border border-transparent  bg-accent-200 px-4  py-2 font-sans text-base font-bold
-                      text-blue-900  transition delay-75 hover:bg-accent-400 focus:outline-hidden  focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 active:scale-105 active:bg-accent-400"
+                      className="bg-accent-200 hover:bg-accent-400 active:bg-accent-400 inline-flex justify-center rounded-md border border-transparent px-4 py-2 font-sans text-base font-bold text-blue-900 transition delay-75 focus:outline-hidden focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 active:scale-105"
                     >
                       Download
                     </button>

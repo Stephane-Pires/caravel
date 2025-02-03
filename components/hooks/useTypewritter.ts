@@ -1,11 +1,14 @@
-import { useEffect, useState } from "react"
+/* eslint-disable no-await-in-loop */
+/* eslint-disable no-magic-numbers */
+import { useCallback, useEffect, useState } from "react"
+
+const CURSOR_BLINK_INTERVAL = 500
 
 function wait(ms: number) {
   return new Promise((resolve) => setTimeout(resolve, ms))
 }
 
 export function useTypewriter(
-  //   element: HTMLSpanElement,
   phrases: Array<string>,
   options: {
     speed: number
@@ -20,7 +23,7 @@ export function useTypewriter(
   const [cursor, setCursor] = useState("")
   const [isTyping, setIsTyping] = useState(false)
 
-  const type = async () => {
+  const type = useCallback(async () => {
     while (options.loop || phraseIndex !== phrases.length - 1) {
       for (const [phIndex, phrase] of phrases.entries()) {
         setPhraseIndex(phIndex)
@@ -46,27 +49,22 @@ export function useTypewriter(
         await wait(options.waitBetween)
       }
     }
-  }
+  }, [])
 
-  const typeCursor = async () => {
+  const typeCursor = useCallback(async () => {
     while (options.cursor) {
       setCursor("|")
-      await wait(500)
+      await wait(CURSOR_BLINK_INTERVAL)
 
-      
       setCursor("")
-      await wait(500)
+      await wait(CURSOR_BLINK_INTERVAL)
     }
-  }
-
-  // if is deleting
-  // if is not deleting
+  }, [options.cursor])
 
   useEffect(() => {
-    
     type()
     typeCursor()
-  }, [])
+  }, [type, typeCursor])
 
   return `${text}${isTyping ? "|" : cursor}`
 }

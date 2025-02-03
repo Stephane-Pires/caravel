@@ -6,26 +6,26 @@ import localFont from "next/font/local"
 import "./globals.css"
 
 export const metadata: Metadata = {
-  title: "Caravel",
   description: "The adventure blog of Stéphane Pires",
+  title: "Caravel",
 }
 
 const mono_lisa_regular = localFont({
+  display: "swap",
   src: "./MonoLisa-Regular.ttf",
   variable: "--font-mono-lisa-regular",
-  display: "swap",
 })
 
 const open_sans = Open_Sans({
+  display: "swap",
   subsets: ["latin"],
   variable: "--font-open-sans",
-  display: "swap",
 })
 
 const merienda = Merienda({
+  display: "swap",
   subsets: ["latin"],
   variable: "--font-merienda",
-  display: "swap",
 })
 
 export default function RootLayout({
@@ -39,14 +39,14 @@ export default function RootLayout({
       className={`${open_sans.variable} ${merienda.variable} ${mono_lisa_regular.variable}`}
     >
       <body>
-        <header className="fixed z-50 h-20 w-full bg-slate-900 ">
+        <header className="fixed z-50 h-20 w-full bg-slate-900">
           <Navigation />
           <NavigationMobile />
         </header>
 
         {children}
 
-        <footer className="flex flex-row justify-center bg-primary-600 p-2 text-blue-900">
+        <footer className="bg-primary-600 flex flex-row justify-center p-2 text-blue-900">
           Made by Stéphane Pires with ❤️
         </footer>
       </body>

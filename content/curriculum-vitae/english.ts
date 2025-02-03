@@ -1,3 +1,6 @@
+/* eslint-disable sort-keys */
+/* eslint-disable max-lines */
+
 export const CURRICULUM_VITAE = {
   ME: {
     id: "ME",
