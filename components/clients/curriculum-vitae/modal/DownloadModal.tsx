@@ -1,9 +1,23 @@
 import { LOCAL_SUPPORTED } from "@/utils/local"
-import { Dialog, Transition } from "@headlessui/react"
-import { RadioGroup } from "@headlessui/react"
+import {
+  Dialog,
+  DialogPanel,
+  DialogTitle,
+  Label,
+  Radio,
+  RadioGroup,
+  Transition,
+  TransitionChild,
+} from "@headlessui/react"
 import { CheckIcon } from "@heroicons/react/24/solid"
 import Link from "next/link"
-import { Dispatch, Fragment, SetStateAction, useState } from "react"
+import {
+  Dispatch,
+  Fragment,
+  SetStateAction,
+  useCallback,
+  useState,
+} from "react"
 
 interface DownloadModalProps {
   isShow: boolean
@@ -12,6 +26,13 @@ interface DownloadModalProps {
 
 export function DownloadModal({ isShow, setIsShow }: DownloadModalProps) {
   let [local, setLocal] = useState<LOCAL_SUPPORTED>(LOCAL_SUPPORTED.ENGLISH)
+
+  const handleDialogClose = useCallback(() => setIsShow(false), [setIsShow])
+  const handleLocalChange = useCallback(({ checked }: {checked: boolean}) =>
+    ` ${checked ? "bg-primary-600" : "bg-slate-800"} active:ring-primary-900 active:ring-opacity-60 active:ring-offset-primary-300 relative flex cursor-pointer rounded-lg px-5 py-4 focus:outline-hidden active:ring-2 active:ring-offset-2`, [])
+ 
+ 
+
   return (
     <Transition
       appear
@@ -21,9 +42,9 @@ export function DownloadModal({ isShow, setIsShow }: DownloadModalProps) {
       <Dialog
         as="div"
         className="relative z-10"
-        onClose={() => setIsShow(false)}
+        onClose={handleDialogClose}
       >
-        <Transition.Child
+        <TransitionChild
           as={Fragment}
           enter="ease-out duration-300"
           enterFrom="opacity-0"
@@ -33,11 +54,11 @@ export function DownloadModal({ isShow, setIsShow }: DownloadModalProps) {
           leaveTo="opacity-0"
         >
           <div className="fixed inset-0 bg-black/25" />
-        </Transition.Child>
+        </TransitionChild>
 
         <div className="fixed inset-0 overflow-y-auto">
           <div className="flex min-h-full items-center justify-center p-4 text-center">
-            <Transition.Child
+            <TransitionChild
               as={Fragment}
               enter="ease-out duration-300"
               enterFrom="opacity-0 scale-95"
@@ -46,13 +67,13 @@ export function DownloadModal({ isShow, setIsShow }: DownloadModalProps) {
               leaveFrom="opacity-100 scale-100"
               leaveTo="opacity-0 scale-95"
             >
-              <Dialog.Panel className="w-full max-w-md overflow-hidden rounded-2xl bg-slate-800 p-6 text-left align-middle shadow-xl transition-all">
-                <Dialog.Title
+              <DialogPanel className="w-full max-w-md overflow-hidden rounded-2xl bg-slate-800 p-6 text-left align-middle shadow-xl transition-all">
+                <DialogTitle
                   as="h3"
-                  className="text-lg font-medium leading-6 text-blue-300"
+                  className="text-lg leading-6 font-medium text-blue-300"
                 >
                   Choose language
-                </Dialog.Title>
+                </DialogTitle>
                 <div className="mt-2">
                   <p className="text-sm text-blue-100">
                     My curriculum vitae will be translated in the language you
@@ -69,33 +90,25 @@ export function DownloadModal({ isShow, setIsShow }: DownloadModalProps) {
                         {Object.values(LOCAL_SUPPORTED).map(
                           (local_supported) => {
                             return (
-                              <RadioGroup.Option
+                              <Radio
                                 key={local_supported}
                                 value={local_supported}
-                                className={({ active, checked }) =>
-                                  `${
-                                    active
-                                      ? "ring-2 ring-primary-900 ring-opacity-60 ring-offset-2 ring-offset-primary-300"
-                                      : ""
-                                  }
-                  ${checked ? "bg-primary-600" : "bg-slate-800"}
-                    relative flex cursor-pointer rounded-lg px-5 py-4 focus:outline-hidden`
-                                }
+                                className={handleLocalChange}
                               >
                                 {({ checked }) => (
                                   <div className="flex w-full items-center justify-between">
                                     <div className="flex items-center">
                                       <div className="text-sm">
-                                        <RadioGroup.Label
+                                        <Label
                                           as="p"
-                                          className={`font-bold capitalize  ${
+                                          className={`font-bold capitalize ${
                                             checked
                                               ? "text-blue-900"
                                               : "text-blue-100"
                                           }`}
                                         >
                                           {local_supported}
-                                        </RadioGroup.Label>
+                                        </Label>
                                       </div>
                                     </div>
                                     {checked && (
@@ -105,9 +118,9 @@ export function DownloadModal({ isShow, setIsShow }: DownloadModalProps) {
                                     )}
                                   </div>
                                 )}
-                              </RadioGroup.Option>
+                              </Radio>
                             )
-                          }
+                          },
                         )}
                       </div>
                     </RadioGroup>
@@ -118,15 +131,14 @@ export function DownloadModal({ isShow, setIsShow }: DownloadModalProps) {
                   <Link href={`/api/download/curriculum?language=${local}`}>
                     <button
                       type="button"
-                      className="inline-flex justify-center rounded-md border border-transparent  bg-accent-200 px-4  py-2 font-sans text-base font-bold
-                      text-blue-900  transition delay-75 hover:bg-accent-400 focus:outline-hidden  focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 active:scale-105 active:bg-accent-400"
+                      className="bg-accent-200 hover:bg-accent-400 active:bg-accent-400 inline-flex justify-center rounded-md border border-transparent px-4 py-2 font-sans text-base font-bold text-blue-900 transition delay-75 focus:outline-hidden focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 active:scale-105"
                     >
                       Download
                     </button>
                   </Link>
                 </div>
-              </Dialog.Panel>
-            </Transition.Child>
+              </DialogPanel>
+            </TransitionChild>
           </div>
         </div>
       </Dialog>

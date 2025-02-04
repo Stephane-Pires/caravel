@@ -13,7 +13,7 @@ export function NavigationCurriculumVitae({
 }: PropsNavigationCurriculumVitae) {
   if (articleDom) {
     return (
-      <nav className="flex flex-col items-center   rounded-lg bg-primary-600 p-1 sm:border-l-4 sm:border-t-4 sm:border-primary-900 sm:p-2">
+      <nav className="bg-primary-600 sm:border-primary-900 flex flex-col items-center rounded-lg p-1 sm:border-t-4 sm:border-l-4 sm:p-2">
         {Array.from(Object.values(CURRICULUM_VITAE)).map((content) => {
           const domElementReferenced = articleDom.get(content.id)
 
@@ -32,6 +32,15 @@ export function NavigationCurriculumVitae({
               </Fragment>
             )
           }
+
+          return (
+            <div
+              key={content.id}
+              className="text-red-500"
+            >
+              {"UI ERROR ELEMENT"}
+            </div>
+          )
         })}
       </nav>
     )

@@ -1,7 +1,7 @@
 "use client"
 
 import { Polaroid } from "@/components/Polaroid"
-import { useTypewriter } from "@/hooks/typewritter"
+import { useTypewriter } from "@/components/hooks/useTypewritter"
 
 export default function Home() {
   const text = useTypewriter(
@@ -13,11 +13,11 @@ export default function Home() {
       "For Water Lovers",
     ],
     {
+      cursor: true,
+      loop: true,
       speed: 150,
       waitBetween: 2000,
       waitEnd: 2000,
-      loop: true,
-      cursor: true,
     },
   )
 

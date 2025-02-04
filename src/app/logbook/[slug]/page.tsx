@@ -16,7 +16,7 @@ export const generateMetadata = async ({ params }: BlogContentProps) => {
   }
 }
 
-export async function generateStaticParams() {
+export function generateStaticParams() {
   return allContents.map((content) => ({
     slug: content.url,
   }))
@@ -36,9 +36,8 @@ export default async function BlogContent({ params }: BlogContentProps) {
 
     if (resultat) {
       return resultat
-    } else {
-      notFound()
     }
+    notFound()
   }
 
   const content = findContent(slug)
@@ -54,7 +53,7 @@ export default async function BlogContent({ params }: BlogContentProps) {
         />
 
         <div className="relative size-full bg-black/60 text-center align-middle">
-          <div className="relative top-40 font-script text-6xl text-blue-300">
+          <div className="font-script relative top-40 text-6xl text-blue-300">
             {content.title}
           </div>
         </div>

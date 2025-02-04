@@ -1,3 +1,4 @@
+/* eslint-disable no-magic-numbers */
 import { useEffect, useState } from "react"
 
 export function usePercentScrolled() {

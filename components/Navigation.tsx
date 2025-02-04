@@ -4,23 +4,23 @@ import { Bars2Icon, XMarkIcon } from "@heroicons/react/24/solid"
 import Image from "next/image"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
-import { useEffect, useState } from "react"
+import { useCallback, useEffect, useState } from "react"
 
 const NAVIGATION = {
   ABOUT_ME: {
-    pathname: "/about-me",
-    name: "About Me",
     icon: "person",
+    name: "About Me",
+    pathname: "/about-me",
   },
   LOGBOOK: {
-    pathname: "/logbook",
-    name: "Logbook",
     icon: "sticky-note",
+    name: "Logbook",
+    pathname: "/logbook",
   },
   PROJECTS: {
-    pathname: "/projects",
-    name: "Projects",
     icon: "code",
+    name: "Projects",
+    pathname: "/projects",
   },
 } as const
 
@@ -84,8 +84,10 @@ export function NavigationMobile() {
 
   const [showLinks, setShowLinks] = useState(false)
 
-  const handleClickIcon = () =>
-    setShowLinks((previousShowLinks) => !previousShowLinks)
+  const handleClickIcon = useCallback(
+    () => setShowLinks((previousShowLinks) => !previousShowLinks),
+    [],
+  )
 
   useEffect(() => {
     setShowLinks(false)

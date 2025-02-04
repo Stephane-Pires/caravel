@@ -3,17 +3,17 @@ import Image from "next/image"
 import { HTMLProps } from "react"
 
 interface Quote {
-  quote: string
   author: string
+  quote: string
 }
 
-function Quote({ quote, author }: Quote) {
+function Quote({ author, quote }: Quote) {
   return (
     <div className="m-2 flex flex-col">
-      <div className="mx-2 my-4 font-script text-base italic leading-relaxed text-blue-100 sm:text-lg">
+      <div className="font-script mx-2 my-4 text-base leading-relaxed text-blue-100 italic sm:text-lg">
         {quote}
       </div>
-      <div className="mx-2 self-end font-script text-sm italic text-blue-100 underline underline-offset-2 sm:text-base">
+      <div className="font-script mx-2 self-end text-sm text-blue-100 italic underline underline-offset-2 sm:text-base">
         &quot;{author}&quot;
       </div>
     </div>
@@ -22,7 +22,7 @@ function Quote({ quote, author }: Quote) {
 
 function h1({ children }: HTMLProps<HTMLHeadingElement>) {
   return (
-    <h1 className="m-8  text-center font-script text-4xl text-blue-300">
+    <h1 className="font-script m-8 text-center text-4xl text-blue-300">
       {children}
     </h1>
   )
@@ -30,7 +30,7 @@ function h1({ children }: HTMLProps<HTMLHeadingElement>) {
 
 function h2({ children }: HTMLProps<HTMLHeadingElement>) {
   return (
-    <h2 className="m-6 text-center font-script text-3xl text-blue-300">
+    <h2 className="font-script m-6 text-center text-3xl text-blue-300">
       {children}
     </h2>
   )
@@ -38,7 +38,7 @@ function h2({ children }: HTMLProps<HTMLHeadingElement>) {
 
 function h3({ children }: HTMLProps<HTMLHeadingElement>) {
   return (
-    <h3 className=" m-4 text-center font-script text-2xl text-blue-300">
+    <h3 className="font-script m-4 text-center text-2xl text-blue-300">
       {children}
     </h3>
   )
@@ -46,7 +46,7 @@ function h3({ children }: HTMLProps<HTMLHeadingElement>) {
 
 function h4({ children }: HTMLProps<HTMLHeadingElement>) {
   return (
-    <h4 className=" m-2 text-center font-script text-xl text-blue-300">
+    <h4 className="font-script m-2 text-center text-xl text-blue-300">
       {children}
     </h4>
   )
@@ -54,7 +54,7 @@ function h4({ children }: HTMLProps<HTMLHeadingElement>) {
 
 function p({ children }: HTMLProps<HTMLParagraphElement>) {
   return (
-    <p className="m-2 font-sans text-base text-blue-100 sm:text-lg ">
+    <p className="m-2 font-sans text-base text-blue-100 sm:text-lg">
       {children}
     </p>
   )
@@ -70,7 +70,7 @@ function li({ children }: HTMLProps<HTMLLIElement>) {
 
 function ul({ children }: HTMLProps<HTMLUListElement>) {
   return (
-    <ul className="m-2 my-4 flex  list-outside list-none flex-col gap-2 sm:list-disc sm:list-image-[url(/logbook/mdx/chevron-right.svg)]">
+    <ul className="m-2 my-4 flex list-outside list-none flex-col gap-2 sm:list-disc sm:list-image-[url(/logbook/mdx/chevron-right.svg)]">
       {children}
     </ul>
   )
@@ -80,27 +80,27 @@ function a({ children, href }: HTMLProps<HTMLAnchorElement>) {
   return (
     <a
       href={href}
-      className="cursor-pointer text-base text-accent-600  visited:text-accent-100 hover:underline hover:decoration-accent-600 visited:hover:decoration-accent-100 sm:text-lg"
+      className="text-accent-600 visited:text-accent-100 hover:decoration-accent-600 visited:hover:decoration-accent-100 cursor-pointer text-base hover:underline sm:text-lg"
     >
       {children}
     </a>
   )
 }
 
-function ImageMdx({ src, alt }: HTMLProps<HTMLImageElement>) {
+function ImageMdx({ alt, src }: HTMLProps<HTMLImageElement>) {
   if (!src) {
     throw new Error("You can not create an image with an undefined src")
   }
 
   if (!alt) {
     throw new Error(
-      "You can not create an image with an undefined alt (due to next-web-vitals rules)"
+      "You can not create an image with an undefined alt (due to next-web-vitals rules)",
     )
   }
 
   return (
     <div className="flex flex-row justify-center">
-      <div className={`relative my-4  h-[50vh] w-[90vw] md:w-full`}>
+      <div className={`relative my-4 h-[50vh] w-[90vw] md:w-full`}>
         <Image
           src={src}
           alt={alt}
@@ -113,22 +113,23 @@ function ImageMdx({ src, alt }: HTMLProps<HTMLImageElement>) {
 }
 
 const mdxHTMLComponents = {
+  a,
   h1,
   h2,
   h3,
   h4,
-  p,
   li,
+  p,
   ul,
-  a,
 }
+
+const MDX_COMPONENTS = { ImageMdx, Quote, ...mdxHTMLComponents }
 
 export function Mdx({ code }: { code: string }) {
   const MDXContent = useMDXComponent(code)
-
   return (
     <div className="flex flex-col sm:max-w-3xl">
-      <MDXContent components={{ Quote, ImageMdx, ...mdxHTMLComponents }} />
+      <MDXContent components={MDX_COMPONENTS} />
     </div>
   )
 }

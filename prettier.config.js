@@ -1,6 +1,4 @@
-module.exports = {
-  semi: false,
-  singleAttributePerLine: true,
+export default {
   importOrder: [
     "<THIRD_PARTY_MODULES>",
     "^@components/(.*)$",
@@ -13,4 +11,6 @@ module.exports = {
     "@trivago/prettier-plugin-sort-imports",
     "prettier-plugin-tailwindcss",
   ],
+  semi: false,
+  singleAttributePerLine: true,
 }
