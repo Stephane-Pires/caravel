@@ -1,4 +1,4 @@
-export default {
+module.exports = {
   importOrder: [
     "<THIRD_PARTY_MODULES>",
     "^@components/(.*)$",
