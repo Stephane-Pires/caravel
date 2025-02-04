@@ -1,3 +1,4 @@
+// eslint-disable jsx-no-new-object-as-prop
 /* eslint-disable no-magic-numbers */
 import { Article, CURRICULUM_VITAE } from "@/content/curriculum-vitae/english"
 import { Fragment, useMemo } from "react"

@@ -28,6 +28,10 @@ export function DownloadModal({ isShow, setIsShow }: DownloadModalProps) {
   let [local, setLocal] = useState<LOCAL_SUPPORTED>(LOCAL_SUPPORTED.ENGLISH)
 
   const handleDialogClose = useCallback(() => setIsShow(false), [setIsShow])
+  const handleLocalChange = useCallback(({ checked }: {checked: boolean}) =>
+    ` ${checked ? "bg-primary-600" : "bg-slate-800"} active:ring-primary-900 active:ring-opacity-60 active:ring-offset-primary-300 relative flex cursor-pointer rounded-lg px-5 py-4 focus:outline-hidden active:ring-2 active:ring-offset-2`, [])
+ 
+ 
 
   return (
     <Transition
@@ -89,9 +93,7 @@ export function DownloadModal({ isShow, setIsShow }: DownloadModalProps) {
                               <Radio
                                 key={local_supported}
                                 value={local_supported}
-                                className={({ checked }) =>
-                                  ` ${checked ? "bg-primary-600" : "bg-slate-800"} active:ring-primary-900 active:ring-opacity-60 active:ring-offset-primary-300 relative flex cursor-pointer rounded-lg px-5 py-4 focus:outline-hidden active:ring-2 active:ring-offset-2`
-                                }
+                                className={handleLocalChange}
                               >
                                 {({ checked }) => (
                                   <div className="flex w-full items-center justify-between">
