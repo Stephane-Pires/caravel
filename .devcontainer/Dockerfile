@@ -1,5 +1,5 @@
 # Use the Node.js official image as a base image
-ARG VARIANT="16-bullseye"
+ARG VARIANT="22-bullseye"
 FROM mcr.microsoft.com/vscode/devcontainers/javascript-node:${VARIANT}
 
 # Set working directory
