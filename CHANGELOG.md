@@ -1,5 +1,3 @@
-## 0.4.0
-
 ## 0.5.0
 
 ### Minor Changes
@@ -18,9 +16,13 @@
   - update postcss
   - add devcontainer
 
+## 0.4.0
+
 ### Minor Changes
 
 - [`084d6d5`](https://github.com/Stephane-Pires/caravel/commit/084d6d5fd19a7050ca03785bfd3c36861245dfbe) Thanks [@Stephane-Pires](https://github.com/Stephane-Pires)! - Adding @changesets/changelog-github
+
+## 0.3.0
 
 ### Minor Changes
 
