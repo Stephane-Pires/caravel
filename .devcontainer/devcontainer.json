@@ -1,5 +1,5 @@
 {
-  "name": "Node.js & TypeScript",
+  "name": "Caravel DevContainer",
   "image": "mcr.microsoft.com/devcontainers/typescript-node:1-22-bookworm",
   "customizations": {
     "vscode": {
@@ -14,5 +14,6 @@
     }
   },
   "forwardPorts": [3000],
+  "portsAttributes": { "3000": { "label": "Application port" } },
   "postCreateCommand": "npm install && npm run dev"
 }

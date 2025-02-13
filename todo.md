@@ -14,7 +14,7 @@
 
 - [ ] : Find assets for Star components
 
-- [ ] : Find a logo
+- [x] : Find a logo
 
 - [ ] : Defines features, mock-up them
 
@@ -58,4 +58,4 @@
 
 - [ ] : Update dependencies to solve various problems (not-found.tsx that don't redirect with Link, error.tsx that doesn't trigger on throw error, contentlayer that brings vulnaribility, etc...)
 
-- [ ] : pin with volta
+- [x] : pin with volta
