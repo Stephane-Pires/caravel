@@ -2,96 +2,95 @@
 
 ![u7161273191_Boat_Ocean_blog_book_bright_colors_cheerful_carav_78754917-23a2-4af1-98de-ff0b23f580e0_0](https://github.com/user-attachments/assets/df74f3b9-a5b7-4a97-b915-4e3856172973)
 
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+## Introduction :
 
-## Getting Started
+_What is this project about ?_
 
-First, run the development server:
+- This project is a my personal blog where you can find :
+  - Public article where i write about software engineering (Pattern, Tools, Architecture, Product, Management, etc..)
+  - Links to my personal projects
+  - Information regarding myself (Curriculum vitae, hobbies, etc..)
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
+
+## How to run ? : 
+
+There is 2 ways of running the project :
+
+### 1️⃣ Use a `devcontainer` (prefered way): 
+
+In order to use [devcontainer](https://code.visualstudio.com/docs/devcontainers/containers) the requirements are : 
+
+- [docker](https://www.docker.com/) 
+- [visual studio code](https://code.visualstudio.com/)
+- [dev container extension](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-containers)
+
+Once the requirements are installed, open this repository using vscode. 
+
+It should : 
+
+- Open it inside a `container`
+- Install the project
+- Run it on the `3000`
+
+Open [http://localhost:3000](http://localhost:3000) 
+
+![gif](/public/readme/caravel-devcontainer.gif)
+
+### 2️⃣ Basic installation
+
+On the root of the project
+
+Run : 
+
+- `npm install`
+- `npm run dev`
+- Open [http://localhost:3000](http://localhost:3000)
+
+## Technologies
+
+_What technologies are you using ?_
+
+### Basic 
+
+This project uses :
+-  `nextjs` has a metaframework 
+- `tailwind` for the styling
+
+### Blog
+
+In order to run the blog i use the `mdx` format with plugins `rehype, retype`. I use the `contentlayer` library to manage the content.
+
+### Hosting
+
+The hosting is managed by vercel :
+ - The file serving is DONE using `lambda` functions
+
+## Architecture
+
+_TODO: Define Architecture of the project_
+
+```mermaid
+graph TD;
+    subgraph Client
+        A[User Interface] --> B[Web Browser]
+    end
+
+    subgraph Server
+        C[Web Server] --> D[Application Server]
+        D --> E[Business Logic]
+        E --> F[Database]
+        E --> G[Cache]
+        D --> H[Authentication Service]
+    end
+
+    subgraph External Services
+        I[Payment Gateway]
+        J[Email Service]
+        K[Third-Party API]
+    end
+
+    B --> C
+    D --> I
+    D --> J
+    D --> K
 ```
-
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
-
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
-
-[http://localhost:3000/api/hello](http://localhost:3000/api/hello) is an endpoint that uses [Route Handlers](https://beta.nextjs.org/docs/routing/route-handlers). This endpoint can be edited in `app/api/hello/route.ts`.
-
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
-
-## V2. README
-
-1. Title and Project Logo:
-
-A clear, descriptive title.
-A visually appealing project logo or banner.
-
-2. Badges and Status Indicators:
-
-Badges for build status, test coverage, latest release, and any certifications.
-Additional badges for community engagement (like GitHub stars or contributors).
-
-3. Introduction and Purpose:
-
-A brief overview of the project’s main goals and features.
-A clear statement of the problem it solves or the benefit it provides.
-Links to an online demo, if available, or a GIF/screenshot that shows the project in action. 4) Table of Contents (TOC):
-
-A clickable TOC for easy navigation.
-Links to key sections like Features, Installation, Usage, and Contributing.
-
-5. Features and Benefits:
-
-A bullet-point list of core features.
-A “Why Use This Project” section that highlights its advantages over alternatives.
-Screenshots or GIFs illustrating key functionalities.
-
-6. Installation Guide:
-
-Step-by-step instructions for getting started, including prerequisites.
-Clear commands with code blocks.
-Notes on common pitfalls and troubleshooting steps.
-
-7. Usage Examples:
-
-Simple code snippets or commands to show how to use the project.
-Links to a comprehensive user guide or API documentation.
-Additional advanced examples for experienced users.
-
-8. Contributing and Community Guidelines:
-
-Instructions on how to contribute (e.g., fork, clone, create a pull request).
-A link to a CONTRIBUTING.md file or guidelines on reporting issues.
-A welcoming tone that encourages participation.
-
-9. License and Acknowledgments:
-
-A clear license statement (e.g., MIT, Apache 2.0) with a link to the LICENSE file.
-Recognition of contributors, sponsors, or projects that inspired this one.
-Contact information or a link to a code of conduct.
-
-10. Additional Resources:
-
-Links to the project’s website, documentation, or related blog posts.
-References to articles, videos, or conference talks that explain the project further.
-A FAQ section addressing common questions.
