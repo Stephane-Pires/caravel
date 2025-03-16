@@ -15,6 +15,7 @@
       ]
     }
   },
+  "runArgs": ["--name", "caravel_devcontainer"],
   "appPort": 3000,
   "portsAttributes": { "3000": { "label": "Application port" } },
   "postCreateCommand": "npm install && npm run dev"
