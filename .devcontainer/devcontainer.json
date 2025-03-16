@@ -9,11 +9,14 @@
         "dbaeumer.vscode-eslint",
         "oxc.oxc-vscode",
         "bradlc.vscode-tailwindcss",
-        "esbenp.prettier-vscode"
+        "esbenp.prettier-vscode",
+        "bierner.markdown-mermaid",
+        "unifiedjs.vscode-mdx"
       ]
     }
   },
-  "forwardPorts": [3000],
+  "runArgs": ["--name", "caravel_devcontainer"],
+  "appPort": 3000,
   "portsAttributes": { "3000": { "label": "Application port" } },
   "postCreateCommand": "npm install && npm run dev"
 }
