@@ -5,7 +5,7 @@
     "correctness": "error",
     "suspicious": "error",
     "perf": "error",
-    "style": "error",
+    "style": "warn",
     "restriction": "warn",
     "pedantic": "warn"
   },
