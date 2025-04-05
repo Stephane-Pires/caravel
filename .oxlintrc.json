@@ -5,9 +5,9 @@
     "correctness": "error",
     "suspicious": "error",
     "perf": "error",
-    "style": "warn",
-    "restriction": "warn",
-    "pedantic": "warn"
+    "style": "off",
+    "restriction": "off",
+    "pedantic": "off"
   },
   "rules": {
     "no-magic-numbers": "warn",
