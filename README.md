@@ -71,12 +71,14 @@ The hosting is managed by vercel :
 ```mermaid
 graph TD;
     subgraph Client
-        A[NextJS : frontend]
+        A[NextJS : frontend] --> B[about-me - CSR]
+        A --> D[logbook - SSR]
+        A --> E[projects - SSR]
     end
 
     subgraph Server
         C[api/download/curriculum]
     end
 
-    A --> C
+    B --> C
 ```
