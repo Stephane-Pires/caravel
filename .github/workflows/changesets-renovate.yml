@@ -1,7 +1,6 @@
-name: Generate changeset for Renovate
+name: Add changeset to Renovate updates
 
 on:
-  merge_group:
   pull_request_target:
     paths:
       - ".github/workflows/changesets-renovate.yml"
@@ -9,23 +8,18 @@ on:
       - "**/package.json"
 
 jobs:
-  generate-changeset:
+  renovate:
+    name: Update Renovate PR
     runs-on: ubuntu-latest
-    if: github.actor == 'renovate[bot]' && github.repository == 'stephane-pires/caravel'
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-        with:
-          fetch-depth: 2
-          ref: ${{ github.head_ref }}
-      - name: Git Identity
-        run: |
-          git config --global user.name 'Scaleway Bot'
-          git config --global user.email 'stephane.pires.learning@gmail.com'
-      - name: Install Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: 22
+    if: github.actor == 'renovate[bot]'
 
-      - name: Run changesets-renovate
-        run: npx @scaleway/changesets-renovate
+    steps:
+      - name: Update PR
+        uses: mscharley/dependency-changesets-action@v1.0.5
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          changeset-folder: ".changeset"
+          use-conventional-commits: true
+          commit-message: "chore(deps): changeset for dependency update"
+          # author-name: Changeset Renovate Bot
+          # author-email: stephane.pires.learning@gmail.com
