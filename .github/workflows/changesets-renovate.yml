@@ -20,6 +20,6 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
           changeset-folder: ".changeset"
           use-conventional-commits: true
-          commit-message: "chore(deps): changeset for dependency update"
+          commit-message: "docs(changeset): 📚 Add changeset from renovate update"
           # author-name: Changeset Renovate Bot
           # author-email: stephane.pires.learning@gmail.com
