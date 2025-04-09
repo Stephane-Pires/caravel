@@ -1,0 +1,25 @@
+name: Add changeset to Renovate updates
+
+on:
+  pull_request_target:
+    paths:
+      - ".github/workflows/changesets-renovate.yml"
+      - "**/package-lock.json"
+      - "**/package.json"
+
+jobs:
+  renovate:
+    name: Update Renovate PR
+    runs-on: ubuntu-latest
+    if: github.actor == 'renovate[bot]'
+
+    steps:
+      - name: Update PR
+        uses: mscharley/dependency-changesets-action@v1.0.5
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          changeset-folder: ".changeset"
+          use-conventional-commits: true
+          commit-message: "chore(deps): changeset for dependency update"
+          # author-name: Changeset Renovate Bot
+          # author-email: stephane.pires.learning@gmail.com
