@@ -75,6 +75,10 @@
         "label": "app"
       },
       {
+        "value": "changeset",
+        "label": "changeset"
+      },
+      {
         "value": "content",
         "label": "content"
       },
