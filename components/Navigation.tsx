@@ -105,10 +105,10 @@ export function NavigationMobile() {
         <div className="col-span-1 ml-4">
           <Link href="/">
             <Image
-              src="/logbook/logbook.png"
+              src="/logbook/colorized-logo.png"
               alt="logo caravel"
-              width={60}
-              height={60}
+              width={80}
+              height={80}
             />
           </Link>
         </div>
