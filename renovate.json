@@ -1,7 +1,7 @@
 {
-    "$schema": "https://docs.renovatebot.com/renovate-schema.json",
-    "extends": ["config:base"],
-    "commitMessagePrefix": "chore(deps): :arrow_up:",
-    "commitMessageTopic": "{{depName}}",
-    "commitMessageExtra": "from {{currentVersion}} to v{{newVersion}}"
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "extends": ["config:base"],
+  "commitMessagePrefix": "chore(app): 🧹",
+  "commitMessageTopic": "{{depName}}",
+  "commitMessageExtra": "from {{currentVersion}} to v{{newVersion}}"
 }
