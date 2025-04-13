@@ -17,7 +17,7 @@ jobs:
       - name: Update PR
         uses: mscharley/dependency-changesets-action@v1.1.4
         with:
-          token: ${{ secrets.GITHUB_TOKEN }}
+          token: ${{ secrets.RENOVATE_CHANGESET_GITHUB_ACTION_CARAVEL }}
           changeset-folder: ".changeset"
           use-conventional-commits: false
           commit-message:
