@@ -19,7 +19,8 @@ jobs:
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           changeset-folder: ".changeset"
-          use-conventional-commits: true
-          commit-message: "docs(changeset): 📚 Add changeset from renovate update"
-          # author-name: Changeset Renovate Bot
+          use-conventional-commits: false
+          commit-message:
+            "docs(changeset): 📚 Add changeset from renovate update"
+            # author-name: Changeset Renovate Bot
           # author-email: stephane.pires.learning@gmail.com
