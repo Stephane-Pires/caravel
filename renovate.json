@@ -4,5 +4,6 @@
   "commitMessagePrefix": "chore(app): 🧹",
   "commitMessageTopic": "{{depName}}",
   "commitMessageExtra": "from {{currentVersion}} to v{{newVersion}}",
-  "gitIgnoredAuthors": ["changesets-renovate@ci.com"]
+  "gitIgnoredAuthors": ["changesets-renovate@ci.com"],
+  "prHourlyLimit": 1
 }
