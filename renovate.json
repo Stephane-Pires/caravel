@@ -3,5 +3,6 @@
   "extends": ["config:best-practices"],
   "commitMessagePrefix": "chore(app): 🧹",
   "commitMessageTopic": "{{depName}}",
-  "commitMessageExtra": "from {{currentVersion}} to v{{newVersion}}"
+  "commitMessageExtra": "from {{currentVersion}} to v{{newVersion}}",
+  "gitIgnoredAuthors": ["renovate+changeset@ci.com"]
 }
