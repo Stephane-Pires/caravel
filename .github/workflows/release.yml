@@ -19,7 +19,10 @@ jobs:
         uses: actions/setup-node@dbe1369d7be17e7823f8c1ee1ae8bec5779239dd # v3
 
       - name: Install Dependencies
-        run: yarn
+        run: npm install
+
+      - name: Generate contentlayer types
+        run: npx contentlayer2 build
 
       - name: Create Release Pull Request
         uses: changesets/action@v1
