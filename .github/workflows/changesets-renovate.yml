@@ -20,7 +20,6 @@ jobs:
           token: ${{ secrets.RENOVATE_CHANGESET_GITHUB_ACTION_CARAVEL }}
           changeset-folder: ".changeset"
           use-conventional-commits: false
-          commit-message:
-            "docs(changeset): 📚 Add changeset from renovate update"
-            # author-name: Changeset Renovate Bot
-          # author-email: stephane.pires.learning@gmail.com
+          commit-message: "docs(changeset): 📚 Add changeset from renovate update"
+          author-name: Changeset Renovate Bot
+          author-email: changesets-renovate@ci.com
