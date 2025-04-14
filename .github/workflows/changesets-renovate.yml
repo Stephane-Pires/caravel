@@ -22,4 +22,4 @@ jobs:
           use-conventional-commits: false
           commit-message: "docs(changeset): 📚 Add changeset from renovate update"
           author-name: Changeset Renovate Bot
-          author-email: renovate+changeset@ci.com
+          author-email: changesets-renovate@ci.com
