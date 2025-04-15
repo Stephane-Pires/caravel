@@ -13,7 +13,7 @@ module.exports = {
     "type-enum": [
       ERROR_LEVEL,
       "always",
-      ["feat", "evol", "dx", "fix", "docs", "test", "chore"],
+      ["feat", "evol", "dx", "fix", "docs", "test", "chore", "release"],
     ],
   },
 }
