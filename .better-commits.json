@@ -59,6 +59,13 @@
         "trailer": "Changelog: chore"
       },
       {
+        "value": "release",
+        "label": "release",
+        "hint": "Process of release a version (changeset version, tag, publish, etc..",
+        "emoji": "🚀",
+        "trailer": "Changelog: release"
+      },
+      {
         "value": "",
         "label": "none"
       }
