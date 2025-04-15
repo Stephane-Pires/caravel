@@ -3,7 +3,7 @@ name: Add changeset to Renovate updates
 on:
   pull_request_target:
     paths:
-      - ".github/workflows/changesets-renovate.yml"
+      - ".github/workflows/*.yml"
       - "**/package-lock.json"
       - "**/package.json"
 
