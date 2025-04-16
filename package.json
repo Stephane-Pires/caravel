@@ -8,6 +8,7 @@
     "start": "next start",
     "lint": "npm run oxlint && next lint && npm run type-check",
     "oxlint": "npx oxlint -c .oxlintrc.json",
+    "publish": "npx changeset publish && git push --follow-tags",
     "type-check": "tsc",
     "prepare": "husky"
   },
