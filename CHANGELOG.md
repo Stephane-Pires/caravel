@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.6.2
+
+### Patch Changes
+
+- [#11](https://github.com/Stephane-Pires/caravel/pull/11) [`ca13e16`](https://github.com/Stephane-Pires/caravel/commit/ca13e1647e59a8daf011d6556cf3d880be7c4c0c) Thanks [@renovate](https://github.com/apps/renovate)! - chore(app): 🧹 Update shiki from 1.29.2 to v3.2.2
+
+- [#136](https://github.com/Stephane-Pires/caravel/pull/136) [`7a1422c`](https://github.com/Stephane-Pires/caravel/commit/7a1422c9bc53f3959bba47c2f617c1a8615f456d) Thanks [@renovate](https://github.com/apps/renovate)! - chore(app): 🧹 Update @sentry/nextjs from 9.12.0 to v9.13.0
+
 ## 0.6.1
 
 ### Patch Changes
