@@ -1,5 +1,41 @@
 # Changelog
 
+## 0.6.0
+
+### Minor Changes
+
+- [#60](https://github.com/Stephane-Pires/caravel/pull/60) [`920b7aa`](https://github.com/Stephane-Pires/caravel/commit/920b7aaa3b8776a7b6a151bcb6a791a1fc3549ff) Thanks [@Stephane-Pires](https://github.com/Stephane-Pires)! - Update the README and add a devcontainer to start the project
+
+- [#83](https://github.com/Stephane-Pires/caravel/pull/83) [`c6bbd99`](https://github.com/Stephane-Pires/caravel/commit/c6bbd995eb8797630117d241ddc79daa1c9f25a6) Thanks [@Stephane-Pires](https://github.com/Stephane-Pires)! - Add Sentry to do error monitoring
+
+### Patch Changes
+
+- [`1f142e4`](https://github.com/Stephane-Pires/caravel/commit/1f142e4a702ae5cbc725598f9bbeeb77d77f6835) Thanks [@Stephane-Pires](https://github.com/Stephane-Pires)! - Update Architecture in README.md
+
+- [#103](https://github.com/Stephane-Pires/caravel/pull/103) [`9a07d5b`](https://github.com/Stephane-Pires/caravel/commit/9a07d5bf635f98f51cde0dc3e06b4d89a764b3df) Thanks [@renovate](https://github.com/apps/renovate)! - chore(app): 🧹 Pin dependencies
+
+- [#104](https://github.com/Stephane-Pires/caravel/pull/104) [`e533f59`](https://github.com/Stephane-Pires/caravel/commit/e533f59cb05e9e0862e5bdd80231c69577d48c2a) Thanks [@renovate](https://github.com/apps/renovate)! - chore(app): 🧹 Pin dependencies
+
+- [#106](https://github.com/Stephane-Pires/caravel/pull/106) [`27eda7c`](https://github.com/Stephane-Pires/caravel/commit/27eda7cf5f32438ed6c66ab9de9253da26c24294) Thanks [@renovate](https://github.com/apps/renovate)! - chore(app): 🧹 Pin dependencies
+
+- [#108](https://github.com/Stephane-Pires/caravel/pull/108) [`74f70e6`](https://github.com/Stephane-Pires/caravel/commit/74f70e6cfce387e7b56d69ea8ed312592093b5b9) Thanks [@renovate](https://github.com/apps/renovate)! - chore(app): 🧹 Update eslint-plugin-oxlint from 0.16.5 to v0.16.6
+
+- [#109](https://github.com/Stephane-Pires/caravel/pull/109) [`7ee822e`](https://github.com/Stephane-Pires/caravel/commit/7ee822e6365d76748eaea910c48c6c1a609edcb4) Thanks [@renovate](https://github.com/apps/renovate)! - chore(app): 🧹 Update oxlint from 0.16.5 to v0.16.6
+
+- [#111](https://github.com/Stephane-Pires/caravel/pull/111) [`9c1cd2c`](https://github.com/Stephane-Pires/caravel/commit/9c1cd2c5c1bd16263f6f701a4686ca6e7bb29a56) Thanks [@renovate](https://github.com/apps/renovate)! - chore(app): 🧹 Update @changesets/cli from 2.28.1 to v2.29.0
+
+- [#113](https://github.com/Stephane-Pires/caravel/pull/113) [`4150531`](https://github.com/Stephane-Pires/caravel/commit/4150531fd56d17717558b22d1712b8705be0c15d) Thanks [@renovate](https://github.com/apps/renovate)! - chore(app): 🧹 Update @types/react from 19.1.1 to v19.1.2
+
+- [#126](https://github.com/Stephane-Pires/caravel/pull/126) [`f62cc9a`](https://github.com/Stephane-Pires/caravel/commit/f62cc9a2263c45d74cbfb8510f365d9d0d40653d) Thanks [@renovate](https://github.com/apps/renovate)! - chore(app): 🧹 Update react monorepo from 19.1.0 to v19.1.2
+
+- [#127](https://github.com/Stephane-Pires/caravel/pull/127) [`a549e36`](https://github.com/Stephane-Pires/caravel/commit/a549e36842912eaaa04fa6ee0bc334e396b28e7d) Thanks [@renovate](https://github.com/apps/renovate)! - chore(app): 🧹 Update @changesets/cli from 2.29.0 to v2.29.1
+
+- [#129](https://github.com/Stephane-Pires/caravel/pull/129) [`ffc1a4f`](https://github.com/Stephane-Pires/caravel/commit/ffc1a4f98a235e22067eaade324babffb17a4ede) Thanks [@renovate](https://github.com/apps/renovate)! - chore(app): 🧹 Update tailwindcss from 4.1.3 to v4.1.4
+
+- [#131](https://github.com/Stephane-Pires/caravel/pull/131) [`1a83300`](https://github.com/Stephane-Pires/caravel/commit/1a83300e985076ed4d6f494a3cee2714695f4923) Thanks [@renovate](https://github.com/apps/renovate)! - chore(app): 🧹 Update framer-motion from 12.6.5 to v12.7.3
+
+- [#72](https://github.com/Stephane-Pires/caravel/pull/72) [`795d815`](https://github.com/Stephane-Pires/caravel/commit/795d81547262bf435d2e991d5ca68632a1d6043b) Thanks [@Stephane-Pires](https://github.com/Stephane-Pires)! - update devcontainer with postStartCommand
+
 ## 0.5.0
 
 ### Minor Changes
