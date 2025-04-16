@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.6.1
+
+### Patch Changes
+
+- [#133](https://github.com/Stephane-Pires/caravel/pull/133) [`47e25d8`](https://github.com/Stephane-Pires/caravel/commit/47e25d81ce4fac945f4b5bad562db5fad97c46ce) Thanks [@Stephane-Pires](https://github.com/Stephane-Pires)! - Adding a publish to release workflow
+
 ## 0.6.0
 
 ### Minor Changes
