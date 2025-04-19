@@ -1,5 +1,19 @@
 # Changelog
 
+## 0.6.3
+
+### Patch Changes
+
+- [#137](https://github.com/Stephane-Pires/caravel/pull/137) [`8124199`](https://github.com/Stephane-Pires/caravel/commit/8124199e1baa0a5e0513fd7ac73fd88ae170ddd1) Thanks [@renovate](https://github.com/apps/renovate)! - chore(app): 🧹 Update @changesets/cli from 2.29.1 to v2.29.2
+
+- [#139](https://github.com/Stephane-Pires/caravel/pull/139) [`bed9652`](https://github.com/Stephane-Pires/caravel/commit/bed96524ec16279aed28421747ab6296fe53fa7a) Thanks [@renovate](https://github.com/apps/renovate)! - chore(app): 🧹 Update framer-motion from 12.7.3 to v12.7.4
+
+- [#140](https://github.com/Stephane-Pires/caravel/pull/140) [`88dda8a`](https://github.com/Stephane-Pires/caravel/commit/88dda8af65b149f62305b04daf3ef9dc79488b86) Thanks [@renovate](https://github.com/apps/renovate)! - chore(app): 🧹 Update @headlessui/react from 2.2.1 to v2.2.2
+
+- [#141](https://github.com/Stephane-Pires/caravel/pull/141) [`1b096cf`](https://github.com/Stephane-Pires/caravel/commit/1b096cf8b10b756b962cda920ef74a3f9270dc82) Thanks [@renovate](https://github.com/apps/renovate)! - chore(app): 🧹 Update nextjs monorepo from 15.3.0 to v15.3.1
+
+- [#142](https://github.com/Stephane-Pires/caravel/pull/142) [`6c917fc`](https://github.com/Stephane-Pires/caravel/commit/6c917fc5fd143d78f47abd9d6752bdb24bbb7018) Thanks [@renovate](https://github.com/apps/renovate)! - chore(app): 🧹 Update eslint monorepo from 9.24.0 to v9.25.0
+
 ## 0.6.2
 
 ### Patch Changes
