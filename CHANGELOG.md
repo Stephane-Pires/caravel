@@ -1,5 +1,29 @@
 # Changelog
 
+## 0.6.4
+
+### Patch Changes
+
+- [#152](https://github.com/Stephane-Pires/caravel/pull/152) [`4bf65ec`](https://github.com/Stephane-Pires/caravel/commit/4bf65ec869dab74c274e7556327def1979ac722d) Thanks [@renovate](https://github.com/apps/renovate)! - chore(app): 🧹 Update @sentry/nextjs from 9.14.0 to v9.15.0
+
+- [#154](https://github.com/Stephane-Pires/caravel/pull/154) [`379e02c`](https://github.com/Stephane-Pires/caravel/commit/379e02c392440a75765c35ed83cb8180f8e6f1a0) Thanks [@renovate](https://github.com/apps/renovate)! - chore(app): 🧹 Update @types/react-dom from 19.1.2 to v19.1.3
+
+- [#155](https://github.com/Stephane-Pires/caravel/pull/155) [`c8f9ff2`](https://github.com/Stephane-Pires/caravel/commit/c8f9ff2f36c7f3d3ebee16b3621af5c5c2cd99ac) Thanks [@renovate](https://github.com/apps/renovate)! - chore(app): 🧹 Update tailwindcss monorepo from 4.1.4 to v4.1.5
+
+- [#156](https://github.com/Stephane-Pires/caravel/pull/156) [`ee5c3e7`](https://github.com/Stephane-Pires/caravel/commit/ee5c3e742691fd4cab5c2b1fe5316f6b653741bc) Thanks [@renovate](https://github.com/apps/renovate)! - chore(app): 🧹 Update framer-motion from 12.9.2 to v12.9.7
+
+- [#157](https://github.com/Stephane-Pires/caravel/pull/157) [`8bad6f0`](https://github.com/Stephane-Pires/caravel/commit/8bad6f067c302e70a3b82ef56cb8165e03ed029c) Thanks [@renovate](https://github.com/apps/renovate)! - chore(app): 🧹 Update eslint monorepo from 9.25.1 to v9.26.0
+
+- [#158](https://github.com/Stephane-Pires/caravel/pull/158) [`790a700`](https://github.com/Stephane-Pires/caravel/commit/790a700f872db9dc54daba4e46df504157c03256) Thanks [@renovate](https://github.com/apps/renovate)! - chore(app): 🧹 Update contentlayer2 from 0.5.7 to v0.5.8
+
+- [#159](https://github.com/Stephane-Pires/caravel/pull/159) [`bf88024`](https://github.com/Stephane-Pires/caravel/commit/bf880249897446f18f2146f3c7725d37bdb738b7) Thanks [@renovate](https://github.com/apps/renovate)! - chore(app): 🧹 Update eslint-plugin-oxlint from 0.16.8 to v0.16.9
+
+- [#160](https://github.com/Stephane-Pires/caravel/pull/160) [`83513e6`](https://github.com/Stephane-Pires/caravel/commit/83513e662cd7b390f5e6102fdc5efec16a430e9d) Thanks [@renovate](https://github.com/apps/renovate)! - chore(app): 🧹 Update next-contentlayer2 from 0.5.7 to v0.5.8
+
+- [#161](https://github.com/Stephane-Pires/caravel/pull/161) [`3fdd031`](https://github.com/Stephane-Pires/caravel/commit/3fdd03147a8804a90d0c28ed2f7d4a210156e6e8) Thanks [@renovate](https://github.com/apps/renovate)! - chore(app): 🧹 Update oxlint from 0.16.8 to v0.16.9
+
+- [#162](https://github.com/Stephane-Pires/caravel/pull/162) [`22d7bea`](https://github.com/Stephane-Pires/caravel/commit/22d7bea963c8eb962b11ea0bec21f1ed20daacce) Thanks [@renovate](https://github.com/apps/renovate)! - chore(app): 🧹 Update @changesets/cli from 2.29.2 to v2.29.3
+
 ## 0.6.3
 
 ### Patch Changes
