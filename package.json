@@ -29,7 +29,7 @@
     "rehype-katex": "7.0.1",
     "rehype-pretty-code": "0.14.1",
     "remark-math": "6.0.0",
-    "shiki": "3.3.0",
+    "shiki": "3.4.0",
     "tailwindcss": "4.1.5",
     "typescript": "5.8.3"
   },
