@@ -16,7 +16,7 @@
     "@headlessui/react": "2.2.3",
     "@heroicons/react": "2.2.0",
     "@sentry/nextjs": "9.18.0",
-    "@tailwindcss/postcss": "4.1.6",
+    "@tailwindcss/postcss": "4.1.7",
     "contentlayer2": "0.5.8",
     "date-fns": "4.1.0",
     "dayjs": "1.11.13",
@@ -30,7 +30,7 @@
     "rehype-pretty-code": "0.14.1",
     "remark-math": "6.0.0",
     "shiki": "3.4.0",
-    "tailwindcss": "4.1.6",
+    "tailwindcss": "4.1.7",
     "typescript": "5.8.3"
   },
   "devDependencies": {
