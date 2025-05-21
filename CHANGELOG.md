@@ -1,5 +1,41 @@
 # Changelog
 
+## 0.6.5
+
+### Patch Changes
+
+- [#163](https://github.com/Stephane-Pires/caravel/pull/163) [`7629204`](https://github.com/Stephane-Pires/caravel/commit/76292042d6715157f616b6e75aba4ffa903878e5) Thanks [@renovate](https://github.com/apps/renovate)! - chore(app): 🧹 Update @types/react from 19.1.2 to v19.1.3
+
+- [#165](https://github.com/Stephane-Pires/caravel/pull/165) [`dcb2c1b`](https://github.com/Stephane-Pires/caravel/commit/dcb2c1bd13e34e9db4f31fcef794efe9882fc846) Thanks [@renovate](https://github.com/apps/renovate)! - chore(app): 🧹 Update shiki from 3.3.0 to v3.4.0
+
+- [#166](https://github.com/Stephane-Pires/caravel/pull/166) [`d7bc426`](https://github.com/Stephane-Pires/caravel/commit/d7bc4261b72f0ddabe3e6b607d3195f497d28beb) Thanks [@renovate](https://github.com/apps/renovate)! - chore(app): 🧹 Update framer-motion from 12.9.7 to v12.10.0
+
+- [#167](https://github.com/Stephane-Pires/caravel/pull/167) [`7c91d61`](https://github.com/Stephane-Pires/caravel/commit/7c91d617a73ba4a72067146de70f4c45a1096d83) Thanks [@renovate](https://github.com/apps/renovate)! - chore(app): 🧹 Update nextjs monorepo from 15.3.1 to v15.3.2
+
+- [#168](https://github.com/Stephane-Pires/caravel/pull/168) [`8563389`](https://github.com/Stephane-Pires/caravel/commit/8563389a18fc791af5d23ff53636685d2d850afb) Thanks [@renovate](https://github.com/apps/renovate)! - chore(app): 🧹 Update framer-motion from 12.10.0 to v12.10.5
+
+- [#169](https://github.com/Stephane-Pires/caravel/pull/169) [`7d1160d`](https://github.com/Stephane-Pires/caravel/commit/7d1160d3a1ce6f1ffe8cf962724cc00ac40de0d3) Thanks [@renovate](https://github.com/apps/renovate)! - chore(app): 🧹 Update @sentry/nextjs from 9.15.0 to v9.17.0
+
+- [#170](https://github.com/Stephane-Pires/caravel/pull/170) [`da42118`](https://github.com/Stephane-Pires/caravel/commit/da42118569b053617c948d42b560aebf1347648d) Thanks [@renovate](https://github.com/apps/renovate)! - chore(app): 🧹 Update commitlint monorepo from 19.8.0 to v19.8.1
+
+- [#171](https://github.com/Stephane-Pires/caravel/pull/171) [`2e56baf`](https://github.com/Stephane-Pires/caravel/commit/2e56bafbd47d606ea539639a96eefdcbb5262844) Thanks [@renovate](https://github.com/apps/renovate)! - chore(app): 🧹 Update oxlint from 0.16.9 to v0.16.10
+
+- [#172](https://github.com/Stephane-Pires/caravel/pull/172) [`a1eb076`](https://github.com/Stephane-Pires/caravel/commit/a1eb07610f19a7dda01627662fb3cc7696ced519) Thanks [@renovate](https://github.com/apps/renovate)! - chore(app): 🧹 Update eslint-plugin-oxlint from 0.16.9 to v0.16.10
+
+- [#173](https://github.com/Stephane-Pires/caravel/pull/173) [`90bbcf9`](https://github.com/Stephane-Pires/caravel/commit/90bbcf9e3402e5a49d222e65bbbe04a83b01b200) Thanks [@renovate](https://github.com/apps/renovate)! - chore(app): 🧹 Update tailwindcss monorepo from 4.1.5 to v4.1.6
+
+- [#174](https://github.com/Stephane-Pires/caravel/pull/174) [`ca5a43b`](https://github.com/Stephane-Pires/caravel/commit/ca5a43bb82d628642fe9a809e617d636d8120d96) Thanks [@renovate](https://github.com/apps/renovate)! - chore(app): 🧹 Update framer-motion from 12.10.5 to v12.11.0
+
+- [#175](https://github.com/Stephane-Pires/caravel/pull/175) [`3006403`](https://github.com/Stephane-Pires/caravel/commit/30064036967b4ba221055144c3c6420081b86e0c) Thanks [@renovate](https://github.com/apps/renovate)! - chore(app): 🧹 Update @changesets/cli from 2.29.3 to v2.29.4
+
+- [#176](https://github.com/Stephane-Pires/caravel/pull/176) [`db02cd9`](https://github.com/Stephane-Pires/caravel/commit/db02cd956fe98ab7586d8f784ada95135fd1ce0d) Thanks [@renovate](https://github.com/apps/renovate)! - chore(app): 🧹 Update @headlessui/react from 2.2.2 to v2.2.3
+
+- [#177](https://github.com/Stephane-Pires/caravel/pull/177) [`8336b09`](https://github.com/Stephane-Pires/caravel/commit/8336b09c3dc533e9e4f99d49431eb39ea4b02f26) Thanks [@renovate](https://github.com/apps/renovate)! - chore(app): 🧹 Update react monorepo
+
+- [#178](https://github.com/Stephane-Pires/caravel/pull/178) [`b63f605`](https://github.com/Stephane-Pires/caravel/commit/b63f6055cb81a3c783b4ea3cfe52187b49e5b025) Thanks [@renovate](https://github.com/apps/renovate)! - chore(app): 🧹 Update @sentry/nextjs from 9.17.0 to v9.18.0
+
+- [#179](https://github.com/Stephane-Pires/caravel/pull/179) [`1e1e4a3`](https://github.com/Stephane-Pires/caravel/commit/1e1e4a3e47828db2d9410ddc3fabc7ae95b95a47) Thanks [@renovate](https://github.com/apps/renovate)! - chore(app): 🧹 Update framer-motion from 12.11.0 to v12.12.1
+
 ## 0.6.4
 
 ### Patch Changes
