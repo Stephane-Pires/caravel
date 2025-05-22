@@ -19,7 +19,8 @@
     "max-dependencies": "off",
     "no-default-export": "off",
     "unambiguous": "off",
-    "avoid-new": "off"
+    "avoid-new": "off",
+    "no-unassigned-import": "off"
   },
   "env": {
     "browser": true
