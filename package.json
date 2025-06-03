@@ -45,7 +45,7 @@
     "@types/react-dom": "19.1.5",
     "eslint": "9.28.0",
     "eslint-config-next": "15.3.3",
-    "eslint-plugin-oxlint": "0.16.12",
+    "eslint-plugin-oxlint": "0.17.0",
     "husky": "9.1.7",
     "oxlint": "0.17.0",
     "prettier": "3.5.3",
