@@ -47,7 +47,7 @@
     "eslint-config-next": "15.3.3",
     "eslint-plugin-oxlint": "0.16.12",
     "husky": "9.1.7",
-    "oxlint": "0.16.12",
+    "oxlint": "0.17.0",
     "prettier": "3.5.3",
     "prettier-plugin-tailwindcss": "0.6.12"
   },
