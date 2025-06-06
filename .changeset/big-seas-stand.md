@@ -1,5 +1,0 @@
----
-"caravel": minor
----
-
-Add dockerignore
