@@ -1,5 +1,4 @@
 import { useMDXComponent } from "next-contentlayer2/hooks"
-import Image from "next/image"
 import { HTMLProps } from "react"
 
 interface Quote {
@@ -87,6 +86,14 @@ function a({ children, href }: HTMLProps<HTMLAnchorElement>) {
   )
 }
 
+function blockquote({ children }: HTMLProps<HTMLQuoteElement>) {
+  return (
+    <blockquote className="my-4 rounded-lg border-s-4 border-slate-50 bg-slate-800 p-4 text-xl leading-relaxed font-medium italic">
+      {children}
+    </blockquote>
+  )
+}
+
 function ImageMdx({ alt, src }: HTMLProps<HTMLImageElement>) {
   if (!src) {
     throw new Error("You can not create an image with an undefined src")
@@ -99,13 +106,13 @@ function ImageMdx({ alt, src }: HTMLProps<HTMLImageElement>) {
   }
 
   return (
-    <div className="flex flex-row justify-center">
-      <div className={`relative my-4 h-[50vh] w-[90vw] md:w-full`}>
-        <Image
+    <div className="m-4 flex flex-row justify-center">
+      <div className="relative h-fit w-fit p-4">
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img
           src={src}
           alt={alt}
-          fill
-          className="rounded-md object-cover"
+          className="rounded-md object-contain"
         />
       </div>
     </div>
@@ -121,6 +128,7 @@ const mdxHTMLComponents = {
   li,
   p,
   ul,
+  blockquote,
 }
 
 const MDX_COMPONENTS = { ImageMdx, Quote, ...mdxHTMLComponents }
