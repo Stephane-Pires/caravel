@@ -42,7 +42,7 @@ const STYLE_WAVE = {
 
 const BirdAnimation = () => {
   return (
-    <div className="h-96 w-96 overflow-hidden bg-sky-200">
+    <div className="size-60 overflow-hidden bg-sky-200 md:size-96">
       {/* Bird container */}
       <div className="relative rotate-12">
         {/* Left wing */}
@@ -86,7 +86,7 @@ const BirdAnimation = () => {
           src="/logbook/colorized-logo.png"
           width={250}
           height={250}
-          className="transla absolute mt-32 transition-transform duration-300 ease-in-out"
+          className="transla absolute mt-8 transition-transform duration-300 ease-in-out md:mt-32"
         />
       </motion.div>
 
@@ -97,7 +97,7 @@ const BirdAnimation = () => {
         height={0}
         sizes="100vw"
         style={STYLE_WAVE}
-        className="mt-56"
+        className="mt-36 md:mt-56"
       />
     </div>
   )
@@ -106,9 +106,9 @@ const BirdAnimation = () => {
 export function Polaroid() {
   return (
     <div className="container w-fit -rotate-6 transition-transform duration-300 ease-in-out hover:-rotate-4">
-      <div className="rounded-lg bg-white p-10 shadow-lg">
+      <div className="rounded-lg bg-white p-6 shadow-lg md:p-10">
         <BirdAnimation />
-        <div className="h-20 w-full bg-white" />
+        <div className="h-8 w-full bg-white md:h-20" />
       </div>
     </div>
   )
