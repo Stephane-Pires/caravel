@@ -88,11 +88,11 @@ export function TimelineContainer({
                         icon={content.icon}
                         link={content.link}
                       />
-                      <p className="basis-10/12 font-sans break-normal">
+                      <p className="basis-10/12 break-normal font-sans">
                         {content.label}
                       </p>
                     </div>
-                    <div className="flex w-36 translate-x-10 flex-col items-start justify-start bg-slate-900 font-mono break-words text-slate-400">
+                    <div className="flex w-36 translate-x-10 flex-col items-start justify-start break-words bg-slate-900 font-mono text-slate-400">
                       <div className="flex flex-row justify-between">{`from: ${content.duration.start}`}</div>
                       <div className="flex flex-row justify-between">{`to: ${content.duration.end}`}</div>
                       {content.duration?.difference && (

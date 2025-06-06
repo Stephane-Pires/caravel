@@ -25,7 +25,7 @@ export function Star({ star }: StarProps) {
   const { src, tooltip } = STAR_INFO[star]
 
   return (
-    <div className="group border-primary-800 rounded-full border-4 border-solid bg-blue-300 sm:mt-[335px]">
+    <div className="border-primary-800 group rounded-full border-4 border-solid bg-blue-300 sm:mt-[335px]">
       <Image
         alt="wind force weak"
         src={src}

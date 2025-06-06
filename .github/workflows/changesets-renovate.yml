@@ -4,8 +4,8 @@ on:
   pull_request_target:
     paths:
       - ".github/workflows/*.yml"
-      - "**/package-lock.json"
-      - "**/package.json"
+      - "**/*/package-lock.json"
+      - "**/*/package.json"
 
 jobs:
   renovate:

@@ -14,12 +14,12 @@ interface Card {
 
 export function Card({ title, date, subject, category, image }: Card) {
   return (
-    <div className="my-3 flex h-[400px] w-[320px] flex-col justify-between rounded-lg border-l-4 border-t-4 border-primary-900 bg-primary-700 p-2 transition delay-100 ease-in-out hover:bg-primary-500 active:scale-105 active:bg-primary-500">
-      <h3 className="m-4 py-2 text-center font-script text-2xl text-blue-900 underline decoration-dotted underline-offset-2">
+    <div className="border-primary-900 bg-primary-700 hover:bg-primary-500 active:bg-primary-500 my-3 flex h-[400px] w-[320px] flex-col justify-between rounded-lg border-l-4 border-t-4 p-2 transition delay-100 ease-in-out active:scale-105">
+      <h3 className="font-script m-4 py-2 text-center text-2xl text-blue-900 underline decoration-dotted underline-offset-2">
         {title}
       </h3>
 
-      <div className="relative h-[200px] ">
+      <div className="relative h-[200px]">
         <Image
           src={`/logbook/card/${image}`}
           alt="My Image"
@@ -28,7 +28,7 @@ export function Card({ title, date, subject, category, image }: Card) {
         />
       </div>
 
-      <div className="flex flex-row py-2 font-code text-blue-900">
+      <div className="font-code flex flex-row py-2 text-blue-900">
         <CalendarDaysIcon className="mr-2 size-6 italic text-blue-900" />{" "}
         {dayjs(date).format("dddd D MMMM YYYY")}
       </div>

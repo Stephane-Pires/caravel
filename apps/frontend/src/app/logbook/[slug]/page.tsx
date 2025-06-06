@@ -1,7 +1,7 @@
+import { Content, allContents } from "@/.contentlayer/generated"
 import { Mdx } from "@/components/Mdx"
 import { Star } from "@/components/Star"
 import { STAR } from "@/enums/stars"
-import { Content, allContents } from "contentlayer/generated"
 import Image from "next/image"
 import { notFound } from "next/navigation"
 

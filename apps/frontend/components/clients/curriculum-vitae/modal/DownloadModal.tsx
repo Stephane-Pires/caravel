@@ -28,10 +28,11 @@ export function DownloadModal({ isShow, setIsShow }: DownloadModalProps) {
   let [local, setLocal] = useState<LOCAL_SUPPORTED>(LOCAL_SUPPORTED.ENGLISH)
 
   const handleDialogClose = useCallback(() => setIsShow(false), [setIsShow])
-  const handleLocalChange = useCallback(({ checked }: {checked: boolean}) =>
-    ` ${checked ? "bg-primary-600" : "bg-slate-800"} active:ring-primary-900 active:ring-opacity-60 active:ring-offset-primary-300 relative flex cursor-pointer rounded-lg px-5 py-4 focus:outline-hidden active:ring-2 active:ring-offset-2`, [])
- 
- 
+  const handleLocalChange = useCallback(
+    ({ checked }: { checked: boolean }) =>
+      ` ${checked ? "bg-primary-600" : "bg-slate-800"} active:ring-primary-900 active:ring-opacity-60 active:ring-offset-primary-300 relative flex cursor-pointer rounded-lg px-5 py-4 focus:outline-hidden active:ring-2 active:ring-offset-2`,
+    [],
+  )
 
   return (
     <Transition
@@ -70,7 +71,7 @@ export function DownloadModal({ isShow, setIsShow }: DownloadModalProps) {
               <DialogPanel className="w-full max-w-md overflow-hidden rounded-2xl bg-slate-800 p-6 text-left align-middle shadow-xl transition-all">
                 <DialogTitle
                   as="h3"
-                  className="text-lg leading-6 font-medium text-blue-300"
+                  className="text-lg font-medium leading-6 text-blue-300"
                 >
                   Choose language
                 </DialogTitle>
@@ -131,7 +132,7 @@ export function DownloadModal({ isShow, setIsShow }: DownloadModalProps) {
                   <Link href={`/api/download/curriculum?language=${local}`}>
                     <button
                       type="button"
-                      className="bg-accent-200 hover:bg-accent-400 active:bg-accent-400 inline-flex justify-center rounded-md border border-transparent px-4 py-2 font-sans text-base font-bold text-blue-900 transition delay-75 focus:outline-hidden focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 active:scale-105"
+                      className="bg-accent-200 hover:bg-accent-400 active:bg-accent-400 focus:outline-hidden inline-flex justify-center rounded-md border border-transparent px-4 py-2 font-sans text-base font-bold text-blue-900 transition delay-75 focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 active:scale-105"
                     >
                       Download
                     </button>

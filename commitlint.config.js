@@ -1,6 +1,6 @@
 /* eslint-disable no-commonjs */
 
-const ERROR_LEVEL = 2
+const ERROR_LEVEL = 2;
 
 module.exports = {
   extends: ["@commitlint/config-conventional"],
@@ -16,4 +16,4 @@ module.exports = {
       ["feat", "evol", "dx", "fix", "docs", "test", "chore", "release"],
     ],
   },
-}
+};

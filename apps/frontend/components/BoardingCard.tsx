@@ -23,7 +23,7 @@ export function BoardingCardDesktop({
 }: BoardingCard) {
   return (
     <a href={url}>
-      <div className="border-primary-900 bg-primary-700 hover:bg-primary-500 active:bg-primary-500 h-80 max-w-[660px] min-w-[660px] -rotate-6 rounded-xl border-t-4 border-l-4 p-2 transition delay-100 ease-in-out hover:rotate-0 active:scale-105">
+      <div className="border-primary-900 bg-primary-700 hover:bg-primary-500 active:bg-primary-500 h-80 min-w-[660px] max-w-[660px] -rotate-6 rounded-xl border-l-4 border-t-4 p-2 transition delay-100 ease-in-out hover:rotate-0 active:scale-105">
         <div className="m-2 flex flex-row">
           <h2 className="font-script mr-8 text-blue-900">{title}</h2>
           <div className="flex translate-y-1 flex-row gap-4">
@@ -88,7 +88,7 @@ export function BoardingCardMobile({
 }: BoardingCard) {
   return (
     <a href={url}>
-      <div className="border-primary-900 bg-primary-700 hover:bg-primary-500 active:bg-primary-500 h-auto max-w-[350px] min-w-[350px] rounded-lg border-t-4 border-l-4 p-2 transition delay-100 ease-in-out active:scale-105">
+      <div className="border-primary-900 bg-primary-700 hover:bg-primary-500 active:bg-primary-500 h-auto min-w-[350px] max-w-[350px] rounded-lg border-l-4 border-t-4 p-2 transition delay-100 ease-in-out active:scale-105">
         <div className="m-2 flex flex-row">
           <div className="flex translate-y-1 flex-row gap-4">
             <div className="bg-accent-300 size-4 rotate-45 skew-y-[-45deg]" />

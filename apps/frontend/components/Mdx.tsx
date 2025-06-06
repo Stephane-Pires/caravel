@@ -9,10 +9,10 @@ interface Quote {
 function Quote({ author, quote }: Quote) {
   return (
     <div className="m-2 flex flex-col">
-      <div className="font-script mx-2 my-4 text-base leading-relaxed text-blue-100 italic sm:text-lg">
+      <div className="font-script mx-2 my-4 text-base italic leading-relaxed text-blue-100 sm:text-lg">
         {quote}
       </div>
-      <div className="font-script mx-2 self-end text-sm text-blue-100 italic underline underline-offset-2 sm:text-base">
+      <div className="font-script mx-2 self-end text-sm italic text-blue-100 underline underline-offset-2 sm:text-base">
         &quot;{author}&quot;
       </div>
     </div>
@@ -88,7 +88,7 @@ function a({ children, href }: HTMLProps<HTMLAnchorElement>) {
 
 function blockquote({ children }: HTMLProps<HTMLQuoteElement>) {
   return (
-    <blockquote className="my-4 rounded-lg border-s-4 border-slate-50 bg-slate-800 p-4 text-xl leading-relaxed font-medium italic">
+    <blockquote className="my-4 rounded-lg border-s-4 border-slate-50 bg-slate-800 p-4 text-xl font-medium italic leading-relaxed">
       {children}
     </blockquote>
   )

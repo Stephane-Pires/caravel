@@ -62,7 +62,7 @@ const BirdAnimation = () => {
         ></motion.div>
 
         <motion.div
-          className="absolute top-8 right-16 h-14 w-[2px] rounded-br-full bg-black"
+          className="absolute right-16 top-8 h-14 w-[2px] rounded-br-full bg-black"
           animate={ANIMATE_LEFT_WING}
           transition={TRANSITION_SLOW}
           style={STYLE_CLIP}
@@ -70,7 +70,7 @@ const BirdAnimation = () => {
 
         {/* Left wing */}
         <motion.div
-          className="absolute top-8 right-16 h-14 w-[2px] rounded-bl-full bg-black"
+          className="absolute right-16 top-8 h-14 w-[2px] rounded-bl-full bg-black"
           animate={ANIMATE_RIGHT_WING}
           transition={TRANSITION_SLOW}
           style={STYLE_CLIP}
@@ -105,7 +105,7 @@ const BirdAnimation = () => {
 
 export function Polaroid() {
   return (
-    <div className="container w-fit -rotate-6 transition-transform duration-300 ease-in-out hover:-rotate-4">
+    <div className="hover:-rotate-4 container w-fit -rotate-6 transition-transform duration-300 ease-in-out">
       <div className="rounded-lg bg-white p-6 shadow-lg md:p-10">
         <BirdAnimation />
         <div className="h-8 w-full bg-white md:h-20" />

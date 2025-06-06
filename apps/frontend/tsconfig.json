@@ -24,16 +24,16 @@
     "paths": {
       // "@/src": ["src/*"],
       "@/*": ["./*"],
-      "contentlayer/generated": ["./.contentlayer/generated"]
+      "contentlayer/generated": ["apps/frontend/.contentlayer/generated"]
     }
   },
   "include": [
-    "next-env.d.ts",
+    "apps/frontend/next-env.d.ts",
     "**/*.ts",
     "**/*.tsx",
     ".next/types/**/*.ts",
     "mdx-components.tsx",
-    ".contentlayer/generated"
+    "apps/frontend/.contentlayer/generated"
   ],
   "exclude": ["node_modules"]
 }

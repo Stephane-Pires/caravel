@@ -27,10 +27,7 @@ export function SectionContent({ section }: SectionProps) {
       </h3>
 
       {section.content.skills && (
-        <div
-          className="m-4 flex flex-row flex-wrap items-center justify-center gap-2
-  "
-        >
+        <div className="m-4 flex flex-row flex-wrap items-center justify-center gap-2">
           {/* // WORKAROUND DUE TO READONLY (because curriculum is readonly)  */}
           {section.content.skills.map((skill: SOFT_SKILLS | TECHNO) => (
             <Tag
@@ -55,7 +52,7 @@ export function SectionContent({ section }: SectionProps) {
         section.content.photos.map((photo: string) => (
           <div
             key={photo}
-            className="relative -z-20 my-10 h-[600px] "
+            className="relative -z-20 my-10 h-[600px]"
           >
             <Image
               src={photo}

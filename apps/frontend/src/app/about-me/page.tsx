@@ -113,10 +113,10 @@ export default function AboutMe() {
     <main className="flex min-h-screen flex-col items-center p-4 pt-20 md:p-10 md:py-20">
       {/* progress bar */}
       <div
-        className={`from-accent-500 to-accent-300 fixed top-20 left-0 z-30 flex h-1 bg-linear-to-r`}
+        className={`from-accent-500 to-accent-300 bg-linear-to-r fixed left-0 top-20 z-30 flex h-1`}
         style={scrollableDivStyle}
       />
-      <div className="mt-4 mb-8 flex w-full flex-col items-center gap-4 font-serif lg:flex-row lg:gap-10">
+      <div className="mb-8 mt-4 flex w-full flex-col items-center gap-4 font-serif lg:flex-row lg:gap-10">
         {/* <div className="sticky top-[40%] self-start md:basis-2/12">
           <div className="hidden justify-end md:flex">
             <NavigationCurriculumVitae articleDom={mapDom} />
