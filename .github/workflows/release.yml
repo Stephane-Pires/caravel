@@ -15,25 +15,24 @@ jobs:
   release:
     name: Release
     runs-on: ubuntu-latest
-
     steps:
       - name: Checkout Repo
-        uses: actions/checkout@v4
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4
 
       - name: Setup Node.js
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
         with:
-          node-version: 20 # or your desired Node.js version
-          cache: "pnpm"
+          node-version: 22 # or your desired version
 
-      - name: Install pnpm
+      - name: Install PNPM
         run: npm install -g pnpm
 
-      - name: Install Dependencies
+      - name: Install Dependencies (Root)
         run: pnpm install
 
-      - name: Generate contentlayer types
-        run: pnpm exec contentlayer2 build
+      - name: Generate Contentlayer Types (Frontend App)
+        run: pnpm contentlayer2 build
+        working-directory: apps/frontend
 
       - name: Create Release Pull Request
         uses: changesets/action@v1

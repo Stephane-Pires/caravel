@@ -80,5 +80,9 @@ graph TD;
         C[api/download/curriculum]
     end
 
+    subgraph Backend
+        F[index]
+    end
+
     B --> C
 ```
