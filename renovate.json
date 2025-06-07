@@ -6,5 +6,15 @@
   "commitMessageExtra": "from {{currentVersion}} to v{{newVersion}}",
   "gitIgnoredAuthors": ["changesets-renovate@ci.com"],
   "prHourlyLimit": 1,
-  "rangeStrategy": "bump"
+  "rangeStrategy": "bump",
+  "packageRules": [
+    {
+      "matchPaths": ["apps/frontend/**"],
+      "commitMessagePrefix": "chore(frontend): 🧹"
+    },
+    {
+      "matchPaths": ["apps/backend/**"],
+      "commitMessagePrefix": "chore(backend): 🧹"
+    }
+  ]
 }

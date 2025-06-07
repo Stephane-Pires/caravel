@@ -82,16 +82,12 @@
         "label": "app"
       },
       {
-        "value": "changeset",
-        "label": "changeset"
+        "value": "frontend",
+        "label": "frontend"
       },
       {
-        "value": "content",
-        "label": "content"
-      },
-      {
-        "value": "curriculum",
-        "label": "curriculum"
+        "value": "backend",
+        "label": "backend"
       },
       {
         "value": "",
