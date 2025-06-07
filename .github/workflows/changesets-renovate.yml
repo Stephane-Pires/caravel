@@ -6,6 +6,7 @@ on:
       - ".github/workflows/*.yml"
       - "**/*/package-lock.json"
       - "**/*/package.json"
+      - "renovate.json"
 
 jobs:
   renovate:
@@ -20,6 +21,6 @@ jobs:
           token: ${{ secrets.RENOVATE_CHANGESET_GITHUB_ACTION_CARAVEL }}
           changeset-folder: ".changeset"
           use-conventional-commits: false
-          commit-message: "docs(changeset): 📚 Add changeset from renovate update"
+          commit-message: "docs(app): 📚 Add changeset from renovate update"
           author-name: github-actions[bot]
           author-email: changesets-renovate@ci.com
