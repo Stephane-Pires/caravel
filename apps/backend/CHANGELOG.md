@@ -1,5 +1,11 @@
 # backend
 
+## 0.0.3
+
+### Patch Changes
+
+- [#222](https://github.com/Stephane-Pires/caravel/pull/222) [`718f6ae`](https://github.com/Stephane-Pires/caravel/commit/718f6aeeedfa50453310240076c27b137e9e1a44) Thanks [@Stephane-Pires](https://github.com/Stephane-Pires)! - Backend - change to private npm registery
+
 ## 0.0.2
 
 ### Patch Changes
