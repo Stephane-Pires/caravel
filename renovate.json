@@ -9,11 +9,11 @@
   "rangeStrategy": "bump",
   "packageRules": [
     {
-      "matchPaths": ["apps/frontend/**"],
+      "matchFileNames": ["apps/frontend/**"],
       "commitMessagePrefix": "chore(frontend): 🧹"
     },
     {
-      "matchPaths": ["apps/backend/**"],
+      "matchFileNames": ["apps/backend/**"],
       "commitMessagePrefix": "chore(backend): 🧹"
     }
   ]
