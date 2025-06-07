@@ -1,5 +1,21 @@
 # Changelog
 
+## 0.7.1
+
+### Patch Changes
+
+- [#212](https://github.com/Stephane-Pires/caravel/pull/212) [`350d76f`](https://github.com/Stephane-Pires/caravel/commit/350d76f93425bdc1989c581a4796a5d61ff51f27) Thanks [@renovate](https://github.com/apps/renovate)! - chore(frontend): 🧹 Update oxlint from 0.17.0 to v0.18.0
+
+- [#221](https://github.com/Stephane-Pires/caravel/pull/221) [`6d7cb61`](https://github.com/Stephane-Pires/caravel/commit/6d7cb619804df5a197d84b2520a60e941f48d6c2) Thanks [@Stephane-Pires](https://github.com/Stephane-Pires)! - Update README
+
+- [#217](https://github.com/Stephane-Pires/caravel/pull/217) [`2b19898`](https://github.com/Stephane-Pires/caravel/commit/2b19898efad6ecc4da5a2ee9d41e03f7fdb03c5d) Thanks [@Stephane-Pires](https://github.com/Stephane-Pires)! - - (App) : Modify documentation
+
+  - (App) : Update Github Release action to pnpm & monorepo
+
+- [#213](https://github.com/Stephane-Pires/caravel/pull/213) [`05c47a8`](https://github.com/Stephane-Pires/caravel/commit/05c47a8eb432f78ed940ff02266ebbde10c91ab5) Thanks [@Stephane-Pires](https://github.com/Stephane-Pires)! - Transform to monorepo
+
+  - Adding backend project
+
 ## 0.7.0
 
 ### Minor Changes
