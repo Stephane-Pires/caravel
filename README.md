@@ -29,11 +29,15 @@ It should :
 
 - Open it inside a `container`
 - Install the project
-- Run it on the `3000`
+- Run the frontend under port `3000`
 
 Open [http://localhost:3000](http://localhost:3000)
 
-![gif](/public/readme/caravel-devcontainer.gif)
+- Run the backend under port `3001`
+
+Open [http://localhost:3001](http://localhost:3001)
+
+![gif](/assets/readme/caravel-devcontainer.gif)
 
 ### 2️⃣ Basic installation
 
@@ -41,30 +45,37 @@ On the root of the project
 
 Run :
 
-- `npm install`
-- `npm run dev`
+- `pnpm install -r`
+- `pnpm dev`
 - Open [http://localhost:3000](http://localhost:3000)
+- Open [http://localhost:3001](http://localhost:3001)
 
 ## Technologies
 
 _What technologies are you using ?_
 
-### Basic
+### Frontend
 
 This project uses :
 
-- `nextjs` has a metaframework
-- `tailwind` for the styling
+- `NextJS` has a metaframework
+- `Tailwind` for the styling
 
-### Blog
+#### Blog
 
 In order to run the blog i use the `mdx` format with plugins `rehype, retype`. I use the `contentlayer` library to manage the content.
 
-### Hosting
+#### Hosting
 
 The hosting is managed by vercel :
 
 - The file serving is DONE using `lambda` functions
+
+### Bakckend
+
+This project uses :
+
+- `Hono` has a server framework
 
 ## Architecture
 
