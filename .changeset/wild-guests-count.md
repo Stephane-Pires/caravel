@@ -1,5 +1,5 @@
 ---
-"caravel": patch
+"frontend": patch
 "backend": patch
 ---
 
