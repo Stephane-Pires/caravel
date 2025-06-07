@@ -1,2 +1,3 @@
 packages:
   - "apps/*" # Matches all apps in the "apps" folder
+  - "."
