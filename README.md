@@ -11,11 +11,9 @@ _What is this project about ?_
   - Links to my personal projects
   - Information regarding myself (Curriculum vitae, hobbies, etc..)
 
-## How to run ? :
+## 🚀 How to run ? :
 
-There is 2 ways of running the project :
-
-### 1️⃣ Use a `devcontainer` (prefered way):
+### `devcontainer` :
 
 In order to use [devcontainer](https://code.visualstudio.com/docs/devcontainers/containers) the requirements are :
 
@@ -37,20 +35,28 @@ Open [http://localhost:3000](http://localhost:3000)
 
 Open [http://localhost:3001](http://localhost:3001)
 
+- Run the database under port `5432`
+
+- Run Drizzle Studio under port `3002`
+
+Open [Drizzle Studio](https://local.drizzle.studio)
+
 ![gif](/assets/readme/caravel-devcontainer.gif)
 
-### 2️⃣ Basic installation
+#### 📋 Steps done by `devcontainer` :
 
-On the root of the project
+- run containers via `docker-compose`
+- install projects via `pnpm install -r`
+- migrate `database` via `db:migrate`
 
-Run :
+#### 🪴 Seeding
 
-- `pnpm install -r`
-- `pnpm dev`
-- Open [http://localhost:3000](http://localhost:3000)
-- Open [http://localhost:3001](http://localhost:3001)
+You can `seed` the database via [database/seed](http://localhost:3001/database/seed)
 
-## Technologies
+You can `reset` the database via
+[database/reset](http://localhost:3001/database/reset)
+
+## 📡 Technologies
 
 _What technologies are you using ?_
 
@@ -76,6 +82,9 @@ The hosting is managed by vercel :
 This project uses :
 
 - `Hono` has a server framework
+- `PostGRES` has a database
+- `Drizzle` has an ORM
+- `Zod` has a Schema/validation tool
 
 ## Architecture
 
