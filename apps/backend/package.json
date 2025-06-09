@@ -4,16 +4,26 @@
   "type": "module",
   "private": true,
   "scripts": {
-    "dev": "tsx watch src/index.ts",
+    "dev": "tsx watch src/index.ts & pnpm db:studio",
     "build": "tsc",
-    "start": "node dist/index.js"
+    "start": "node dist/index.js",
+    "db:generate": "NODE_OPTIONS='--import tsx' drizzle-kit generate",
+    "db:migrate": "NODE_OPTIONS='--import tsx' drizzle-kit migrate",
+    "db:studio": "NODE_OPTIONS='--import tsx' drizzle-kit studio --verbose"
   },
   "dependencies": {
     "@hono/node-server": "^1.14.4",
-    "hono": "^4.7.11"
+    "drizzle-orm": "^0.44.2",
+    "drizzle-seed": "^0.3.1",
+    "hono": "^4.7.11",
+    "pg": "^8.16.0",
+    "zod": "^3.25.56"
   },
   "devDependencies": {
     "@types/node": "22.15.30",
+    "@types/pg": "^8.15.4",
+    "dotenv": "^16.5.0",
+    "drizzle-kit": "^0.31.1",
     "tsx": "4.19.4",
     "typescript": "5.8.3"
   }

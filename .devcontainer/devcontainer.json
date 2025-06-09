@@ -1,6 +1,8 @@
 {
   "name": "Caravel DevContainer",
-  "image": "mcr.microsoft.com/devcontainers/typescript-node:1-22-bookworm",
+  "dockerComposeFile": "../docker-compose.yml",
+  "service": "dev",
+  "workspaceFolder": "/workspace",
   "customizations": {
     "vscode": {
       "settings": {},
@@ -15,12 +17,15 @@
       ]
     }
   },
-  "runArgs": ["--name", "caravel_devcontainer"],
-  "appPort": 3000,
   "portsAttributes": {
     "3000": { "label": "Application port" },
-    "3001": { "label": "Backend port" }
+    "3001": { "label": "Backend port" },
+    "3002": { "label": "Drizzle Studio" },
+    "5432": { "label": "PostgreSQL" }
   },
-  "postCreateCommand": "pnpm install -r",
-  "postStartCommand": "pnpm run dev"
+  "postCreateCommand": "pnpm install -r && pnpm dev:prepare",
+  "postStartCommand": "pnpm run dev",
+  "remoteEnv": {
+    "DOTENV_CONFIG_PATH": "/workspace/.env"
+  }
 }
