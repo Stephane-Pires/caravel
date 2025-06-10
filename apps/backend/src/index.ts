@@ -1,41 +1,38 @@
 import { serve } from "@hono/node-server"
+import { OpenAPIHono } from "@hono/zod-openapi"
+import { Scalar } from "@scalar/hono-api-reference"
 import dotenv from "dotenv"
-import { reset } from "drizzle-seed"
-import { Hono } from "hono"
+import { logger } from "hono/logger"
 
-import { getDbClient } from "./db/db.client.js"
-import { dbSchema } from "./db/db.schema.js"
-import { seedDb } from "./db/db.seed.js"
+import packageJson from "../package.json" with { type: "json" }
+import contact from "./core/contact/contact.handler.js"
+import rendezVous from "./core/rendez-vous/rendez-vous.handler.js"
+import database from "./db/db.handler.js"
 import { assertEnv } from "./utils/env.js"
 
-const app = new Hono()
-
 dotenv.config()
+
+const app = new OpenAPIHono()
+
+app.use(logger())
+
+app.route("/", contact)
+app.route("/database/", database)
+app.route("/", rendezVous)
 
 app.get("/", (c) => {
   return c.json(assertEnv(process.env))
 })
 
-app.get("/database/seed", async (c) => {
-  try {
-    await seedDb()
-    return c.json({ message: "Database seeded successfully" })
-  } catch (error) {
-    // handle the case where is database has already been seeded and unique constraint conflict reject the query
-    console.error("Error seeding database:", error)
-    return c.json({ error: "Failed to seed database" }, 500)
-  }
+app.doc("/doc", {
+  openapi: "3.0.0",
+  info: {
+    title: "Caravel API",
+    version: packageJson.version,
+  },
 })
 
-app.get("/database/reset", async (c) => {
-  try {
-    await reset(getDbClient(), dbSchema)
-    return c.json({ message: "Database reset successfully" })
-  } catch (error) {
-    console.error("Error resetting database:", error)
-    return c.json({ error: "Failed to reset database" })
-  }
-})
+app.get("/ui", Scalar({ url: "/doc" }))
 
 serve(
   {
