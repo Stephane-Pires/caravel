@@ -13,8 +13,14 @@
   },
   "dependencies": {
     "@hono/node-server": "^1.14.4",
+    "@hono/swagger-ui": "^0.5.2",
+    "@hono/zod-openapi": "^0.19.8",
+    "@hono/zod-validator": "^0.7.0",
+    "@scalar/hono-api-reference": "^0.9.3",
+    "dayjs": "1.11.13",
     "drizzle-orm": "^0.44.2",
     "drizzle-seed": "^0.3.1",
+    "drizzle-zod": "^0.8.2",
     "hono": "^4.7.11",
     "pg": "^8.16.0",
     "zod": "^3.25.56"
