@@ -15,7 +15,7 @@
   "dependencies": {
     "@headlessui/react": "2.2.4",
     "@heroicons/react": "2.2.0",
-    "@sentry/nextjs": "9.28.0",
+    "@sentry/nextjs": "9.28.1",
     "@tailwindcss/postcss": "4.1.8",
     "contentlayer2": "0.5.8",
     "date-fns": "4.1.0",
