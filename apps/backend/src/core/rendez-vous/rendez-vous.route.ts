@@ -3,12 +3,13 @@ import { createRoute } from "@hono/zod-openapi"
 import { API_TAG } from "../../utils/tag.js"
 import {
   CreateRendezVousPayloadSchema,
+  MoveRendezVousPayloadSchema,
   RendezVousDTOSchema,
   RendezVousParamsSchema,
 } from "./rendez-vous.entity.js"
 import {
-  RendezVousInvalidScheduleAtExceptionSchema,
-  RendezVousNotFoundExceptionSchema,
+  RendezVousInvalidScheduleAtException,
+  RendezVousNotFoundException,
 } from "./rendez-vous.exception.js"
 
 export const getRendezVousRoute = createRoute({
@@ -50,7 +51,7 @@ export const getRendezVousByIdRoute = createRoute({
       description: "Rendez-vous not found",
       content: {
         "application/json": {
-          schema: RendezVousNotFoundExceptionSchema,
+          schema: new RendezVousNotFoundException().toSchema(),
         },
       },
     },
@@ -86,11 +87,79 @@ export const postRendezVousRoute = createRoute({
       description: "Invalid Semantic Payload",
       content: {
         "application/json": {
-          schema: RendezVousInvalidScheduleAtExceptionSchema,
+          schema: new RendezVousInvalidScheduleAtException().toSchema(),
         },
       },
     },
   },
 })
 
-//
+export const deleteRendezVousRoute = createRoute({
+  method: "delete",
+  path: "/rendez-vous/{id}",
+  tags: [API_TAG.RENDEZ_VOUS],
+  request: {
+    params: RendezVousParamsSchema,
+  },
+  responses: {
+    204: {
+      description: "Delete rendez-vous",
+    },
+    400: {
+      description: "Invalid request parameters",
+    },
+    404: {
+      description: "Rendez-vous not found",
+      content: {
+        "application/json": {
+          schema: new RendezVousNotFoundException().toSchema(),
+        },
+      },
+    },
+  },
+})
+
+export const moveRendezVousRoute = createRoute({
+  method: "patch",
+  path: "/rendez-vous/{id}/move",
+  tags: [API_TAG.RENDEZ_VOUS],
+  request: {
+    params: RendezVousParamsSchema,
+    body: {
+      content: {
+        "application/json": {
+          schema: MoveRendezVousPayloadSchema,
+        },
+      },
+    },
+  },
+  responses: {
+    200: {
+      description: "Moved rendez-vous",
+      content: {
+        "application/json": {
+          schema: RendezVousDTOSchema,
+        },
+      },
+    },
+    400: {
+      description: "Invalid request parameters",
+    },
+    404: {
+      description: "Rendez-vous not found",
+      content: {
+        "application/json": {
+          schema: new RendezVousNotFoundException().toSchema(),
+        },
+      },
+    },
+    422: {
+      description: "Invalid Semantic Payload",
+      content: {
+        "application/json": {
+          schema: new RendezVousInvalidScheduleAtException().toSchema(),
+        },
+      },
+    },
+  },
+})

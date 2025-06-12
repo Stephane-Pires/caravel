@@ -1,6 +1,7 @@
 import { serve } from "@hono/node-server"
 import { OpenAPIHono } from "@hono/zod-openapi"
 import { Scalar } from "@scalar/hono-api-reference"
+import { createMarkdownFromOpenApi } from "@scalar/openapi-to-markdown"
 import dotenv from "dotenv"
 import { logger } from "hono/logger"
 
@@ -24,15 +25,24 @@ app.get("/", (c) => {
   return c.json(assertEnv(process.env))
 })
 
-app.doc("/doc", {
-  openapi: "3.0.0",
+app.doc31("/doc", {
+  openapi: "3.1.0",
   info: {
     title: "Caravel API",
     version: packageJson.version,
   },
 })
 
+const openapiDoc = app.getOpenAPI31Document({
+  openapi: "3.1.0",
+  info: { title: "Example", version: "v1" },
+})
+
 app.get("/ui", Scalar({ url: "/doc" }))
+
+app.get("/llms.txt", async (c) => {
+  return c.text(await createMarkdownFromOpenApi(JSON.stringify(openapiDoc)))
+})
 
 serve(
   {

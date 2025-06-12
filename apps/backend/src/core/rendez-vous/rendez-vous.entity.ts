@@ -3,7 +3,7 @@ import dayjs from "dayjs"
 
 import type { RendezVousDb } from "../../db/schema/rendez-vous.js"
 import { ContactSchema } from "../contact/contact.entity.js"
-import type { RendezVousInvalidScheduleAtException } from "./rendez-vous.exception.js"
+import { RendezVousInvalidScheduleAtException } from "./rendez-vous.exception.js"
 
 const RendezVousSchema = z.object({
   id: z.number().min(1).openapi({
@@ -13,6 +13,8 @@ const RendezVousSchema = z.object({
   scheduledAt: z.date(),
 })
 
+export type RendezVous = z.infer<typeof RendezVousSchema>
+
 export const RendezVousParamsSchema = z
   .object({
     id: z.coerce.number().min(1).openapi({
@@ -20,8 +22,6 @@ export const RendezVousParamsSchema = z
     }),
   })
   .openapi("RendezVousParams")
-
-type RendezVous = z.infer<typeof RendezVousSchema>
 
 export const RendezVousDTOSchema = RendezVousSchema.extend({
   id: RendezVousSchema.shape.id.openapi({
@@ -59,6 +59,33 @@ export type CreateRendezVousPayload = z.infer<
   typeof CreateRendezVousPayloadSchema
 >
 
+export const UpdateRendezVousSchema = z
+  .object({
+    scheduledAt: z.coerce.string().datetime().pipe(z.coerce.date()).openapi({
+      example: "2024-10-01T10:00:00Z",
+    }),
+  })
+  .partial()
+
+export type UpdateRendezVous = z.infer<typeof UpdateRendezVousSchema>
+
+export const MoveRendezVousPayloadSchema = z
+  .object({
+    scheduledAt: UpdateRendezVousSchema.shape.scheduledAt.openapi({
+      example: "2026-10-01T10:00:00Z",
+    }),
+  })
+  .openapi("MoveRendezVousPayload", {
+    description: "Moving the rendez-vous to a new date",
+    required: ["scheduledAt"],
+    example: {
+      scheduledAt: "2026-10-01T10:00:00Z",
+    },
+  })
+  .strict()
+
+export type MoveRendezVousPayload = z.infer<typeof MoveRendezVousPayloadSchema>
+
 interface InvariantSuccess {
   success: true
 }
@@ -88,11 +115,7 @@ export class RendezVousEntity {
     ) {
       return {
         success: false,
-        exception: {
-          code: "1002",
-          title: "RendezVousInvalidScheduleAtException",
-          message: "Rendez-vous scheduled at is invalid",
-        },
+        exception: new RendezVousInvalidScheduleAtException(),
       }
     }
 
