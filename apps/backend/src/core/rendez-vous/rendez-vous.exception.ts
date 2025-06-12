@@ -1,59 +1,40 @@
-import { z } from "@hono/zod-openapi"
+import { DomainException } from "../../utils/exception.js"
 
-export const RendezVousIdParamExceptionSchema = z
-  .object({
-    title: z.literal("RendezVousIdParamException"),
-    code: z.literal("1001"),
-    message: z.literal("Invalid rendez-vous ID"),
-  })
-  .openapi({
-    description: "Exception thrown when the rendez-vous ID is invalid.",
-    example: {
-      title: "RendezVousIdParamException",
-      code: "1001",
-      message: "Invalid rendez-vous ID",
-    },
-  })
+export class RendezVousIdParamException extends DomainException {
+  readonly code = "1000"
+  readonly description =
+    "Exception returned when the rendez-vous ID is invalid."
 
-export type RendezVousIdParamException = z.infer<
-  typeof RendezVousIdParamExceptionSchema
->
+  constructor() {
+    super("Invalid rendez-vous ID")
+  }
+}
 
-export const RendezVousNotFoundExceptionSchema = z
-  .object({
-    title: z.literal("RendezVousNotFoundException"),
-    code: z.literal("1001"),
-    message: z.literal("Rendez-vous not found"),
-  })
-  .openapi({
-    description: "Exception thrown when the rendez-vous is not found",
-    example: {
-      title: "RendezVousNotFoundException",
-      code: "1001",
-      message: "Rendez-vous not found",
-    },
-  })
+export class RendezVousNotFoundException extends DomainException {
+  readonly code = "1001"
+  readonly description = "Exception returned when the rendez-vous is not found"
 
-export type RendezVousNotFoundException = z.infer<
-  typeof RendezVousNotFoundExceptionSchema
->
+  constructor() {
+    super("Rendez-vous not found")
+  }
+}
 
-export const RendezVousInvalidScheduleAtExceptionSchema = z
-  .object({
-    title: z.literal("RendezVousInvalidScheduleAtException"),
-    code: z.literal("1002"),
-    message: z.literal("Rendez-vous scheduled at is invalid"),
-  })
-  .openapi({
-    description:
-      "Exception thrown when the rendez-vous is scheduled at an invalid date",
-    example: {
-      title: "RendezVousInvalidScheduleAtException",
-      code: "1002",
-      message: "Rendez-vous scheduled at is invalid",
-    },
-  })
+export class RendezVousInvalidScheduleAtException extends DomainException {
+  readonly code = "1002"
+  readonly description =
+    "Exception returned when the rendez-vous is scheduled at an invalid date"
 
-export type RendezVousInvalidScheduleAtException = z.infer<
-  typeof RendezVousInvalidScheduleAtExceptionSchema
->
+  constructor() {
+    super("Rendez-vous scheduled at is invalid")
+  }
+}
+
+export class RendezVousInvalidScheduleAtAlreadyTakenException extends DomainException {
+  readonly code = "1003"
+  readonly description =
+    "Exception returned when the rendez-vous is scheduled at a date that is already taken"
+
+  constructor() {
+    super("The time slot is already booked")
+  }
+}
