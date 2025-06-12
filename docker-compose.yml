@@ -2,7 +2,7 @@ version: "3.8"
 
 services:
   dev:
-    image: mcr.microsoft.com/devcontainers/typescript-node:1-22-bookworm
+    image: mcr.microsoft.com/devcontainers/typescript-node:1-22-bookworm@sha256:7c2e711a4f7b02f32d2da16192d5e05aa7c95279be4ce889cff5df316f251c1d
     container_name: caravel_devcontainer
     volumes:
       - .:/workspace:cached
@@ -23,7 +23,7 @@ services:
     command: sleep infinity
 
   db:
-    image: postgres:17
+    image: postgres:17@sha256:62d6869ec6d5b30b53ee45e102a952990be578189a8abc5804bfdebeb4f9f542
     container_name: caravel_postgres
     restart: unless-stopped
     ports:
