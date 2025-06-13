@@ -20,7 +20,7 @@
     "contentlayer2": "0.5.8",
     "date-fns": "4.1.0",
     "dayjs": "1.11.13",
-    "framer-motion": "12.16.0",
+    "framer-motion": "12.17.3",
     "next": "15.3.3",
     "next-contentlayer2": "0.5.8",
     "postcss": "8.5.5",
