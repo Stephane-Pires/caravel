@@ -43,10 +43,10 @@ importers:
         version: 0.5.2(hono@4.7.11)
       '@hono/zod-openapi':
         specifier: ^0.19.8
-        version: 0.19.8(hono@4.7.11)(zod@3.25.63)
+        version: 0.19.8(hono@4.7.11)(zod@3.25.64)
       '@hono/zod-validator':
         specifier: ^0.7.0
-        version: 0.7.0(hono@4.7.11)(zod@3.25.63)
+        version: 0.7.0(hono@4.7.11)(zod@3.25.64)
       '@scalar/hono-api-reference':
         specifier: ^0.9.3
         version: 0.9.3(hono@4.7.11)
@@ -64,7 +64,7 @@ importers:
         version: 0.3.1(drizzle-orm@0.44.2(@opentelemetry/api@1.9.0)(@types/pg@8.15.4)(pg@8.16.0))
       drizzle-zod:
         specifier: ^0.8.2
-        version: 0.8.2(drizzle-orm@0.44.2(@opentelemetry/api@1.9.0)(@types/pg@8.15.4)(pg@8.16.0))(zod@3.25.63)
+        version: 0.8.2(drizzle-orm@0.44.2(@opentelemetry/api@1.9.0)(@types/pg@8.15.4)(pg@8.16.0))(zod@3.25.64)
       hono:
         specifier: ^4.7.11
         version: 4.7.11
@@ -72,8 +72,8 @@ importers:
         specifier: ^8.16.0
         version: 8.16.0
       zod:
-        specifier: ^3.25.63
-        version: 3.25.63
+        specifier: ^3.25.64
+        version: 3.25.64
     devDependencies:
       '@types/node':
         specifier: 22.15.31
@@ -5434,8 +5434,8 @@ packages:
   zod@3.24.1:
     resolution: {integrity: sha512-muH7gBL9sI1nciMZV67X5fTKKBLtwpZ5VBp1vsOQzj1MhrBZ4wlVCm3gedKZWLp0Oyel8sIGfeiz54Su+OVT+A==}
 
-  zod@3.25.63:
-    resolution: {integrity: sha512-3ttCkqhtpncYXfP0f6dsyabbYV/nEUW+Xlu89jiXbTBifUfjaSqXOG6JnQPLtqt87n7KAmnMqcjay6c0Wq0Vbw==}
+  zod@3.25.64:
+    resolution: {integrity: sha512-hbP9FpSZf7pkS7hRVUrOjhwKJNyampPgtXKc3AN6DsWtoHsg2Sb4SQaS4Tcay380zSwd2VPo9G9180emBACp5g==}
 
   zwitch@2.0.4:
     resolution: {integrity: sha512-bXE4cR/kVZhKZX/RjPEflHaKVhUVl85noU3v6b8apfQEc1x4A+zBxjZ4lN8LqGd6WZ3dl98pY4o717VFmoPp+A==}
@@ -5449,10 +5449,10 @@ snapshots:
       '@jridgewell/gen-mapping': 0.3.8
       '@jridgewell/trace-mapping': 0.3.25
 
-  '@asteasolutions/zod-to-openapi@7.3.3(zod@3.25.63)':
+  '@asteasolutions/zod-to-openapi@7.3.3(zod@3.25.64)':
     dependencies:
       openapi3-ts: 4.4.0
-      zod: 3.25.63
+      zod: 3.25.64
 
   '@babel/code-frame@7.27.1':
     dependencies:
@@ -5877,7 +5877,7 @@ snapshots:
       ts-pattern: 5.7.1
       unified: 11.0.5
       yaml: 2.8.0
-      zod: 3.25.63
+      zod: 3.25.64
     transitivePeerDependencies:
       - '@effect-ts/otel-node'
       - acorn
@@ -6238,17 +6238,17 @@ snapshots:
     dependencies:
       hono: 4.7.11
 
-  '@hono/zod-openapi@0.19.8(hono@4.7.11)(zod@3.25.63)':
+  '@hono/zod-openapi@0.19.8(hono@4.7.11)(zod@3.25.64)':
     dependencies:
-      '@asteasolutions/zod-to-openapi': 7.3.3(zod@3.25.63)
-      '@hono/zod-validator': 0.7.0(hono@4.7.11)(zod@3.25.63)
+      '@asteasolutions/zod-to-openapi': 7.3.3(zod@3.25.64)
+      '@hono/zod-validator': 0.7.0(hono@4.7.11)(zod@3.25.64)
       hono: 4.7.11
-      zod: 3.25.63
+      zod: 3.25.64
 
-  '@hono/zod-validator@0.7.0(hono@4.7.11)(zod@3.25.63)':
+  '@hono/zod-validator@0.7.0(hono@4.7.11)(zod@3.25.64)':
     dependencies:
       hono: 4.7.11
-      zod: 3.25.63
+      zod: 3.25.64
 
   '@humanfs/core@0.19.1': {}
 
@@ -8431,10 +8431,10 @@ snapshots:
     optionalDependencies:
       drizzle-orm: 0.44.2(@opentelemetry/api@1.9.0)(@types/pg@8.15.4)(pg@8.16.0)
 
-  drizzle-zod@0.8.2(drizzle-orm@0.44.2(@opentelemetry/api@1.9.0)(@types/pg@8.15.4)(pg@8.16.0))(zod@3.25.63):
+  drizzle-zod@0.8.2(drizzle-orm@0.44.2(@opentelemetry/api@1.9.0)(@types/pg@8.15.4)(pg@8.16.0))(zod@3.25.64):
     dependencies:
       drizzle-orm: 0.44.2(@opentelemetry/api@1.9.0)(@types/pg@8.15.4)(pg@8.16.0)
-      zod: 3.25.63
+      zod: 3.25.64
 
   dunder-proto@1.0.1:
     dependencies:
@@ -11735,6 +11735,6 @@ snapshots:
 
   zod@3.24.1: {}
 
-  zod@3.25.63: {}
+  zod@3.25.64: {}
 
   zwitch@2.0.4: {}
