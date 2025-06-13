@@ -1,5 +1,40 @@
 # backend
 
+## 0.1.0
+
+### Minor Changes
+
+- [#226](https://github.com/Stephane-Pires/caravel/pull/226) [`b7eba3d`](https://github.com/Stephane-Pires/caravel/commit/b7eba3de4fdc7f6bb4134664068d6c72ce2e1684) Thanks [@Stephane-Pires](https://github.com/Stephane-Pires)! - - [Backend] : Add PostGRES, Drizzle (generate, migrate, studio, seeding)
+
+  - [Backend] : Create database entity (rendez-vous, contact)
+  - [Backend] : Create endpoint /database/seed and /database/reset in order to seed and reset database
+  - [Caravel] : Configure the devcontainer in order to launch postgres, migrate the database on running the application
+  - [Caravel] : Update the documentation (README)
+
+- [#235](https://github.com/Stephane-Pires/caravel/pull/235) [`bfe50b2`](https://github.com/Stephane-Pires/caravel/commit/bfe50b2ad3bc0a0cf8083012c78d5b620e3044e5) Thanks [@Stephane-Pires](https://github.com/Stephane-Pires)! - - [Backend] : Add Scalar has UI on /ui
+  - [Backend] : Add OpenAPI documentation on /doc
+  - [Backend] : Handle POST/GET /rendez-vous + GET /{id} Handle GET /contacts
+
+### Patch Changes
+
+- [#228](https://github.com/Stephane-Pires/caravel/pull/228) [`5a5cabb`](https://github.com/Stephane-Pires/caravel/commit/5a5cabb9c33e6f625bf9315714d483a6638a37b6) Thanks [@renovate](https://github.com/apps/renovate)! - chore(backend): 🧹 Pin dependencies
+
+- [#231](https://github.com/Stephane-Pires/caravel/pull/231) [`6210e14`](https://github.com/Stephane-Pires/caravel/commit/6210e1439238603e2716e97401c187bea077091d) Thanks [@renovate](https://github.com/apps/renovate)! - chore(backend): 🧹 Update zod from 3.25.56 to v3.25.57
+
+- [#232](https://github.com/Stephane-Pires/caravel/pull/232) [`3fc5f34`](https://github.com/Stephane-Pires/caravel/commit/3fc5f34db7c957db4cb96feea41e7019faa0e62a) Thanks [@renovate](https://github.com/apps/renovate)! - chore(frontend): 🧹 Update @types/node from 22.15.30 to v22.15.31
+
+- [#237](https://github.com/Stephane-Pires/caravel/pull/237) [`d5671a4`](https://github.com/Stephane-Pires/caravel/commit/d5671a4367a0aada7dcb71ac411f996b4be203cf) Thanks [@renovate](https://github.com/apps/renovate)! - chore(backend): 🧹 Update zod from 3.25.57 to v3.25.58
+
+- [#240](https://github.com/Stephane-Pires/caravel/pull/240) [`ab532ee`](https://github.com/Stephane-Pires/caravel/commit/ab532eeb000ad4df56a6cbc0ec2f5569dfac74a7) Thanks [@renovate](https://github.com/apps/renovate)! - chore(backend): 🧹 Update zod from 3.25.63 to v3.25.63
+
+- [#245](https://github.com/Stephane-Pires/caravel/pull/245) [`0fc5d8d`](https://github.com/Stephane-Pires/caravel/commit/0fc5d8ddddadbe8212a4864ef1f791607b7785ba) Thanks [@renovate](https://github.com/apps/renovate)! - chore(backend): 🧹 Update tsx from 4.19.4 to v4.20.2
+
+- [#250](https://github.com/Stephane-Pires/caravel/pull/250) [`d5823e3`](https://github.com/Stephane-Pires/caravel/commit/d5823e37c8343bfa4256cf72ff482520b8a59f6f) Thanks [@renovate](https://github.com/apps/renovate)! - chore(backend): 🧹 Update zod from 3.25.63 to v3.25.64
+
+- [#246](https://github.com/Stephane-Pires/caravel/pull/246) [`4b15e95`](https://github.com/Stephane-Pires/caravel/commit/4b15e95d75d88fb25cbfb4976e32d79120cec0d5) Thanks [@Stephane-Pires](https://github.com/Stephane-Pires)! - - [Backend] : Add Scalar UI at /ui
+  - [Backend] : Add Openapi at /doc
+  - [Backend] : Handle exception
+
 ## 0.0.4
 
 ### Patch Changes
