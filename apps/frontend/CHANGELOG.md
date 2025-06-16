@@ -1,5 +1,37 @@
 # Changelog
 
+## 0.7.2
+
+### Patch Changes
+
+- [#230](https://github.com/Stephane-Pires/caravel/pull/230) [`90c3ad0`](https://github.com/Stephane-Pires/caravel/commit/90c3ad00a9cdff797d9b0861d5f37ebdf60a4ac5) Thanks [@renovate](https://github.com/apps/renovate)! - chore(frontend): 🧹 Update @types/react from 19.1.6 to v19.1.7
+
+- [#232](https://github.com/Stephane-Pires/caravel/pull/232) [`3fc5f34`](https://github.com/Stephane-Pires/caravel/commit/3fc5f34db7c957db4cb96feea41e7019faa0e62a) Thanks [@renovate](https://github.com/apps/renovate)! - chore(frontend): 🧹 Update @types/node from 22.15.30 to v22.15.31
+
+- [#233](https://github.com/Stephane-Pires/caravel/pull/233) [`28cb96a`](https://github.com/Stephane-Pires/caravel/commit/28cb96a1b00746fc795c46eba2ec8a29eb46e4c2) Thanks [@renovate](https://github.com/apps/renovate)! - chore(frontend): 🧹 Update oxlint from 0.18.0 to v0.18.1
+
+- [#234](https://github.com/Stephane-Pires/caravel/pull/234) [`3589f09`](https://github.com/Stephane-Pires/caravel/commit/3589f0981b09ab5f7d5fc1667816204c28abc5ff) Thanks [@renovate](https://github.com/apps/renovate)! - chore(frontend): 🧹 Update @sentry/nextjs from 9.27.0 to v9.28.0
+
+- [#236](https://github.com/Stephane-Pires/caravel/pull/236) [`79e015b`](https://github.com/Stephane-Pires/caravel/commit/79e015b22ff885eddd4c206d1de8a8b050d26ec5) Thanks [@renovate](https://github.com/apps/renovate)! - chore(frontend): 🧹 Update eslint-plugin-oxlint from 0.18.0 to v1.0.0
+
+- [#241](https://github.com/Stephane-Pires/caravel/pull/241) [`510a0b4`](https://github.com/Stephane-Pires/caravel/commit/510a0b44e56ca2c33d3b596ab431e95a43f318f0) Thanks [@renovate](https://github.com/apps/renovate)! - chore(frontend): 🧹 Update @sentry/nextjs from 9.28.0 to v9.28.1
+
+- [#242](https://github.com/Stephane-Pires/caravel/pull/242) [`42c58cc`](https://github.com/Stephane-Pires/caravel/commit/42c58cc28b5a846fd2fec760a28a76953c3df96b) Thanks [@renovate](https://github.com/apps/renovate)! - chore(frontend): 🧹 Update @types/react from 19.1.7 to v19.1.8
+
+- [#243](https://github.com/Stephane-Pires/caravel/pull/243) [`10acd4b`](https://github.com/Stephane-Pires/caravel/commit/10acd4b1d9d882f6fc4d60a71bde03dae042fa6b) Thanks [@renovate](https://github.com/apps/renovate)! - chore(frontend): 🧹 Update postcss from 8.5.4 to v8.5.5
+
+- [#244](https://github.com/Stephane-Pires/caravel/pull/244) [`08ea11a`](https://github.com/Stephane-Pires/caravel/commit/08ea11a72e73c22e2058bc054d7669659a4f044e) Thanks [@renovate](https://github.com/apps/renovate)! - chore(frontend): 🧹 Update tailwindcss monorepo from 4.1.8 to v4.1.10
+
+- [#247](https://github.com/Stephane-Pires/caravel/pull/247) [`ae95a88`](https://github.com/Stephane-Pires/caravel/commit/ae95a8877a7b90d652ca6a9d8990920dd71cd1a2) Thanks [@renovate](https://github.com/apps/renovate)! - chore(frontend): 🧹 Update eslint-plugin-oxlint from 1.0.0 to v1.1.0
+
+- [#248](https://github.com/Stephane-Pires/caravel/pull/248) [`256e057`](https://github.com/Stephane-Pires/caravel/commit/256e057d212f9e556cf3c80e1a0be8510abda804) Thanks [@renovate](https://github.com/apps/renovate)! - chore(frontend): 🧹 Update framer-motion from 12.16.0 to v12.17.3
+
+- [#253](https://github.com/Stephane-Pires/caravel/pull/253) [`85cb891`](https://github.com/Stephane-Pires/caravel/commit/85cb891bb913cf147207ead82aa84872c80960de) Thanks [@renovate](https://github.com/apps/renovate)! - chore(frontend): 🧹 Update @sentry/nextjs from 9.28.1 to v9.29.0
+
+- [#254](https://github.com/Stephane-Pires/caravel/pull/254) [`021d57b`](https://github.com/Stephane-Pires/caravel/commit/021d57bd209ef97e889c2738480391f5583423b9) Thanks [@renovate](https://github.com/apps/renovate)! - chore(frontend): 🧹 Update eslint monorepo from 9.28.0 to v9.29.0
+
+- [#255](https://github.com/Stephane-Pires/caravel/pull/255) [`f76113b`](https://github.com/Stephane-Pires/caravel/commit/f76113bc572c2d85117ef95a21488d6f43dc772f) Thanks [@renovate](https://github.com/apps/renovate)! - chore(frontend): 🧹 Update framer-motion from 12.17.3 to v12.18.1
+
 ## 0.7.1
 
 ### Patch Changes
