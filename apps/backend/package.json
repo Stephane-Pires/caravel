@@ -22,7 +22,7 @@
     "drizzle-orm": "^0.44.2",
     "drizzle-seed": "^0.3.1",
     "drizzle-zod": "^0.8.2",
-    "hono": "^4.7.11",
+    "hono": "^4.8.2",
     "ical-generator": "^9.0.0",
     "nodemailer": "^7.0.3",
     "pg": "^8.16.2",
