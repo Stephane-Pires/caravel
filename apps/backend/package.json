@@ -29,7 +29,7 @@
     "zod": "^3.25.64"
   },
   "devDependencies": {
-    "@types/node": "22.15.31",
+    "@types/node": "22.15.32",
     "@types/nodemailer": "6.4.17",
     "@types/pg": "8.15.4",
     "dotenv": "16.5.0",
