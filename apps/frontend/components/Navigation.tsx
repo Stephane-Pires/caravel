@@ -12,11 +12,11 @@ const NAVIGATION = {
     name: "About Me",
     pathname: "/about-me",
   },
-  POURPARLER: {
-    icon: "chat",
-    name: "Pourparler",
-    pathname: "/pourparler",
-  },
+  // POURPARLER: {
+  //   icon: "chat",
+  //   name: "Pourparler",
+  //   pathname: "/pourparler",
+  // },
   LOGBOOK: {
     icon: "sticky-note",
     name: "Logbook",
@@ -120,12 +120,12 @@ export function NavigationMobile() {
 
         {showLinks ? (
           <XMarkIcon
-            className="m-2 size-10 fill-primary-600 stroke-primary-600"
+            className="fill-primary-600 stroke-primary-600 m-2 size-10"
             onClick={handleClickIcon}
           />
         ) : (
           <Bars2Icon
-            className="m-2 size-10 fill-primary-600 stroke-primary-600"
+            className="fill-primary-600 stroke-primary-600 m-2 size-10"
             onClick={handleClickIcon}
           />
         )}
