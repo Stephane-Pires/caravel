@@ -3,7 +3,11 @@ import dayjs from "dayjs"
 
 import type { RendezVousDb } from "../../db/schema/rendez-vous.js"
 import { ContactSchema } from "../contact/contact.entity.js"
-import { RendezVousInvalidScheduleAtException } from "./rendez-vous.exception.js"
+import {
+  RendezVousInvalidScheduleAtAlreadyTakenException,
+  RendezVousInvalidScheduleAtException,
+} from "./rendez-vous.exception.js"
+import { getRendezVousService } from "./rendez-vous.service.js"
 
 const RendezVousSchema = z.object({
   id: z.number().min(1).openapi({
@@ -22,6 +26,45 @@ export const RendezVousParamsSchema = z
     }),
   })
   .openapi("RendezVousParams")
+
+export const RendezVousQueryParamSchema = z
+  .object({
+    "dateRange[start]": z.coerce
+      .date()
+      .optional()
+      .openapi({ example: "2025-10-01T00:00:00Z" }),
+    "dateRange[end]": z.coerce
+      .date()
+      .optional()
+      .openapi({ example: "2026-10-31T23:59:59Z" }),
+  })
+  .refine(
+    (data) => {
+      const startDefined = data["dateRange[start]"] !== undefined
+      const endDefined = data["dateRange[end]"] !== undefined
+      return (startDefined && endDefined) || (!startDefined && !endDefined)
+    },
+    {
+      message:
+        "Both dateRange[start] and dateRange[end] must be provided together.",
+      path: ["dateRange"],
+    },
+  )
+  .refine(
+    (data) => {
+      const start = data["dateRange[start]"]
+      const end = data["dateRange[end]"]
+      if (start && end) {
+        return dayjs(start).isBefore(end) || dayjs(start).isSame(end)
+      }
+      return true
+    },
+    {
+      message: "dateRange[start] must be before or equal to dateRange[end].",
+      path: ["dateRange[start]"],
+    },
+  )
+  .openapi("RendezVousQueryParamSchema")
 
 export const RendezVousDTOSchema = RendezVousSchema.extend({
   id: RendezVousSchema.shape.id.openapi({
@@ -92,10 +135,12 @@ interface InvariantSuccess {
 
 interface InvariantError {
   success: false
-  exception: RendezVousInvalidScheduleAtException
+  exception:
+    | RendezVousInvalidScheduleAtException
+    | RendezVousInvalidScheduleAtAlreadyTakenException
 }
 
-type InvariantResult = InvariantSuccess | InvariantError
+type InvariantResult = Promise<InvariantSuccess | InvariantError>
 
 export class RendezVousEntity {
   constructor() {}
@@ -108,7 +153,9 @@ export class RendezVousEntity {
     return RendezVousDTOSchema.parse(rendezVous)
   }
 
-  static checkInvariants(rendezVous: Partial<RendezVous>): InvariantResult {
+  static async checkInvariants(
+    rendezVous: Partial<RendezVous>,
+  ): InvariantResult {
     if (
       rendezVous.scheduledAt &&
       dayjs(rendezVous.scheduledAt).isBefore(dayjs())
@@ -116,6 +163,26 @@ export class RendezVousEntity {
       return {
         success: false,
         exception: new RendezVousInvalidScheduleAtException(),
+      }
+    }
+
+    if (rendezVous.scheduledAt) {
+      const scheduledAt = dayjs(rendezVous.scheduledAt)
+
+      const rendezVousSaved = await getRendezVousService({
+        filter: {
+          dateRange: {
+            start: scheduledAt.subtract(30, "minute").toDate(),
+            end: scheduledAt.add(30, "minute").toDate(),
+          },
+        },
+      })
+
+      if (rendezVousSaved.length > 0) {
+        return {
+          success: false,
+          exception: new RendezVousInvalidScheduleAtAlreadyTakenException(),
+        }
       }
     }
 

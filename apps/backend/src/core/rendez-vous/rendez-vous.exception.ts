@@ -1,18 +1,8 @@
 import { DomainException } from "../../utils/exception.js"
 
-export class RendezVousIdParamException extends DomainException {
-  readonly code = "1000"
-  readonly description =
-    "Exception returned when the rendez-vous ID is invalid."
-
-  constructor() {
-    super("Invalid rendez-vous ID")
-  }
-}
-
 export class RendezVousNotFoundException extends DomainException {
   readonly code = "1001"
-  readonly description = "Exception returned when the rendez-vous is not found"
+  readonly description = "Rendez-vous not found"
 
   constructor() {
     super("Rendez-vous not found")
@@ -21,20 +11,32 @@ export class RendezVousNotFoundException extends DomainException {
 
 export class RendezVousInvalidScheduleAtException extends DomainException {
   readonly code = "1002"
-  readonly description =
-    "Exception returned when the rendez-vous is scheduled at an invalid date"
+  readonly description = "Rendez-vous scheduled at an invalid time slot"
 
   constructor() {
-    super("Rendez-vous scheduled at is invalid")
+    super("Rendez-vous scheduled at an invalid datetime")
   }
 }
 
 export class RendezVousInvalidScheduleAtAlreadyTakenException extends DomainException {
   readonly code = "1003"
-  readonly description =
-    "Exception returned when the rendez-vous is scheduled at a date that is already taken"
+  readonly description = "Rendez-vous scheduled at an already taken time slot"
 
   constructor() {
-    super("The time slot is already booked")
+    super("Rendez-vous scheduled at an already taken time slot")
   }
 }
+
+// export function mapRendezVousException(exception: DatabaseException) {
+//   // extract PostgreSQL error code
+//   // extract PostgreSQL database contraint name
+
+//   if (exception.cause && exception.cause.code === "23505") {
+//     switch (exception.cause.constraint) {
+//       case "rendez_vous_scheduledAt_unique":
+//         return new RendezVousInvalidScheduleAtAlreadyTakenException()
+//     }
+//   }
+
+//   return exception
+// }

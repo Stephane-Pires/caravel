@@ -1,6 +1,7 @@
 import { Navigation, NavigationMobile } from "@/components/Navigation"
+import { Toaster } from "@/components/ui/sonner"
 import type { Metadata } from "next"
-import { Merienda, Open_Sans } from "next/font/google"
+import { Atkinson_Hyperlegible, Merienda } from "next/font/google"
 import localFont from "next/font/local"
 
 import "./globals.css"
@@ -16,16 +17,17 @@ const mono_lisa_regular = localFont({
   variable: "--font-mono-lisa-regular",
 })
 
-const open_sans = Open_Sans({
-  display: "swap",
-  subsets: ["latin"],
-  variable: "--font-open-sans",
-})
-
 const merienda = Merienda({
   display: "swap",
   subsets: ["latin"],
   variable: "--font-merienda",
+})
+
+const atkinson = Atkinson_Hyperlegible({
+  display: "swap",
+  subsets: ["latin"],
+  weight: ["400", "700"],
+  variable: "--font-atkinson",
 })
 
 export default function RootLayout({
@@ -36,7 +38,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${open_sans.variable} ${merienda.variable} ${mono_lisa_regular.variable}`}
+      className={`${atkinson.variable} ${merienda.variable} ${mono_lisa_regular.variable}`}
     >
       <body>
         <header className="fixed z-50 h-20 w-full bg-slate-900">
@@ -49,6 +51,7 @@ export default function RootLayout({
         <footer className="bg-primary-600 flex flex-row justify-center p-2 text-blue-900">
           Made by Stéphane Pires with ❤️
         </footer>
+        <Toaster />
       </body>
     </html>
   )

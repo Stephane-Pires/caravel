@@ -1,4 +1,4 @@
-import { eq, inArray } from "drizzle-orm"
+import { SQL, and, between, eq, inArray } from "drizzle-orm"
 import { DatabaseError } from "pg"
 
 import { getDbClient } from "../../db/db.client.js"
@@ -12,7 +12,8 @@ import type {
 
 interface GetRendezVousRepositoryOptions {
   filter?: {
-    ids?: Array<number>
+    ids?: Array<RendezVous["id"]>
+    dateRange?: { start: Date; end: Date }
   }
 }
 
@@ -22,9 +23,40 @@ export const getRendezVousRepository = async (
   const db = getDbClient()
   let query = db.select().from(dbSchema.rendezVous)
 
+  console.log("RendezVous Repository Options:", options)
+
+  // https://orm.drizzle.team/docs/guides/conditional-filters-in-query
+  const filters: SQL[] = []
+
   if (options?.filter?.ids?.length) {
-    query.where(inArray(dbSchema.rendezVous.id, options.filter.ids))
+    filters.push(inArray(dbSchema.rendezVous.id, options.filter.ids))
   }
+
+  if (options?.filter?.dateRange) {
+    filters.push(
+      between(
+        dbSchema.rendezVous.scheduledAt,
+        options.filter.dateRange.start,
+        options.filter.dateRange.end,
+      ),
+    )
+  }
+
+  // if (options?.filter?.dateRange) {
+  //   const [start, end] = options.filter.dateRange
+  //   filters.push(dbSchema.rendezVous.scheduledAt.between(start, end))
+  // }
+
+  // if (options?.filter?.ids?.length) {
+  //   query.where(inArray(dbSchema.rendezVous.id, options.filter.ids))
+  // }
+
+  // if (options?.filter?.dateRange) {
+  //   const [start, end] = options.filter.dateRange
+  //   query.where(dbSchema.rendezVous.scheduledAt.between(start, end))
+  // }
+
+  query.where(and(...filters))
 
   return await query.execute()
 }

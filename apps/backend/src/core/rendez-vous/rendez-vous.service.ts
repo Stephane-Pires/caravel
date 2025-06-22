@@ -1,14 +1,12 @@
 import { DatabaseException } from "../../utils/exception.js"
+import { MailService } from "../../utils/mail.js"
 import {
   type CreateRendezVousPayload,
   type MoveRendezVousPayload,
   type RendezVous,
   RendezVousEntity,
 } from "./rendez-vous.entity.js"
-import {
-  RendezVousInvalidScheduleAtAlreadyTakenException,
-  RendezVousNotFoundException,
-} from "./rendez-vous.exception.js"
+import { RendezVousNotFoundException } from "./rendez-vous.exception.js"
 import {
   deleteRendezVousRepository,
   getRendezVousRepository,
@@ -18,7 +16,11 @@ import {
 
 interface GetRendezVousServiceOptions {
   filter?: {
-    ids?: Array<number>
+    ids?: Array<RendezVous["id"]>
+    dateRange?: {
+      start: Date
+      end: Date
+    }
   }
 }
 
@@ -35,38 +37,43 @@ export async function getRendezVousService(
 export async function createRendezVousService(
   payload: CreateRendezVousPayload,
 ) {
-  const invariantResult = RendezVousEntity.checkInvariants(payload)
+  const invariantResult = await RendezVousEntity.checkInvariants(payload)
 
   if (!invariantResult.success) return invariantResult.exception
 
   const persistedRendezVous = await persistRendezVousRepository(payload)
 
-  if (persistedRendezVous instanceof DatabaseException) {
+  if (persistedRendezVous instanceof DatabaseException)
     return persistedRendezVous
-  }
 
-  const createdRendezVous = await getRendezVousService({
+  const createdRendezVousList = await getRendezVousService({
     filter: {
       ids: [persistedRendezVous[0].id],
     },
   })
 
-  return createdRendezVous[0]
+  const createdRendezVous = createdRendezVousList[0]
+
+  await MailService.sendRendezVousCreated(createdRendezVous)
+
+  return createdRendezVous
 }
 
-export async function deleteRendezVousService(ids: Array<RendezVous["id"]>) {
+export async function cancelRendezVousService(ids: Array<RendezVous["id"]>) {
   try {
-    const rendezVousDb = await getRendezVousRepository({
+    const rendezVousList = await getRendezVousService({
       filter: {
         ids,
       },
     })
 
-    if (rendezVousDb.length !== ids.length) {
+    if (rendezVousList.length !== ids.length) {
       return new RendezVousNotFoundException()
     }
 
     await deleteRendezVousRepository(ids)
+
+    await MailService.sendCancelRendezVous(rendezVousList)
   } catch (error) {
     // Should be a Service Exception
     throw new DatabaseException("Error deleting rendez-vous", { cause: error })
@@ -78,46 +85,38 @@ export async function moveRendezVousService(
   payload: MoveRendezVousPayload,
 ) {
   try {
-    const rendezVousDb = await getRendezVousRepository({
+    const rendezVousList = await getRendezVousService({
       filter: {
         ids: [id],
       },
     })
 
-    if (rendezVousDb.length === 0) {
+    if (rendezVousList.length === 0) {
       return new RendezVousNotFoundException()
     }
 
-    const invariantResult = RendezVousEntity.checkInvariants({
-      ...RendezVousEntity.fromRepository(rendezVousDb[0]),
+    const rendezVousToUpdate = rendezVousList[0]
+
+    const invariantResult = await RendezVousEntity.checkInvariants({
+      ...rendezVousToUpdate,
       ...payload,
     })
 
-    if (!invariantResult.success) {
-      return invariantResult.exception
-    }
+    if (!invariantResult.success) return invariantResult.exception
 
     const movedRendezVousDb = await updateRendezVousRepository([[id, payload]])
 
-    if (movedRendezVousDb instanceof DatabaseException) {
-      // extract PostgreSQL error code
-      // extract PostgreSQL database contraint name
+    if (movedRendezVousDb instanceof DatabaseException) return movedRendezVousDb
 
-      if (movedRendezVousDb.cause && movedRendezVousDb.cause.code === "23505") {
-        switch (movedRendezVousDb.cause.constraint) {
-          case "rendez_vous_scheduledAt_unique":
-            return new RendezVousInvalidScheduleAtAlreadyTakenException()
-        }
-      }
-
-      return movedRendezVousDb
-    }
-
-    const movedRendezVous = movedRendezVousDb.map(
+    const movedRendezVousList = movedRendezVousDb.map(
       RendezVousEntity.fromRepository,
     )
 
-    return movedRendezVous[0]
+    const movedRendezVous = movedRendezVousList[0]
+
+    MailService.sendRendezVousMoved(rendezVousToUpdate, movedRendezVous)
+
+    return movedRendezVous
   } catch (error) {
     // Not correct should be ServiceException
     return new DatabaseException("Error moving rendez-vous", { cause: error })

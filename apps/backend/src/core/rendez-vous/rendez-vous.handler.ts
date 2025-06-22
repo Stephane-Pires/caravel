@@ -8,15 +8,15 @@ import {
   RendezVousNotFoundException,
 } from "./rendez-vous.exception.js"
 import {
-  deleteRendezVousRoute,
+  cancelRendezVousRoute,
   getRendezVousByIdRoute,
   getRendezVousRoute,
   moveRendezVousRoute,
   postRendezVousRoute,
 } from "./rendez-vous.route.js"
 import {
+  cancelRendezVousService,
   createRendezVousService,
-  deleteRendezVousService,
   getRendezVousService,
   moveRendezVousService,
 } from "./rendez-vous.service.js"
@@ -24,7 +24,22 @@ import {
 const app = new OpenAPIHono()
 
 app.openapi(getRendezVousRoute, async (c) => {
-  const rendezVous = await getRendezVousService()
+  const { "dateRange[start]": dateRangeStart, "dateRange[end]": dateRangeEnd } =
+    c.req.valid("query")
+
+  const options = {
+    filter: {
+      dateRange:
+        dateRangeStart && dateRangeEnd
+          ? {
+              start: new Date(dateRangeStart),
+              end: new Date(dateRangeEnd),
+            }
+          : undefined,
+    },
+  }
+
+  const rendezVous = await getRendezVousService(options)
 
   return c.json(rendezVous.map(RendezVousEntity.toDto))
 })
@@ -50,8 +65,12 @@ app.openapi(postRendezVousRoute, async (c) => {
 
   const result = await createRendezVousService(payload)
 
+  if (result instanceof RendezVousInvalidScheduleAtAlreadyTakenException) {
+    return c.json(result, 409)
+  }
+
   if (result instanceof RendezVousInvalidScheduleAtException) {
-    return c.json(result.toDTO(), 422)
+    return c.json(result, 422)
   }
 
   if (result instanceof DatabaseException) {
@@ -61,7 +80,7 @@ app.openapi(postRendezVousRoute, async (c) => {
   return c.json(RendezVousEntity.toDto(result), 201)
 })
 
-app.openapi(deleteRendezVousRoute, async (c) => {
+app.openapi(cancelRendezVousRoute, async (c) => {
   const { id } = c.req.valid("param")
 
   const rendezVous = await getRendezVousService({
@@ -74,7 +93,7 @@ app.openapi(deleteRendezVousRoute, async (c) => {
     return c.json(new RendezVousNotFoundException().toDTO(), 404)
   }
 
-  await deleteRendezVousService([id])
+  await cancelRendezVousService([id])
 
   return c.newResponse(null, 204)
 })
