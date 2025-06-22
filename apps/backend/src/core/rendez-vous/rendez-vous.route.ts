@@ -6,8 +6,10 @@ import {
   MoveRendezVousPayloadSchema,
   RendezVousDTOSchema,
   RendezVousParamsSchema,
+  RendezVousQueryParamSchema,
 } from "./rendez-vous.entity.js"
 import {
+  RendezVousInvalidScheduleAtAlreadyTakenException,
   RendezVousInvalidScheduleAtException,
   RendezVousNotFoundException,
 } from "./rendez-vous.exception.js"
@@ -16,6 +18,9 @@ export const getRendezVousRoute = createRoute({
   method: "get",
   path: "rendez-vous",
   tags: [API_TAG.RENDEZ_VOUS],
+  request: {
+    query: RendezVousQueryParamSchema,
+  },
   responses: {
     200: {
       content: {
@@ -83,6 +88,15 @@ export const postRendezVousRoute = createRoute({
     400: {
       description: "Invalid request parameters",
     },
+    409: {
+      description: "Rendez-vous already exists at the same time",
+      content: {
+        "application/json": {
+          schema:
+            new RendezVousInvalidScheduleAtAlreadyTakenException().toSchema(),
+        },
+      },
+    },
     422: {
       description: "Invalid Semantic Payload",
       content: {
@@ -94,7 +108,7 @@ export const postRendezVousRoute = createRoute({
   },
 })
 
-export const deleteRendezVousRoute = createRoute({
+export const cancelRendezVousRoute = createRoute({
   method: "delete",
   path: "/rendez-vous/{id}",
   tags: [API_TAG.RENDEZ_VOUS],

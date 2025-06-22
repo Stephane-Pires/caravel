@@ -21,7 +21,8 @@
     "3000": { "label": "Application port" },
     "3001": { "label": "Backend port" },
     "3002": { "label": "Drizzle Studio" },
-    "5432": { "label": "PostgreSQL" }
+    "5432": { "label": "PostgreSQL" },
+    "587": { "label": "Mailpit SMTP" }
   },
   "postCreateCommand": "pnpm install -r && pnpm dev:prepare",
   "postStartCommand": "pnpm run dev",

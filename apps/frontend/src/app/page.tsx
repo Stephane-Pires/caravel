@@ -29,7 +29,7 @@ export default function Home() {
             <h1 className="from-primary-700 to-primary-300 font-script bg-linear-to-r bg-clip-text text-6xl font-bold text-transparent sm:text-8xl">
               Caravel
             </h1>
-            <span className="pl-2 font-mono text-xl">{text}&nbsp;</span>
+            <span className="pl-2 font-mono text-xl text-blue-100">{text}&nbsp;</span>
           </div>
 
           <Polaroid />

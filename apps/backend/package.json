@@ -23,11 +23,14 @@
     "drizzle-seed": "^0.3.1",
     "drizzle-zod": "^0.8.2",
     "hono": "^4.7.11",
+    "ical-generator": "^9.0.0",
+    "nodemailer": "^7.0.3",
     "pg": "^8.16.0",
     "zod": "^3.25.64"
   },
   "devDependencies": {
     "@types/node": "22.15.31",
+    "@types/nodemailer": "^6.4.17",
     "@types/pg": "8.15.4",
     "dotenv": "16.5.0",
     "drizzle-kit": "0.31.1",

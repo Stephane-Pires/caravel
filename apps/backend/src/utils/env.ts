@@ -17,6 +17,9 @@ const envSchema = z
     POSTGRES_HOST: z.string().nonempty().meta({
       description: "The host address for the PostgreSQL database",
     }),
+    GMAIL_PASSWORD: z.string().nonempty().meta({
+      description: "The password for the Gmail account used to send emails",
+    }),
   })
   .meta({
     description: "Schema to parse environnement variables",

@@ -3,6 +3,7 @@ import { OpenAPIHono } from "@hono/zod-openapi"
 import { Scalar } from "@scalar/hono-api-reference"
 import { createMarkdownFromOpenApi } from "@scalar/openapi-to-markdown"
 import dotenv from "dotenv"
+import { cors } from "hono/cors"
 import { logger } from "hono/logger"
 
 import packageJson from "../package.json" with { type: "json" }
@@ -16,6 +17,19 @@ dotenv.config()
 const app = new OpenAPIHono()
 
 app.use(logger())
+app.use(
+  "*",
+  cors({
+    origin: ["http://localhost:3000"],
+    allowHeaders: [
+      "Content-Type",
+      "Authorization",
+      "Upgrade-Insecure-Requests",
+    ],
+    allowMethods: ["GET", "POST", "DELETE"],
+    exposeHeaders: ["Content-Length", "Content-Type"],
+  }),
+)
 
 app.route("/", contact)
 app.route("/database/", database)
