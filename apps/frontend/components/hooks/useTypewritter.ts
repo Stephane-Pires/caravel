@@ -49,8 +49,8 @@ export function useTypewriter(
         await wait(options.waitBetween)
       }
     }
-    
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   const typeCursor = useCallback(async () => {

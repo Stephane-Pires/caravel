@@ -78,12 +78,8 @@
           "name": "rendez_vous_contact_email_contact_email_fk",
           "tableFrom": "rendez_vous",
           "tableTo": "contact",
-          "columnsFrom": [
-            "contact_email"
-          ],
-          "columnsTo": [
-            "email"
-          ],
+          "columnsFrom": ["contact_email"],
+          "columnsTo": ["email"],
           "onDelete": "cascade",
           "onUpdate": "cascade"
         }
@@ -93,9 +89,7 @@
         "rendez_vous_scheduledAt_unique": {
           "name": "rendez_vous_scheduledAt_unique",
           "nullsNotDistinct": false,
-          "columns": [
-            "scheduled_at"
-          ]
+          "columns": ["scheduled_at"]
         }
       },
       "policies": {},

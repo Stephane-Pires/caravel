@@ -37,10 +37,12 @@ export function SectionContent({ section }: SectionProps) {
           ))}
         </div>
       )}
-      <div className="my-10 indent-8 max-w-prose text-blue-100">{section.content.paragraph}</div>
+      <div className="my-10 max-w-prose indent-8 text-blue-100">
+        {section.content.paragraph}
+      </div>
 
       {section.content.missions && (
-        <ul className="mx-6 flex w-full text-blue-100 list-outside list-disc list-image-[url(/logbook/mdx/paper-airplane.svg)] flex-col justify-center gap-4">
+        <ul className="mx-6 flex w-full list-outside list-disc list-image-[url(/logbook/mdx/paper-airplane.svg)] flex-col justify-center gap-4 text-blue-100">
           {/* // WORKAROUND DUE TO READONLY (because curriculum is readonly) */}
           {section.content.missions.map((mission: string) => (
             <li key={mission}>{mission}</li>

@@ -19,9 +19,9 @@ const eslintConfig = [
   ...oxlint.buildFromOxlintConfigFile(".oxlintrc.json"),
   {
     linterOptions: {
-      reportUnusedDisableDirectives: "off"
-  }
-}
+      reportUnusedDisableDirectives: "off",
+    },
+  },
 ]
 
 export default eslintConfig
