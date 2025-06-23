@@ -33,7 +33,7 @@
     "@types/nodemailer": "6.4.17",
     "@types/pg": "8.15.4",
     "dotenv": "16.5.0",
-    "drizzle-kit": "0.31.1",
+    "drizzle-kit": "0.31.2",
     "tsx": "4.20.3",
     "typescript": "5.8.3"
   }
