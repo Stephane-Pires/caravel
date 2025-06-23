@@ -7,7 +7,7 @@ export const metadata: Metadata = {
 
 export default function Pourparler() {
   return (
-    <main className="flex min-h-screen flex-col justify-center items-center p-10 py-20">
+    <main className="flex min-h-screen flex-col items-center justify-center p-10 py-20">
       <div className="text-accent-200 flex items-center pt-10">
         <TakeRendezVousForm />
       </div>

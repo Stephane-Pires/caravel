@@ -21,7 +21,7 @@ function Quote({ author, quote }: Quote) {
 
 function h1({ children }: HTMLProps<HTMLHeadingElement>) {
   return (
-    <h1 className="font-bold m-8 text-center text-4xl text-blue-300">
+    <h1 className="m-8 text-center text-4xl font-bold text-blue-300">
       {children}
     </h1>
   )
@@ -29,7 +29,7 @@ function h1({ children }: HTMLProps<HTMLHeadingElement>) {
 
 function h2({ children }: HTMLProps<HTMLHeadingElement>) {
   return (
-    <h2 className="font-semibold m-6 text-center text-3xl text-blue-300">
+    <h2 className="m-6 text-center text-3xl font-semibold text-blue-300">
       {children}
     </h2>
   )
@@ -37,7 +37,7 @@ function h2({ children }: HTMLProps<HTMLHeadingElement>) {
 
 function h3({ children }: HTMLProps<HTMLHeadingElement>) {
   return (
-    <h3 className="font-semibold m-4 text-center text-2xl text-blue-300">
+    <h3 className="m-4 text-center text-2xl font-semibold text-blue-300">
       {children}
     </h3>
   )
@@ -53,7 +53,7 @@ function h4({ children }: HTMLProps<HTMLHeadingElement>) {
 
 function p({ children }: HTMLProps<HTMLParagraphElement>) {
   return (
-    <p className="m-2 font-sans text-base max-w-prose text-blue-100 sm:text-lg">
+    <p className="m-2 max-w-prose font-sans text-base text-blue-100 sm:text-lg">
       {children}
     </p>
   )

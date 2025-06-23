@@ -222,38 +222,36 @@ export function TakeRendezVousForm() {
   const renderScheduledAtField = useCallback(
     ({ field }: { field: any }) => {
       // oxlint-disable-next-line jsx-no-new-function-as-prop
-      const handleTimePickerChange = 
-        (value: string | undefined) => {
-          if (!value) return
+      const handleTimePickerChange = (value: string | undefined) => {
+        if (!value) return
 
-          const [hours, minutes, seconds] = value.split(":").map(Number)
+        const [hours, minutes, seconds] = value.split(":").map(Number)
 
-          const baseDate = field.value ? new Date(field.value) : new Date()
-          const updatedDate = setSeconds(
-            setMinutes(setHours(baseDate, hours), minutes),
-            seconds,
-          )
+        const baseDate = field.value ? new Date(field.value) : new Date()
+        const updatedDate = setSeconds(
+          setMinutes(setHours(baseDate, hours), minutes),
+          seconds,
+        )
 
-          field.onChange(updatedDate)
-        }
+        field.onChange(updatedDate)
+      }
 
       // oxlint-disable-next-line jsx-no-new-function-as-prop
-      const handleCalendarDateChange = 
-        (selectedDate: Date | undefined) => {
-          if (!selectedDate) return
+      const handleCalendarDateChange = (selectedDate: Date | undefined) => {
+        if (!selectedDate) return
 
-          const currentDate = field.value ? new Date(field.value) : new Date()
+        const currentDate = field.value ? new Date(field.value) : new Date()
 
-          const mergedDate = setSeconds(
-            setMinutes(
-              setHours(selectedDate, currentDate.getHours()),
-              currentDate.getMinutes(),
-            ),
-            currentDate.getSeconds(),
-          )
+        const mergedDate = setSeconds(
+          setMinutes(
+            setHours(selectedDate, currentDate.getHours()),
+            currentDate.getMinutes(),
+          ),
+          currentDate.getSeconds(),
+        )
 
-          field.onChange(mergedDate)
-        }
+        field.onChange(mergedDate)
+      }
 
       return (
         <FormItem className="flex flex-col gap-4">

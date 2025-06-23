@@ -3,7 +3,7 @@ import Image from "next/image"
 export default function NotFound() {
   return (
     <main className="z-50 flex h-screen min-h-screen w-full flex-col items-center justify-center p-4">
-      <h1 className="mb-8 font-sans text-8xl text-primary-700">
+      <h1 className="text-primary-700 mb-8 font-sans text-8xl">
         404 Not found
       </h1>
       <h1 className="mb-8 font-sans text-2xl text-blue-200">
@@ -15,7 +15,7 @@ export default function NotFound() {
         alt="kraken icon"
         width="300"
         height="300"
-        className="rounded-full border-4 border-primary-600"
+        className="border-primary-600 rounded-full border-4"
       />
     </main>
   )

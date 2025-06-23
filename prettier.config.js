@@ -9,6 +9,7 @@ module.exports = {
   importOrderSortSpecifiers: true,
   plugins: [
     "@trivago/prettier-plugin-sort-imports",
+    "@prettier/plugin-oxc",
     "prettier-plugin-tailwindcss",
   ],
   semi: false,
