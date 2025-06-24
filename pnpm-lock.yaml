@@ -21,8 +21,8 @@ importers:
         specifier: 19.8.1
         version: 19.8.1
       '@prettier/plugin-oxc':
-        specifier: 0.0.3
-        version: 0.0.3
+        specifier: 0.0.4
+        version: 0.0.4
       '@trivago/prettier-plugin-sort-imports':
         specifier: 5.2.2
         version: 5.2.2(@vue/compiler-sfc@3.5.16)(prettier@3.6.0)
@@ -1637,8 +1637,8 @@ packages:
   '@phosphor-icons/core@2.1.1':
     resolution: {integrity: sha512-v4ARvrip4qBCImOE5rmPUylOEK4iiED9ZyKjcvzuezqMaiRASCHKcRIuvvxL/twvLpkfnEODCOJp5dM4eZilxQ==}
 
-  '@prettier/plugin-oxc@0.0.3':
-    resolution: {integrity: sha512-mtVlaFQA4Bq6flltVUUD0UaXwSWnDkQpcb5tkQColZzWb6tr4C27YGJpxIIUgKzJ0NrLxFrdcEkUgQXU/RJdtg==}
+  '@prettier/plugin-oxc@0.0.4':
+    resolution: {integrity: sha512-UGXe+g/rSRbglL0FOJiar+a+nUrst7KaFmsg05wYbKiInGWP6eAj/f8A2Uobgo5KxEtb2X10zeflNH6RK2xeIQ==}
     engines: {node: '>=14'}
 
   '@prisma/instrumentation@6.8.2':
@@ -7559,7 +7559,7 @@ snapshots:
 
   '@phosphor-icons/core@2.1.1': {}
 
-  '@prettier/plugin-oxc@0.0.3':
+  '@prettier/plugin-oxc@0.0.4':
     dependencies:
       oxc-parser: 0.74.0
 
