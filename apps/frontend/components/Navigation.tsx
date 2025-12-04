@@ -12,11 +12,11 @@ const NAVIGATION = {
     name: "About Me",
     pathname: "/about-me",
   },
-  // POURPARLER: {
-  //   icon: "chat",
-  //   name: "Pourparler",
-  //   pathname: "/pourparler",
-  // },
+  POURPARLER: {
+    icon: "chat",
+    name: "Pourparler",
+    pathname: "/pourparler",
+  },
   LOGBOOK: {
     icon: "sticky-note",
     name: "Logbook",

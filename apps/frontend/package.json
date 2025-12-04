@@ -5,6 +5,7 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
+    "build:image": "docker build --tag caravel-frontend .",
     "start": "next start",
     "lint": "npm run oxlint && next lint && npm run type-check",
     "oxlint": "npx oxlint -c .oxlintrc.json",

@@ -17,6 +17,8 @@ RUN npm run build
 # 2️⃣ Production stage
 FROM node:22-alpine AS runner
 
+RUN curl -sfS https://dotenvx.sh/install.sh | sh -s -- -b /usr/local/bin
+
 ENV NODE_ENV=production
 WORKDIR /app
 
@@ -24,11 +26,13 @@ WORKDIR /app
 COPY package.json package-lock.json* ./
 RUN npm ci --omit=dev --ignore-scripts
 
+
 # Copy build artifacts from builder
 COPY --from=builder /app/.next ./.next
 COPY --from=builder /app/public ./public
 COPY --from=builder /app/.contentlayer ./.contentlayer
+COPY --from=builder /app/.env.production ./.env.production
 
 # Start the app
 EXPOSE 3000
-CMD ["npm", "start"]
+CMD ["dotenvx", "run", "--env-file=.env.production", "--", "npm", "run", "start"]
