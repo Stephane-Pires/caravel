@@ -3,8 +3,10 @@
 # dependencies
 **/node_modules/
 **/.pnp/
+
 .pnp.js
 
+.env.keys
 
 # testing
 **/coverage/

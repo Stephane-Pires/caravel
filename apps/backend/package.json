@@ -9,7 +9,7 @@
     "start": "node dist/index.js",
     "db:generate": "NODE_OPTIONS='--import tsx' drizzle-kit generate",
     "db:migrate": "NODE_OPTIONS='--import tsx' drizzle-kit migrate",
-    "db:studio": "NODE_OPTIONS='--import tsx' drizzle-kit studio --verbose"
+    "db:studio": "NODE_OPTIONS='--import tsx' drizzle-kit studio --host 0.0.0.0 --port 3002 --verbose"
   },
   "dependencies": {
     "@hono/node-server": "^1.14.4",
