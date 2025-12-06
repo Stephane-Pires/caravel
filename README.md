@@ -66,6 +66,8 @@ This project uses :
 
 - `NextJS` has a metaframework
 - `Tailwind` for the styling
+- `Shadcn` has a UI library
+- `Sonner` for Toaster
 
 #### Blog
 
