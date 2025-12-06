@@ -1,4 +1,4 @@
-import { allContents } from "@/.contentlayer/generated"
+import { allContents } from "contentlayer/generated"
 import { Card } from "@/components/Card"
 import { CATEGORY, SUBJECT } from "@/enums/tag"
 import { compareDesc } from "date-fns"

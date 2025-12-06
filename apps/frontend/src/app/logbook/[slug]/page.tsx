@@ -1,4 +1,4 @@
-import { Content, allContents } from "@/.contentlayer/generated"
+import { Content, allContents } from "contentlayer/generated"
 import { Mdx } from "@/components/Mdx"
 import { Star } from "@/components/Star"
 import { STAR } from "@/enums/stars"
