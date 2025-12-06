@@ -2,7 +2,7 @@ version: "3.8"
 
 services:
   dev:
-    image: mcr.microsoft.com/devcontainers/typescript-node:24-trixie
+    image: mcr.microsoft.com/devcontainers/typescript-node:24-trixie@sha256:3680b2fc40432023eccbe2145fc8e39cde79d2a57d04df7059c59e4cbcf9091a
     container_name: caravel_devcontainer
     volumes:
       - .:/workspace:cached
