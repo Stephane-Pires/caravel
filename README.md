@@ -65,6 +65,7 @@ _What technologies are you using ?_
 This project uses :
 
 - `NextJS` has a metaframework
+- `React` has a frontend library
 - `Tailwind` for the styling
 - `Shadcn` has a UI library
 - `Sonner` for Toaster
