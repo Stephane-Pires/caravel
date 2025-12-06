@@ -40,19 +40,19 @@ importers:
     dependencies:
       '@hono/node-server':
         specifier: ^1.14.4
-        version: 1.14.4(hono@4.8.2)
+        version: 1.14.4(hono@4.10.7)
       '@hono/swagger-ui':
         specifier: ^0.5.2
-        version: 0.5.2(hono@4.8.2)
+        version: 0.5.2(hono@4.10.7)
       '@hono/zod-openapi':
         specifier: ^0.19.8
-        version: 0.19.8(hono@4.8.2)(zod@3.25.67)
+        version: 0.19.8(hono@4.10.7)(zod@3.25.67)
       '@hono/zod-validator':
         specifier: ^0.7.0
-        version: 0.7.0(hono@4.8.2)(zod@3.25.67)
+        version: 0.7.0(hono@4.10.7)(zod@3.25.67)
       '@scalar/hono-api-reference':
         specifier: ^0.9.25
-        version: 0.9.26(hono@4.8.2)
+        version: 0.9.26(hono@4.10.7)
       '@scalar/openapi-to-markdown':
         specifier: ^0.3.4
         version: 0.3.5(typescript@5.8.3)
@@ -69,8 +69,8 @@ importers:
         specifier: ^0.8.2
         version: 0.8.2(drizzle-orm@0.44.2(@opentelemetry/api@1.9.0)(@types/pg@8.15.4)(pg@8.16.2))(zod@3.25.67)
       hono:
-        specifier: ^4.8.2
-        version: 4.8.2
+        specifier: ^4.10.7
+        version: 4.10.7
       ical-generator:
         specifier: ^9.0.0
         version: 9.0.0(@types/node@22.19.1)(dayjs@1.11.13)
@@ -3524,10 +3524,6 @@ packages:
   emoji-regex@9.2.2:
     resolution: {integrity: sha512-L18DaJsXSUk2+42pv8mLs5jJT2hqFkFE4j21wOmgbUqsZ2hL72NsUU785g9RXgo3s0ZNgVl42TiHp3ZtOv/Vyg==}
 
-  enhanced-resolve@5.18.1:
-    resolution: {integrity: sha512-ZSW3ma5GkcQBIpwZTSRAI8N71Uuwgs93IezB7mf7R60tC8ZbJideoDNKjHn2O9KIlx6rkGTTEk1xUCK2E1Y2Yg==}
-    engines: {node: '>=10.13.0'}
-
   enhanced-resolve@5.18.3:
     resolution: {integrity: sha512-d4lC8xfavMeBjzGr2vECC3fsGXziXZQyJxD868h2M/mBI3PwAuODxAkLkq5HYuvrPYcUtiLzsTo8U3PgX3Ocww==}
     engines: {node: '>=10.13.0'}
@@ -4129,8 +4125,8 @@ packages:
   hoist-non-react-statics@3.3.2:
     resolution: {integrity: sha512-/gGivxi8JPKWNm/W0jSmzcMPpfpPLc3dY/6GxhX2hQ9iGj3aDfklV4ET7NjKpSinLpJ5vafa9iiGIEZg10SfBw==}
 
-  hono@4.8.2:
-    resolution: {integrity: sha512-hM+1RIn9PK1I6SiTNS6/y7O1mvg88awYLFEuEtoiMtRyT3SD2iu9pSFgbBXT3b1Ua4IwzvSTLvwO0SEhDxCi4w==}
+  hono@4.10.7:
+    resolution: {integrity: sha512-icXIITfw/07Q88nLSkB9aiUrd8rYzSweK681Kjo/TSggaGbOX4RRyxxm71v+3PC8C/j+4rlxGeoTRxQDkaJkUw==}
     engines: {node: '>=16.9.0'}
 
   html-minifier-terser@7.2.0:
@@ -7035,24 +7031,24 @@ snapshots:
     dependencies:
       react: 19.2.1
 
-  '@hono/node-server@1.14.4(hono@4.8.2)':
+  '@hono/node-server@1.14.4(hono@4.10.7)':
     dependencies:
-      hono: 4.8.2
+      hono: 4.10.7
 
-  '@hono/swagger-ui@0.5.2(hono@4.8.2)':
+  '@hono/swagger-ui@0.5.2(hono@4.10.7)':
     dependencies:
-      hono: 4.8.2
+      hono: 4.10.7
 
-  '@hono/zod-openapi@0.19.8(hono@4.8.2)(zod@3.25.67)':
+  '@hono/zod-openapi@0.19.8(hono@4.10.7)(zod@3.25.67)':
     dependencies:
       '@asteasolutions/zod-to-openapi': 7.3.3(zod@3.25.67)
-      '@hono/zod-validator': 0.7.0(hono@4.8.2)(zod@3.25.67)
-      hono: 4.8.2
+      '@hono/zod-validator': 0.7.0(hono@4.10.7)(zod@3.25.67)
+      hono: 4.10.7
       zod: 3.25.67
 
-  '@hono/zod-validator@0.7.0(hono@4.8.2)(zod@3.25.67)':
+  '@hono/zod-validator@0.7.0(hono@4.10.7)(zod@3.25.67)':
     dependencies:
-      hono: 4.8.2
+      hono: 4.10.7
       zod: 3.25.67
 
   '@hookform/resolvers@5.1.1(react-hook-form@7.58.1(react@19.2.1))':
@@ -8249,10 +8245,10 @@ snapshots:
 
   '@scalar/helpers@0.1.3': {}
 
-  '@scalar/hono-api-reference@0.9.26(hono@4.8.2)':
+  '@scalar/hono-api-reference@0.9.26(hono@4.10.7)':
     dependencies:
       '@scalar/core': 0.3.24
-      hono: 4.8.2
+      hono: 4.10.7
 
   '@scalar/icons@0.5.0(typescript@5.8.3)':
     dependencies:
@@ -9663,11 +9659,6 @@ snapshots:
 
   emoji-regex@9.2.2: {}
 
-  enhanced-resolve@5.18.1:
-    dependencies:
-      graceful-fs: 4.2.11
-      tapable: 2.2.2
-
   enhanced-resolve@5.18.3:
     dependencies:
       graceful-fs: 4.2.11
@@ -10610,7 +10601,7 @@ snapshots:
     dependencies:
       react-is: 16.13.1
 
-  hono@4.8.2: {}
+  hono@4.10.7: {}
 
   html-minifier-terser@7.2.0:
     dependencies:
@@ -12985,7 +12976,7 @@ snapshots:
       acorn: 8.15.0
       browserslist: 4.25.0
       chrome-trace-event: 1.0.4
-      enhanced-resolve: 5.18.1
+      enhanced-resolve: 5.18.3
       es-module-lexer: 1.7.0
       eslint-scope: 5.1.1
       events: 3.3.0
