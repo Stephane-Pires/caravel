@@ -1,5 +1,7 @@
 // eslint-disable jsx-no-new-object-as-prop
 /* eslint-disable no-magic-numbers */
+/* eslint-disable react-hooks/static-components */
+/* eslint-disable react-hooks/preserve-manual-memoization */
 import { Article, CURRICULUM_VITAE } from "@/content/curriculum-vitae/english"
 import { Fragment, useMemo } from "react"
 
@@ -32,20 +34,16 @@ export function TimelineContainer({
   let stepPosition = 0
   const stepGap = withTag ? STEP_GAP_WITH_TAG_IN_PX : STEP_GAP_IN_PX
 
+  const lastOffsetTop = lastSectionDom?.offsetTop ?? 0
+  const lastClientHeight = lastSectionDom?.clientHeight ?? 0
+  const firstOffsetTop = firstSectionDom?.offsetTop ?? 0
+
   const TIMELINE_DOT_STYLE = useMemo(() => {
-    // Relying on Typescript : https://dev.to/tmaximini/typescript-bang-operator-considered-harmful-3hhi
     return {
-      height:
-        lastSectionDom?.offsetTop! +
-        lastSectionDom?.clientHeight! -
-        firstSectionDom?.offsetTop!,
-      top: firstSectionDom?.offsetTop!,
+      height: lastOffsetTop + lastClientHeight - firstOffsetTop,
+      top: firstOffsetTop,
     }
-  }, [
-    lastSectionDom?.offsetTop,
-    lastSectionDom?.clientHeight,
-    firstSectionDom?.offsetTop,
-  ])
+  }, [lastOffsetTop, lastClientHeight, firstOffsetTop])
 
   if (!sectionDom) {
     return <div>{"CAN NOT SHOW TIMELINE"}</div>
@@ -67,9 +65,11 @@ export function TimelineContainer({
                 ArrayOfSection[index - 1].id,
               )
 
+              const previousClientHeight =
+                previousDomElementReferenced?.clientHeight ?? 0
+
               // Calculate new stepPosition (start)
-              stepPosition =
-                previousDomElementReferenced?.clientHeight! - stepGap
+              stepPosition = previousClientHeight - stepGap
             }
 
             return (

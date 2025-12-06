@@ -1,5 +1,9 @@
+/* eslint-disable react-hooks/static-components */
+/* eslint-disable react-hooks/preserve-manual-memoization */
+
 import { useMDXComponent } from "next-contentlayer2/hooks"
-import { HTMLProps } from "react"
+import Link from "next/link"
+import { HTMLProps, useMemo } from "react"
 
 interface Quote {
   author: string
@@ -75,14 +79,21 @@ function ul({ children }: HTMLProps<HTMLUListElement>) {
   )
 }
 
-function a({ children, href }: HTMLProps<HTMLAnchorElement>) {
+function A({ children, href }: HTMLProps<HTMLAnchorElement>) {
+  const hrefMemoized = useMemo(
+    () => (url: string) => {
+      return { pathname: url }
+    },
+    [],
+  )
+
   return (
-    <a
-      href={href}
+    <Link
+      href={hrefMemoized(href || "")}
       className="text-accent-600 visited:text-accent-100 hover:decoration-accent-600 visited:hover:decoration-accent-100 cursor-pointer text-base hover:underline sm:text-lg"
     >
       {children}
-    </a>
+    </Link>
   )
 }
 
@@ -120,7 +131,7 @@ function ImageMdx({ alt, src }: HTMLProps<HTMLImageElement>) {
 }
 
 const mdxHTMLComponents = {
-  a,
+  a: A,
   h1,
   h2,
   h3,

@@ -4,20 +4,20 @@ import { useEffect, useState } from "react"
 export function usePercentScrolled() {
   const [percentScrolled, setPercentScrolled] = useState(0)
 
+  const scrollHeight = () => {
+    const el = document.documentElement
+    const scrollTop = el.scrollTop || document.body.scrollTop
+    const scrollHeight = el.scrollHeight || document.body.scrollHeight
+
+    const percent = (scrollTop / (scrollHeight - el.clientHeight)) * 100
+
+    setPercentScrolled(percent)
+  }
+
   useEffect(() => {
     window.addEventListener("scroll", scrollHeight)
     return () => window.removeEventListener("scroll", scrollHeight)
   })
-
-  const scrollHeight = () => {
-    let el = document.documentElement
-    let ScrollTop = el.scrollTop || document.body.scrollTop
-    let ScrollHeight = el.scrollHeight || document.body.scrollHeight
-
-    let percent = (ScrollTop / (ScrollHeight - el.clientHeight)) * 100
-
-    setPercentScrolled(percent)
-  }
 
   return percentScrolled
 }

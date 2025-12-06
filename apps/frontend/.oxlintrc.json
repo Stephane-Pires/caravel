@@ -1,6 +1,6 @@
 {
   "$schema": "./node_modules/oxlint/configuration_schema.json",
-  "plugins": ["next", "react-perf", "import", "jsx-a11y", "promise", "node"],
+  "plugins": ["nextjs", "react-perf", "import", "jsx-a11y", "promise", "node"],
   "categories": {
     "correctness": "error",
     "suspicious": "error",

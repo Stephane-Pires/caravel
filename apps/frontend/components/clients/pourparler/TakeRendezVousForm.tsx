@@ -1,5 +1,7 @@
 "use client"
 
+/* eslint-disable @typescript-eslint/no-explicit-any */
+
 import { Button } from "@/components/ui/button"
 import { Calendar } from "@/components/ui/calendar"
 import {
@@ -36,7 +38,11 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip"
 import { cn } from "@/lib/utils"
-import { useCreateRendezVous } from "@/utils/hook"
+import {
+  rendezVousSchema,
+  RendezVousSchema,
+  useCreateRendezVous,
+} from "@/utils/hook"
 import { CalendarIcon } from "@heroicons/react/24/solid"
 import { zodResolver } from "@hookform/resolvers/zod"
 import {
@@ -77,7 +83,7 @@ const rendezVousFormSchema = z
 export type RendezVousFormSchema = z.infer<typeof rendezVousFormSchema>
 
 export function TakeRendezVousForm() {
-  const [rendezVous, setRendezVous] = useState<any>([])
+  const [rendezVous, setRendezVous] = useState<Array<RendezVousSchema>>([])
   const [createRendezVous] = useCreateRendezVous()
 
   useEffect(() => {
@@ -89,10 +95,11 @@ export function TakeRendezVousForm() {
         if (!response.ok) {
           throw new Error(`HTTP error! status: ${response.status}`)
         }
-        const data = await response.json()
+        const data = rendezVousSchema.array().parse(await response.json())
 
         setRendezVous(data)
-      } catch {
+      } catch (error) {
+        console.error("Error fetching rendez-vous:", error)
         // setError(err.message)
       } finally {
         // setLoading(false)
@@ -119,7 +126,7 @@ export function TakeRendezVousForm() {
 
       await toast.promise(
         createRendezVousPromise.then((rendezVousCreated) => {
-          setRendezVous((prev: any) => [...prev, rendezVousCreated])
+          setRendezVous((prev) => [...prev, rendezVousCreated])
           return rendezVousCreated
         }),
         {
@@ -196,7 +203,7 @@ export function TakeRendezVousForm() {
 
       // Disable dates with scheduled rendez-vous
       // Should be typed with the RendezVousDTO type
-      return rendezVous.some((rendezVous: any) =>
+      return rendezVous.some((rendezVous) =>
         isSameDay(new Date(rendezVous.scheduledAt), date),
       )
     },
@@ -206,9 +213,7 @@ export function TakeRendezVousForm() {
   const modifiers = useMemo(() => {
     return {
       // Should be typed with the RendezVousDTO type
-      occupied: rendezVous.map((rdv: any) =>
-        startOfDay(new Date(rdv.scheduledAt)),
-      ),
+      occupied: rendezVous.map((rdv) => startOfDay(new Date(rdv.scheduledAt))),
     }
   }, [rendezVous])
 
