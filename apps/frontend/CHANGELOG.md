@@ -1,5 +1,96 @@
 # Changelog
 
+## 0.8.0
+
+### Minor Changes
+
+- [#265](https://github.com/Stephane-Pires/caravel/pull/265) [`8d19cf6`](https://github.com/Stephane-Pires/caravel/commit/8d19cf643116e8c1f3e0e87aea4be24a2e945f21) Thanks [@Stephane-Pires](https://github.com/Stephane-Pires)! - - [Caravel] : Add the ability to take a RendezVous
+  - [Frontend] : Add a <TakeRendezVousForm /> component
+  - [Frontend] : Add a Pourparler page
+  - [Frontend] : Use multiple Shadcn components (Sonner, Card, Calendar, Button, Select, Tooltip, etc..)
+  - [Frontend] : Import color palette use oklch colors
+  - [Backend] : Handle RendezVous logic (CRUD) with exceptions
+  - [Backend] : Create a mailing service using nodemailer and ical-generator
+
+### Patch Changes
+
+- [#230](https://github.com/Stephane-Pires/caravel/pull/230) [`90c3ad0`](https://github.com/Stephane-Pires/caravel/commit/90c3ad00a9cdff797d9b0861d5f37ebdf60a4ac5) Thanks [@renovate](https://github.com/apps/renovate)! - chore(frontend): 🧹 Update @types/react from 19.1.6 to v19.1.7
+
+- [#232](https://github.com/Stephane-Pires/caravel/pull/232) [`3fc5f34`](https://github.com/Stephane-Pires/caravel/commit/3fc5f34db7c957db4cb96feea41e7019faa0e62a) Thanks [@renovate](https://github.com/apps/renovate)! - chore(frontend): 🧹 Update @types/node from 22.15.30 to v22.15.31
+
+- [#233](https://github.com/Stephane-Pires/caravel/pull/233) [`28cb96a`](https://github.com/Stephane-Pires/caravel/commit/28cb96a1b00746fc795c46eba2ec8a29eb46e4c2) Thanks [@renovate](https://github.com/apps/renovate)! - chore(frontend): 🧹 Update oxlint from 0.18.0 to v0.18.1
+
+- [#234](https://github.com/Stephane-Pires/caravel/pull/234) [`3589f09`](https://github.com/Stephane-Pires/caravel/commit/3589f0981b09ab5f7d5fc1667816204c28abc5ff) Thanks [@renovate](https://github.com/apps/renovate)! - chore(frontend): 🧹 Update @sentry/nextjs from 9.27.0 to v9.28.0
+
+- [#236](https://github.com/Stephane-Pires/caravel/pull/236) [`79e015b`](https://github.com/Stephane-Pires/caravel/commit/79e015b22ff885eddd4c206d1de8a8b050d26ec5) Thanks [@renovate](https://github.com/apps/renovate)! - chore(frontend): 🧹 Update eslint-plugin-oxlint from 0.18.0 to v1.0.0
+
+- [#241](https://github.com/Stephane-Pires/caravel/pull/241) [`510a0b4`](https://github.com/Stephane-Pires/caravel/commit/510a0b44e56ca2c33d3b596ab431e95a43f318f0) Thanks [@renovate](https://github.com/apps/renovate)! - chore(frontend): 🧹 Update @sentry/nextjs from 9.28.0 to v9.28.1
+
+- [#242](https://github.com/Stephane-Pires/caravel/pull/242) [`42c58cc`](https://github.com/Stephane-Pires/caravel/commit/42c58cc28b5a846fd2fec760a28a76953c3df96b) Thanks [@renovate](https://github.com/apps/renovate)! - chore(frontend): 🧹 Update @types/react from 19.1.7 to v19.1.8
+
+- [#243](https://github.com/Stephane-Pires/caravel/pull/243) [`10acd4b`](https://github.com/Stephane-Pires/caravel/commit/10acd4b1d9d882f6fc4d60a71bde03dae042fa6b) Thanks [@renovate](https://github.com/apps/renovate)! - chore(frontend): 🧹 Update postcss from 8.5.4 to v8.5.5
+
+- [#244](https://github.com/Stephane-Pires/caravel/pull/244) [`08ea11a`](https://github.com/Stephane-Pires/caravel/commit/08ea11a72e73c22e2058bc054d7669659a4f044e) Thanks [@renovate](https://github.com/apps/renovate)! - chore(frontend): 🧹 Update tailwindcss monorepo from 4.1.8 to v4.1.10
+
+- [#247](https://github.com/Stephane-Pires/caravel/pull/247) [`ae95a88`](https://github.com/Stephane-Pires/caravel/commit/ae95a8877a7b90d652ca6a9d8990920dd71cd1a2) Thanks [@renovate](https://github.com/apps/renovate)! - chore(frontend): 🧹 Update eslint-plugin-oxlint from 1.0.0 to v1.1.0
+
+- [#248](https://github.com/Stephane-Pires/caravel/pull/248) [`256e057`](https://github.com/Stephane-Pires/caravel/commit/256e057d212f9e556cf3c80e1a0be8510abda804) Thanks [@renovate](https://github.com/apps/renovate)! - chore(frontend): 🧹 Update framer-motion from 12.16.0 to v12.17.3
+
+- [#249](https://github.com/Stephane-Pires/caravel/pull/249) [`e5deb82`](https://github.com/Stephane-Pires/caravel/commit/e5deb820422e51e391196df2d6ffc5177fa3ca0e) Thanks [@renovate](https://github.com/apps/renovate)! - chore(frontend): 🧹 Update oxlint from 0.18.1 to v1.2.0
+
+- [#253](https://github.com/Stephane-Pires/caravel/pull/253) [`85cb891`](https://github.com/Stephane-Pires/caravel/commit/85cb891bb913cf147207ead82aa84872c80960de) Thanks [@renovate](https://github.com/apps/renovate)! - chore(frontend): 🧹 Update @sentry/nextjs from 9.28.1 to v9.29.0
+
+- [#254](https://github.com/Stephane-Pires/caravel/pull/254) [`021d57b`](https://github.com/Stephane-Pires/caravel/commit/021d57bd209ef97e889c2738480391f5583423b9) Thanks [@renovate](https://github.com/apps/renovate)! - chore(frontend): 🧹 Update eslint monorepo from 9.28.0 to v9.29.0
+
+- [#255](https://github.com/Stephane-Pires/caravel/pull/255) [`f76113b`](https://github.com/Stephane-Pires/caravel/commit/f76113bc572c2d85117ef95a21488d6f43dc772f) Thanks [@renovate](https://github.com/apps/renovate)! - chore(frontend): 🧹 Update framer-motion from 12.17.3 to v12.18.1
+
+- [#256](https://github.com/Stephane-Pires/caravel/pull/256) [`5738161`](https://github.com/Stephane-Pires/caravel/commit/5738161bf8b296b6c8c841894a92d377b92de349) Thanks [@renovate](https://github.com/apps/renovate)! - chore(frontend): 🧹 Update @types/node from 22.15.31 to v22.15.32
+
+- [#257](https://github.com/Stephane-Pires/caravel/pull/257) [`c643ffb`](https://github.com/Stephane-Pires/caravel/commit/c643ffb24c4a806ad5aae648787ac299503262a2) Thanks [@renovate](https://github.com/apps/renovate)! - chore(frontend): 🧹 Update postcss from 8.5.5 to v8.5.6
+
+- [#258](https://github.com/Stephane-Pires/caravel/pull/258) [`431a860`](https://github.com/Stephane-Pires/caravel/commit/431a8608d037d44d17dee55164c03d591d85ce20) Thanks [@renovate](https://github.com/apps/renovate)! - chore(frontend): 🧹 Update zod to v3.25.67
+
+- [#259](https://github.com/Stephane-Pires/caravel/pull/259) [`dee4cea`](https://github.com/Stephane-Pires/caravel/commit/dee4ceae765961ffe0f8e74d4fe9f1b9622a363d) Thanks [@renovate](https://github.com/apps/renovate)! - chore(frontend): 🧹 Update @sentry/nextjs from 9.29.0 to v9.30.0
+
+- [#263](https://github.com/Stephane-Pires/caravel/pull/263) [`c2f1a54`](https://github.com/Stephane-Pires/caravel/commit/c2f1a5499b5ea4772747fe82c79e9e90c09c1703) Thanks [@renovate](https://github.com/apps/renovate)! - chore(frontend): 🧹 Update nextjs monorepo from 15.3.3 to v15.3.4
+
+- [#264](https://github.com/Stephane-Pires/caravel/pull/264) [`fa701b3`](https://github.com/Stephane-Pires/caravel/commit/fa701b317569ce51b2cfee78b534c52464eafe8f) Thanks [@renovate](https://github.com/apps/renovate)! - chore(frontend): 🧹 Update eslint-plugin-oxlint from 1.1.0 to v1.2.0
+
+- [#266](https://github.com/Stephane-Pires/caravel/pull/266) [`154816c`](https://github.com/Stephane-Pires/caravel/commit/154816ce4942958684407612f0d2fb87202c63a2) Thanks [@renovate](https://github.com/apps/renovate)! - chore(backend): 🧹 Pin dependencies
+
+- [#267](https://github.com/Stephane-Pires/caravel/pull/267) [`1109b38`](https://github.com/Stephane-Pires/caravel/commit/1109b389f9a9f6576e5a8b472c7bf6dada311789) Thanks [@renovate](https://github.com/apps/renovate)! - chore(app): 🧹 Update @changesets/cli from 2.29.4 to v2.29.5
+
+- [#269](https://github.com/Stephane-Pires/caravel/pull/269) [`0f0d24e`](https://github.com/Stephane-Pires/caravel/commit/0f0d24e187df64e18c6274b8b25b2898e7a017c5) Thanks [@renovate](https://github.com/apps/renovate)! - chore(app): 🧹 Update prettier-plugin-tailwindcss from 0.6.12 to v0.6.13
+
+- [#270](https://github.com/Stephane-Pires/caravel/pull/270) [`d13ccd6`](https://github.com/Stephane-Pires/caravel/commit/d13ccd66ba17aee93531e5000df4b012b2c2d339) Thanks [@renovate](https://github.com/apps/renovate)! - chore(frontend): 🧹 Update react-hook-form from 7.58.0 to v7.58.1
+
+- [#271](https://github.com/Stephane-Pires/caravel/pull/271) [`2638004`](https://github.com/Stephane-Pires/caravel/commit/263800444ff0109b4d66338ebad3a345fd57d39a) Thanks [@renovate](https://github.com/apps/renovate)! - chore(frontend): 🧹 Update lucide-react from 0.515.0 to v0.522.0
+
+- [#272](https://github.com/Stephane-Pires/caravel/pull/272) [`fdb3997`](https://github.com/Stephane-Pires/caravel/commit/fdb3997cb7dfab160bbb16a37419f42a5b36e0ec) Thanks [@renovate](https://github.com/apps/renovate)! - chore(app): 🧹 Update prettier from 3.5.3 to v3.6.0
+
+- [#273](https://github.com/Stephane-Pires/caravel/pull/273) [`8e24845`](https://github.com/Stephane-Pires/caravel/commit/8e2484536a6f718991f3223a628f857184f18c41) Thanks [@renovate](https://github.com/apps/renovate)! - chore(frontend): 🧹 Update oxlint from 1.2.0 to v1.3.0
+
+- [#275](https://github.com/Stephane-Pires/caravel/pull/275) [`0c17856`](https://github.com/Stephane-Pires/caravel/commit/0c17856058e6e0dff1959bce44cb5da2e4e288c8) Thanks [@renovate](https://github.com/apps/renovate)! - chore(frontend): 🧹 Update eslint-plugin-oxlint from 1.2.0 to v1.3.0
+
+- [#282](https://github.com/Stephane-Pires/caravel/pull/282) [`71da524`](https://github.com/Stephane-Pires/caravel/commit/71da52454412017702b9f46b1d67aa49d2b64725) Thanks [@renovate](https://github.com/apps/renovate)! - chore(frontend): 🧹 Update framer-motion from 12.18.1 to v12.23.25
+
+- [#283](https://github.com/Stephane-Pires/caravel/pull/283) [`32c51dd`](https://github.com/Stephane-Pires/caravel/commit/32c51dd14909bf2f5ee4d07c29a2bb67b1192f29) Thanks [@renovate](https://github.com/apps/renovate)! - chore(frontend): 🧹 Update lucide-react from 0.522.0 to v0.555.0
+
+- [#284](https://github.com/Stephane-Pires/caravel/pull/284) [`3699539`](https://github.com/Stephane-Pires/caravel/commit/3699539de55dd86382a904b961f21ccb3f017ae5) Thanks [@renovate](https://github.com/apps/renovate)! - chore(app): 🧹 Update node from 22.0.0 to v22.21.1
+
+- [#286](https://github.com/Stephane-Pires/caravel/pull/286) [`669d527`](https://github.com/Stephane-Pires/caravel/commit/669d527a6d5d1c7a5cc2ecd06894c9e6ba5cc57e) Thanks [@renovate](https://github.com/apps/renovate)! - chore(frontend): 🧹 Update shiki from 3.6.0 to v3.19.0
+
+- [#287](https://github.com/Stephane-Pires/caravel/pull/287) [`a1998c0`](https://github.com/Stephane-Pires/caravel/commit/a1998c0a8231de96602579febff1e3b9039068fa) Thanks [@renovate](https://github.com/apps/renovate)! - chore(app): 🧹 Update prettier from 3.6.0 to v3.7.4
+
+- [#289](https://github.com/Stephane-Pires/caravel/pull/289) [`24c6f32`](https://github.com/Stephane-Pires/caravel/commit/24c6f32c85fad1e774e074365bcd6365a575d42d) Thanks [@renovate](https://github.com/apps/renovate)! - chore(frontend): 🧹 Update tailwindcss monorepo from 4.1.10 to v4.1.17
+
+- [#292](https://github.com/Stephane-Pires/caravel/pull/292) [`c65f220`](https://github.com/Stephane-Pires/caravel/commit/c65f220cd091052917ac3317ed731b893be56af7) Thanks [@Stephane-Pires](https://github.com/Stephane-Pires)! - - [Caravel] : Upgrade to Node v24
+  - [Frontend] : Upgrade NextJS to v16
+  - [Frontend] : Upgrade Node to v24
+  - [Frontend] : Disable some eslint warning via disable-eslint on files or lines
+  - [Frontend] : Fix some eslint warning
+  - [Backend] : Upgrade Node to v24
+
 ## 0.7.1
 
 ### Patch Changes
@@ -9,11 +100,9 @@
 - [#221](https://github.com/Stephane-Pires/caravel/pull/221) [`6d7cb61`](https://github.com/Stephane-Pires/caravel/commit/6d7cb619804df5a197d84b2520a60e941f48d6c2) Thanks [@Stephane-Pires](https://github.com/Stephane-Pires)! - Update README
 
 - [#217](https://github.com/Stephane-Pires/caravel/pull/217) [`2b19898`](https://github.com/Stephane-Pires/caravel/commit/2b19898efad6ecc4da5a2ee9d41e03f7fdb03c5d) Thanks [@Stephane-Pires](https://github.com/Stephane-Pires)! - - (App) : Modify documentation
-
   - (App) : Update Github Release action to pnpm & monorepo
 
 - [#213](https://github.com/Stephane-Pires/caravel/pull/213) [`05c47a8`](https://github.com/Stephane-Pires/caravel/commit/05c47a8eb432f78ed940ff02266ebbde10c91ab5) Thanks [@Stephane-Pires](https://github.com/Stephane-Pires)! - Transform to monorepo
-
   - Adding backend project
 
 ## 0.7.0
