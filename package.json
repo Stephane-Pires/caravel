@@ -20,7 +20,7 @@
     "@prettier/plugin-oxc": "0.0.3",
     "@trivago/prettier-plugin-sort-imports": "5.2.2",
     "husky": "9.1.7",
-    "prettier": "3.6.0",
+    "prettier": "3.7.4",
     "prettier-plugin-tailwindcss": "0.6.13"
   },
   "volta": {
