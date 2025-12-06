@@ -4,7 +4,7 @@ import { Bars2Icon, XMarkIcon } from "@heroicons/react/24/solid"
 import Image from "next/image"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
-import { useCallback, useEffect, useState } from "react"
+import { useCallback, useState } from "react"
 
 const NAVIGATION = {
   ABOUT_ME: {
@@ -94,9 +94,13 @@ export function NavigationMobile() {
     [],
   )
 
-  useEffect(() => {
+  const handleClickLink = useCallback(() => {
     setShowLinks(false)
-  }, [pathname])
+  }, [])
+
+  // useEffect(() => {
+  //   setShowLinks(false)
+  // }, [pathname])
 
   return (
     <nav
@@ -137,6 +141,7 @@ export function NavigationMobile() {
             <Link
               key={navigation.name}
               href={navigation.pathname}
+              onClick={handleClickLink}
               className={`m-2 rounded-lg p-4 font-sans text-2xl font-bold ${
                 isActivePathname(pathname, navigation.pathname)
                   ? "text-accent-500"

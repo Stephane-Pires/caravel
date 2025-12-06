@@ -9,11 +9,14 @@ interface SectionProps {
     label: string
     content: {
       // WORKAROUND DUE TO READONLY (because curriculum is readonly)
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       skills?: any
       paragraph: string
       // WORKAROUND DUE TO READONLY (because curriculum is readonly)
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       missions?: any
       // WORKAROUND DUE TO READONLY (because curriculum is readonly)
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       photos?: any
     }
   }

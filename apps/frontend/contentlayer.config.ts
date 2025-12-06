@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable no-magic-numbers */
 import { defineDocumentType, makeSource } from "contentlayer2/source-files"
 import rehypeKatex from "rehype-katex"

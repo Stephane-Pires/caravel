@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+
 import { CURRICULUM_VITAE as CURRICULUM_VITAE_ENGLISH } from "@/content/curriculum-vitae/english"
 import {
   CURRICULUM_VITAE as CURRICULUM_VITAE_FRENCH,

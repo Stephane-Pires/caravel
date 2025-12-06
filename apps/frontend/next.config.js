@@ -1,4 +1,4 @@
-/* eslint-disable no-commonjs */
+/* eslint-disable @typescript-eslint/no-require-imports */
 
 const { withContentlayer } = require("next-contentlayer2")
 

@@ -7,14 +7,14 @@ export const SUBJECT = {
   GAME_VIDEO: "GAME_VIDEO",
   MOVIE: "MOVIE",
   TEAMS: "TEAMS",
-}
+} as const
 
 export type SUBJECT = keyof typeof SUBJECT
 
 export const CATEGORY = {
   INSPIRATION: "INSPIRATION",
   THOUGH: "THOUGH",
-}
+} as const
 
 export type CATEGORY = keyof typeof CATEGORY
 
@@ -45,7 +45,7 @@ export const TECHNO = {
   VITE: "VITE",
   VUE: "VUE",
   WINDICSS: "WINDICSS",
-}
+} as const
 
 export type TECHNO = keyof typeof TECHNO
 
@@ -56,6 +56,6 @@ export const SOFT_SKILLS = {
   FINANCE: "FINANCE",
   MANAGEMENT: "MANAGEMENT",
   NEGOCIATION: "NEGOCIATION",
-}
+} as const
 
 export type SOFT_SKILLS = keyof typeof SOFT_SKILLS

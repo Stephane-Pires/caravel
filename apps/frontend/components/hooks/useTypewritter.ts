@@ -39,6 +39,7 @@ export function useTypewriter(
         await wait(options.waitEnd)
 
         setIsTyping(true)
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
         for (const _ of phrase) {
           setText((prev) => prev.slice(0, prev.length - 1))
 

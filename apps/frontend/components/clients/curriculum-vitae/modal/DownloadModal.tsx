@@ -25,7 +25,7 @@ interface DownloadModalProps {
 }
 
 export function DownloadModal({ isShow, setIsShow }: DownloadModalProps) {
-  let [local, setLocal] = useState<LOCAL_SUPPORTED>(LOCAL_SUPPORTED.ENGLISH)
+  const [local, setLocal] = useState<LOCAL_SUPPORTED>(LOCAL_SUPPORTED.ENGLISH)
 
   const handleDialogClose = useCallback(() => setIsShow(false), [setIsShow])
   const handleLocalChange = useCallback(

@@ -1,6 +1,8 @@
 import { Tag } from "@/components/Tag"
 import { SOFT_SKILLS, TECHNO } from "@/enums/tag"
 import Image from "next/image"
+import Link from "next/link"
+import { useMemo } from "react"
 
 interface BoardingCard {
   title: string
@@ -9,6 +11,7 @@ interface BoardingCard {
     end: string
   }
   // WORKAROUND DUE TO READONLY (because curriculum is readonly)
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   skills: any
   image: string
   url: string
@@ -21,8 +24,15 @@ export function BoardingCardDesktop({
   image,
   url,
 }: BoardingCard) {
+  const hrefMemoized = useMemo(
+    () => (url: string) => {
+      return { pathname: url }
+    },
+    [],
+  )
+
   return (
-    <a href={url}>
+    <Link href={hrefMemoized(url)}>
       <div className="border-primary-900 bg-primary-700 hover:bg-primary-500 active:bg-primary-500 h-80 min-w-[660px] max-w-[660px] -rotate-6 rounded-xl border-l-4 border-t-4 p-2 transition delay-100 ease-in-out hover:rotate-0 active:scale-105">
         <div className="m-2 flex flex-row">
           <h2 className="font-script mr-8 text-blue-900">{title}</h2>
@@ -75,7 +85,7 @@ export function BoardingCardDesktop({
           </div>
         </div>
       </div>
-    </a>
+    </Link>
   )
 }
 
@@ -86,8 +96,14 @@ export function BoardingCardMobile({
   image,
   url,
 }: BoardingCard) {
+  const hrefMemoized = useMemo(
+    () => (url: string) => {
+      return { pathname: url }
+    },
+    [],
+  )
   return (
-    <a href={url}>
+    <Link href={hrefMemoized(url)}>
       <div className="border-primary-900 bg-primary-700 hover:bg-primary-500 active:bg-primary-500 h-auto min-w-[350px] max-w-[350px] rounded-lg border-l-4 border-t-4 p-2 transition delay-100 ease-in-out active:scale-105">
         <div className="m-2 flex flex-row">
           <div className="flex translate-y-1 flex-row gap-4">
@@ -135,7 +151,7 @@ export function BoardingCardMobile({
           ))}
         </div>
       </div>
-    </a>
+    </Link>
   )
 }
 

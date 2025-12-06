@@ -1,5 +1,7 @@
 "use client"
 
+/* eslint-disable react-hooks/preserve-manual-memoization */
+
 import { DownloadModal } from "@/components/clients/curriculum-vitae/modal/DownloadModal"
 // import { NavigationCurriculumVitae } from "@/components/clients/curriculum-vitae/navigation/NavigationCurriculumVitae"
 import { SectionContent } from "@/components/clients/curriculum-vitae/section/SectionContent"
@@ -13,23 +15,23 @@ import {
 import { useCallback, useEffect, useMemo, useRef, useState } from "react"
 
 export default function AboutMe() {
-  let articleRef = useRef(new Map<string, HTMLDivElement>())
-  let sectionExperienceRef = useRef(new Map<string, HTMLDivElement>())
-  let sectionHobbiesRef = useRef(new Map<string, HTMLDivElement>())
-  let sectionEducationRef = useRef(new Map<string, HTMLDivElement>())
+  const articleRef = useRef(new Map<string, HTMLDivElement>())
+  const sectionExperienceRef = useRef(new Map<string, HTMLDivElement>())
+  const sectionHobbiesRef = useRef(new Map<string, HTMLDivElement>())
+  const sectionEducationRef = useRef(new Map<string, HTMLDivElement>())
 
   const percentScrolled = usePercentScrolled()
 
-  let [showLanguageModal, setShowLanguageModal] = useState(false)
+  const [showLanguageModal, setShowLanguageModal] = useState(false)
 
   // let [mapDom, setMapDom] = useState(new Map<string, HTMLDivElement>())
-  let [mapSectionExperienceDom, setMapSectionExperienceDom] = useState(
+  const [mapSectionExperienceDom, setMapSectionExperienceDom] = useState(
     new Map<string, HTMLDivElement>(),
   )
-  let [mapSectionHobbiesDom, setMapSectionHobbiesDom] = useState(
+  const [mapSectionHobbiesDom, setMapSectionHobbiesDom] = useState(
     new Map<string, HTMLDivElement>(),
   )
-  let [mapSectionEducationDom, setMapSectionEducationDom] = useState(
+  const [mapSectionEducationDom, setMapSectionEducationDom] = useState(
     new Map<string, HTMLDivElement>(),
   )
 
