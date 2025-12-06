@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "next build",
+    "build": "contentlayer2 build && next build",
     "build:image": "docker build --tag caravel-frontend .",
     "start": "next start",
     "lint": "npm run oxlint && eslint . && npm run type-check",
