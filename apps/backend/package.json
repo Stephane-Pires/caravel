@@ -21,7 +21,7 @@
     "dayjs": "1.11.19",
     "drizzle-orm": "^0.44.7",
     "drizzle-seed": "^0.3.1",
-    "drizzle-zod": "^0.8.2",
+    "drizzle-zod": "^0.8.3",
     "hono": "^4.10.7",
     "ical-generator": "^9.0.0",
     "nodemailer": "^7.0.3",
