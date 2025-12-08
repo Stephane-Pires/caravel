@@ -51,10 +51,10 @@ importers:
         specifier: ^0.7.5
         version: 0.7.5(hono@4.10.7)(zod@3.25.67)
       '@scalar/hono-api-reference':
-        specifier: ^0.9.25
+        specifier: ^0.9.26
         version: 0.9.26(hono@4.10.7)
       '@scalar/openapi-to-markdown':
-        specifier: ^0.3.4
+        specifier: ^0.3.5
         version: 0.3.5(typescript@5.8.3)
       dayjs:
         specifier: 1.11.19
@@ -12961,7 +12961,7 @@ snapshots:
 
   radix-vue@1.9.17(vue@3.5.25(typescript@5.8.3)):
     dependencies:
-      '@floating-ui/dom': 1.7.1
+      '@floating-ui/dom': 1.7.4
       '@floating-ui/vue': 1.1.9(vue@3.5.25(typescript@5.8.3))
       '@internationalized/date': 3.8.2
       '@internationalized/number': 3.6.3
