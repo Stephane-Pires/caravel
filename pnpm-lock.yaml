@@ -57,8 +57,8 @@ importers:
         specifier: ^0.3.4
         version: 0.3.5(typescript@5.8.3)
       dayjs:
-        specifier: 1.11.13
-        version: 1.11.13
+        specifier: 1.11.19
+        version: 1.11.19
       drizzle-orm:
         specifier: ^0.44.7
         version: 0.44.7(@opentelemetry/api@1.9.0)(@types/pg@8.15.6)(pg@8.16.3)
@@ -73,7 +73,7 @@ importers:
         version: 4.10.7
       ical-generator:
         specifier: ^9.0.0
-        version: 9.0.0(@types/node@22.19.1)(dayjs@1.11.13)
+        version: 9.0.0(@types/node@22.19.1)(dayjs@1.11.19)
       nodemailer:
         specifier: ^7.0.3
         version: 7.0.3
@@ -151,8 +151,8 @@ importers:
         specifier: ^4.1.0
         version: 4.1.0
       dayjs:
-        specifier: 1.11.13
-        version: 1.11.13
+        specifier: 1.11.19
+        version: 1.11.19
       framer-motion:
         specifier: 12.23.25
         version: 12.23.25(react-dom@19.2.1(react@19.2.1))(react@19.2.1)
@@ -3631,8 +3631,8 @@ packages:
   date-fns@4.1.0:
     resolution: {integrity: sha512-Ukq0owbQXxa/U3EGtsdVBkR1w7KOQ5gIBqdH2hkvknzZPYvBxb/aa6E8L7tmjFtkwZBu3UXBbjIgPo/Ez4xaNg==}
 
-  dayjs@1.11.13:
-    resolution: {integrity: sha512-oaMBel6gjolK862uaPQOVTA7q3TZhuSvuMQAAglQDOWYO9A91IrAOUJEyKVlqJlHE0vq5p5UXxzdPfMH/x6xNg==}
+  dayjs@1.11.19:
+    resolution: {integrity: sha512-t5EcLVS6QPBNqM2z8fakk/NKel+Xzshgt8FFKAn+qwlD1pzZWxh0nVCrvFK7ZDb6XucZeF9z8C7CBWTRIVApAw==}
 
   debug@3.2.7:
     resolution: {integrity: sha512-CFjzYYAi4ThfiQvizrFQevTTXHtnCqWfe7x1AhgEscTz6ZbLbfoLRLPugTQyBth6f8ZERVUSyWHFD/7Wu4t1XQ==}
@@ -10536,7 +10536,7 @@ snapshots:
 
   date-fns@4.1.0: {}
 
-  dayjs@1.11.13: {}
+  dayjs@1.11.19: {}
 
   debug@3.2.7:
     dependencies:
@@ -11608,10 +11608,10 @@ snapshots:
 
   hyperdyperid@1.2.0: {}
 
-  ical-generator@9.0.0(@types/node@22.19.1)(dayjs@1.11.13):
+  ical-generator@9.0.0(@types/node@22.19.1)(dayjs@1.11.19):
     optionalDependencies:
       '@types/node': 22.19.1
-      dayjs: 1.11.13
+      dayjs: 1.11.19
 
   iconv-lite@0.7.0:
     dependencies:

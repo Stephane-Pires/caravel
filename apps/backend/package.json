@@ -18,7 +18,7 @@
     "@hono/zod-validator": "^0.7.5",
     "@scalar/hono-api-reference": "^0.9.25",
     "@scalar/openapi-to-markdown": "^0.3.4",
-    "dayjs": "1.11.13",
+    "dayjs": "1.11.19",
     "drizzle-orm": "^0.44.7",
     "drizzle-seed": "^0.3.1",
     "drizzle-zod": "^0.8.2",
