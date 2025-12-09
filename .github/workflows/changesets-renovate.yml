@@ -16,7 +16,7 @@ jobs:
 
     steps:
       - name: Update PR
-        uses: mscharley/dependency-changesets-action@9ed25d74aded420840fa0264625c26f1443d13da # v1.1.8
+        uses: mscharley/dependency-changesets-action@688113f578e02cc37d62d3f5d11bb705744a802d # v1.2.1
         with:
           token: ${{ secrets.RENOVATE_CHANGESET_GITHUB_ACTION_CARAVEL }}
           changeset-folder: ".changeset"
