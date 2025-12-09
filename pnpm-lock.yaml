@@ -94,8 +94,8 @@ importers:
         specifier: 8.15.6
         version: 8.15.6
       dotenv:
-        specifier: 16.5.0
-        version: 16.5.0
+        specifier: 16.6.1
+        version: 16.6.1
       drizzle-kit:
         specifier: 0.31.8
         version: 0.31.8
@@ -3720,8 +3720,8 @@ packages:
     resolution: {integrity: sha512-QM8q3zDe58hqUqjraQOmzZ1LIH9SWQJTlEKCH4kJ2oQvLZk7RbQXvtDM2XEq3fwkV9CCvvH4LA0AV+ogFsBM2Q==}
     engines: {node: '>=8'}
 
-  dotenv@16.5.0:
-    resolution: {integrity: sha512-m/C+AwOAr9/W1UOIZUo232ejMNnJAJtYQjUbHoNTBNTJSvqzzDh7vnrei3o3r3m9blf6ZoDkvcw0VmozNRFJxg==}
+  dotenv@16.6.1:
+    resolution: {integrity: sha512-uBq4egWHTcTt33a72vpSG0z3HnPuIl6NqYcTrKEg2azoEyl2hpW0zqlxysq2pK9HlDIHyHyakeYaYnSAwd8bow==}
     engines: {node: '>=12'}
 
   dotenv@8.6.0:
@@ -9147,7 +9147,7 @@ snapshots:
       '@babel/core': 7.27.4
       '@sentry/babel-plugin-component-annotate': 4.6.1
       '@sentry/cli': 2.58.2
-      dotenv: 16.5.0
+      dotenv: 16.6.1
       find-up: 5.0.0
       glob: 10.5.0
       magic-string: 0.30.8
@@ -10628,7 +10628,7 @@ snapshots:
     dependencies:
       is-obj: 2.0.0
 
-  dotenv@16.5.0: {}
+  dotenv@16.6.1: {}
 
   dotenv@8.6.0: {}
 
