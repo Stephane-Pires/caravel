@@ -115,8 +115,8 @@ importers:
         specifier: 2.2.0
         version: 2.2.0(react@19.2.1)
       '@hookform/resolvers':
-        specifier: ^5.1.1
-        version: 5.1.1(react-hook-form@7.58.1(react@19.2.1))
+        specifier: ^5.2.2
+        version: 5.2.2(react-hook-form@7.58.1(react@19.2.1))
       '@radix-ui/react-label':
         specifier: ^2.1.8
         version: 2.1.8(@types/react-dom@19.2.3(@types/react@19.2.7))(@types/react@19.2.7)(react-dom@19.2.1(react@19.2.1))(react@19.2.1)
@@ -1109,8 +1109,8 @@ packages:
       hono: '>=3.9.0'
       zod: ^3.25.0 || ^4.0.0
 
-  '@hookform/resolvers@5.1.1':
-    resolution: {integrity: sha512-J/NVING3LMAEvexJkyTLjruSm7aOFx7QX21pzkiJfMoNG0wl5aFEjLTl7ay7IQb9EWY6AkrBy7tHL2Alijpdcg==}
+  '@hookform/resolvers@5.2.2':
+    resolution: {integrity: sha512-A/IxlMLShx3KjV/HeTcTfaMxdwy690+L/ZADoeaTltLx+CVuzkeVIPuybK3jrRfw7YZnmdKsVVHAlEPIAEUNlA==}
     peerDependencies:
       react-hook-form: ^7.55.0
 
@@ -7750,7 +7750,7 @@ snapshots:
       hono: 4.10.7
       zod: 3.25.76
 
-  '@hookform/resolvers@5.1.1(react-hook-form@7.58.1(react@19.2.1))':
+  '@hookform/resolvers@5.2.2(react-hook-form@7.58.1(react@19.2.1))':
     dependencies:
       '@standard-schema/utils': 0.3.0
       react-hook-form: 7.58.1(react@19.2.1)
