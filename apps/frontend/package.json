@@ -38,7 +38,7 @@
     "react": "19.2.1",
     "react-day-picker": "^9.7.0",
     "react-dom": "19.2.1",
-    "react-hook-form": "^7.58.1",
+    "react-hook-form": "^7.68.0",
     "rehype-katex": "7.0.1",
     "rehype-pretty-code": "0.14.1",
     "remark-math": "6.0.0",
