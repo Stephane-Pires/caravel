@@ -175,8 +175,8 @@ importers:
         specifier: 19.2.1
         version: 19.2.1
       react-day-picker:
-        specifier: ^9.7.0
-        version: 9.7.0(react@19.2.1)
+        specifier: ^9.12.0
+        version: 9.12.0(react@19.2.1)
       react-dom:
         specifier: 19.2.1
         version: 19.2.1(react@19.2.1)
@@ -642,8 +642,8 @@ packages:
       '@effect-ts/otel-node':
         optional: true
 
-  '@date-fns/tz@1.2.0':
-    resolution: {integrity: sha512-LBrd7MiJZ9McsOgxqWX7AaxrDjcFVjWH/tIKJd7pnR7McaslGYOP1QmmiBXdJH/H/yLCT+rcQ7FaPBUxRGUtrg==}
+  '@date-fns/tz@1.4.1':
+    resolution: {integrity: sha512-P5LUNhtbj6YfI3iJjw5EL9eUAG6OitD0W3fWQcpQjDRc/QIsL0tRNuO1PcDvPccWL1fSTXXdE1ds+l95DV/OFA==}
 
   '@drizzle-team/brocli@0.10.2':
     resolution: {integrity: sha512-z33Il7l5dKjUgGULTqBsQBQwckHh5AbIuxhdsIxDDiZAzBOrZO6q9ogcWC65kU382AfynTfgNumVcNIjuIua6w==}
@@ -5846,8 +5846,8 @@ packages:
   randombytes@2.1.0:
     resolution: {integrity: sha512-vYl3iOX+4CKUWuxGi9Ukhie6fsqXqS9FE2Zaic4tNFD2N2QQaXOMFbuKK4QmDHC0JO6B1Zp41J0LpT0oR68amQ==}
 
-  react-day-picker@9.7.0:
-    resolution: {integrity: sha512-urlK4C9XJZVpQ81tmVgd2O7lZ0VQldZeHzNejbwLWZSkzHH498KnArT0EHNfKBOWwKc935iMLGZdxXPRISzUxQ==}
+  react-day-picker@9.12.0:
+    resolution: {integrity: sha512-t8OvG/Zrciso5CQJu5b1A7yzEmebvST+S3pOVQJWxwjjVngyG/CA2htN/D15dLI4uTEuLLkbZyS4YYt480FAtA==}
     engines: {node: '>=18'}
     peerDependencies:
       react: '>=16.8.0'
@@ -7549,7 +7549,7 @@ snapshots:
       ts-pattern: 5.7.1
       type-fest: 4.41.0
 
-  '@date-fns/tz@1.2.0': {}
+  '@date-fns/tz@1.4.1': {}
 
   '@drizzle-team/brocli@0.10.2': {}
 
@@ -13287,9 +13287,9 @@ snapshots:
     dependencies:
       safe-buffer: 5.2.1
 
-  react-day-picker@9.7.0(react@19.2.1):
+  react-day-picker@9.12.0(react@19.2.1):
     dependencies:
-      '@date-fns/tz': 1.2.0
+      '@date-fns/tz': 1.4.1
       date-fns: 4.1.0
       date-fns-jalali: 4.1.0-0
       react: 19.2.1
