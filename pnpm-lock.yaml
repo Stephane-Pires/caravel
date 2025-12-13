@@ -40,19 +40,19 @@ importers:
     dependencies:
       '@hono/node-server':
         specifier: ^1.19.7
-        version: 1.19.7(hono@4.10.7)
+        version: 1.19.7(hono@4.11.0)
       '@hono/swagger-ui':
         specifier: ^0.5.2
-        version: 0.5.2(hono@4.10.7)
+        version: 0.5.2(hono@4.11.0)
       '@hono/zod-openapi':
         specifier: ^0.19.10
-        version: 0.19.10(hono@4.10.7)(zod@3.25.76)
+        version: 0.19.10(hono@4.11.0)(zod@3.25.76)
       '@hono/zod-validator':
         specifier: ^0.7.5
-        version: 0.7.5(hono@4.10.7)(zod@3.25.76)
+        version: 0.7.5(hono@4.11.0)(zod@3.25.76)
       '@scalar/hono-api-reference':
         specifier: ^0.9.28
-        version: 0.9.28(hono@4.10.7)
+        version: 0.9.28(hono@4.11.0)
       '@scalar/openapi-to-markdown':
         specifier: ^0.3.7
         version: 0.3.8(typescript@5.9.3)
@@ -69,8 +69,8 @@ importers:
         specifier: ^0.8.3
         version: 0.8.3(drizzle-orm@0.45.1(@opentelemetry/api@1.9.0)(@types/pg@8.15.6)(pg@8.16.3))(zod@3.25.76)
       hono:
-        specifier: ^4.10.7
-        version: 4.10.7
+        specifier: ^4.10.8
+        version: 4.11.0
       ical-generator:
         specifier: ^9.0.0
         version: 9.0.0(@types/node@22.19.1)(dayjs@1.11.19)
@@ -4624,8 +4624,8 @@ packages:
   hoist-non-react-statics@3.3.2:
     resolution: {integrity: sha512-/gGivxi8JPKWNm/W0jSmzcMPpfpPLc3dY/6GxhX2hQ9iGj3aDfklV4ET7NjKpSinLpJ5vafa9iiGIEZg10SfBw==}
 
-  hono@4.10.7:
-    resolution: {integrity: sha512-icXIITfw/07Q88nLSkB9aiUrd8rYzSweK681Kjo/TSggaGbOX4RRyxxm71v+3PC8C/j+4rlxGeoTRxQDkaJkUw==}
+  hono@4.11.0:
+    resolution: {integrity: sha512-Jg8uZzN2ul8/qlyid5FO8O624F3AK0wKtkgoeEON1qBum1rM1itYBxoMKu/1SPJC7F1+xlIZsJMmc4HHhJ1AWg==}
     engines: {node: '>=16.9.0'}
 
   html-minifier-terser@7.2.0:
@@ -7990,25 +7990,25 @@ snapshots:
     dependencies:
       react: 19.2.1
 
-  '@hono/node-server@1.19.7(hono@4.10.7)':
+  '@hono/node-server@1.19.7(hono@4.11.0)':
     dependencies:
-      hono: 4.10.7
+      hono: 4.11.0
 
-  '@hono/swagger-ui@0.5.2(hono@4.10.7)':
+  '@hono/swagger-ui@0.5.2(hono@4.11.0)':
     dependencies:
-      hono: 4.10.7
+      hono: 4.11.0
 
-  '@hono/zod-openapi@0.19.10(hono@4.10.7)(zod@3.25.76)':
+  '@hono/zod-openapi@0.19.10(hono@4.11.0)(zod@3.25.76)':
     dependencies:
       '@asteasolutions/zod-to-openapi': 7.3.3(zod@3.25.76)
-      '@hono/zod-validator': 0.7.5(hono@4.10.7)(zod@3.25.76)
-      hono: 4.10.7
+      '@hono/zod-validator': 0.7.5(hono@4.11.0)(zod@3.25.76)
+      hono: 4.11.0
       openapi3-ts: 4.5.0
       zod: 3.25.76
 
-  '@hono/zod-validator@0.7.5(hono@4.10.7)(zod@3.25.76)':
+  '@hono/zod-validator@0.7.5(hono@4.11.0)(zod@3.25.76)':
     dependencies:
-      hono: 4.10.7
+      hono: 4.11.0
       zod: 3.25.76
 
   '@hookform/resolvers@5.2.2(react-hook-form@7.68.0(react@19.2.1))':
@@ -9245,10 +9245,10 @@ snapshots:
 
   '@scalar/helpers@0.2.2': {}
 
-  '@scalar/hono-api-reference@0.9.28(hono@4.10.7)':
+  '@scalar/hono-api-reference@0.9.28(hono@4.11.0)':
     dependencies:
       '@scalar/core': 0.3.26
-      hono: 4.10.7
+      hono: 4.11.0
 
   '@scalar/icons@0.5.0(typescript@5.9.3)':
     dependencies:
@@ -11183,7 +11183,7 @@ snapshots:
       eslint: 9.39.1(jiti@2.6.1)
       eslint-import-resolver-node: 0.3.9
       eslint-import-resolver-typescript: 3.10.1(eslint-plugin-import@2.32.0(@typescript-eslint/parser@8.48.1(eslint@9.39.1(jiti@2.6.1))(typescript@5.9.3))(eslint@9.39.1(jiti@2.6.1)))(eslint@9.39.1(jiti@2.6.1))
-      eslint-plugin-import: 2.32.0(@typescript-eslint/parser@8.48.1(eslint@9.39.1(jiti@2.6.1))(typescript@5.9.3))(eslint-import-resolver-typescript@3.10.1)(eslint@9.39.1(jiti@2.6.1))
+      eslint-plugin-import: 2.32.0(@typescript-eslint/parser@8.48.1(eslint@9.39.1(jiti@2.6.1))(typescript@5.9.3))(eslint-import-resolver-typescript@3.10.1(eslint-plugin-import@2.32.0(@typescript-eslint/parser@8.48.1(eslint@9.39.1(jiti@2.6.1))(typescript@5.9.3))(eslint@9.39.1(jiti@2.6.1)))(eslint@9.39.1(jiti@2.6.1)))(eslint@9.39.1(jiti@2.6.1))
       eslint-plugin-jsx-a11y: 6.10.2(eslint@9.39.1(jiti@2.6.1))
       eslint-plugin-react: 7.37.5(eslint@9.39.1(jiti@2.6.1))
       eslint-plugin-react-hooks: 7.0.1(eslint@9.39.1(jiti@2.6.1))
@@ -11216,7 +11216,7 @@ snapshots:
       tinyglobby: 0.2.14
       unrs-resolver: 1.7.11
     optionalDependencies:
-      eslint-plugin-import: 2.32.0(@typescript-eslint/parser@8.48.1(eslint@9.39.1(jiti@2.6.1))(typescript@5.9.3))(eslint-import-resolver-typescript@3.10.1)(eslint@9.39.1(jiti@2.6.1))
+      eslint-plugin-import: 2.32.0(@typescript-eslint/parser@8.48.1(eslint@9.39.1(jiti@2.6.1))(typescript@5.9.3))(eslint-import-resolver-typescript@3.10.1(eslint-plugin-import@2.32.0(@typescript-eslint/parser@8.48.1(eslint@9.39.1(jiti@2.6.1))(typescript@5.9.3))(eslint@9.39.1(jiti@2.6.1)))(eslint@9.39.1(jiti@2.6.1)))(eslint@9.39.1(jiti@2.6.1))
     transitivePeerDependencies:
       - supports-color
 
@@ -11231,7 +11231,7 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  eslint-plugin-import@2.32.0(@typescript-eslint/parser@8.48.1(eslint@9.39.1(jiti@2.6.1))(typescript@5.9.3))(eslint-import-resolver-typescript@3.10.1)(eslint@9.39.1(jiti@2.6.1)):
+  eslint-plugin-import@2.32.0(@typescript-eslint/parser@8.48.1(eslint@9.39.1(jiti@2.6.1))(typescript@5.9.3))(eslint-import-resolver-typescript@3.10.1(eslint-plugin-import@2.32.0(@typescript-eslint/parser@8.48.1(eslint@9.39.1(jiti@2.6.1))(typescript@5.9.3))(eslint@9.39.1(jiti@2.6.1)))(eslint@9.39.1(jiti@2.6.1)))(eslint@9.39.1(jiti@2.6.1)):
     dependencies:
       '@rtsao/scc': 1.1.0
       array-includes: 3.1.9
@@ -11914,7 +11914,7 @@ snapshots:
     dependencies:
       react-is: 16.13.1
 
-  hono@4.10.7: {}
+  hono@4.11.0: {}
 
   html-minifier-terser@7.2.0:
     dependencies:
