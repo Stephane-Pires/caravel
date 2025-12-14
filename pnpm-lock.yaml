@@ -54,7 +54,7 @@ importers:
         specifier: ^0.9.28
         version: 0.9.28(hono@4.11.0)
       '@scalar/openapi-to-markdown':
-        specifier: ^0.3.7
+        specifier: ^0.3.8
         version: 0.3.8(typescript@5.9.3)
       dayjs:
         specifier: 1.11.19
@@ -8140,8 +8140,8 @@ snapshots:
 
   '@jridgewell/source-map@0.3.6':
     dependencies:
-      '@jridgewell/gen-mapping': 0.3.8
-      '@jridgewell/trace-mapping': 0.3.25
+      '@jridgewell/gen-mapping': 0.3.13
+      '@jridgewell/trace-mapping': 0.3.31
 
   '@jridgewell/sourcemap-codec@1.5.0': {}
 
