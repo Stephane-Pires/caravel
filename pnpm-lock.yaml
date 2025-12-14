@@ -13,10 +13,10 @@ importers:
         version: 0.5.2
       '@changesets/cli':
         specifier: 2.29.8
-        version: 2.29.8(@types/node@22.19.2)
+        version: 2.29.8(@types/node@24.10.3)
       '@commitlint/cli':
         specifier: 20.2.0
-        version: 20.2.0(@types/node@22.19.2)(typescript@5.9.3)
+        version: 20.2.0(@types/node@24.10.3)(typescript@5.9.3)
       '@commitlint/config-conventional':
         specifier: 20.2.0
         version: 20.2.0
@@ -73,7 +73,7 @@ importers:
         version: 4.11.0
       ical-generator:
         specifier: ^9.0.0
-        version: 9.0.0(@types/node@22.19.2)(dayjs@1.11.19)
+        version: 9.0.0(@types/node@24.10.3)(dayjs@1.11.19)
       nodemailer:
         specifier: ^7.0.3
         version: 7.0.3
@@ -85,8 +85,8 @@ importers:
         version: 3.25.76
     devDependencies:
       '@types/node':
-        specifier: 22.19.2
-        version: 22.19.2
+        specifier: 24.10.3
+        version: 24.10.3
       '@types/nodemailer':
         specifier: 6.4.21
         version: 6.4.21
@@ -216,10 +216,10 @@ importers:
         version: 0.5.2
       '@changesets/cli':
         specifier: 2.29.8
-        version: 2.29.8(@types/node@22.19.2)
+        version: 2.29.8(@types/node@24.10.3)
       '@commitlint/cli':
         specifier: 20.2.0
-        version: 20.2.0(@types/node@22.19.2)(typescript@5.9.3)
+        version: 20.2.0(@types/node@24.10.3)(typescript@5.9.3)
       '@commitlint/config-conventional':
         specifier: 20.2.0
         version: 20.2.0
@@ -230,8 +230,8 @@ importers:
         specifier: 6.0.0
         version: 6.0.0(@vue/compiler-sfc@3.5.25)(prettier@3.7.4)
       '@types/node':
-        specifier: 22.19.2
-        version: 22.19.2
+        specifier: 24.10.3
+        version: 24.10.3
       '@types/react':
         specifier: 19.2.7
         version: 19.2.7
@@ -3114,6 +3114,9 @@ packages:
 
   '@types/node@22.19.2':
     resolution: {integrity: sha512-LPM2G3Syo1GLzXLGJAKdqoU35XvrWzGJ21/7sgZTUpbkBaOasTj8tjwn6w+hCkqaa1TfJ/w67rJSwYItlJ2mYw==}
+
+  '@types/node@24.10.3':
+    resolution: {integrity: sha512-gqkrWUsS8hcm0r44yn7/xZeV1ERva/nLgrLxFRUGb7aoNMIJfZJ3AC261zDQuOAKC7MiXai1WCpYc48jAHoShQ==}
 
   '@types/nodemailer@6.4.21':
     resolution: {integrity: sha512-Eix+sb/Nj28MNnWvO2X1OLrk5vuD4C9SMnb2Vf4itWnxphYeSceqkFX7IdmxTzn+dvmnNz7paMbg4Uc60wSfJg==}
@@ -6452,6 +6455,9 @@ packages:
   undici-types@6.21.0:
     resolution: {integrity: sha512-iwDZqg0QAGrg9Rav5H4n0M64c3mkR59cJ6wQp+7C4nI0gsmExaedaYLNO44eT4AtBBwjbTiGPMlt2Md0T9H9JQ==}
 
+  undici-types@7.16.0:
+    resolution: {integrity: sha512-Zz+aZWSj8LE6zoxD+xrjh4VfkIG8Ya6LvYkZqtUQGJPZjYl53ypCaUwWqo7eI0x66KBGeRo+mlBEkMSeSZ38Nw==}
+
   unicorn-magic@0.1.0:
     resolution: {integrity: sha512-lRfVq8fE8gz6QMBuDM6a+LO3IAzTi05H6gCVaUpir2E1Rwpo4ZUog45KpNXKC/Mn3Yb9UDuHumeFTo9iV/D9FQ==}
     engines: {node: '>=18'}
@@ -7226,7 +7232,7 @@ snapshots:
     transitivePeerDependencies:
       - encoding
 
-  '@changesets/cli@2.29.8(@types/node@22.19.2)':
+  '@changesets/cli@2.29.8(@types/node@24.10.3)':
     dependencies:
       '@changesets/apply-release-plan': 7.0.14
       '@changesets/assemble-release-plan': 6.0.9
@@ -7242,7 +7248,7 @@ snapshots:
       '@changesets/should-skip-package': 0.1.2
       '@changesets/types': 6.1.0
       '@changesets/write': 0.4.0
-      '@inquirer/external-editor': 1.0.3(@types/node@22.19.2)
+      '@inquirer/external-editor': 1.0.3(@types/node@24.10.3)
       '@manypkg/get-packages': 1.1.3
       ansi-colors: 4.1.3
       ci-info: 3.9.0
@@ -7348,11 +7354,11 @@ snapshots:
       human-id: 4.1.1
       prettier: 2.8.8
 
-  '@commitlint/cli@20.2.0(@types/node@22.19.2)(typescript@5.9.3)':
+  '@commitlint/cli@20.2.0(@types/node@24.10.3)(typescript@5.9.3)':
     dependencies:
       '@commitlint/format': 20.2.0
       '@commitlint/lint': 20.2.0
-      '@commitlint/load': 20.2.0(@types/node@22.19.2)(typescript@5.9.3)
+      '@commitlint/load': 20.2.0(@types/node@24.10.3)(typescript@5.9.3)
       '@commitlint/read': 20.2.0
       '@commitlint/types': 20.2.0
       tinyexec: 1.0.1
@@ -7399,7 +7405,7 @@ snapshots:
       '@commitlint/rules': 20.2.0
       '@commitlint/types': 20.2.0
 
-  '@commitlint/load@20.2.0(@types/node@22.19.2)(typescript@5.9.3)':
+  '@commitlint/load@20.2.0(@types/node@24.10.3)(typescript@5.9.3)':
     dependencies:
       '@commitlint/config-validator': 20.2.0
       '@commitlint/execute-rule': 20.0.0
@@ -7407,7 +7413,7 @@ snapshots:
       '@commitlint/types': 20.2.0
       chalk: 5.4.1
       cosmiconfig: 9.0.0(typescript@5.9.3)
-      cosmiconfig-typescript-loader: 6.1.0(@types/node@22.19.2)(cosmiconfig@9.0.0(typescript@5.9.3))(typescript@5.9.3)
+      cosmiconfig-typescript-loader: 6.1.0(@types/node@24.10.3)(cosmiconfig@9.0.0(typescript@5.9.3))(typescript@5.9.3)
       lodash.isplainobject: 4.0.6
       lodash.merge: 4.6.2
       lodash.uniq: 4.5.0
@@ -8094,12 +8100,12 @@ snapshots:
   '@img/sharp-win32-x64@0.34.5':
     optional: true
 
-  '@inquirer/external-editor@1.0.3(@types/node@22.19.2)':
+  '@inquirer/external-editor@1.0.3(@types/node@24.10.3)':
     dependencies:
       chardet: 2.1.1
       iconv-lite: 0.7.0
     optionalDependencies:
-      '@types/node': 22.19.2
+      '@types/node': 24.10.3
 
   '@internationalized/date@3.8.2':
     dependencies:
@@ -9990,11 +9996,11 @@ snapshots:
 
   '@types/connect@3.4.38':
     dependencies:
-      '@types/node': 22.19.2
+      '@types/node': 24.10.3
 
   '@types/conventional-commits-parser@5.0.1':
     dependencies:
-      '@types/node': 22.19.2
+      '@types/node': 24.10.3
 
   '@types/debug@4.1.12':
     dependencies:
@@ -10038,7 +10044,7 @@ snapshots:
 
   '@types/mysql@2.15.27':
     dependencies:
-      '@types/node': 22.19.2
+      '@types/node': 24.10.3
 
   '@types/node@12.20.55': {}
 
@@ -10046,10 +10052,14 @@ snapshots:
     dependencies:
       undici-types: 6.21.0
 
+  '@types/node@24.10.3':
+    dependencies:
+      undici-types: 7.16.0
+
   '@types/nodemailer@6.4.21':
     dependencies:
       '@aws-sdk/client-ses': 3.946.0
-      '@types/node': 22.19.2
+      '@types/node': 24.10.3
     transitivePeerDependencies:
       - aws-crt
 
@@ -10059,7 +10069,7 @@ snapshots:
 
   '@types/pg@8.15.6':
     dependencies:
-      '@types/node': 22.19.2
+      '@types/node': 24.10.3
       pg-protocol: 1.10.2
       pg-types: 2.2.0
 
@@ -10075,7 +10085,7 @@ snapshots:
 
   '@types/tedious@4.0.14':
     dependencies:
-      '@types/node': 22.19.2
+      '@types/node': 24.10.3
 
   '@types/unist@2.0.11': {}
 
@@ -10752,9 +10762,9 @@ snapshots:
 
   core-util-is@1.0.3: {}
 
-  cosmiconfig-typescript-loader@6.1.0(@types/node@22.19.2)(cosmiconfig@9.0.0(typescript@5.9.3))(typescript@5.9.3):
+  cosmiconfig-typescript-loader@6.1.0(@types/node@24.10.3)(cosmiconfig@9.0.0(typescript@5.9.3))(typescript@5.9.3):
     dependencies:
-      '@types/node': 22.19.2
+      '@types/node': 24.10.3
       cosmiconfig: 9.0.0(typescript@5.9.3)
       jiti: 2.6.1
       typescript: 5.9.3
@@ -11911,9 +11921,9 @@ snapshots:
 
   hyperdyperid@1.2.0: {}
 
-  ical-generator@9.0.0(@types/node@22.19.2)(dayjs@1.11.19):
+  ical-generator@9.0.0(@types/node@24.10.3)(dayjs@1.11.19):
     optionalDependencies:
-      '@types/node': 22.19.2
+      '@types/node': 24.10.3
       dayjs: 1.11.19
 
   iconv-lite@0.7.0:
@@ -12133,7 +12143,7 @@ snapshots:
 
   jest-worker@27.5.1:
     dependencies:
-      '@types/node': 22.19.2
+      '@types/node': 24.10.3
       merge-stream: 2.0.0
       supports-color: 8.1.1
 
@@ -13259,7 +13269,7 @@ snapshots:
       '@protobufjs/path': 1.1.2
       '@protobufjs/pool': 1.1.0
       '@protobufjs/utf8': 1.1.0
-      '@types/node': 22.19.2
+      '@types/node': 24.10.3
       long: 5.3.2
 
   proxy-from-env@1.1.0: {}
@@ -14086,6 +14096,8 @@ snapshots:
       which-boxed-primitive: 1.1.1
 
   undici-types@6.21.0: {}
+
+  undici-types@7.16.0: {}
 
   unicorn-magic@0.1.0: {}
 

@@ -29,7 +29,7 @@
     "zod": "^3.25.76"
   },
   "devDependencies": {
-    "@types/node": "22.19.2",
+    "@types/node": "24.10.3",
     "@types/nodemailer": "6.4.21",
     "@types/pg": "8.15.6",
     "dotenv": "16.6.1",
@@ -38,6 +38,6 @@
     "typescript": "5.9.3"
   },
   "volta": {
-    "node": "24.11.1"
+    "node": "24.12.0"
   }
 }
