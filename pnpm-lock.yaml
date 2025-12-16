@@ -69,7 +69,7 @@ importers:
         specifier: ^0.8.3
         version: 0.8.3(drizzle-orm@0.45.1(@opentelemetry/api@1.9.0)(@types/pg@8.16.0)(pg@8.16.3))(zod@3.25.76)
       hono:
-        specifier: ^4.10.8
+        specifier: ^4.11.0
         version: 4.11.0
       ical-generator:
         specifier: ^9.0.0
