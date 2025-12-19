@@ -40,19 +40,19 @@ importers:
     dependencies:
       '@hono/node-server':
         specifier: ^1.19.7
-        version: 1.19.7(hono@4.11.0)
+        version: 1.19.7(hono@4.11.1)
       '@hono/swagger-ui':
         specifier: ^0.5.2
-        version: 0.5.2(hono@4.11.0)
+        version: 0.5.2(hono@4.11.1)
       '@hono/zod-openapi':
         specifier: ^0.19.10
-        version: 0.19.10(hono@4.11.0)(zod@3.25.76)
+        version: 0.19.10(hono@4.11.1)(zod@3.25.76)
       '@hono/zod-validator':
         specifier: ^0.7.5
-        version: 0.7.5(hono@4.11.0)(zod@3.25.76)
+        version: 0.7.5(hono@4.11.1)(zod@3.25.76)
       '@scalar/hono-api-reference':
         specifier: ^0.9.28
-        version: 0.9.28(hono@4.11.0)
+        version: 0.9.28(hono@4.11.1)
       '@scalar/openapi-to-markdown':
         specifier: ^0.3.8
         version: 0.3.8(typescript@5.9.3)
@@ -69,8 +69,8 @@ importers:
         specifier: ^0.8.3
         version: 0.8.3(drizzle-orm@0.45.1(@opentelemetry/api@1.9.0)(@types/pg@8.16.0)(pg@8.16.3))(zod@3.25.76)
       hono:
-        specifier: ^4.11.0
-        version: 4.11.0
+        specifier: ^4.11.1
+        version: 4.11.1
       ical-generator:
         specifier: ^9.0.0
         version: 9.0.0(@types/node@24.10.4)(dayjs@1.11.19)
@@ -4592,8 +4592,8 @@ packages:
   hoist-non-react-statics@3.3.2:
     resolution: {integrity: sha512-/gGivxi8JPKWNm/W0jSmzcMPpfpPLc3dY/6GxhX2hQ9iGj3aDfklV4ET7NjKpSinLpJ5vafa9iiGIEZg10SfBw==}
 
-  hono@4.11.0:
-    resolution: {integrity: sha512-Jg8uZzN2ul8/qlyid5FO8O624F3AK0wKtkgoeEON1qBum1rM1itYBxoMKu/1SPJC7F1+xlIZsJMmc4HHhJ1AWg==}
+  hono@4.11.1:
+    resolution: {integrity: sha512-KsFcH0xxHes0J4zaQgWbYwmz3UPOOskdqZmItstUG93+Wk1ePBLkLGwbP9zlmh1BFUiL8Qp+Xfu9P7feJWpGNg==}
     engines: {node: '>=16.9.0'}
 
   html-minifier-terser@7.2.0:
@@ -7936,25 +7936,25 @@ snapshots:
     dependencies:
       react: 19.2.3
 
-  '@hono/node-server@1.19.7(hono@4.11.0)':
+  '@hono/node-server@1.19.7(hono@4.11.1)':
     dependencies:
-      hono: 4.11.0
+      hono: 4.11.1
 
-  '@hono/swagger-ui@0.5.2(hono@4.11.0)':
+  '@hono/swagger-ui@0.5.2(hono@4.11.1)':
     dependencies:
-      hono: 4.11.0
+      hono: 4.11.1
 
-  '@hono/zod-openapi@0.19.10(hono@4.11.0)(zod@3.25.76)':
+  '@hono/zod-openapi@0.19.10(hono@4.11.1)(zod@3.25.76)':
     dependencies:
       '@asteasolutions/zod-to-openapi': 7.3.3(zod@3.25.76)
-      '@hono/zod-validator': 0.7.5(hono@4.11.0)(zod@3.25.76)
-      hono: 4.11.0
+      '@hono/zod-validator': 0.7.5(hono@4.11.1)(zod@3.25.76)
+      hono: 4.11.1
       openapi3-ts: 4.5.0
       zod: 3.25.76
 
-  '@hono/zod-validator@0.7.5(hono@4.11.0)(zod@3.25.76)':
+  '@hono/zod-validator@0.7.5(hono@4.11.1)(zod@3.25.76)':
     dependencies:
-      hono: 4.11.0
+      hono: 4.11.1
       zod: 3.25.76
 
   '@hookform/resolvers@5.2.2(react-hook-form@7.68.0(react@19.2.3))':
@@ -9176,10 +9176,10 @@ snapshots:
 
   '@scalar/helpers@0.2.2': {}
 
-  '@scalar/hono-api-reference@0.9.28(hono@4.11.0)':
+  '@scalar/hono-api-reference@0.9.28(hono@4.11.1)':
     dependencies:
       '@scalar/core': 0.3.26
-      hono: 4.11.0
+      hono: 4.11.1
 
   '@scalar/icons@0.5.0(typescript@5.9.3)':
     dependencies:
@@ -11843,7 +11843,7 @@ snapshots:
     dependencies:
       react-is: 16.13.1
 
-  hono@4.11.0: {}
+  hono@4.11.1: {}
 
   html-minifier-terser@7.2.0:
     dependencies:
