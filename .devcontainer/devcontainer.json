@@ -24,7 +24,7 @@
     "5432": { "label": "PostgreSQL" },
     "587": { "label": "Mailpit SMTP" }
   },
-  "postCreateCommand": "pnpm install -r && pnpm dev:prepare",
+  "postCreateCommand": "echo 'package-import-method=copy\nstore-dir=/home/node/.pnpm-store' > .npmrc && pnpm install -r && pnpm dev:prepare",
   "postStartCommand": "pnpm run dev",
   "remoteEnv": {
     "DOTENV_CONFIG_PATH": "/workspace/.env"
