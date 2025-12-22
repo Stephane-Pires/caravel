@@ -4,6 +4,7 @@ services:
     container_name: caravel_devcontainer
     volumes:
       - .:/workspace:cached
+      - ~/.ssh:/home/node/.ssh:ro
     ports:
       - 3000:3000
       - 3001:3001
