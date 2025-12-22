@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
+    "commit": "better-commits",
     "dev": "pnpm -r dev",
     "dev:prepare": "pnpm --filter ./apps/backend db:migrate",
     "build": "pnpm -r build",
@@ -15,6 +16,7 @@
   "devDependencies": {
     "@changesets/changelog-github": "0.5.2",
     "@changesets/cli": "2.29.8",
+    "better-commits": "1.18.1",
     "@commitlint/cli": "20.2.0",
     "@commitlint/config-conventional": "20.2.0",
     "@prettier/plugin-oxc": "0.1.3",
