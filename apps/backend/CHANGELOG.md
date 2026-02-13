@@ -1,5 +1,95 @@
 # backend
 
+## 0.1.1
+
+### Patch Changes
+
+- [#297](https://github.com/Stephane-Pires/caravel/pull/297) [`051afae`](https://github.com/Stephane-Pires/caravel/commit/051afae5f0b24ce500dba9a4161a67a061b7e399) Thanks [@renovate](https://github.com/apps/renovate)! - chore(backend): 🧹 Update @hono/zod-openapi from 0.19.8 to v0.19.10
+
+- [#299](https://github.com/Stephane-Pires/caravel/pull/299) [`68aac5c`](https://github.com/Stephane-Pires/caravel/commit/68aac5c000c49505e0c0581e2af323eedbe14c6c) Thanks [@renovate](https://github.com/apps/renovate)! - chore(backend): 🧹 Update @hono/zod-validator from 0.7.0 to v0.7.5
+
+- [#300](https://github.com/Stephane-Pires/caravel/pull/300) [`d2d3681`](https://github.com/Stephane-Pires/caravel/commit/d2d36815c8a3eadd5668ee77fae1e4ccdcd1e72f) Thanks [@renovate](https://github.com/apps/renovate)! - chore(backend): 🧹 Update @types/nodemailer from 6.4.17 to v6.4.21
+
+- [#301](https://github.com/Stephane-Pires/caravel/pull/301) [`c370a89`](https://github.com/Stephane-Pires/caravel/commit/c370a89f0b9216bf897f2e1d52232745ca310fa9) Thanks [@renovate](https://github.com/apps/renovate)! - chore(backend): 🧹 Update drizzle-kit from 0.31.2 to v0.31.7
+
+- [#302](https://github.com/Stephane-Pires/caravel/pull/302) [`50b3e4f`](https://github.com/Stephane-Pires/caravel/commit/50b3e4f84388a0a15d483c152d64ef4139169c26) Thanks [@renovate](https://github.com/apps/renovate)! - chore(backend): 🧹 Update drizzle-orm from 0.44.2 to v0.44.7
+
+- [#303](https://github.com/Stephane-Pires/caravel/pull/303) [`88c994e`](https://github.com/Stephane-Pires/caravel/commit/88c994ec290c196c555a30568a83915c6f9080d8) Thanks [@renovate](https://github.com/apps/renovate)! - chore(backend): 🧹 Update drizzle-zod from 0.8.2 to v0.8.3
+
+- [#304](https://github.com/Stephane-Pires/caravel/pull/304) [`92e83b8`](https://github.com/Stephane-Pires/caravel/commit/92e83b80822272d29d9d5d92d69c5b6565766d34) Thanks [@renovate](https://github.com/apps/renovate)! - chore(backend): 🧹 Update pg from 8.16.2 to v8.16.3
+
+- [#305](https://github.com/Stephane-Pires/caravel/pull/305) [`f6b5bdd`](https://github.com/Stephane-Pires/caravel/commit/f6b5bdd5571dfedb8e76de07c84432602e2a5c83) Thanks [@renovate](https://github.com/apps/renovate)! - chore(backend): 🧹 Update drizzle-kit from 0.31.7 to v0.31.8
+
+- [#306](https://github.com/Stephane-Pires/caravel/pull/306) [`008fbbe`](https://github.com/Stephane-Pires/caravel/commit/008fbbe44262889a906dddbe973cdef5130bcdcb) Thanks [@renovate](https://github.com/apps/renovate)! - chore(backend): 🧹 Update scalar monorepo
+
+- [#308](https://github.com/Stephane-Pires/caravel/pull/308) [`400f976`](https://github.com/Stephane-Pires/caravel/commit/400f9766033735235841304042da4629d2b36dc2) Thanks [@renovate](https://github.com/apps/renovate)! - chore(frontend): 🧹 Update dayjs from 1.11.13 to v1.11.19
+
+- [#311](https://github.com/Stephane-Pires/caravel/pull/311) [`5a525d5`](https://github.com/Stephane-Pires/caravel/commit/5a525d576dc75cc3e602da96ff7f3ed5e3055cd0) Thanks [@renovate](https://github.com/apps/renovate)! - chore(frontend): 🧹 Update zod from 3.25.67 to v3.25.76
+
+- [#315](https://github.com/Stephane-Pires/caravel/pull/315) [`166d5c7`](https://github.com/Stephane-Pires/caravel/commit/166d5c7a06dfbad2a0b3dc804a17059e16942555) Thanks [@renovate](https://github.com/apps/renovate)! - chore(backend): 🧹 Update @hono/node-server from 1.14.4 to v1.19.6
+
+- [#316](https://github.com/Stephane-Pires/caravel/pull/316) [`4ef6feb`](https://github.com/Stephane-Pires/caravel/commit/4ef6febfccb3c60ddc3925aa220c6bcde8fe2845) Thanks [@renovate](https://github.com/apps/renovate)! - chore(backend): 🧹 Update dotenv from 16.5.0 to v16.6.1
+
+- [#317](https://github.com/Stephane-Pires/caravel/pull/317) [`27e8a5c`](https://github.com/Stephane-Pires/caravel/commit/27e8a5cdd7f90857317d7fea5e00ed6dacd480bf) Thanks [@renovate](https://github.com/apps/renovate)! - chore(backend): 🧹 Update drizzle-orm from 0.44.7 to v0.45.0
+
+- [#318](https://github.com/Stephane-Pires/caravel/pull/318) [`5f2d33d`](https://github.com/Stephane-Pires/caravel/commit/5f2d33d22b074e275f84ba5a489a609a6470ea3a) Thanks [@renovate](https://github.com/apps/renovate)! - chore(backend): 🧹 Update tsx from 4.20.3 to v4.21.0
+
+- [#326](https://github.com/Stephane-Pires/caravel/pull/326) [`1643e9e`](https://github.com/Stephane-Pires/caravel/commit/1643e9e3590debd7e917a51d2e5e03e80890c8cb) Thanks [@renovate](https://github.com/apps/renovate)! - chore(frontend): 🧹 Update typescript from 5.8.3 to v5.9.3
+
+- [#328](https://github.com/Stephane-Pires/caravel/pull/328) [`d6a739e`](https://github.com/Stephane-Pires/caravel/commit/d6a739e594ce4a9328c3becaee01b76efcc23b97) Thanks [@renovate](https://github.com/apps/renovate)! - chore(backend): 🧹 Update @hono/node-server from 1.19.7 to v1.19.7
+
+- [#330](https://github.com/Stephane-Pires/caravel/pull/330) [`737ea39`](https://github.com/Stephane-Pires/caravel/commit/737ea3911741ca670a2b76a46e20773a2d0f3992) Thanks [@renovate](https://github.com/apps/renovate)! - chore(backend): 🧹 Update scalar monorepo
+
+- [#331](https://github.com/Stephane-Pires/caravel/pull/331) [`c3aad2e`](https://github.com/Stephane-Pires/caravel/commit/c3aad2ea6a41e82e08f7d77f06bcc1a5a0925ea8) Thanks [@renovate](https://github.com/apps/renovate)! - chore(frontend): 🧹 Update @types/node from 22.19.1 to v22.19.2
+
+- [#332](https://github.com/Stephane-Pires/caravel/pull/332) [`a1cbd13`](https://github.com/Stephane-Pires/caravel/commit/a1cbd13b26a3717ec80c4c9c58b77c8ab17eab65) Thanks [@renovate](https://github.com/apps/renovate)! - chore(backend): 🧹 Update hono from 4.10.7 to v4.10.8
+
+- [#337](https://github.com/Stephane-Pires/caravel/pull/337) [`8e7defb`](https://github.com/Stephane-Pires/caravel/commit/8e7defb2e6f4726e2ca142603486283af6239a7c) Thanks [@renovate](https://github.com/apps/renovate)! - chore(backend): 🧹 Update drizzle-orm from 0.45.0 to v0.45.1
+
+- [#339](https://github.com/Stephane-Pires/caravel/pull/339) [`7de5a44`](https://github.com/Stephane-Pires/caravel/commit/7de5a44b775edebd7fd7c0ddcf451518e4de23a0) Thanks [@renovate](https://github.com/apps/renovate)! - chore(backend): 🧹 Update @types/pg from 8.15.6 to v8.16.0
+
+- [#341](https://github.com/Stephane-Pires/caravel/pull/341) [`d25e0bb`](https://github.com/Stephane-Pires/caravel/commit/d25e0bba59de37a7a77f657b5e19d76f18c82e13) Thanks [@renovate](https://github.com/apps/renovate)! - chore(app): 🧹 Update Node.js from v24.11.1 to v24.12.0
+
+- [#342](https://github.com/Stephane-Pires/caravel/pull/342) [`f6d5baf`](https://github.com/Stephane-Pires/caravel/commit/f6d5bafe099e4806df4a7d63a2a7529f889b6665) Thanks [@renovate](https://github.com/apps/renovate)! - chore(backend): 🧹 Update @scalar/openapi-to-markdown from 0.3.8 to v0.3.8
+
+- [#348](https://github.com/Stephane-Pires/caravel/pull/348) [`ce6bb41`](https://github.com/Stephane-Pires/caravel/commit/ce6bb4105ffa2cdb10e6a9e1807f8618ca30a31b) Thanks [@renovate](https://github.com/apps/renovate)! - chore(backend): 🧹 Update @hono/zod-openapi from 0.19.10 to v1.1.5
+
+- [#350](https://github.com/Stephane-Pires/caravel/pull/350) [`f9ca4f5`](https://github.com/Stephane-Pires/caravel/commit/f9ca4f52a431bee93515ac8315ba6158dbe413af) Thanks [@renovate](https://github.com/apps/renovate)! - chore(backend): 🧹 Update dotenv from 16.6.1 to v17.2.3
+
+- [#352](https://github.com/Stephane-Pires/caravel/pull/352) [`f3a06ec`](https://github.com/Stephane-Pires/caravel/commit/f3a06ecb9f318b385c1c1f90f4528188c83808b1) Thanks [@renovate](https://github.com/apps/renovate)! - chore(backend): 🧹 Update ical-generator from 9.0.0 to v10.0.0
+
+- [#353](https://github.com/Stephane-Pires/caravel/pull/353) [`48f06e1`](https://github.com/Stephane-Pires/caravel/commit/48f06e1f7f7b815ba27895410168ea6d778ffb0a) Thanks [@renovate](https://github.com/apps/renovate)! - chore(backend): 🧹 Update nodemailer from 7.0.3 to v7.0.11
+
+- [#355](https://github.com/Stephane-Pires/caravel/pull/355) [`e032136`](https://github.com/Stephane-Pires/caravel/commit/e032136c3d15f83609f7c4d663b5ab1ef81187e8) Thanks [@renovate](https://github.com/apps/renovate)! - chore(frontend): 🧹 Update zod from 3.25.76 to v4.2.1
+
+- [#356](https://github.com/Stephane-Pires/caravel/pull/356) [`f1afb22`](https://github.com/Stephane-Pires/caravel/commit/f1afb221d63f5f579cc4692043d40202d7b6dbec) Thanks [@renovate](https://github.com/apps/renovate)! - chore(backend): 🧹 Update hono from 4.11.0 to v4.11.0
+
+- [#357](https://github.com/Stephane-Pires/caravel/pull/357) [`50d20cd`](https://github.com/Stephane-Pires/caravel/commit/50d20cd462d4923c2847c52b25331aa93ae810f6) Thanks [@renovate](https://github.com/apps/renovate)! - chore(frontend): 🧹 Update @types/node from 24.10.3 to v24.10.4
+
+- [#359](https://github.com/Stephane-Pires/caravel/pull/359) [`b25bfd5`](https://github.com/Stephane-Pires/caravel/commit/b25bfd5b883f7f615770625c95d4c517c1b7db81) Thanks [@renovate](https://github.com/apps/renovate)! - chore(backend): 🧹 Update hono from 4.11.0 to v4.11.1
+
+- [#364](https://github.com/Stephane-Pires/caravel/pull/364) [`ff275de`](https://github.com/Stephane-Pires/caravel/commit/ff275deb40fe11452e432bee0038b0ceaf919597) Thanks [@renovate](https://github.com/apps/renovate)! - chore(backend): 🧹 Update @hono/zod-validator from 0.7.5 to v0.7.6
+
+- [#367](https://github.com/Stephane-Pires/caravel/pull/367) [`cb659f4`](https://github.com/Stephane-Pires/caravel/commit/cb659f4d50ca2937083d833c40ab1ee8571fb847) Thanks [@renovate](https://github.com/apps/renovate)! - chore(backend): 🧹 Update scalar monorepo
+
+- [#369](https://github.com/Stephane-Pires/caravel/pull/369) [`6566225`](https://github.com/Stephane-Pires/caravel/commit/6566225c4f77b5d6870a4c1dcf96618c08295973) Thanks [@renovate](https://github.com/apps/renovate)! - chore(backend): 🧹 Update @hono/zod-openapi from 1.1.6 to v1.1.6
+
+- [#376](https://github.com/Stephane-Pires/caravel/pull/376) [`7fcad4b`](https://github.com/Stephane-Pires/caravel/commit/7fcad4bb2486d427223aee50aac99bb39a272e0a) Thanks [@renovate](https://github.com/apps/renovate)! - chore(backend): 🧹 Update @hono/zod-openapi from 1.1.6 to v1.2.0
+
+- [#377](https://github.com/Stephane-Pires/caravel/pull/377) [`a7f8703`](https://github.com/Stephane-Pires/caravel/commit/a7f8703d4628263e5cdb61ca8f1e96aa292efa90) Thanks [@renovate](https://github.com/apps/renovate)! - chore(backend): 🧹 Update @scalar/openapi-to-markdown from 0.3.12 to v0.3.12
+
+- [#378](https://github.com/Stephane-Pires/caravel/pull/378) [`4d26015`](https://github.com/Stephane-Pires/caravel/commit/4d260155b00e6eedebef10b0e479c42069894bc2) Thanks [@renovate](https://github.com/apps/renovate)! - chore(backend): 🧹 Update nodemailer from 7.0.11 to v7.0.12
+
+- [#381](https://github.com/Stephane-Pires/caravel/pull/381) [`1e69974`](https://github.com/Stephane-Pires/caravel/commit/1e699748757e76798e87c40798d80d362866b52c) Thanks [@renovate](https://github.com/apps/renovate)! - chore(backend): 🧹 Update @hono/swagger-ui from 0.5.2 to v0.5.3
+
+- [#382](https://github.com/Stephane-Pires/caravel/pull/382) [`8e7ddb9`](https://github.com/Stephane-Pires/caravel/commit/8e7ddb94dcb5c8ccf61eb724756cb84e0dafd88a) Thanks [@renovate](https://github.com/apps/renovate)! - chore(backend): 🧹 Update hono from 4.11.1 to v4.11.3
+
+- [#385](https://github.com/Stephane-Pires/caravel/pull/385) [`4e5785e`](https://github.com/Stephane-Pires/caravel/commit/4e5785e25e8d8f908611677da167dc6c41721006) Thanks [@renovate](https://github.com/apps/renovate)! - chore(frontend): 🧹 Update zod from 4.2.1 to v4.3.6
+
+- [#393](https://github.com/Stephane-Pires/caravel/pull/393) [`a76647b`](https://github.com/Stephane-Pires/caravel/commit/a76647b85d707925391c2a4dd80e988905cf3b4a) Thanks [@renovate](https://github.com/apps/renovate)! - chore(backend): 🧹 Update scalar monorepo
+
+- [#395](https://github.com/Stephane-Pires/caravel/pull/395) [`5b42ae9`](https://github.com/Stephane-Pires/caravel/commit/5b42ae9f2edbd4cef8b9ff4e6d34555dcb176d2e) Thanks [@renovate](https://github.com/apps/renovate)! - chore(backend): 🧹 Update @hono/node-server from 1.19.7 to v1.19.9
+
 ## 0.1.0
 
 ### Minor Changes

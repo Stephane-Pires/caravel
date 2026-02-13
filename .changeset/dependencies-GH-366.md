@@ -1,5 +1,0 @@
----
-"frontend": patch
----
-
-chore(frontend): 🧹 Update react-day-picker from 9.12.0 to v9.13.0
