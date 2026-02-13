@@ -298,6 +298,19 @@ export const CURRICULUM_VITAE = {
           skills: ["ANSIBLE", "LINUX", "TERMINAL"],
         },
       },
+      FARAWAY: {
+        id: "Faraway",
+        label: "Faraway",
+        icon: "/projects/faraway.png",
+        url: "https://faraway-solver.com",
+        duration: {
+          start: "January 2026",
+          end: "On going",
+        },
+        content: {
+          skills: ["SVELTE", "SVELTEKIT", "AWS", "COMPUTER_VISION", "PYTHON"],
+        },
+      },
     },
   },
 } as const
