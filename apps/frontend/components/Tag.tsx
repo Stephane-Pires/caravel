@@ -52,6 +52,8 @@ function getColor(tag: SUBJECT | CATEGORY | TECHNO | SOFT_SKILLS) {
     case "ANSIBLE":
     case "LINUX":
     case "TERMINAL":
+    case "ARTIFICIAL_INTELLIGENCE":
+    case "COMPUTER_VISION":
       return "bg-accent-200"
     default:
       return unreachable(tag)
@@ -143,6 +145,10 @@ function getLabel(tag: SUBJECT | CATEGORY | TECHNO | SOFT_SKILLS) {
       return "Terminal"
     case "LINUX":
       return "Linux 🚀"
+    case "ARTIFICIAL_INTELLIGENCE":
+      return "AI 🚀"
+    case "COMPUTER_VISION":
+      return "Computer vision 🚀"
     default:
       return unreachable(tag)
   }
