@@ -54,6 +54,7 @@ function getColor(tag: SUBJECT | CATEGORY | TECHNO | SOFT_SKILLS) {
     case "TERMINAL":
     case "ARTIFICIAL_INTELLIGENCE":
     case "COMPUTER_VISION":
+    case "SERVERLESS":
       return "bg-accent-200"
     default:
       return unreachable(tag)
@@ -90,7 +91,7 @@ function getLabel(tag: SUBJECT | CATEGORY | TECHNO | SOFT_SKILLS) {
     case "STORYBOOK":
       return "Storybook"
     case "AWS":
-      return "Amazon Web Service"
+      return "AWS 🚀"
     case "SQL":
       return "SQL"
     case "POSTGRESQL":
@@ -102,7 +103,7 @@ function getLabel(tag: SUBJECT | CATEGORY | TECHNO | SOFT_SKILLS) {
     case "SVELTE":
       return "Svelte 🚀"
     case "SVELTEKIT":
-      return "SvelteKit 🚀"
+      return "SvelteKit"
     case "NODEJS":
       return "NodeJS"
     case "JAVASCRIPT":
@@ -149,6 +150,8 @@ function getLabel(tag: SUBJECT | CATEGORY | TECHNO | SOFT_SKILLS) {
       return "AI 🚀"
     case "COMPUTER_VISION":
       return "Computer vision 🚀"
+    case "SERVERLESS":
+      return "Serverless"
     default:
       return unreachable(tag)
   }
