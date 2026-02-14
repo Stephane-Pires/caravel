@@ -308,7 +308,7 @@ export const CURRICULUM_VITAE = {
           end: "On going",
         },
         content: {
-          skills: ["SVELTE", "SVELTEKIT", "AWS", "COMPUTER_VISION", "PYTHON"],
+          skills: ["SVELTE", "SVELTEKIT", "AWS", "COMPUTER_VISION", "PYTHON", "SERVERLESS"],
         },
       },
     },
