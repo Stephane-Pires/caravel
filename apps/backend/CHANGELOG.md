@@ -1,5 +1,19 @@
 # backend
 
+## 0.1.2
+
+### Patch Changes
+
+- [#403](https://github.com/Stephane-Pires/caravel/pull/403) [`3953131`](https://github.com/Stephane-Pires/caravel/commit/3953131f3ec57f46328cadc1503da88235ec6be9) Thanks [@renovate](https://github.com/apps/renovate)! - chore(backend): 🧹 Update @hono/zod-openapi from 1.2.0 to v1.2.1
+
+- [#404](https://github.com/Stephane-Pires/caravel/pull/404) [`590588f`](https://github.com/Stephane-Pires/caravel/commit/590588fc31e7c5582a7a34420445dbec516cc054) Thanks [@renovate](https://github.com/apps/renovate)! - chore(backend): 🧹 Update dotenv from 17.2.3 to v17.2.4
+
+- [#405](https://github.com/Stephane-Pires/caravel/pull/405) [`260b1c6`](https://github.com/Stephane-Pires/caravel/commit/260b1c65c00988af1746926b77a4286d599da05c) Thanks [@renovate](https://github.com/apps/renovate)! - chore(backend): 🧹 Update drizzle-kit from 0.31.8 to v0.31.9
+
+- [#406](https://github.com/Stephane-Pires/caravel/pull/406) [`d066789`](https://github.com/Stephane-Pires/caravel/commit/d066789546065e91b3574fb34550593ed2d058db) Thanks [@renovate](https://github.com/apps/renovate)! - chore(backend): 🧹 Update @scalar/openapi-to-markdown from 0.3.43 to v0.3.41
+
+- [#408](https://github.com/Stephane-Pires/caravel/pull/408) [`00ecd46`](https://github.com/Stephane-Pires/caravel/commit/00ecd46f3cca822ed78070c1368efdf06aeebd20) Thanks [@renovate](https://github.com/apps/renovate)! - chore(backend): 🧹 Update hono from 4.11.3 to v4.11.9
+
 ## 0.1.1
 
 ### Patch Changes

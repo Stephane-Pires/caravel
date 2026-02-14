@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.8.2
+
+### Patch Changes
+
+- [#407](https://github.com/Stephane-Pires/caravel/pull/407) [`ac39322`](https://github.com/Stephane-Pires/caravel/commit/ac393223259b7cc84b1f25da337f9fc2e76e6b0b) Thanks [@Stephane-Pires](https://github.com/Stephane-Pires)! - Adding SERVERLESS to SKILLS in FARAWAY
+
 ## 0.8.1
 
 ### Patch Changes
