@@ -1,5 +1,7 @@
 import { memo } from "react"
 
+import { FidelitySwitch } from "@/components/FidelitySwitch"
+
 // The cabin's overlay: top bar, panel, wanted scroll, tooltip and loading veil.
 // cabin/cabin.js drives it through these ids (it fills the empty containers and toggles `hidden`),
 // so this component is memoized: React renders it once and never re-renders over the scene's changes.
@@ -17,20 +19,7 @@ export const CabinOverlay = memo(function CabinOverlay() {
           <span className="name">Caravel</span>
           <span className="tag">Captain&apos;s log</span>
         </div>
-        <button
-          type="button"
-          className="music"
-          id="music"
-          aria-pressed="false"
-        >
-          <span
-            className="icon"
-            aria-hidden="true"
-          >
-            ♪
-          </span>
-          <span id="music-label">Play music</span>
-        </button>
+        <FidelitySwitch />
       </header>
 
       <section

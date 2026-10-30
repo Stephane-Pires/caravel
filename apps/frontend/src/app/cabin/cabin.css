@@ -18,7 +18,7 @@
 .cabin .bar {
   position: fixed; top: 0; left: 0; right: 0; z-index: 2;
   display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap;
-  padding-top: calc(12px + env(safe-area-inset-top, 0px)); padding-bottom: 28px;
+  padding-top: calc(var(--bar-top, 29px) + env(safe-area-inset-top, 0px)); padding-bottom: 28px;
   padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px));
   background: linear-gradient(rgba(13, 22, 38, 0.85), rgba(13, 22, 38, 0));
   pointer-events: none;
@@ -26,15 +26,9 @@
 .cabin .brand { display: flex; align-items: baseline; gap: 10px; }
 .cabin .brand .name { font-family: var(--display); font-weight: 700; font-size: 1.6rem; color: var(--sand); letter-spacing: 0.01em; }
 .cabin .brand .tag { font-size: 0.8rem; color: var(--mist); text-transform: uppercase; letter-spacing: 0.12em; }
-.cabin .music {
-  pointer-events: auto; display: inline-flex; align-items: center; gap: 8px;
-  font: 700 0.95rem var(--body); color: var(--ink); background: var(--sand);
-  border: 2px solid var(--ink); border-radius: 999px; padding: 8px 16px; cursor: pointer;
-  box-shadow: 0 0 0 2px rgba(240, 199, 94, 0.25);
-}
-.cabin .music[aria-pressed="true"] { background: var(--coral); }
-.cabin .music .icon { font-size: 1.05rem; line-height: 1; }
-.cabin .music:disabled { opacity: 0.6; cursor: progress; }
+/* the Lo-fi/Hi-fi switch is pinned where it sits on the classic site; it stays under the scroll */
+.cabin .fidelity { z-index: 2; }
+@media (max-width: 767px) { .cabin .bar { --bar-top: 21px; } }
 .cabin button:focus-visible { outline: 3px solid var(--mint); outline-offset: 2px; }
 .cabin .panel {
   position: fixed; z-index: 2;
@@ -202,5 +196,4 @@
 .cabin .panel { padding: 12px 14px; max-height: 48vh; }
 .cabin .panel h1, .cabin .panel h2 { font-size: 1.15rem; }
 .cabin .mood { display: none; }
-.cabin .music { padding: 7px 13px; font-size: 0.9rem; }
 }

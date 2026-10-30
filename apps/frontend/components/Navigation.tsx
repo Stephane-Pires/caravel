@@ -6,6 +6,8 @@ import Link from "next/link"
 import { usePathname } from "next/navigation"
 import { useCallback, useState } from "react"
 
+import { FidelitySwitch } from "./FidelitySwitch"
+
 const NAVIGATION = {
   ABOUT_ME: {
     icon: "person",
@@ -48,7 +50,7 @@ export function Navigation() {
         </Link>
       </div>
 
-      <div className="mx-4 flex flex-row gap-8">
+      <div className="mr-40 ml-4 flex flex-row items-center gap-8">
         {Object.values(NAVIGATION).map((navigation) => (
           <Link
             href={navigation.pathname}
@@ -74,6 +76,7 @@ export function Navigation() {
             </div>
           </Link>
         ))}
+        <FidelitySwitch />
       </div>
     </nav>
   )
@@ -117,17 +120,20 @@ export function NavigationMobile() {
           </Link>
         </div>
 
-        {showLinks ? (
-          <XMarkIcon
-            className="fill-primary-600 stroke-primary-600 m-2 size-10"
-            onClick={handleClickIcon}
-          />
-        ) : (
-          <Bars2Icon
-            className="fill-primary-600 stroke-primary-600 m-2 size-10"
-            onClick={handleClickIcon}
-          />
-        )}
+        <div className="mr-40 flex flex-row items-center gap-2">
+          <FidelitySwitch />
+          {showLinks ? (
+            <XMarkIcon
+              className="fill-primary-600 stroke-primary-600 m-2 size-10"
+              onClick={handleClickIcon}
+            />
+          ) : (
+            <Bars2Icon
+              className="fill-primary-600 stroke-primary-600 m-2 size-10"
+              onClick={handleClickIcon}
+            />
+          )}
+        </div>
       </div>
 
       {showLinks && (

@@ -819,7 +819,8 @@ const STEM_IDS = ["ambience", "percussion", "bass", "chords", "melody"];
 const LOOP_SECONDS = 96; // 40 bars at 100 BPM: loop exactly this, so encoder padding never adds a gap
 const AUDIO_EXT = new Audio().canPlayType('audio/ogg; codecs="opus"') ? "opus" : "m4a"; // AAC where Opus isn't supported
 let audioCtx = null, musicMaster = null, stemBuffers = null, stemNodes = [], busy = false;
-const musicBtn = $("music"), musicLabel = $("music-label"), musicIcon = musicBtn.querySelector(".icon");
+// the music box is the only control: its close-up winds it up or stops it
+let musicFailed = false;
 
 async function loadMusic() {
   audioCtx = new AudioContext();
@@ -849,18 +850,15 @@ function startStems() {
 }
 
 function setMusicUI() {
-  musicBtn.setAttribute("aria-pressed", String(playing));
-  musicLabel.textContent = playing ? "Stop music" : "Play music";
-  musicIcon.textContent = playing ? "■" : "♪";
   if (focused === musicHot) renderFocus(musicHot);
 }
 
 async function toggleMusic() {
   if (busy) return;
-  busy = true; musicBtn.disabled = true;
+  busy = true; musicFailed = false; setMusicUI();
   try {
     if (!playing) {
-      if (!audioCtx) { musicLabel.textContent = "Tuning up…"; await loadMusic(); }
+      if (!audioCtx) await loadMusic();
       if (audioCtx.state === "suspended") await audioCtx.resume();
       startStems();
       musicMaster.gain.cancelScheduledValues(audioCtx.currentTime);
@@ -875,13 +873,12 @@ async function toggleMusic() {
       playing = false;
     }
   } catch (e) {
-    musicLabel.textContent = "Music unavailable";
+    musicFailed = true;
   } finally {
-    busy = false; musicBtn.disabled = false;
+    busy = false;
     setMusicUI();
   }
 }
-musicBtn.addEventListener("click", toggleMusic);
 
 // ---------- camera: kept inside the cabin, with smooth close-ups ----------
 const OVERVIEW = { pos: new THREE.Vector3(3.2, 2.5, 2.8), target: new THREE.Vector3(-0.4, 1.6, -1.3) };
@@ -972,9 +969,11 @@ function renderFocus(h) {
     fBody.append(el("p", { class: "detail" }, "The rendez-vous page is hidden for now. When it comes back, this bottle opens the booking form."));
   } else if (h.id === "musicbox") {
     fLede.textContent = "An original island tune, played live by your browser.";
-    const b = el("button", { type: "button" }, playing ? "■ Stop the music" : "♪ Wind it up");
+    const b = el("button", { type: "button", "aria-pressed": String(playing) }, busy ? "Tuning up…" : playing ? "■ Stop the music" : "♪ Wind it up");
+    if (busy) b.disabled = true;
     b.addEventListener("click", toggleMusic);
     fBody.append(el("div", { class: "actions" }, b));
+    if (musicFailed) fNote.textContent = "The music box is jammed: the music couldn't load.";
   }
 }
 
