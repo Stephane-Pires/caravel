@@ -1060,7 +1060,7 @@ function closeScroll() {
 $("scroll-close").addEventListener("click", closeScroll);
 scrollWrap.addEventListener("click", (e) => { if (e.target === scrollWrap) closeScroll(); });
 
-function focusOn(h) {
+function showCloseUp(h) {
   focused = h;
   hovered = null;
   controls.enabled = false;
@@ -1072,7 +1072,7 @@ function focusOn(h) {
   $("back").focus({ preventScroll: true });
 }
 
-function backToCabin() {
+function leaveCloseUp() {
   if (!focused) return;
   const from = focused;
   focused = null;
@@ -1081,6 +1081,26 @@ function backToCabin() {
   refreshHighlights();
   const chip = $(`chip-${from.id}`); if (chip) chip.focus({ preventScroll: true });
 }
+// close-ups live in the URL (/cabin#chart): links can be shared, and the browser's back button
+// returns to the overview. Native hash navigation, so Next.js's router stays out of it.
+const closeUpById = (id) => hotspots.find((x) => x.view && x.id === id);
+let enteredFromOverview = false; // did we add the history entry we're on?
+function focusOn(h) {
+  if (location.hash.slice(1) === h.id) { if (focused !== h) showCloseUp(h); return; }
+  if (focused) location.replace(`#${h.id}`);           // close-up to close-up: same history entry
+  else { enteredFromOverview = true; location.hash = h.id; } // overview to close-up: one new entry
+}
+function backToCabin() {
+  if (!focused) return;
+  if (enteredFromOverview) { enteredFromOverview = false; history.back(); } // the hashchange below leaves the close-up
+  else { history.replaceState(history.state, "", location.pathname + location.search); leaveCloseUp(); } // arrived by a shared link
+}
+function syncFromHash() {
+  const h = closeUpById(location.hash.slice(1));
+  if (h) { if (focused !== h) showCloseUp(h); }
+  else if (focused) { enteredFromOverview = false; leaveCloseUp(); }
+}
+addEventListener("hashchange", syncFromHash);
 $("back").addEventListener("click", backToCabin);
 addEventListener("keydown", (e) => { if (e.key === "Escape" && !closeScroll()) backToCabin(); });
 
@@ -1171,6 +1191,7 @@ addEventListener("resize", resize);
 resize();
 setMusicUI();
 veil.remove();
+syncFromHash(); // /cabin#chart opens on the chart
 
 // redraw the chart while an island is hovered (and once more when the hover ends, to settle it)
 ticks.push((t) => {
