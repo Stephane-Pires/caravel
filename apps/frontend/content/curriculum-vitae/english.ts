@@ -147,8 +147,8 @@ export const CURRICULUM_VITAE = {
         link: "https://www.leakmited.com/",
         duration: {
           start: "Sep 2023",
-          end: "today",
-          difference: "N/A",
+          end: "Mar 2026",
+          difference: "2+ years",
         },
         content: {
           paragraph: `At Leakmited, I joined a small team of seven people, including a Tech/Product team of three, and contributed significantly to the company’s growth journey. During my tenure, the company expanded to over 20 employees and successfully raised €5 million in a Series A funding round. Working in an international environment with colleagues from over five countries, I adapted quickly and embraced diverse perspectives to drive the development of impactful software solutions.
@@ -172,6 +172,34 @@ export const CURRICULUM_VITAE = {
             "ETL",
             "PYTHON",
             "POSTGRESQL",
+          ],
+        },
+      },
+      FIGURES: {
+        id: "FIGURES",
+        label: "Figures",
+        icon: "/about-me/figures-logo.png",
+        link: "https://figures.hr/",
+        duration: {
+          start: "May 2026",
+          end: "Oct 2026",
+          difference: "6 months",
+        },
+        content: {
+          paragraph: `As a Senior Software Engineer at Figures, a pay-transparency platform, I owned the Salary Bands module end-to-end, from product and design decisions to delivery, performance and scaling, for 100+ clients and 10,000+ employees' data.
+          I built DataHealth from scratch: rule-based validation and profiling of data from our HR connectors to catch discrepancies before they reach customers. I also set up monitoring as code, with Datadog dashboards via Terraform tracking p75 FCP, p50/p95 API latency and payload size, adopted by the team to track performance.
+          I worked AI-first in a 9-person cross-functional team (4 devs, product, manager, DevOps, data), running supervised multi-hour agentic tasks in TypeScript with Claude Code, Codex and MCP/Skills.`,
+          missions: [
+            "Owned the Salary Bands module end-to-end for 100+ clients",
+            "Built DataHealth from scratch to validate HR-connector data",
+            "Cut page load by ~60% (p75 FCP 4s → 1.5s) and brought 98% of API calls under 1s",
+            "Prototyped background task notifications, SalaryBand auto-mapping and benchmark mapping",
+          ],
+          skills: [
+            "TYPESCRIPT",
+            "TERRAFORM",
+            "DATADOG",
+            "ARTIFICIAL_INTELLIGENCE",
           ],
         },
       },

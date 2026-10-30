@@ -55,6 +55,8 @@ function getColor(tag: SUBJECT | CATEGORY | TECHNO | SOFT_SKILLS) {
     case "ARTIFICIAL_INTELLIGENCE":
     case "COMPUTER_VISION":
     case "SERVERLESS":
+    case "TERRAFORM":
+    case "DATADOG":
       return "bg-accent-200"
     default:
       return unreachable(tag)
@@ -152,6 +154,10 @@ function getLabel(tag: SUBJECT | CATEGORY | TECHNO | SOFT_SKILLS) {
       return "Computer vision 🚀"
     case "SERVERLESS":
       return "Serverless"
+    case "TERRAFORM":
+      return "Terraform"
+    case "DATADOG":
+      return "Datadog"
     default:
       return unreachable(tag)
   }
