@@ -74,6 +74,55 @@
 .cabin .note { margin: 0; font-size: 0.85rem; color: var(--mint); min-height: 1.2em; }
 .cabin .veil { position: fixed; inset: 0; z-index: 3; display: grid; place-items: center; background: var(--ink); color: var(--sand); font: 700 1.3rem var(--display); text-align: center; padding-inline: max(16px, env(safe-area-inset-left, 0px)) max(16px, env(safe-area-inset-right, 0px)); }
 .cabin .veil p { max-width: 34ch; margin: 0; }
+/* the loading voyage: a caravel crosses the screen as the cabin loads (--progress, 0 to 1, set by cabin.js),
+   then a spyglass opens onto the cabin */
+@property --iris { syntax: "<length>"; inherits: false; initial-value: 0px; }
+.cabin .veil { --progress: 0.06; }
+.cabin .voyage { width: min(420px, 82vw); display: grid; gap: 18px; }
+.cabin .course { position: relative; height: 100px; }
+.cabin .ship {
+  position: absolute; left: 0; bottom: 10px; width: 88px; height: 77px; overflow: visible;
+  transform: translateX(calc(var(--progress) * (min(420px, 82vw) - 88px)));
+  transition: transform 0.7s cubic-bezier(0.3, 0.7, 0.3, 1);
+}
+.cabin .ship path { stroke: var(--parch); stroke-width: 2; stroke-linejoin: round; stroke-linecap: round; }
+.cabin .ship .hull { fill: #8a4f2a; }
+.cabin .ship .sail { fill: var(--parch); stroke: var(--sand); }
+.cabin .ship .mast { stroke: var(--sand); stroke-width: 3; }
+.cabin .ship .pennant { fill: var(--coral); }
+.cabin .ship { animation: cabin-bob 1.6s ease-in-out infinite; }
+.cabin .ship > * { transform-box: fill-box; }
+.cabin .waves { position: absolute; left: 0; right: 0; bottom: 0; width: 100%; height: 16px; overflow: hidden; }
+.cabin .waves path { transform-box: view-box; }
+.cabin .waves path { fill: none; stroke: var(--mist); stroke-width: 2; opacity: 0.55; animation: cabin-swell 2.4s linear infinite; }
+/* the waves already sailed turn gold: a clipped copy that grows with --progress */
+.cabin .sailed {
+  position: absolute; left: 0; bottom: 0; height: 16px; overflow: hidden;
+  width: calc(var(--progress) * (100% - 88px) + 44px); transition: width 0.7s cubic-bezier(0.3, 0.7, 0.3, 1);
+}
+.cabin .sailed .waves { width: min(420px, 82vw); right: auto; }
+.cabin .sailed .waves path { stroke: var(--sand); stroke-width: 2.5; opacity: 1; }
+.cabin .veil #veil-text { font-size: 1.15rem; }
+@keyframes cabin-bob {
+  0%, 100% { translate: 0 0; rotate: -3deg; }
+  50% { translate: 0 -4px; rotate: 3deg; }
+}
+@keyframes cabin-swell { to { transform: translateX(-40px); } }
+.cabin .veil.open { animation: cabin-iris 1.3s cubic-bezier(0.55, 0, 0.35, 1) forwards; pointer-events: none; }
+.cabin .veil.open .voyage { opacity: 0; transition: opacity 0.25s; }
+@keyframes cabin-iris {
+  from { --iris: 0px; }
+  to { --iris: 80vmax; } /* past the corners: half the diagonal is under 75vmax */
+}
+.cabin .veil.open {
+  -webkit-mask-image: radial-gradient(circle at 50% 50%, transparent var(--iris), #000 calc(var(--iris) + 18px));
+  mask-image: radial-gradient(circle at 50% 50%, transparent var(--iris), #000 calc(var(--iris) + 18px));
+}
+@media (prefers-reduced-motion: reduce) {
+  .cabin .ship, .cabin .waves path { animation: none; }
+  .cabin .veil.open { animation: cabin-fade 0.3s forwards; -webkit-mask-image: none; mask-image: none; }
+}
+@keyframes cabin-fade { to { opacity: 0; } }
 .cabin .veil small { display: block; margin-top: 10px; font: 400 0.95rem/1.5 var(--body); color: var(--mist); }
 .cabin .scroll-wrap {
   position: fixed; inset: 0; z-index: 4; display: grid; place-items: center;

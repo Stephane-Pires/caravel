@@ -25,6 +25,15 @@ const still = matchMedia("(prefers-reduced-motion: reduce)").matches;
 const small = Math.min(innerWidth, innerHeight) < 600;
 const $ = (id) => document.getElementById(id);
 const veil = $("veil");
+// the loading voyage: move the ship along and say what's happening, then let the page paint it
+const nextFrame = () => new Promise((r) => requestAnimationFrame(() => r()));
+async function voyage(progress, text) {
+  veil.style.setProperty("--progress", String(progress));
+  const label = $("veil-text");
+  if (label) label.textContent = text;
+  await nextFrame();
+}
+await voyage(0.3, "Inking the chart…"); // three.js is in: now the fonts
 
 
 // the chart and poster paint text onto canvases, so wait for the fonts before building anything
@@ -37,9 +46,11 @@ async function fontsReady() {
   } catch (e) { /* canvas text falls back to Georgia */ }
 }
 await fontsReady();
+await voyage(0.5, "Pinning up the wanted poster…");
 // the captain's portrait for the wanted poster (falls back to a drawn silhouette if it can't load)
 const loadImage = (src) => new Promise((res) => { const i = new Image(); i.onload = () => res(i); i.onerror = () => res(null); i.src = src; });
 const CAPTAIN = await loadImage("/cabin/assets/captain-wide.jpg");
+await voyage(0.7, "Building the cabin…");
 
 // ---------- renderer (falls back to a message when WebGL is unavailable) ----------
 const canvas = $("stage");
@@ -1185,7 +1196,6 @@ addEventListener("resize", resize);
 
 resize();
 setMusicUI();
-veil.hidden = true; // React owns this node: hide it, never remove it
 syncFromHash(); // /cabin#chart opens on the chart
 
 // redraw the chart while an island is hovered (and once more when the hover ends, to settle it)
@@ -1199,7 +1209,7 @@ ticks.push((t) => {
 
 const clock = new THREE.Clock();
 let t = 0;
-renderer.setAnimationLoop(() => {
+function frame() {
   const dt = Math.min(clock.getDelta(), 0.05);
   if (!still) t += dt;
   ticks.forEach((f) => f(t, still ? 0 : dt));
@@ -1214,7 +1224,25 @@ renderer.setAnimationLoop(() => {
     camera.position.clamp(ROOM_MIN, ROOM_MAX); // stay inside the cabin
   }
   composer.render();
-});
+}
+
+// compile every shader off the main thread before the first frame (so the voyage keeps sailing),
+// then open the spyglass once the cabin is drawn whole
+async function reveal() {
+  await voyage(0.85, "Lighting the lantern…");
+  try { await renderer.compileAsync(scene, camera); } catch (e) { /* the first frame compiles them instead */ }
+  if (ac.signal.aborted) return;
+  clock.getDelta(); // don't count the compile time as one long frame
+  renderer.setAnimationLoop(frame);
+  await nextFrame();
+  await voyage(1, "Land ho!");
+  if (ac.signal.aborted) return;
+  const done = () => { veil.hidden = true; veil.classList.remove("open"); }; // React owns this node: hide it, never remove it
+  veil.addEventListener("animationend", done, { once: true, signal: ac.signal });
+  setTimeout(done, 1800); // in case the animation never runs (hidden tab)
+  veil.classList.add("open");
+}
+reveal();
 
 return () => {
   ac.abort();
