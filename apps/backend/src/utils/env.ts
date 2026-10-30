@@ -20,6 +20,22 @@ const envSchema = z
     GMAIL_PASSWORD: z.string().nonempty().meta({
       description: "The password for the Gmail account used to send emails",
     }),
+    NODE_ENV: z
+      .enum(["development", "test", "production"])
+      .default("development")
+      .meta({
+        description:
+          "production hides the development routes and the query log",
+      }),
+    CORS_ORIGINS: z
+      .string()
+      .default("http://localhost:3000")
+      .transform((origins) => origins.split(",").map((o) => o.trim()))
+      .meta({ description: "Comma-separated origins allowed to call the API" }),
+    TURNSTILE_SECRET_KEY: z.string().optional().meta({
+      description:
+        "Cloudflare Turnstile secret; when set, creating a rendez-vous needs a valid challenge token",
+    }),
   })
   .meta({
     description: "Schema to parse environnement variables",
@@ -37,3 +53,5 @@ export function assertEnv(
 
   return result.data
 }
+
+export const isProduction = () => process.env.NODE_ENV === "production"

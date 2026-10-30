@@ -14,6 +14,8 @@ export const rendezVous = pgTable("rendez_vous", {
     })
     .notNull(),
   scheduledAt: timestamp().notNull().unique(),
+  // SHA-256 of the secret token that lets the guest manage this rendez-vous (utils/token.ts)
+  manageTokenHash: varchar({ length: 64 }),
   ...auditColumns,
 })
 

@@ -80,13 +80,40 @@ export const RendezVousDTOSchema = RendezVousSchema.extend({
 
 type RendezVousDTO = z.infer<typeof RendezVousDTOSchema>
 
+// what anyone may see: when the captain is busy, never who with
+export const BusySlotDTOSchema = z
+  .object({
+    scheduledAt: z.date().openapi({ example: "2026-10-01T10:00:00Z" }),
+  })
+  .openapi("BusySlotDTO")
+
+// returned once, on creation: the secret to see, move or cancel this rendez-vous later
+export const CreatedRendezVousDTOSchema = RendezVousDTOSchema.extend({
+  manageToken: z.string().openapi({
+    description:
+      "Secret to send as `Authorization: Bearer <token>` to see, move or cancel this rendez-vous. Shown only once.",
+    example: "q9Z0mJ8r2Xh7c1pY4fK6vT3sWbN5aL0dGeUiOoRtE2M",
+  }),
+}).openapi("CreatedRendezVousDTO")
+
+export const ManageTokenHeadersSchema = z.object({
+  authorization: z.string().openapi({
+    description: "Bearer token received when the rendez-vous was created",
+    example: "Bearer q9Z0mJ8r2Xh7c1pY4fK6vT3sWbN5aL0dGeUiOoRtE2M",
+  }),
+})
+
 export const CreateRendezVousPayloadSchema = z
   .object({
     contactEmail: ContactSchema.shape.email.openapi({
       example: "john.doe@gmail.com",
     }),
-    scheduledAt: z.coerce.string().datetime().pipe(z.coerce.date()).openapi({
+    scheduledAt: z.iso.datetime().pipe(z.coerce.date()).openapi({
       example: "2023-10-01T10:00:00Z",
+    }),
+    turnstileToken: z.string().optional().openapi({
+      description:
+        "Cloudflare Turnstile token from the booking form (required when the server has a Turnstile secret)",
     }),
   })
   .openapi("CreateRendezVousPayload", {
@@ -104,7 +131,7 @@ export type CreateRendezVousPayload = z.infer<
 
 export const UpdateRendezVousSchema = z
   .object({
-    scheduledAt: z.coerce.string().datetime().pipe(z.coerce.date()).openapi({
+    scheduledAt: z.iso.datetime().pipe(z.coerce.date()).openapi({
       example: "2024-10-01T10:00:00Z",
     }),
   })
@@ -151,6 +178,10 @@ export class RendezVousEntity {
 
   static toDto(rendezVous: RendezVous): RendezVousDTO {
     return RendezVousDTOSchema.parse(rendezVous)
+  }
+
+  static toBusySlotDto(rendezVous: RendezVous) {
+    return BusySlotDTOSchema.parse({ scheduledAt: rendezVous.scheduledAt })
   }
 
   static async checkInvariants(

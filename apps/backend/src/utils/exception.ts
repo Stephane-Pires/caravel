@@ -77,3 +77,10 @@ export class DatabaseException extends Error {
     }
   }
 }
+
+// a caught error's pg cause (drizzle wraps the driver error), if there is one
+export function databaseCause(error: unknown): DatabaseError | undefined {
+  if (error instanceof DatabaseError) return error
+  const cause = (error as { cause?: unknown } | null)?.cause
+  return cause instanceof DatabaseError ? cause : undefined
+}

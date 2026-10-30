@@ -1,11 +1,17 @@
 import { OpenAPIHono } from "@hono/zod-openapi"
 
 import { DatabaseException } from "../../utils/exception.js"
-import { RendezVousEntity } from "./rendez-vous.entity.js"
+import { bearerToken } from "../../utils/token.js"
+import {
+  CreatedRendezVousDTOSchema,
+  RendezVousEntity,
+} from "./rendez-vous.entity.js"
 import {
   RendezVousInvalidScheduleAtAlreadyTakenException,
   RendezVousInvalidScheduleAtException,
   RendezVousNotFoundException,
+  RendezVousSpamCheckFailedException,
+  RendezVousTooManyException,
 } from "./rendez-vous.exception.js"
 import {
   cancelRendezVousRoute,
@@ -17,6 +23,7 @@ import {
 import {
   cancelRendezVousService,
   createRendezVousService,
+  findManagedRendezVousService,
   getRendezVousService,
   moveRendezVousService,
 } from "./rendez-vous.service.js"
@@ -41,29 +48,36 @@ app.openapi(getRendezVousRoute, async (c) => {
 
   const rendezVous = await getRendezVousService(options)
 
-  return c.json(rendezVous.map(RendezVousEntity.toDto))
+  return c.json(rendezVous.map(RendezVousEntity.toBusySlotDto))
 })
 
 app.openapi(getRendezVousByIdRoute, async (c) => {
   const { id } = c.req.valid("param")
+  const token = bearerToken(c.req.valid("header").authorization)
 
-  const rendezVous = await getRendezVousService({
-    filter: {
-      ids: [id],
-    },
-  })
+  const rendezVous = await findManagedRendezVousService(id, token)
 
-  if (rendezVous.length === 0) {
+  if (!rendezVous) {
     return c.json(new RendezVousNotFoundException().toDTO(), 404)
   }
 
-  return c.json(RendezVousEntity.toDto(rendezVous[0]), 200)
+  return c.json(RendezVousEntity.toDto(rendezVous), 200)
 })
 
 app.openapi(postRendezVousRoute, async (c) => {
   const payload = c.req.valid("json")
 
-  const result = await createRendezVousService(payload)
+  const result = await createRendezVousService(payload, {
+    ip: c.req.header("x-forwarded-for")?.split(",")[0]?.trim(),
+  })
+
+  if (result instanceof RendezVousSpamCheckFailedException) {
+    return c.json(result, 403)
+  }
+
+  if (result instanceof RendezVousTooManyException) {
+    return c.json(result, 429)
+  }
 
   if (result instanceof RendezVousInvalidScheduleAtAlreadyTakenException) {
     return c.json(result, 409)
@@ -77,19 +91,14 @@ app.openapi(postRendezVousRoute, async (c) => {
     return c.json(result, 500)
   }
 
-  return c.json(RendezVousEntity.toDto(result), 201)
+  return c.json(CreatedRendezVousDTOSchema.parse(result), 201)
 })
 
 app.openapi(cancelRendezVousRoute, async (c) => {
   const { id } = c.req.valid("param")
+  const token = bearerToken(c.req.valid("header").authorization)
 
-  const rendezVous = await getRendezVousService({
-    filter: {
-      ids: [id],
-    },
-  })
-
-  if (rendezVous.length === 0) {
+  if (!(await findManagedRendezVousService(id, token))) {
     return c.json(new RendezVousNotFoundException().toDTO(), 404)
   }
 
@@ -101,6 +110,11 @@ app.openapi(cancelRendezVousRoute, async (c) => {
 app.openapi(moveRendezVousRoute, async (c) => {
   const { id } = c.req.valid("param")
   const payload = c.req.valid("json")
+  const token = bearerToken(c.req.valid("header").authorization)
+
+  if (!(await findManagedRendezVousService(id, token))) {
+    return c.json(new RendezVousNotFoundException().toDTO(), 404)
+  }
 
   const movedRendezVous = await moveRendezVousService(id, payload)
 

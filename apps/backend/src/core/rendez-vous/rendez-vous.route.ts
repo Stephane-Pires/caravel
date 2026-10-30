@@ -2,7 +2,10 @@ import { createRoute } from "@hono/zod-openapi"
 
 import { API_TAG } from "../../utils/tag.js"
 import {
+  BusySlotDTOSchema,
   CreateRendezVousPayloadSchema,
+  CreatedRendezVousDTOSchema,
+  ManageTokenHeadersSchema,
   MoveRendezVousPayloadSchema,
   RendezVousDTOSchema,
   RendezVousParamsSchema,
@@ -12,7 +15,12 @@ import {
   RendezVousInvalidScheduleAtAlreadyTakenException,
   RendezVousInvalidScheduleAtException,
   RendezVousNotFoundException,
+  RendezVousSpamCheckFailedException,
+  RendezVousTooManyException,
 } from "./rendez-vous.exception.js"
+
+// seeing, moving or cancelling a rendez-vous needs the token given at creation
+const manageTokenSecurity = [{ manageToken: [] }]
 
 export const getRendezVousRoute = createRoute({
   method: "get",
@@ -25,10 +33,10 @@ export const getRendezVousRoute = createRoute({
     200: {
       content: {
         "application/json": {
-          schema: RendezVousDTOSchema.array(),
+          schema: BusySlotDTOSchema.array(),
         },
       },
-      description: "Retrieves rendez-vous",
+      description: "When the captain is already busy (times only, no guests)",
     },
   },
 })
@@ -37,8 +45,10 @@ export const getRendezVousByIdRoute = createRoute({
   method: "get",
   path: "/rendez-vous/{id}",
   tags: [API_TAG.RENDEZ_VOUS],
+  security: manageTokenSecurity,
   request: {
     params: RendezVousParamsSchema,
+    headers: ManageTokenHeadersSchema,
   },
   responses: {
     200: {
@@ -80,10 +90,27 @@ export const postRendezVousRoute = createRoute({
     201: {
       content: {
         "application/json": {
-          schema: RendezVousDTOSchema,
+          schema: CreatedRendezVousDTOSchema,
         },
       },
-      description: "Create a new rendez-vous",
+      description:
+        "Create a new rendez-vous (the response carries its manage token, once)",
+    },
+    403: {
+      description: "The anti-spam check failed",
+      content: {
+        "application/json": {
+          schema: new RendezVousSpamCheckFailedException().toSchema(),
+        },
+      },
+    },
+    429: {
+      description: "Too many upcoming rendez-vous for this email",
+      content: {
+        "application/json": {
+          schema: new RendezVousTooManyException().toSchema(),
+        },
+      },
     },
     400: {
       description: "Invalid request parameters",
@@ -112,8 +139,10 @@ export const cancelRendezVousRoute = createRoute({
   method: "delete",
   path: "/rendez-vous/{id}",
   tags: [API_TAG.RENDEZ_VOUS],
+  security: manageTokenSecurity,
   request: {
     params: RendezVousParamsSchema,
+    headers: ManageTokenHeadersSchema,
   },
   responses: {
     204: {
@@ -137,8 +166,10 @@ export const moveRendezVousRoute = createRoute({
   method: "patch",
   path: "/rendez-vous/{id}/move",
   tags: [API_TAG.RENDEZ_VOUS],
+  security: manageTokenSecurity,
   request: {
     params: RendezVousParamsSchema,
+    headers: ManageTokenHeadersSchema,
     body: {
       content: {
         "application/json": {

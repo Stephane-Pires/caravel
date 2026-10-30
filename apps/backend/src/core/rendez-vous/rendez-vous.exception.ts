@@ -27,6 +27,25 @@ export class RendezVousInvalidScheduleAtAlreadyTakenException extends DomainExce
   }
 }
 
+export class RendezVousTooManyException extends DomainException {
+  readonly code = "1004"
+  readonly description =
+    "This email already has the maximum of upcoming rendez-vous"
+
+  constructor() {
+    super("This email already has the maximum of upcoming rendez-vous")
+  }
+}
+
+export class RendezVousSpamCheckFailedException extends DomainException {
+  readonly code = "1005"
+  readonly description = "The anti-spam check failed"
+
+  constructor() {
+    super("The anti-spam check failed, please try again")
+  }
+}
+
 // export function mapRendezVousException(exception: DatabaseException) {
 //   // extract PostgreSQL error code
 //   // extract PostgreSQL database contraint name
