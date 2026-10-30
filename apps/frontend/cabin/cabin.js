@@ -905,14 +905,15 @@ function flyNoteAway(done) {
   if (still) { done(); return; }
   const forward = new THREE.Vector3(); camera.getWorldDirection(forward);
   const start = camera.position.clone().addScaledVector(forward, 0.45).add(new THREE.Vector3(0, -0.04, 0)); // where the sheet folded
-  // through the middle pane behind the bottle, then away over the sea (the camera looks out meanwhile)
-  const pane = new THREE.Vector3(WIN.xs[2] + WIN.w / 4, WIN.y0 + (WIN.y1 - WIN.y0) / 2, -3.06);
+  // out through the casement next to the lantern, the one window that opens (its sash swings in on
+  // its left hinge, so the plane keeps to the right of the opening), then away over the sea
+  const gap = new THREE.Vector3(WIN.xs[OPEN_WIN] + WIN.w / 4, WIN.y0 + (WIN.y1 - WIN.y0) / 2, -3.06);
   const curve = new THREE.CatmullRomCurve3([
     start,
-    new THREE.Vector3(pane.x + 0.03, pane.y - 0.2, -2.4), // clear of the bottle's neck
-    pane,
-    new THREE.Vector3(pane.x + 0.6, pane.y + 0.3, -7), // banking right, away from the moon and the mullions
-    new THREE.Vector3(pane.x + 3.2, pane.y + 1.1, -26), // away over the sea
+    new THREE.Vector3(gap.x + 0.25, gap.y - 0.2, -2.4),
+    gap,
+    new THREE.Vector3(gap.x + 0.6, gap.y + 0.3, -7), // banking right, away from the moon
+    new THREE.Vector3(gap.x + 3.2, gap.y + 1.1, -26), // away over the sea
   ]);
   const plane = paperPlane();
   plane.position.copy(start); plane.scale.setScalar(0.2);
@@ -921,7 +922,7 @@ function flyNoteAway(done) {
 }
 ticks.push((t, dt) => {
   if (!flight) return;
-  flight.t = Math.min(1, flight.t + dt / 3.8);
+  flight.t = Math.min(1, flight.t + dt / 4.75);
   const k = Math.pow(flight.t, 1.4); // gliding off slowly, then away
   const { plane, curve } = flight;
   plane.position.copy(curve.getPointAt(k));
@@ -934,14 +935,16 @@ ticks.push((t, dt) => {
   }
 });
 // while it flies, the camera lifts to look out of the window; then it comes back to the bottle
-const LOOK_OUT = { pos: [1.15, 1.8, -1.3], target: [1.9, 2.1, -8] };
-addEventListener("cabin:note-folding", () => { // the camera lifts while the note folds
+const LOOK_OUT = { pos: [0.45, 1.8, -1.2], target: [0.1, 2.1, -8] }; // the open casement on the left, the sea ahead
+addEventListener("cabin:note-folding", () => { // the camera turns to the window and it swings open while the note folds
   const out = framed(LOOK_OUT);
   flyTo(out.pos, out.target);
+  sashOpen = true;
 });
 addEventListener("cabin:note-sent", () => {
   setNote(false);
   flyNoteAway(() => {
+    if (!windowOpen) sashOpen = false; // closed again, unless the visitor had opened it
     if (focused !== bottleHot) return;
     const back = framed(bottleHot.view);
     flyTo(back.pos, back.target, () => { if (focused === bottleHot) setNote(true); }); // the confirmation, once it's gone

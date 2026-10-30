@@ -37,7 +37,7 @@ body:has(.cabin) [data-radix-popper-content-wrapper] { z-index: 101 !important; 
 .cabin .note-sheet { animation: unroll 0.7s cubic-bezier(0.2, 0.8, 0.2, 1); }
 /* booked: the sheet folds into a dart (four corners pinch to a point) and shrinks away; the 3D paper
    plane takes over in the scene where it vanished */
-.cabin .note-sheet.folding { pointer-events: none; animation: note-fold 0.8s cubic-bezier(0.55, 0, 0.75, 0.2) forwards; }
+.cabin .note-sheet.folding { pointer-events: none; animation: note-fold 1s cubic-bezier(0.55, 0, 0.75, 0.2) forwards; }
 @keyframes note-fold {
   0% { clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%); transform: none; opacity: 1; }
   45% { clip-path: polygon(50% 0, 50% 0, 100% 70%, 0 70%); transform: scale(0.7, 0.55); opacity: 1; }
