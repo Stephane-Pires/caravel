@@ -2,6 +2,7 @@
   "name": "caravel",
   "version": "0.1.1",
   "private": true,
+  "packageManager": "pnpm@10.28.2",
   "scripts": {
     "commit": "better-commits",
     "dev": "pnpm -r dev",
