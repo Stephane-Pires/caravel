@@ -558,11 +558,14 @@ const rope = mesh(new THREE.TorusGeometry(0.3, 0.07, 8, 24), 0xc9a26b); rope.rot
 scene.add(at(rope, 3.2, 0.07, -2.0));
 
 // hanging lantern
-const lamp = new THREE.PointLight(0xffb85c, 2.2, 8, 1.5);
+const lamp = new THREE.PointLight(0xffb85c, 0, 8, 1.5);
+// the lantern burns at night only: by day its glass is a dull amber, at night it glows (and blooms)
+const LANTERN_LIT = new THREE.Color().setRGB(2.2, 1.6, 0.7), LANTERN_OUT = new THREE.Color(0x8a6a3c);
+const lanternGlass = glow(2.2, 1.6, 0.7);
 const lantern = group(
   at(mesh(new THREE.CylinderGeometry(0.015, 0.015, 1.1, 4), 0x3a2a1a, { outline: false, shadow: false }), 0, -0.55, 0),
   at(mesh(new THREE.ConeGeometry(0.2, 0.18, 6), 0x2b2b33, { shadow: false }), 0, -1.18, 0),
-  at(new THREE.Mesh(new THREE.CylinderGeometry(0.14, 0.14, 0.32, 6), glow(2.2, 1.6, 0.7)), 0, -1.43, 0),
+  at(new THREE.Mesh(new THREE.CylinderGeometry(0.14, 0.14, 0.32, 6), lanternGlass), 0, -1.43, 0),
   at(mesh(new THREE.CylinderGeometry(0.18, 0.18, 0.05, 6), 0x2b2b33, { shadow: false }), 0, -1.61, 0),
   at(lamp, 0, -1.43, 0),
 );
@@ -640,7 +643,8 @@ ticks.push((t, dt) => {
 ticks.push((t) => {
   lantern.rotation.z = Math.sin(t * 1.3) * 0.06;
   lantern.rotation.x = Math.cos(t * 0.9) * 0.035;
-  lamp.intensity = 2.2 + nightK * 1.4 + Math.sin(t * 7) * 0.12;
+  lamp.intensity = nightK * (3.6 + Math.sin(t * 7) * 0.12); // off by day, lit (and flickering) at night
+  lanternGlass.color.copy(LANTERN_OUT).lerp(LANTERN_LIT, nightK);
 });
 
 // a mug of hot chocolate on the table, still steaming
