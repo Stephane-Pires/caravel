@@ -189,13 +189,7 @@ export const CURRICULUM_VITAE = {
         content: {
           paragraph:
             "Since Age of Empires at four. Games shaped my eye for UI and UX.",
-          missions: [
-            "Final Fantasy VII",
-            "Rayman",
-            "Monkey Island",
-            "Celeste",
-            "Starcraft",
-          ],
+          photos: ["/about-me/video-games.jpg"],
         },
       },
       CLIMBING: {
@@ -237,13 +231,7 @@ export const CURRICULUM_VITAE = {
         content: {
           paragraph:
             "Weekly sessions with friends, family and colleagues: the best icebreaker.",
-          missions: [
-            "Living Forest",
-            "Carcassonne",
-            "Small World",
-            "Azul",
-            "Micro Macro",
-          ],
+          photos: ["/about-me/board-game-faraway.jpg"],
         },
       },
     },
