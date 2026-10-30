@@ -3,12 +3,13 @@
 import { useEffect } from "react"
 
 import "./cabin.css"
+import type { CabinData } from "./cabinData"
 import { CABIN_MARKUP } from "./markup"
 
 // static markup: one object for the lifetime of the module
 const MARKUP = { __html: CABIN_MARKUP }
 
-export function CabinClient() {
+export function CabinClient({ data }: { data: CabinData }) {
   useEffect(() => {
     let cancelled = false
     let dispose: (() => void) | undefined
@@ -19,7 +20,7 @@ export function CabinClient() {
       try {
         const { mountCabin } = await import("@/cabin/cabin.js")
         if (cancelled) return
-        const cleanup = await mountCabin()
+        const cleanup = await mountCabin(data)
         if (cancelled) cleanup()
         else dispose = cleanup
       } catch (error) {
@@ -32,7 +33,7 @@ export function CabinClient() {
       cancelled = true
       dispose?.()
     }
-  }, [])
+  }, [data])
 
   return (
     <div

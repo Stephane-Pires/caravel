@@ -63,7 +63,7 @@ function getColor(tag: SUBJECT | CATEGORY | TECHNO | SOFT_SKILLS) {
   }
 }
 
-function getLabel(tag: SUBJECT | CATEGORY | TECHNO | SOFT_SKILLS) {
+export function getLabel(tag: SUBJECT | CATEGORY | TECHNO | SOFT_SKILLS) {
   switch (tag) {
     case "CODE":
       return "Code 🧑‍💻"
