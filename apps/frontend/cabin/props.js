@@ -1,7 +1,7 @@
 /* eslint-disable */
 // Props built from simple shapes: sea, palms, bottle, chest, logbook, clouds, bike, game boxes, sea bird, ship's cat
 import * as THREE from "three";
-import { INK, grad, toon, glow, mesh, at, group, hot, canvasTex, plankTex, tubeBetween } from "./toolkit.js";
+import { FONTS, INK, grad, toon, glow, mesh, at, group, hot, canvasTex, plankTex, tubeBetween } from "./toolkit.js";
 import { POSTS } from "./content.js";
 export function makeSea(color, y) {
   const geo = new THREE.PlaneGeometry(220, 220, 90, 90);
@@ -78,14 +78,14 @@ export function pageTexture() {
     x.strokeStyle = "rgba(122, 90, 50, 0.25)"; x.lineWidth = 2;
     x.beginPath(); x.moveTo(w / 2, 0); x.lineTo(w / 2, h); x.stroke();
     x.fillStyle = "#4a2a14"; x.textAlign = "left";
-    x.font = "700 52px Merienda, Georgia, serif"; x.fillText("Logbook", 46, 86);
-    x.font = "24px 'Atkinson Hyperlegible', sans-serif"; x.fillStyle = "#7a5a32"; x.fillText("Latest entries", 48, 124);
+    x.font = `700 52px ${FONTS.merienda}, Georgia, serif`; x.fillText("Logbook", 46, 86);
+    x.font = `24px ${FONTS.atkinson}, sans-serif`; x.fillStyle = "#7a5a32"; x.fillText("Latest entries", 48, 124);
     const draw = (items, x0, y0) => items.forEach(([t, d], i) => {
       const y = y0 + i * 96;
-      x.fillStyle = "#3a2614"; x.font = "700 27px Merienda, Georgia, serif";
+      x.fillStyle = "#3a2614"; x.font = `700 27px ${FONTS.merienda}, Georgia, serif`;
       const title = t.length > 26 ? t.slice(0, 25) + "…" : t;
       x.fillText(title, x0, y);
-      x.fillStyle = "#8a6a3c"; x.font = "22px 'Atkinson Hyperlegible', sans-serif"; x.fillText(d, x0, y + 32);
+      x.fillStyle = "#8a6a3c"; x.font = `22px ${FONTS.atkinson}, sans-serif`; x.fillText(d, x0, y + 32);
       x.strokeStyle = "rgba(122, 90, 50, 0.3)"; x.beginPath(); x.moveTo(x0, y + 50); x.lineTo(x0 + 410, y + 50); x.stroke();
     });
     draw(POSTS.slice(0, 5).map((p) => [p[0], p[1]]), 48, 190);

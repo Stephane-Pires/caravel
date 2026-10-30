@@ -2,6 +2,7 @@
 // The sea chart: one illustrated island per project, animated while hovered
 import * as THREE from "three";
 import { ISLANDS } from "./content.js";
+import { FONTS } from "./toolkit.js";
 export function blob(x, cx, cy, r, seed) {
   x.beginPath();
   for (let a = 0; a <= 64; a++) {
@@ -35,7 +36,7 @@ export const ISLAND_ART = {
       x.fillStyle = "#fbf3df"; x.strokeStyle = MAP_INK; x.lineWidth = 1.6;
       x.beginPath(); x.roundRect(-cw / 2, -chh / 2, cw, chh, 3); x.fill(); x.stroke();
       x.fillStyle = REGIONS[i % 4]; x.fillRect(-cw / 2 + 2, -chh / 2 + 2, cw - 4, chh * 0.42);
-      x.fillStyle = MAP_INK; x.font = `700 ${Math.round(r * 0.16)}px 'Atkinson Hyperlegible', sans-serif`; x.textAlign = "center";
+      x.fillStyle = MAP_INK; x.font = `700 ${Math.round(r * 0.16)}px ${FONTS.atkinson}, sans-serif`; x.textAlign = "center";
       x.fillText(String(n), 0, chh / 2 - 4);
       x.restore();
     });
@@ -110,7 +111,7 @@ export function drawChart(x, w, h, title, anim = {}) {
     if (hovered) { const s = 1.12 + Math.sin(t * 5) * 0.03; x.translate(cx, cy); x.rotate(Math.sin(t * 3) * 0.05); x.scale(s, s); x.translate(-cx, -cy); }
     ISLAND_ART[name](x, cx, cy, w * 0.075, t);
     x.restore();
-    x.fillStyle = hovered ? "#b5462f" : "#3a2614"; x.font = `700 ${Math.round(w * 0.034)}px Merienda, Georgia, serif`; x.textAlign = "center";
+    x.fillStyle = hovered ? "#b5462f" : "#3a2614"; x.font = `700 ${Math.round(w * 0.034)}px ${FONTS.merienda}, Georgia, serif`; x.textAlign = "center";
     x.fillText(name, ix * w, iy * h + w * 0.085);
   });
   const cx = w * 0.9, cy = h * 0.18, r = w * 0.055; // compass rose
@@ -121,7 +122,7 @@ export function drawChart(x, w, h, title, anim = {}) {
     x.lineTo(cx + Math.cos(a + 0.5) * r * 0.25, cy + Math.sin(a + 0.5) * r * 0.25);
     x.lineTo(cx + Math.cos(a - 0.5) * r * 0.25, cy + Math.sin(a - 0.5) * r * 0.25); x.fill();
   }
-  x.font = `700 ${Math.round(w * 0.03)}px Merienda, Georgia, serif`; x.fillText("N", cx, cy - r - 6);
-  x.font = `700 ${Math.round(w * 0.045)}px Merienda, Georgia, serif`; x.textAlign = "left"; x.fillText(title, w * 0.05, h * 0.12);
+  x.font = `700 ${Math.round(w * 0.03)}px ${FONTS.merienda}, Georgia, serif`; x.fillText("N", cx, cy - r - 6);
+  x.font = `700 ${Math.round(w * 0.045)}px ${FONTS.merienda}, Georgia, serif`; x.textAlign = "left"; x.fillText(title, w * 0.05, h * 0.12);
   x.strokeStyle = "#8a6a3c"; x.lineWidth = 8; x.strokeRect(4, 4, w - 8, h - 8);
 }

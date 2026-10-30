@@ -2,6 +2,7 @@ import type { Metadata } from "next"
 
 import { CabinClient } from "./CabinClient"
 import { buildCabinData } from "./cabinData"
+import { cabinFonts } from "./fonts"
 
 export const metadata: Metadata = {
   title: "Cabin",
@@ -9,5 +10,10 @@ export const metadata: Metadata = {
 }
 
 export default function Cabin() {
-  return <CabinClient data={buildCabinData()} />
+  return (
+    <CabinClient
+      data={buildCabinData()}
+      fonts={cabinFonts}
+    />
+  )
 }

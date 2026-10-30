@@ -8,8 +8,8 @@
   --mint: #a7f0d0;       /* boarding-card stripes */
   --coral: #ec7f62;
   --mist: #a9b8cf;
-  --display: "Merienda", Georgia, "Times New Roman", serif;
-  --body: "Atkinson Hyperlegible", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --display: var(--cabin-merienda), Georgia, "Times New Roman", serif;
+  --body: var(--cabin-atkinson), system-ui, -apple-system, "Segoe UI", sans-serif;
   color-scheme: dark;
 }
 .cabin [hidden] { display: none !important; }
@@ -120,11 +120,11 @@
 .cabin .tabs .roll { border-style: dashed; }
 .cabin .tabs button:focus-visible { outline: 3px solid #b5462f; outline-offset: 2px; }
 .cabin .s-sec { padding-top: 22px; }
-.cabin .s-sec h3 { margin: 0 0 6px; font: 900 1.7rem/1.1 "Playfair Display", Georgia, serif; text-align: center; text-wrap: balance; }
+.cabin .s-sec h3 { margin: 0 0 6px; font: 900 1.7rem/1.1 var(--cabin-playfair), Georgia, serif; text-align: center; text-wrap: balance; }
 .cabin .s-sec h3::before, .cabin .s-sec h3::after { content: " ✦ "; font-size: 0.6em; vertical-align: middle; color: #b5462f; }
 .cabin .bounty { display: grid; grid-template-columns: 170px 1fr; gap: 20px; align-items: center; padding-top: 6px; }
 .cabin .bounty img { width: 100%; height: auto; transform: rotate(-2deg); filter: drop-shadow(0 6px 10px rgba(46, 26, 12, 0.35)); }
-.cabin .s-name { margin: 0; font: 900 2rem/1.1 "Playfair Display", Georgia, serif; letter-spacing: 0.02em; text-transform: uppercase; }
+.cabin .s-name { margin: 0; font: 900 2rem/1.1 var(--cabin-playfair), Georgia, serif; letter-spacing: 0.02em; text-transform: uppercase; }
 .cabin .s-tag { margin: 6px 0 12px; font-style: italic; }
 .cabin .s-facts { margin: 0; display: grid; grid-template-columns: auto 1fr; gap: 3px 14px; font-size: 0.95rem; }
 .cabin .s-facts dt { font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; font-size: 0.75rem; align-self: center; color: #6b4524; }
@@ -132,7 +132,7 @@
 .cabin .entry { padding: 14px 0; border-bottom: 1px dashed rgba(46, 26, 12, 0.3); }
 .cabin .entry:last-child { border-bottom: 0; }
 .cabin .entry header { display: flex; justify-content: space-between; align-items: baseline; gap: 4px 12px; flex-wrap: wrap; }
-.cabin .e-name { font: 900 1.3rem/1.2 "Playfair Display", Georgia, serif; }
+.cabin .e-name { font: 900 1.3rem/1.2 var(--cabin-playfair), Georgia, serif; }
 .cabin .e-when { font-size: 0.85rem; font-style: italic; color: #6b4524; font-variant-numeric: tabular-nums; }
 .cabin .e-kind { margin: 2px 0 6px; font-size: 0.78rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: #6b4524; }
 .cabin .entry p { margin: 0 0 8px; max-width: 62ch; }
@@ -162,7 +162,7 @@
 .cabin .tl-logo img { width: 92%; height: 92%; object-fit: contain; }
 .cabin .tl-logo.icon img { width: 70%; height: 70%; }
 .cabin .tl-logo.cover img { width: 100%; height: 100%; object-fit: cover; }
-.cabin .tl-name { font: 900 1.05rem/1.15 "Playfair Display", Georgia, serif; }
+.cabin .tl-name { font: 900 1.05rem/1.15 var(--cabin-playfair), Georgia, serif; }
 .cabin .tl-dates { grid-column: 2; font: 0.78rem/1.45 ui-monospace, "SF Mono", Menlo, monospace; color: #6b4524; font-variant-numeric: tabular-nums; white-space: nowrap; }
 .cabin .tl-body p { margin: 0 0 8px; max-width: 62ch; }
 .cabin .polaroids { display: flex; flex-wrap: wrap; gap: 14px; margin-top: 10px; }
