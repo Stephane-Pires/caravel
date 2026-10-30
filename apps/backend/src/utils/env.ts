@@ -42,6 +42,10 @@ const envSchema = z
     GOOGLE_CALENDAR_ID: z.string().default("primary").meta({
       description: "The calendar that holds the rendez-vous",
     }),
+    PUBLIC_SITE_URL: z.url().default("http://localhost:3000").meta({
+      description:
+        "The site's public address, for the guest's manage link in the invitation",
+    }),
     TURNSTILE_SECRET_KEY: z.string().optional().meta({
       description:
         "Cloudflare Turnstile secret; when set, creating a rendez-vous needs a valid challenge token",
