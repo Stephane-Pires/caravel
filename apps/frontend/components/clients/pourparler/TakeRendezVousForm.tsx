@@ -20,6 +20,7 @@ import {
   FormMessage,
 } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
+import { track } from "@/lib/track"
 import {
   type CreatedRendezVousSchema,
   manageHref,
@@ -97,8 +98,16 @@ export function TakeRendezVousForm() {
       })
       take(values.scheduledAt)
       setBooked(created)
+      track("site.pourparler", {
+        action: "booked",
+        topic: Boolean(values.topic),
+      })
     } catch (error: any) {
       setTurnstileReset((count) => count + 1)
+      track("site.pourparler", {
+        action: "refused",
+        code: error?.code ?? "unknown",
+      })
       toast.error(
         error?.description ||
           "The rendez-vous couldn't be booked. Please try another time.",

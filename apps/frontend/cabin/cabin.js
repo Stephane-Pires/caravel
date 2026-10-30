@@ -465,10 +465,11 @@ hotspots.push(posterHot);
 // bottle catching the sun on the sill
 const btl = at(bottle(), 1.05, WIN.y0 + 0.06, -2.88);
 scene.add(btl);
-const bottleHot = hot(btl, { id: "bottle", label: "Message in a bottle", tipOnly: true, tip: { name: "Message in a bottle", quality: "uncommon", lines: [
-  ["A note rolled up inside, for booking a rendez-vous with the captain."],
-  ["The rendez-vous page is resting for now.", "flavor"],
-] } });
+// the note inside books a rendez-vous with the captain (Pourparler)
+const bottleHot = hot(btl, {
+  id: "bottle", label: "Message in a bottle", dest: "Rendez-vous", route: "/pourparler",
+  view: { pos: [1.05, WIN.y0 + 0.75, -1.75], target: [1.05, WIN.y0 + 0.3, -2.88] }, // eye level with the sill, the sea behind
+});
 hotspots.push(bottleHot);
 
 // treasure chest, barrel, rope
@@ -997,6 +998,7 @@ const CAPTIONS = {
   chart: "Tap an island to sail to its site.",
   poster: "Unrolling the wanted scroll…",
   chest: "Take a scroll: the CV in English or in French.",
+  bottle: "Tap the bottle to unroll the note: a 30-minute video call with the captain.",
 };
 function renderFocus(h) {
   fTitle.textContent = h.label;
@@ -1005,6 +1007,7 @@ function renderFocus(h) {
   const links = (items) => fBody.append(el("ul", {}, ...items.map(([text, attrs]) => el("li", {}, el("a", attrs, text)))));
   if (h.id === "logbook") links(bookEntries().map((e) => [`${e.title} (${e.date})`, { href: e.href }]));
   else if (h.id === "chart") links(PROJECTS.map(([name]) => [`${name} ↗`, { href: PROJECT_LINKS[name], target: "_blank", rel: "noopener" }]));
+  else if (h.id === "bottle") links([["Book a rendez-vous →", { href: "/pourparler" }]]);
   else if (h.id === "chest") links([["CV · English (PDF)", { href: "/api/download/curriculum?language=english", download: "cv-stephane-pires-english.pdf" }], ["CV · Français (PDF)", { href: "/api/download/curriculum?language=french", download: "cv-stephane-pires-french.pdf" }]]);
 }
 
@@ -1199,6 +1202,7 @@ canvas.addEventListener("pointerup", (e) => {
     else if (h === chartHot) { const isl = islandAt(lastHit); if (isl) sailTo(isl); }
     else if (h === logHot) { const i = entryAt(lastHit); if (i >= 0) { track("cabin.post", { href: bookEntries()[i].href }); location.assign(bookEntries()[i].href); } }
     else if (h === chestHot) { const cv = cvAt(lastHit); if (cv) downloadCv(cv); }
+    else if (h === bottleHot) { track("cabin.bottle"); location.assign("/pourparler"); } // uncork the note: the booking page
     else if (!h && focused) backToCabin(); // a tap beside the object steps back
   }
   down = null;

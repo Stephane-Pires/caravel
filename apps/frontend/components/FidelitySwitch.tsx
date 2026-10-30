@@ -13,6 +13,7 @@ const CLOSE_UPS = [
   { pathname: "/logbook", closeUp: "logbook" },
   { pathname: "/projects", closeUp: "chart" },
   { pathname: "/about-me", closeUp: "poster" },
+  { pathname: "/pourparler", closeUp: "bottle" },
 ] as const
 const CABIN = "/cabin"
 
