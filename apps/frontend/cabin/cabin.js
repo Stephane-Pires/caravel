@@ -1,12 +1,16 @@
 /* eslint-disable */
-// The cabin scene, ported as-is from the approved prototype (Three.js, plain modules).
-// Step 1 of the port: next steps split this file into typed modules (scene, sky, props, music, overlays).
+// The cabin scene: assembly, interactions, day and night, music.
+// Building blocks live next to it: toolkit.js, content.js, chart.js, props.js
 import * as THREE from "three";
 import { OrbitControls } from "three/addons/controls/OrbitControls.js";
 import { EffectComposer } from "three/addons/postprocessing/EffectComposer.js";
 import { RenderPass } from "three/addons/postprocessing/RenderPass.js";
 import { UnrealBloomPass } from "three/addons/postprocessing/UnrealBloomPass.js";
 import { OutputPass } from "three/addons/postprocessing/OutputPass.js";
+import { INK, grad, toon, glow, mesh, at, group, hot, canvasTex, plankTex, tubeBetween } from "./toolkit.js";
+import { POSTS, PROJECT_LINKS, PROJECTS, ABOUT, ISLANDS } from "./content.js";
+import { drawChart } from "./chart.js";
+import { makeSea, palm, bottle, chest, openBook, puff, cloud, bicycle, gameBox, seaBird, shipCat } from "./props.js";
 
 export async function mountCabin() {
 // every window listener goes through this controller, so leaving the page removes them
@@ -14,36 +18,12 @@ const ac = new AbortController();
 const addEventListener = (type, fn, opts) => window.addEventListener(type, fn, { ...(typeof opts === "object" ? opts : {}), signal: ac.signal });
 
 
-const INK = 0x0d1626, SAND = 0xf0c75e, MINT = 0xa7f0d0;
+const SAND = 0xf0c75e, MINT = 0xa7f0d0;
 const still = matchMedia("(prefers-reduced-motion: reduce)").matches;
 const small = Math.min(innerWidth, innerHeight) < 600;
 const $ = (id) => document.getElementById(id);
 const veil = $("veil");
 
-// ---------- the site's real content, as the close-ups show it ----------
-const POSTS = [
-  ["Water: Part 2 - The little water cycle", "Jun 2025", "water-part-2"],
-  ["Water: Part 1 - The great water cycle", "Apr 2025", "water-part-1"],
-  ["Time Bang", "Sep 2023", "time-bang"],
-  ["Functional Notes", "Sep 2023", "functional-notes"],
-  ["Webnotes", "Aug 2023", "webnotes"],
-  ["Team Topologies", "Jun 2023", "team-topologies"],
-  ["Peopleware", "Jun 2023", "peopleware"],
-  ["Code me an Input", "May 2023", "code-me-an-input"],
-  ["Mythical Man Month", "May 2023", "mythical-man-month"],
-];
-const PROJECT_LINKS = {
-  Faraway: "https://faraway-solver.com",
-  Abracadabra: "https://github.com/Stephane-Pires/abracadabra",
-  Caravel: "https://caravel-mocha.vercel.app/",
-  Ventus: "https://ventus-jade.vercel.app/1",
-};
-const PROJECTS = [
-  ["Faraway", "Jan 2026 → now", "Svelte · SvelteKit · AWS · Computer vision · Python · Serverless"],
-  ["Abracadabra", "Nov 2024 → now", "Ansible · Linux · Terminal"],
-  ["Caravel", "Apr 2023 → now", "Next.js · React · Tailwind · Node.js"],
-  ["Ventus", "Sep 2022 → Jul 2023", "Vue · Vite · WindiCSS"],
-];
 
 // the chart and poster paint text onto canvases, so wait for the fonts before building anything
 async function fontsReady() {
@@ -75,311 +55,25 @@ renderer.setPixelRatio(pixelRatio);
 renderer.shadowMap.enabled = true;
 renderer.shadowMap.type = THREE.PCFSoftShadowMap;
 
-// ---------- toon toolkit ----------
-// three light bands: shadow, midtone, lit. This one texture is most of the "storybook" look.
-const grad = new THREE.DataTexture(new Uint8Array([85, 170, 255]), 3, 1, THREE.RedFormat);
 grad.minFilter = grad.magFilter = THREE.NearestFilter;
 grad.needsUpdate = true;
 
-const toon = (color, extra = {}) => new THREE.MeshToonMaterial({ color, gradientMap: grad, ...extra });
-const glow = (r, g, b) => new THREE.MeshBasicMaterial({ color: new THREE.Color().setRGB(r, g, b) }); // >1 values feed the bloom
-const OUTLINE = 0.024;
 
-// inverted-hull outline with the same thickness on every axis
-function addOutline(m) {
-  const g = m.geometry;
-  g.computeBoundingBox();
-  const size = new THREE.Vector3(), center = new THREE.Vector3();
-  g.boundingBox.getSize(size);
-  g.boundingBox.getCenter(center);
-  const mat = new THREE.MeshBasicMaterial({ color: INK, side: THREE.BackSide });
-  const o = new THREE.Mesh(g, mat);
-  o.scale.set(1 + 2 * OUTLINE / Math.max(size.x, 1e-3), 1 + 2 * OUTLINE / Math.max(size.y, 1e-3), 1 + 2 * OUTLINE / Math.max(size.z, 1e-3));
-  o.position.set(center.x * (1 - o.scale.x), center.y * (1 - o.scale.y), center.z * (1 - o.scale.z));
-  o.raycast = () => {};
-  m.add(o);
-  m.userData.outlineMat = mat;
-}
 
-// every interior mesh casts and receives shadows unless told otherwise
-function mesh(geo, color, { outline = true, mat, shadow = true } = {}) {
-  const m = new THREE.Mesh(geo, mat || toon(color));
-  m.castShadow = m.receiveShadow = shadow;
-  if (outline) addOutline(m);
-  return m;
-}
 
-function at(obj, x, y, z, ry = 0) { obj.position.set(x, y, z); obj.rotation.y = ry; return obj; }
-function group(...children) { const g = new THREE.Group(); children.forEach((c) => g.add(c)); return g; }
 
-// register a clickable object: collects its outline materials for highlighting
-function hot(g, info) {
-  info.group = g;
-  info.outlines = [];
-  g.traverse((o) => { if (o.userData.outlineMat) info.outlines.push(o.userData.outlineMat); });
-  g.userData.hot = info;
-  return info;
-}
 
-function canvasTex(w, h, draw) {
-  const c = document.createElement("canvas");
-  c.width = w; c.height = h;
-  draw(c.getContext("2d"), w, h);
-  const t = new THREE.CanvasTexture(c);
-  t.colorSpace = THREE.SRGBColorSpace;
-  t.anisotropy = 8;
-  return t;
-}
 
-function plankTex(base, line, n, vertical) {
-  return canvasTex(256, 256, (x, w, h) => {
-    x.fillStyle = base; x.fillRect(0, 0, w, h);
-    x.strokeStyle = line; x.lineWidth = 3;
-    const step = (vertical ? w : h) / n;
-    for (let i = 1; i < n; i++) {
-      x.beginPath();
-      if (vertical) { x.moveTo(i * step, 0); x.lineTo(i * step, h); } else { x.moveTo(0, i * step); x.lineTo(w, i * step); }
-      x.stroke();
-    }
-    for (let i = 0; i < n; i++) { // butt joints between plank lengths
-      const q = ((i * 97) % 100) / 100 * (vertical ? h : w);
-      x.beginPath();
-      if (vertical) { x.moveTo(i * step, q); x.lineTo((i + 1) * step, q); } else { x.moveTo(q, i * step); x.lineTo(q, (i + 1) * step); }
-      x.stroke();
-    }
-  });
-}
 
-function makeSea(color, y) {
-  const geo = new THREE.PlaneGeometry(220, 220, 90, 90);
-  geo.rotateX(-Math.PI / 2);
-  const base = geo.attributes.position.array.slice();
-  const m = new THREE.Mesh(geo, toon(color));
-  m.position.y = y;
-  m.userData.tick = (t) => {
-    const p = geo.attributes.position.array;
-    for (let i = 0; i < p.length; i += 3) {
-      const x = base[i], z = base[i + 2];
-      p[i + 1] = Math.sin(x * 0.3 + t * 1.1) * 0.14 + Math.cos(z * 0.25 + t * 0.8) * 0.12;
-    }
-    geo.attributes.position.needsUpdate = true;
-    geo.computeVertexNormals();
-  };
-  return m;
-}
 
-function palm(h = 3.2, lean = 0.5) {
-  const g = new THREE.Group();
-  const segs = 6, segH = h / segs;
-  const top = new THREE.Vector3();
-  for (let i = 0; i < segs; i++) {
-    const r = 0.17 - i * 0.014;
-    const s = mesh(new THREE.CylinderGeometry(r - 0.012, r, segH, 8), i % 2 ? 0x9a6b3f : 0xb3824f, { shadow: false });
-    const off = Math.pow(i / segs, 2) * lean;
-    s.position.set(off, segH * (i + 0.5), 0);
-    g.add(s);
-    top.set(off, segH * (i + 1), 0);
-  }
-  for (let k = 0; k < 7; k++) {
-    const leaf = mesh(new THREE.ConeGeometry(0.3, 1.8, 4), k % 2 ? 0x3f9b6e : 0x52b480, { shadow: false });
-    leaf.scale.z = 0.3;
-    leaf.position.y = 0.9;
-    const tilt = group(leaf); tilt.rotation.z = -1.15 - (k % 2) * 0.25;
-    const pivot = group(tilt); pivot.rotation.y = k * (Math.PI * 2 / 7);
-    pivot.position.copy(top);
-    g.add(pivot);
-  }
-  return g;
-}
 
-function bottle() {
-  const glass = toon(0x6cc5a3, { transparent: true, opacity: 0.85 });
-  return group(
-    at(mesh(new THREE.CylinderGeometry(0.11, 0.11, 0.32, 14), 0, { mat: glass }), 0, 0.16, 0),
-    at(mesh(new THREE.CylinderGeometry(0.045, 0.11, 0.1, 14), 0, { mat: glass }), 0, 0.37, 0),
-    at(mesh(new THREE.CylinderGeometry(0.045, 0.045, 0.11, 12), 0, { mat: glass }), 0, 0.47, 0),
-    at(mesh(new THREE.CylinderGeometry(0.05, 0.045, 0.06, 12), 0xc69060), 0, 0.55, 0),
-    at(mesh(new THREE.CylinderGeometry(0.045, 0.045, 0.22, 10), 0xf6ecd6, { outline: false }), 0, 0.17, 0),
-  );
-}
 
-// chest with a hinged lid (hinge along the back edge) and gold inside
-function chest(w = 1.1, h = 0.6, d = 0.7) {
-  const r = d / 2;
-  const lid = mesh(new THREE.CylinderGeometry(r, r, w, 20, 1, false, -Math.PI / 2, Math.PI), 0x8a5230);
-  lid.rotation.x = -Math.PI / 2;              // half-cylinder dome, arc facing up
-  const lidG = group(lid); lidG.rotation.y = Math.PI / 2; lidG.position.z = r;
-  const hinge = group(lidG); hinge.position.set(0, h, -r);
-  const scroll = mesh(new THREE.CylinderGeometry(0.06, 0.06, 0.6, 12), 0xf6ecd6); scroll.rotation.z = Math.PI / 2;
-  const g = group(
-    at(mesh(new THREE.BoxGeometry(w, h, d), 0x7b4a2a), 0, h / 2, 0),
-    at(mesh(new THREE.BoxGeometry(0.08, h + 0.02, d + 0.02), 0xe9b949), -w * 0.36, h / 2, 0),
-    at(mesh(new THREE.BoxGeometry(0.08, h + 0.02, d + 0.02), 0xe9b949), w * 0.36, h / 2, 0),
-    at(mesh(new THREE.BoxGeometry(0.16, 0.18, 0.06), 0xe9b949), 0, h - 0.05, d / 2 + 0.02),
-    at(new THREE.Mesh(new THREE.BoxGeometry(w - 0.12, 0.04, d - 0.12), glow(2.2, 1.7, 0.6)), 0, h - 0.06, 0),
-    at(scroll, 0, h + 0.0, 0.05),
-    hinge,
-  );
-  return { g, hinge };
-}
 
-function pageTexture() {
-  return canvasTex(1024, 640, (x, w, h) => {
-    x.fillStyle = "#f6ecd6"; x.fillRect(0, 0, w, h);
-    x.strokeStyle = "rgba(122, 90, 50, 0.25)"; x.lineWidth = 2;
-    x.beginPath(); x.moveTo(w / 2, 0); x.lineTo(w / 2, h); x.stroke();
-    x.fillStyle = "#4a2a14"; x.textAlign = "left";
-    x.font = "700 52px Merienda, Georgia, serif"; x.fillText("Logbook", 46, 86);
-    x.font = "24px 'Atkinson Hyperlegible', sans-serif"; x.fillStyle = "#7a5a32"; x.fillText("Latest entries", 48, 124);
-    const draw = (items, x0, y0) => items.forEach(([t, d], i) => {
-      const y = y0 + i * 96;
-      x.fillStyle = "#3a2614"; x.font = "700 27px Merienda, Georgia, serif";
-      const title = t.length > 26 ? t.slice(0, 25) + "…" : t;
-      x.fillText(title, x0, y);
-      x.fillStyle = "#8a6a3c"; x.font = "22px 'Atkinson Hyperlegible', sans-serif"; x.fillText(d, x0, y + 32);
-      x.strokeStyle = "rgba(122, 90, 50, 0.3)"; x.beginPath(); x.moveTo(x0, y + 50); x.lineTo(x0 + 410, y + 50); x.stroke();
-    });
-    draw(POSTS.slice(0, 5).map((p) => [p[0], p[1]]), 48, 190);
-    draw(POSTS.slice(5, 9).map((p) => [p[0], p[1]]), w / 2 + 46, 90);
-  });
-}
 
-function openBook(cover = 0x8c2f22) {
-  const left = mesh(new THREE.BoxGeometry(0.47, 0.06, 0.6), 0xf6ecd6); left.position.set(-0.245, 0.05, 0); left.rotation.z = 0.07;
-  const right = mesh(new THREE.BoxGeometry(0.47, 0.06, 0.6), 0xf6ecd6); right.position.set(0.245, 0.05, 0); right.rotation.z = -0.07;
-  const page = new THREE.Mesh(new THREE.PlaneGeometry(0.94, 0.58), toon(0xffffff, { map: pageTexture() }));
-  page.rotation.x = -Math.PI / 2; page.position.y = 0.087; page.receiveShadow = true;
-  return group(mesh(new THREE.BoxGeometry(1.0, 0.04, 0.66), cover), left, right, page);
-}
 
-// ---------- painted textures ----------
-const ISLANDS = [["Faraway", 0.2, 0.34], ["Caravel", 0.6, 0.24], ["Abracadabra", 0.34, 0.74], ["Ventus", 0.8, 0.66]];
 
-function blob(x, cx, cy, r, seed) {
-  x.beginPath();
-  for (let a = 0; a <= 64; a++) {
-    const th = (a / 64) * Math.PI * 2;
-    const rr = r * (1 + 0.18 * Math.sin(th * 3 + seed) + 0.1 * Math.sin(th * 5 + seed * 2));
-    const px = cx + Math.cos(th) * rr, py = cy + Math.sin(th) * rr * 0.75;
-    a ? x.lineTo(px, py) : x.moveTo(px, py);
-  }
-  x.closePath();
-}
 
-// each project gets its own island on the chart
-const MAP_INK = "#3a2614";
-function sparkle(x, cx, cy, s) {
-  x.beginPath(); x.moveTo(cx, cy - s);
-  x.quadraticCurveTo(cx, cy, cx + s, cy); x.quadraticCurveTo(cx, cy, cx, cy + s);
-  x.quadraticCurveTo(cx, cy, cx - s, cy); x.quadraticCurveTo(cx, cy, cx, cy - s); x.fill();
-}
-function islandBase(x, cx, cy, r, seed, sx = 1, sy = 1, green = "#5aa877") {
-  x.save(); x.translate(cx, cy); x.scale(sx, sy);
-  blob(x, 0, 0, r, seed); x.fillStyle = "#e6c98a"; x.fill();
-  blob(x, 0, 0, r * 0.74, seed); x.fillStyle = green; x.fill(); x.strokeStyle = "#2e4a3a"; x.lineWidth = 2.5 / Math.max(sx, sy); x.stroke();
-  x.restore();
-}
-const ISLAND_ART = {
-  Faraway(x, cx, cy, r, t) { // the board game: a trail of 8 region cards, read by a magnifying glass (the solver's computer vision)
-    islandBase(x, cx, cy, r, 0.4, 1.7, 0.72);
-    const REGIONS = ["#5aa877", "#4f86c6", "#d9a441", "#c8553d"], NUMS = [12, 27, 3, 41, 56, 8, 33, 61];
-    const cw = r * 0.3, chh = r * 0.42, step = r * 0.33, x0 = cx - step * 3.5;
-    NUMS.forEach((n, i) => {
-      x.save(); x.translate(x0 + i * step, cy - r * 0.02); x.rotate(((i * 37) % 7 - 3) * 0.03);
-      x.fillStyle = "#fbf3df"; x.strokeStyle = MAP_INK; x.lineWidth = 1.6;
-      x.beginPath(); x.roundRect(-cw / 2, -chh / 2, cw, chh, 3); x.fill(); x.stroke();
-      x.fillStyle = REGIONS[i % 4]; x.fillRect(-cw / 2 + 2, -chh / 2 + 2, cw - 4, chh * 0.42);
-      x.fillStyle = MAP_INK; x.font = `700 ${Math.round(r * 0.16)}px 'Atkinson Hyperlegible', sans-serif`; x.textAlign = "center";
-      x.fillText(String(n), 0, chh / 2 - 4);
-      x.restore();
-    });
-    const scan = t ? (Math.sin(t * 1.6) * 0.5 + 0.5) : 1; // the lens slides along the row while hovered
-    const mx = x0 + scan * step * 7, my = cy - r * 0.5, lr = r * 0.26;
-    x.strokeStyle = MAP_INK; x.lineWidth = 4; x.lineCap = "round";
-    x.beginPath(); x.moveTo(mx + lr * 0.7, my + lr * 0.7); x.lineTo(mx + lr * 1.6, my + lr * 1.6); x.stroke(); x.lineCap = "butt";
-    x.fillStyle = "rgba(167, 220, 240, 0.55)"; x.beginPath(); x.arc(mx, my, lr, 0, Math.PI * 2); x.fill();
-    x.lineWidth = 3; x.stroke();
-    x.strokeStyle = "rgba(255, 255, 255, 0.8)"; x.lineWidth = 2; x.beginPath(); x.arc(mx, my, lr * 0.65, Math.PI * 1.1, Math.PI * 1.45); x.stroke();
-  },
-  Caravel(x, cx, cy, r, t) { // a harbour island with a palm, and the little caravel at anchor (bobbing while hovered)
-    islandBase(x, cx, cy, r, 1.7);
-    x.strokeStyle = "#7a4a2a"; x.lineWidth = 4;
-    x.beginPath(); x.moveTo(cx - r * 0.15, cy + r * 0.25); x.quadraticCurveTo(cx - r * 0.05, cy - r * 0.2, cx + r * 0.1, cy - r * 0.5); x.stroke();
-    x.fillStyle = "#2f7a4f";
-    for (let k = 0; k < 5; k++) { const a = -Math.PI / 2 + (k - 2) * 0.6 + Math.sin(t * 3 + k) * 0.08; x.beginPath(); x.ellipse(cx + r * 0.1 + Math.cos(a) * r * 0.25, cy - r * 0.5 + Math.sin(a) * r * 0.25, r * 0.28, r * 0.08, a, 0, Math.PI * 2); x.fill(); }
-    const sx = cx + r * 1.2, sy = cy + r * 0.35 + Math.sin(t * 4) * r * 0.08;
-    x.save(); x.translate(sx, sy); x.rotate(Math.sin(t * 3) * 0.12); x.translate(-sx, -sy);
-    x.strokeStyle = MAP_INK; x.lineWidth = 2; x.fillStyle = "#7a4a2a";
-    x.beginPath(); x.moveTo(sx - r * 0.45, sy); x.lineTo(sx + r * 0.45, sy); x.lineTo(sx + r * 0.3, sy + r * 0.2); x.lineTo(sx - r * 0.3, sy + r * 0.2); x.closePath(); x.fill(); x.stroke();
-    x.fillRect(sx - 1.5, sy - r * 0.72, 3, r * 0.72);
-    x.fillStyle = "#f6ecd6";
-    x.beginPath(); x.moveTo(sx + 2, sy - r * 0.66); x.quadraticCurveTo(sx + r * 0.42, sy - r * 0.36, sx + 2, sy - r * 0.08); x.closePath(); x.fill(); x.stroke();
-    x.beginPath(); x.moveTo(sx - 2, sy - r * 0.56); x.quadraticCurveTo(sx - r * 0.34, sy - r * 0.3, sx - 2, sy - r * 0.1); x.closePath(); x.fill(); x.stroke();
-    x.fillStyle = "#b5462f"; x.beginPath(); x.moveTo(sx, sy - r * 0.72); x.lineTo(sx + r * 0.2, sy - r * 0.66); x.lineTo(sx, sy - r * 0.6); x.closePath(); x.fill();
-    x.restore();
-  },
-  Abracadabra(x, cx, cy, r, t) { // a craggy violet island with a wizard's tower; the sparkles pulse while hovered
-    islandBase(x, cx, cy, r, 3.4, 1, 1, "#7d68ad");
-    x.strokeStyle = MAP_INK; x.lineWidth = 2; x.fillStyle = "#4a3a78";
-    x.beginPath(); x.moveTo(cx - r * 0.55, cy + r * 0.2); x.lineTo(cx - r * 0.22, cy - r * 0.42); x.lineTo(cx + r * 0.02, cy - r * 0.1); x.lineTo(cx + r * 0.3, cy - r * 0.48); x.lineTo(cx + r * 0.55, cy + r * 0.2); x.closePath(); x.fill(); x.stroke();
-    const tx = cx + r * 0.3, ty = cy - r * 0.48;
-    x.fillStyle = "#d8cbef"; x.fillRect(tx - r * 0.1, ty - r * 0.45, r * 0.2, r * 0.45); x.strokeRect(tx - r * 0.1, ty - r * 0.45, r * 0.2, r * 0.45);
-    x.fillStyle = "#3a2a6a"; x.beginPath(); x.moveTo(tx - r * 0.17, ty - r * 0.45); x.lineTo(tx, ty - r * 0.88); x.lineTo(tx + r * 0.17, ty - r * 0.45); x.closePath(); x.fill(); x.stroke();
-    x.fillStyle = "#e9b949";
-    [[-0.9, -0.6, 1], [0.85, -0.95, 0.8], [1.05, 0.05, 0.7], [-0.6, -1.05, 0.6]].forEach(([dx, dy, k], i) => sparkle(x, cx + dx * r, cy + dy * r, r * 0.14 * k * (t ? 1 + 0.6 * Math.sin(t * 6 + i * 1.7) : 1)));
-  },
-  Ventus(x, cx, cy, r, t) { // a windswept island; the windmill spins while hovered
-    islandBase(x, cx, cy, r, 5.1, 1.1, 0.85, "#7fb86a");
-    const mx = cx - r * 0.1, my = cy - r * 0.02;
-    x.strokeStyle = MAP_INK; x.lineWidth = 2; x.fillStyle = "#f6ecd6";
-    x.beginPath(); x.moveTo(mx - r * 0.16, my + r * 0.1); x.lineTo(mx + r * 0.16, my + r * 0.1); x.lineTo(mx + r * 0.1, my - r * 0.5); x.lineTo(mx - r * 0.1, my - r * 0.5); x.closePath(); x.fill(); x.stroke();
-    x.fillStyle = "#b5462f"; x.beginPath(); x.moveTo(mx - r * 0.14, my - r * 0.5); x.lineTo(mx, my - r * 0.68); x.lineTo(mx + r * 0.14, my - r * 0.5); x.closePath(); x.fill(); x.stroke();
-    for (let k = 0; k < 4; k++) {
-      x.save(); x.translate(mx, my - r * 0.56); x.rotate(k * Math.PI / 2 + 0.4 + t * 4);
-      x.fillStyle = "#e6c98a"; x.fillRect(0, -r * 0.06, r * 0.55, r * 0.12); x.strokeRect(0, -r * 0.06, r * 0.55, r * 0.12);
-      x.restore();
-    }
-    x.strokeStyle = "rgba(58, 38, 20, 0.6)"; x.lineWidth = 2.5; x.lineCap = "round";
-    [[-1.7, -0.85], [-1.55, -0.45], [0.75, 0.62]].forEach(([dx, dy]) => {
-      const gx = cx + dx * r + (t ? Math.sin(t * 3 + dy) * r * 0.15 : 0), gy = cy + dy * r;
-      x.beginPath(); x.moveTo(gx, gy); x.lineTo(gx + r * 0.7, gy); x.arc(gx + r * 0.7, gy - r * 0.12, r * 0.12, Math.PI / 2, -Math.PI * 0.9, true); x.stroke();
-    });
-    x.lineCap = "butt";
-  },
-};
 
-function drawChart(x, w, h, title, anim = {}) {
-  x.fillStyle = "#efdcae"; x.fillRect(0, 0, w, h);
-  x.strokeStyle = "rgba(122, 90, 50, 0.35)"; x.lineWidth = 2;
-  for (let i = 0; i < 26; i++) { // little wave marks
-    const px = (i * 137) % w, py = 30 + ((i * 89) % (h - 60));
-    x.beginPath(); x.arc(px, py, 7, Math.PI * 1.1, Math.PI * 1.9); x.arc(px + 13, py, 7, Math.PI * 1.1, Math.PI * 1.9); x.stroke();
-  }
-  x.setLineDash([9, 8]); x.strokeStyle = "#b5462f"; x.lineWidth = 3.5;
-  x.beginPath();
-  ISLANDS.forEach(([, ix, iy], i) => (i ? x.lineTo(ix * w, iy * h) : x.moveTo(ix * w, iy * h)));
-  x.stroke(); x.setLineDash([]);
-  ISLANDS.forEach(([name, ix, iy]) => {
-    const cx = ix * w, cy = iy * h, hovered = anim.hover === name, t = hovered ? anim.t : 0;
-    x.save();
-    if (hovered) { const s = 1.12 + Math.sin(t * 5) * 0.03; x.translate(cx, cy); x.rotate(Math.sin(t * 3) * 0.05); x.scale(s, s); x.translate(-cx, -cy); }
-    ISLAND_ART[name](x, cx, cy, w * 0.075, t);
-    x.restore();
-    x.fillStyle = hovered ? "#b5462f" : "#3a2614"; x.font = `700 ${Math.round(w * 0.034)}px Merienda, Georgia, serif`; x.textAlign = "center";
-    x.fillText(name, ix * w, iy * h + w * 0.085);
-  });
-  const cx = w * 0.9, cy = h * 0.18, r = w * 0.055; // compass rose
-  x.fillStyle = "#3a2614";
-  for (let k = 0; k < 4; k++) {
-    const a = k * Math.PI / 2;
-    x.beginPath(); x.moveTo(cx + Math.cos(a) * r, cy + Math.sin(a) * r);
-    x.lineTo(cx + Math.cos(a + 0.5) * r * 0.25, cy + Math.sin(a + 0.5) * r * 0.25);
-    x.lineTo(cx + Math.cos(a - 0.5) * r * 0.25, cy + Math.sin(a - 0.5) * r * 0.25); x.fill();
-  }
-  x.font = `700 ${Math.round(w * 0.03)}px Merienda, Georgia, serif`; x.fillText("N", cx, cy - r - 6);
-  x.font = `700 ${Math.round(w * 0.045)}px Merienda, Georgia, serif`; x.textAlign = "left"; x.fillText(title, w * 0.05, h * 0.12);
-  x.strokeStyle = "#8a6a3c"; x.lineWidth = 8; x.strokeRect(4, 4, w - 8, h - 8);
-}
 
 // ---------- the cabin ----------
 const scene = new THREE.Scene();
@@ -428,20 +122,6 @@ ticks.push(sea.userData.tick);
   scene.add(at(isl, x, -2.2, z));
 });
 
-// weather on the horizon: drifting sunset clouds, a passing rain shower, circling gulls
-const puff = (color, emissive) => new THREE.MeshToonMaterial({ color, emissive, gradientMap: grad, fog: false });
-function cloud(mat, size) {
-  const g = new THREE.Group();
-  const n = 5 + Math.floor(Math.random() * 4);
-  for (let i = 0; i < n; i++) {
-    const r = size * (0.5 + Math.random() * 0.5);
-    const s = new THREE.Mesh(new THREE.SphereGeometry(r, 10, 8), mat);
-    s.position.set((i - n / 2) * size * 0.75 + (Math.random() - 0.5) * size * 0.4, Math.random() * size * 0.5, (Math.random() - 0.5) * size * 0.6);
-    s.scale.y = 0.7;
-    g.add(s);
-  }
-  return g;
-}
 const SKY_SPAN = 110; // clouds wrap around between -SKY_SPAN and +SKY_SPAN on x
 const cloudMat = puff(0xffd9c4, 0x7a4a5a);
 const clouds = [];
@@ -771,34 +451,6 @@ hotspots.push(chestHot);
 scene.add(at(mesh(new THREE.CylinderGeometry(0.38, 0.42, 0.9, 16), 0x8a5733), 3.35, 0.45, 2.55));
 [0.25, 0.68].forEach((y) => scene.add(at(mesh(new THREE.TorusGeometry(0.4, 0.025, 6, 24), 0x3a2a1a, { outline: false }), 3.35, y, 2.55).rotateX(Math.PI / 2)));
 
-// ---------- the captain's own things: the bike, the board-game shelf, the climbing corner ----------
-function tubeBetween(a, b, r, color) {
-  const A = new THREE.Vector3(...a), B = new THREE.Vector3(...b), d = B.clone().sub(A);
-  const m = mesh(new THREE.CylinderGeometry(r, r, d.length(), 8), color, { outline: false });
-  m.position.copy(A).add(B).multiplyScalar(0.5);
-  m.quaternion.setFromUnitVectors(new THREE.Vector3(0, 1, 0), d.normalize());
-  return m;
-}
-function bicycle() { // a blue cyclocross bike: drop bars, knobby tyres
-  const g = new THREE.Group(), BLUE = 0x1f6fb5, DARK = 0x222428, METAL = 0xb8bec6;
-  [-0.52, 0.52].forEach((x0) => {
-    g.add(at(mesh(new THREE.TorusGeometry(0.33, 0.04, 8, 32), DARK), x0, 0.37, 0));
-    g.add(at(mesh(new THREE.TorusGeometry(0.29, 0.012, 6, 32), METAL, { outline: false }), x0, 0.37, 0));
-    for (let k = 0; k < 8; k++) { const sp = mesh(new THREE.CylinderGeometry(0.004, 0.004, 0.58, 4), METAL, { outline: false, shadow: false }); sp.position.set(x0, 0.37, 0); sp.rotation.z = k * Math.PI / 8; g.add(sp); }
-  });
-  const R = [-0.52, 0.37, 0], BB = [-0.06, 0.33, 0], S = [-0.2, 0.86, 0], H = [0.36, 0.84, 0], HB = [0.42, 0.68, 0], F = [0.52, 0.37, 0];
-  [[BB, S], [S, H], [BB, HB], [R, BB], [R, [-0.18, 0.8, 0]], [HB, H]].forEach(([a, b]) => g.add(tubeBetween(a, b, 0.026, BLUE)));
-  g.add(tubeBetween(HB, F, 0.018, DARK));
-  g.add(tubeBetween(S, [-0.23, 0.95, 0], 0.012, METAL));
-  g.add(at(mesh(new THREE.BoxGeometry(0.24, 0.04, 0.09), DARK), -0.25, 0.97, 0));
-  g.add(tubeBetween(H, [0.46, 0.9, 0], 0.014, DARK));
-  const bar = mesh(new THREE.CylinderGeometry(0.013, 0.013, 0.42, 8), DARK, { outline: false }); bar.rotation.x = Math.PI / 2; bar.position.set(0.46, 0.9, 0); g.add(bar);
-  [-0.2, 0.2].forEach((z) => { g.add(tubeBetween([0.46, 0.9, z], [0.56, 0.82, z], 0.013, DARK)); g.add(tubeBetween([0.56, 0.82, z], [0.5, 0.74, z], 0.013, DARK)); });
-  g.add(at(mesh(new THREE.TorusGeometry(0.09, 0.012, 6, 20), METAL, { outline: false }), -0.06, 0.33, 0.03));
-  g.add(tubeBetween([-0.52, 0.37, 0.03], [-0.06, 0.33, 0.035], 0.005, DARK));
-  g.add(at(mesh(new THREE.BoxGeometry(0.09, 0.02, 0.05), DARK), -0.06, 0.24, 0.1));
-  return g;
-}
 const bike = bicycle();
 bike.rotation.y = -Math.PI / 2; // along the wall
 const bikeLean = group(bike);
@@ -809,16 +461,6 @@ scene.add(bikeLean);
 hotspots.push(hot(bikeLean, { id: "bike", label: "Bike", secret: true, tipOnly: true, tip: { name: "Cyclo-cross bike", quality: "rare", lines: [
   ["Equip: Commute through snow, rain and sunshine.", "use"], ["Riding since 2018, starting in Nantes."], ["\"Cheap, healthy and green.\"", "flavor"]] } }));
 
-// board-game shelf under the sea chart
-function gameBox(name, color, ink, w, hh, d) {
-  const label = canvasTex(420, 84, (x, cw, chh) => {
-    x.fillStyle = `#${color.toString(16).padStart(6, "0")}`; x.fillRect(0, 0, cw, chh);
-    x.fillStyle = "rgba(255, 255, 255, 0.18)"; x.fillRect(0, 0, cw, 10);
-    x.fillStyle = "rgba(0, 0, 0, 0.12)"; x.fillRect(0, chh - 14, cw, 14); // lid edge, no title
-  });
-  const side = toon(color), mats = [toon(0xffffff, { map: label }), side, side, side, side, side];
-  return mesh(new THREE.BoxGeometry(w, hh, d), 0, { mat: mats });
-}
 const shelf = new THREE.Group();
 const SW = 1.7, SH = 1.45, SD = 0.4, SHELF_WOOD = 0x6b3f24;
 shelf.add(at(mesh(new THREE.BoxGeometry(SD, SH, 0.05), SHELF_WOOD), 0, SH / 2, -SW / 2), at(mesh(new THREE.BoxGeometry(SD, SH, 0.05), SHELF_WOOD), 0, SH / 2, SW / 2));
@@ -990,28 +632,6 @@ ticks.push((t) => {
   });
 });
 
-// the openable window: a sea bird comes to the sill while it's open, and flies off before it closes
-function seaBird() { // an original little gull: white body, grey wings, orange beak
-  const white = 0xf4f1ea, grey = 0x9aa3b0;
-  const body = mesh(new THREE.SphereGeometry(0.07, 14, 10), white); body.scale.set(1, 0.85, 1.35);
-  const head = group(
-    mesh(new THREE.SphereGeometry(0.045, 12, 10), white),
-    at(mesh(new THREE.ConeGeometry(0.014, 0.045, 8), 0xf0a03c, { outline: false }), 0, -0.005, 0.055).rotateX(Math.PI / 2),
-    at(mesh(new THREE.SphereGeometry(0.008, 6, 6), 0x15100c, { outline: false }), 0.026, 0.012, 0.028),
-    at(mesh(new THREE.SphereGeometry(0.008, 6, 6), 0x15100c, { outline: false }), -0.026, 0.012, 0.028),
-  );
-  head.position.set(0, 0.065, 0.075);
-  const wing = (side) => {
-    const w = mesh(new THREE.SphereGeometry(0.05, 10, 8), grey); w.scale.set(0.25, 0.6, 1.1); w.position.set(side * 0.02, 0, -0.01);
-    const pivot = group(w); pivot.position.set(side * 0.055, 0.02, 0); return pivot;
-  };
-  const wl = wing(1), wr = wing(-1);
-  const tail = at(mesh(new THREE.ConeGeometry(0.03, 0.08, 4), grey), 0, 0.01, -0.11).rotateX(-Math.PI / 2);
-  const legs = [0.02, -0.02].map((x0) => at(mesh(new THREE.CylinderGeometry(0.004, 0.004, 0.05, 4), 0xf0a03c, { outline: false }), x0, -0.075, 0));
-  const g = group(body, head, wl, wr, tail, ...legs);
-  g.userData = { head, wl, wr };
-  return g;
-}
 const winCx = WIN.xs[OPEN_WIN];
 const PERCH = new THREE.Vector3(winCx + 0.3, WIN.y0 + 0.06 + 0.1, -2.9);
 const bird = seaBird();
@@ -1081,24 +701,6 @@ ticks.push((t, dt) => {
   }
 });
 
-// the ship's cat, asleep on the window-seat cushion under the window that opens.
-// If the bird lands while the window is open, the cat wakes, pounces and leaps out with it: neither comes back.
-function shipCat() {
-  const ORANGE = 0xe0913f, DARK = 0x9a5a22;
-  const body = mesh(new THREE.SphereGeometry(0.16, 16, 12), ORANGE); body.scale.set(1.25, 0.58, 1);
-  const stripes = [-0.06, 0.02, 0.1].map((x0) => at(mesh(new THREE.BoxGeometry(0.025, 0.06, 0.24), DARK, { outline: false }), x0, 0.075, 0));
-  const ear = (z0) => at(mesh(new THREE.ConeGeometry(0.03, 0.06, 4), ORANGE), 0.02, 0.085, z0);
-  const eye = (z0) => at(mesh(new THREE.BoxGeometry(0.004, 0.006, 0.026), 0x2e1a0c, { outline: false }), 0.085, 0.015, z0);
-  const head = group(mesh(new THREE.SphereGeometry(0.085, 14, 10), ORANGE), ear(0.04), ear(-0.04), eye(0.032), eye(-0.032),
-    at(mesh(new THREE.SphereGeometry(0.012, 6, 6), 0xd86f6f, { outline: false }), 0.088, -0.012, 0));
-  head.position.set(0.16, 0.0, 0.05);
-  head.rotation.z = -0.25; // tucked down, asleep
-  const tail = mesh(new THREE.TorusGeometry(0.17, 0.028, 6, 18, Math.PI * 1.15), ORANGE);
-  tail.rotation.x = -Math.PI / 2; tail.rotation.z = 0.4; tail.position.y = -0.04;
-  const g = group(body, ...stripes, head, tail);
-  g.userData = { body, head, tail };
-  return g;
-}
 const cat = shipCat();
 const CAT_HOME = new THREE.Vector3(-0.55, 0.76, -2.62);
 cat.scale.setScalar(1.3); // a proper ship's cat, visible from the doorway
@@ -1379,73 +981,6 @@ function renderFocus(h) {
   }
 }
 
-// ---------- the full wanted scroll: the about-me page, unrolled inside the cabin ----------
-const ABOUT = [
-  { id: "crews", tab: "Crews", title: "Crews sailed with", items: [
-    { name: "Figures", logo: "/cabin/assets/figures-logo.png", cover: true, link: "https://figures.hr/", from: "May 2026", to: "Oct 2026", diff: "6 months",
-      kind: "Senior Software Engineer · pay-transparency platform · Paris, hybrid",
-      text: "Owned the Salary Bands module end to end, from product and design decisions to delivery, performance and scaling, for 100+ clients and 10,000+ employees' data.",
-      missions: ["Built DataHealth from scratch: rule-based validation and profiling of HR-connector data, catching discrepancies before customers do",
-        "Set up monitoring as code: Datadog dashboards via Terraform tracking p75 FCP, p50/p95 API latency and payload size",
-        "Cut page load by ~60% (p75 FCP 4s → 1.5s) and brought 98% of API calls under 1s (up from 93%)",
-        "Worked AI-first in a 9-person cross-functional team, running supervised multi-hour agentic tasks with Claude Code, Codex and MCP/Skills",
-        "Prototyped beyond my scope: background task notifications, Salary Band auto-mapping, benchmark mapping"],
-      skills: ["TypeScript", "Terraform", "Datadog", "Claude Code", "Codex", "MCP"] },
-    { name: "Leakmited", logo: "/cabin/assets/leakmited-webclip.png", cover: true, link: "https://www.leakmited.com/", from: "Sep 2023", to: "Mar 2026", diff: "2+ years",
-      kind: "Drinking-water network software · team of seven at the start",
-      text: "Joined a seven-person team with three in Tech/Product and grew with it past 20 people and a €5M Series A. Built and industrialized SENTINEL, which monitors District Metered Areas to direct leak searchers, and extended the TWIN platform with renovation planning and water-savings estimates.",
-      missions: ["Started the SENTINEL project from scratch", "Shipped map, renovation, dashboard and matrix features", "Built ETL pipelines to ingest network data", "Ran client interviews to map real field needs"],
-      skills: ["Node.js", "TypeScript", "Svelte", "SvelteKit", "Storybook", "AWS", "Vercel", "ETL", "Python", "PostgreSQL"] },
-    /* Izicrédit is hidden for now; remove the comment markers to show it again
-    { name: "Izicrédit", logo: "/cabin/assets/izicredit-logo.png", link: "https://www.izicredit.com/", from: "Feb 2023", to: "Jun 2023", diff: "4 months",
-      kind: "Fullstack engineer · team of two",
-      text: "Built a platform for bank professionals and an admin dashboard that gave the product and marketing teams insight from the collected data. A startup pace: products built from scratch on tight timelines.",
-      missions: ["Added database relations with PostGraphile", "Built a catchment-area input, UI and algorithm", "Built the admin and bank dashboards end to end", "Wrote a CRON server in Node.js"],
-      skills: ["Node.js", "TypeScript", "React", "GraphQL", "Next.js", "PostgreSQL"] },
-    */
-    { name: "Analog Way", logo: "/cabin/assets/analogway-logoo.png", link: "https://www.analogway.com/americas/", from: "Sep 2019", to: "Feb 2023", diff: "3+ years",
-      kind: "Software engineer · team of nine",
-      text: "Developed the web application that controls Analog Way's hardware, in a company with a strong R&D culture. Led the adoption of agile practices in the first year and built the authentication module that controls access to the application.",
-      missions: ["Built real-time UI features with React and Redux", "Prototyped a feature with WebRTC", "Built an authentication module", "Introduced Scrum and Kanban"],
-      skills: ["Node.js", "TypeScript", "React", "Redux"] },
-  ] },
-  { id: "ships", tab: "Ships", title: "Ships built", items: [
-    { name: "Faraway", logo: "/cabin/assets/project-faraway.jpg", cover: true, link: "https://faraway-solver.com", from: "Jan 2026", to: "today", kind: "Personal project",
-      shot: "/cabin/assets/project-faraway.jpg", skills: ["Svelte", "SvelteKit", "AWS", "Computer vision", "Python", "Serverless"] },
-    { name: "Abracadabra", logo: "/cabin/assets/project-abracadabra.jpg", cover: true, link: "https://github.com/Stephane-Pires/abracadabra", from: "Nov 2024", to: "today", kind: "Personal project",
-      shot: "/cabin/assets/project-abracadabra.jpg", skills: ["Ansible", "Linux", "Terminal"] },
-    { name: "Caravel", logo: "/cabin/assets/project-caravel.jpg", cover: true, link: "https://caravel-mocha.vercel.app/", from: "Apr 2023", to: "today", kind: "Personal project · this very ship",
-      shot: "/cabin/assets/project-caravel.jpg", skills: ["Next.js", "React", "Tailwind", "Node.js"] },
-    { name: "Ventus", logo: "/cabin/assets/project-ventus.jpg", cover: true, link: "https://ventus-jade.vercel.app/1", from: "Sep 2022", to: "Jul 2023", kind: "Personal project",
-      shot: "/cabin/assets/project-ventus.jpg", skills: ["Vue", "Vite", "WindiCSS"] },
-  ] },
-  { id: "training", tab: "Training", title: "Training grounds", items: [
-    { name: "Audencia", logo: "/cabin/assets/audencia-logo.png", link: "https://www.audencia.com/", from: "Sep 2018", to: "Aug 2019", diff: "1 year",
-      kind: "Double diploma · Engineering & Management",
-      text: "Final year at Audencia Business School in Nantes: finance, accounting and corporate strategy. It gave me the company's point of view, and showed me my heart was in building software.",
-      missions: ["Semester in management, in English", "Semester in business development"],
-      skills: ["Negotiation", "Finance", "Management", "Accounting", "Change management", "Business development"] },
-    { name: "Isep", logo: "/cabin/assets/isep-logo.png", link: "https://en.isep.fr/", from: "Sep 2016", to: "Jun 2018", diff: "2 years",
-      kind: "Engineering school · after CPGE",
-      text: "Chosen for a love of programming: computer science, algorithms, project management, networking and systems architecture.",
-      missions: ["First year: computing and programming", "Second year: information-systems architecture"],
-      skills: ["Java", "HTML", "CSS", "JavaScript", "SQL"] },
-  ] },
-  { id: "shore", tab: "Shore leave", title: "Shore leave", items: [
-    { name: "Video games", logo: "/cabin/assets/power-blue.svg", from: "1998", to: "today",
-      text: "It started at four, with Age of Empires on my father's PC. Games shaped my sense of UI and UX more than anything else.",
-      missions: ["Final Fantasy VII", "Rayman", "Monkey Island", "Celeste", "Starcraft"] },
-    { name: "Climbing", logo: "/cabin/assets/arrow-up-down-blue.svg", from: "2022", to: "today",
-      text: "Found after Covid, with a year at the Aspala club in Antony. Looking for a climbing partner, bouldering or routes.",
-      photos: [["/cabin/assets/climbing.jpg", "Climbing"]] },
-    { name: "Biking", logo: "/cabin/assets/map-blue.svg", from: "2018", to: "today",
-      text: "Started commuting by bike in Nantes and never stopped: snow, rain or sunshine.",
-      photos: [["/cabin/assets/bike.jpg", "Out on the bike"], ["/cabin/assets/bike-treasure.jpg", "A treasure found on a ride"]] },
-    { name: "Board games", logo: "/cabin/assets/puzzle-piece-blue.svg", from: "2018", to: "today",
-      text: "Weekly sessions with friends, family and colleagues. The best icebreaker there is.",
-      missions: ["Living Forest", "Carcassonne", "Small World", "Azul", "Micro Macro"] },
-  ] },
-];
 
 const scrollWrap = $("scroll"), sheet = $("sheet"), navEl = $("scroll-nav"), tabsEl = $("scroll-tabs");
 let scrollBuilt = false, scrollOpener = null;
