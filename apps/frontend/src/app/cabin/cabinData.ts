@@ -4,6 +4,7 @@ import { compareDesc, format } from "date-fns"
 
 import { getLabel } from "@/components/Tag"
 import { CURRICULUM_VITAE } from "@/content/curriculum-vitae/english"
+import { TOOLS } from "@/content/tools"
 
 // What the cabin shows, built on the server from the same sources as the rest of the site
 // (Contentlayer posts and the CV), so the cabin never drifts from /logbook, /projects and /about-me.
@@ -44,12 +45,22 @@ export interface CabinData {
   posts: Array<[title: string, date: string, slug: string]>
   projects: Array<[name: string, when: string, stack: string]>
   projectLinks: Record<string, string>
-  about: Array<{ id: string; tab: string; title: string; items: Array<CabinItem> }>
+  about: Array<{
+    id: string
+    tab: string
+    title: string
+    items: Array<CabinItem>
+  }>
   lastSeen: string
+  tools: ReadonlyArray<{ name: string; why: string }>
 }
 
-const sections = (article: "EXPERIENCE" | "EDUCATION" | "HOBBIES" | "PROJECTS") =>
-  Object.values(CURRICULUM_VITAE[article].section) as unknown as Array<CvSection>
+const sections = (
+  article: "EXPERIENCE" | "EDUCATION" | "HOBBIES" | "PROJECTS",
+) =>
+  Object.values(
+    CURRICULUM_VITAE[article].section,
+  ) as unknown as Array<CvSection>
 
 // tag labels without their decorative emoji ("React 🚀" -> "React")
 const skillLabels = (skills: ReadonlyArray<string> = []) =>
@@ -69,14 +80,30 @@ function summary(paragraph = "") {
 const isPicture = (path: string) => !path.endsWith(".svg")
 
 // CV dates are free text ("19 April 2023", "Novembre 2024"): a sortable year * 100 + month
-const MONTHS = ["jan", "feb|fév|fev", "mar", "apr|avr", "may|mai", "jun|juin", "jul|juil", "aug|aoû|aou", "sep", "oct", "nov", "dec|déc"]
+const MONTHS = [
+  "jan",
+  "feb|fév|fev",
+  "mar",
+  "apr|avr",
+  "may|mai",
+  "jun|juin",
+  "jul|juil",
+  "aug|aoû|aou",
+  "sep",
+  "oct",
+  "nov",
+  "dec|déc",
+]
 function dateKey(text: string) {
   const year = Number(text.match(/\d{4}/)?.[0] ?? 0)
   const word = text.toLowerCase().match(/[a-zéû]{3,}/)?.[0] ?? ""
-  const month = MONTHS.findIndex((m) => m.split("|").some((prefix) => word.startsWith(prefix)))
+  const month = MONTHS.findIndex((m) =>
+    m.split("|").some((prefix) => word.startsWith(prefix)),
+  )
   return year * 100 + (month + 1)
 }
-const newestFirst = (a: CvSection, b: CvSection) => dateKey(b.duration.start) - dateKey(a.duration.start)
+const newestFirst = (a: CvSection, b: CvSection) =>
+  dateKey(b.duration.start) - dateKey(a.duration.start)
 
 function timelineItem(section: CvSection): CabinItem {
   const { difference } = section.duration
@@ -89,15 +116,23 @@ function timelineItem(section: CvSection): CabinItem {
     to: section.duration.end,
     diff: difference && difference !== "N/A" ? difference : undefined,
     text: summary(section.content.paragraph),
-    missions: section.content.missions ? [...section.content.missions] : undefined,
-    skills: section.content.skills ? skillLabels(section.content.skills) : undefined,
+    missions: section.content.missions
+      ? [...section.content.missions]
+      : undefined,
+    skills: section.content.skills
+      ? skillLabels(section.content.skills)
+      : undefined,
   }
 }
 
 export function buildCabinData(): CabinData {
   const posts = [...allContents]
     .sort((a, b) => compareDesc(new Date(a.date), new Date(b.date)))
-    .map((post): [string, string, string] => [post.title, format(new Date(post.date), "MMM yyyy"), post.url])
+    .map((post): [string, string, string] => [
+      post.title,
+      format(new Date(post.date), "MMM yyyy"),
+      post.url,
+    ])
 
   const projects = sections("PROJECTS").sort(newestFirst)
   const crews = sections("EXPERIENCE").sort(newestFirst).map(timelineItem)
@@ -110,7 +145,9 @@ export function buildCabinData(): CabinData {
       `${p.duration.start} → ${p.duration.end}`,
       skillLabels(p.content.skills).join(" · "),
     ]),
-    projectLinks: Object.fromEntries(projects.map((p) => [p.label, p.url ?? "/projects"])),
+    projectLinks: Object.fromEntries(
+      projects.map((p) => [p.label, p.url ?? "/projects"]),
+    ),
     about: [
       { id: "crews", tab: "Crews", title: "Crews sailed with", items: crews },
       {
@@ -129,7 +166,12 @@ export function buildCabinData(): CabinData {
           skills: skillLabels(p.content.skills),
         })),
       },
-      { id: "training", tab: "Training", title: "Training grounds", items: sections("EDUCATION").sort(newestFirst).map(timelineItem) },
+      {
+        id: "training",
+        tab: "Training",
+        title: "Training grounds",
+        items: sections("EDUCATION").sort(newestFirst).map(timelineItem),
+      },
       {
         id: "shore",
         tab: "Shore leave",
@@ -137,7 +179,10 @@ export function buildCabinData(): CabinData {
         items: sections("HOBBIES").map((h) => ({
           ...timelineItem(h),
           cover: false,
-          photos: h.content.photos?.map((src): [string, string] => [src, h.label]),
+          photos: h.content.photos?.map((src): [string, string] => [
+            src,
+            h.label,
+          ]),
         })),
       },
     ],
@@ -146,5 +191,6 @@ export function buildCabinData(): CabinData {
         ? `${newest.name}, since ${newest.from}`
         : `${newest.name}, until ${newest.to}`
       : "",
+    tools: TOOLS,
   }
 }

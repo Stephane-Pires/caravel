@@ -8,7 +8,8 @@ import { RenderPass } from "three/addons/postprocessing/RenderPass.js";
 import { UnrealBloomPass } from "three/addons/postprocessing/UnrealBloomPass.js";
 import { OutputPass } from "three/addons/postprocessing/OutputPass.js";
 import { FONTS, setFonts, INK, grad, toon, glow, mesh, at, group, hot, canvasTex, plankTex, tubeBetween } from "./toolkit.js";
-import { POSTS, PROJECT_LINKS, PROJECTS, ABOUT, ISLANDS, LAST_SEEN, setContent } from "./content.js";
+import { POSTS, PROJECT_LINKS, PROJECTS, ABOUT, ISLANDS, LAST_SEEN, TOOLS, setContent } from "./content.js";
+import { engineRoom } from "./engine.js";
 import { drawChart } from "./chart.js";
 import { makeSea, palm, bottle, chest, openBook, drawPages, bookEntries, PAGE_W, PAGE_H, puff, cloud, bicycle, gameBox, seaBird, shipCat } from "./props.js";
 
@@ -473,6 +474,22 @@ const chestHot = hot(ch, {
   view: { pos: [1.45, 1.75, 0.6], target: [3.0, 0.5, -0.9] },
 });
 hotspots.push(chestHot);
+
+// the engine room, on the wall by the door: how this site is built, shipped and running (engine.js),
+// and the tools it's built with. The live numbers arrive once the scene is up.
+const engine = engineRoom(TOOLS);
+engine.root.position.set(3.97, 2.35, -1.75); engine.root.rotation.y = -Math.PI / 2;
+scene.add(engine.root);
+const engineHot = hot(engine.root, {
+  id: "engine", label: "Engine room", dest: "how this site runs", route: "/api/engine-room",
+  view: { pos: [1.85, 2.35, -1.24], target: [3.97, 2.3, -1.24] }, // the panel and the tool rack side by side
+});
+hotspots.push(engineHot);
+ticks.push((t, dt) => engine.tick(t, dt));
+fetch("/api/engine-room", { signal: ac.signal })
+  .then((response) => (response.ok ? response.json() : null))
+  .then((data) => { if (data) engine.update(data); })
+  .catch(() => { /* the instruments stay at rest */ });
 // in its close-up, the lid opens on the CV: one scroll per language
 const CV_TIPS = {
   english: { name: "Captain's CV · English", quality: "epic", lines: [["Use: download it (PDF)", "use"]] },
@@ -987,6 +1004,7 @@ const CAPTIONS = {
   chart: "Tap an island to sail to its site.",
   poster: "Unrolling the wanted scroll…",
   chest: "Take a scroll: the CV in English or in French.",
+  engine: "How this site is built and runs, live. Hover an instrument or a tool.",
 };
 function renderFocus(h) {
   fTitle.textContent = h.label;
@@ -1185,6 +1203,7 @@ canvas.addEventListener("pointerup", (e) => {
     else if (h === chartHot) { const isl = islandAt(lastHit); if (isl) sailTo(isl); }
     else if (h === logHot) { const i = entryAt(lastHit); if (i >= 0) location.assign(bookEntries()[i].href); }
     else if (h === chestHot) { const cv = cvAt(lastHit); if (cv) downloadCv(cv); }
+    else if (h === engineHot) { const info = engine.tipAt(lastHit); if (info) { showTip(e, info); clearTimeout(tipTimer); tipTimer = setTimeout(hideTip, 2600); } } // phones: tap to read
     else if (!h && focused) backToCabin(); // a tap beside the object steps back
   }
   down = null;
@@ -1206,6 +1225,10 @@ canvas.addEventListener("pointermove", (e) => {
     cvHover = h === chestHot ? cvAt(lastHit) : null;
     canvas.style.cursor = cvHover ? "pointer" : "default";
     if (cvHover) { clearTimeout(tipTimer); tipTimer = 0; showTip(e, CV_TIPS[cvHover]); } else if (!tipTimer) hideTip();
+  } else if (focused === engineHot) {
+    const info = h === engineHot ? engine.tipAt(lastHit) : null; // a day's lamp, a deploy's flag, a gauge, a tool
+    canvas.style.cursor = "default";
+    if (info) { clearTimeout(tipTimer); tipTimer = 0; showTip(e, info); } else if (!tipTimer) hideTip();
   }
 });
 

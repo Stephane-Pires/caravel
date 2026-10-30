@@ -7,6 +7,7 @@ export let PROJECTS = [];       // [name, "start → end", "skill · skill"]
 export let PROJECT_LINKS = {};  // name -> url
 export let ABOUT = [];          // wanted-scroll sections: crews, ships, training, shore leave
 export let LAST_SEEN = "";      // the newest crew, for the bounty facts
+export let TOOLS = [];          // the engine room's tool rack: { name, why }
 
 export function setContent(data) {
   POSTS = data.posts;
@@ -14,6 +15,7 @@ export function setContent(data) {
   PROJECT_LINKS = data.projectLinks;
   ABOUT = data.about;
   LAST_SEEN = data.lastSeen;
+  TOOLS = data.tools ?? [];
 }
 
 // where each project's island sits on the sea chart (its art is drawn in chart.js)
