@@ -4,7 +4,10 @@ import {
   databaseCause,
   isSlotConflict,
 } from "../../utils/exception.js"
-import { MailService } from "../../utils/mail.js"
+import {
+  CalendarUnavailableError,
+  getCalendar,
+} from "../../utils/google-calendar.js"
 import { createManageToken, tokenMatches } from "../../utils/token.js"
 import { passesTurnstile } from "../../utils/turnstile.js"
 import {
@@ -14,6 +17,7 @@ import {
   RendezVousEntity,
 } from "./rendez-vous.entity.js"
 import {
+  RendezVousCalendarUnavailableException,
   RendezVousInvalidScheduleAtAlreadyTakenException,
   RendezVousNotFoundException,
   RendezVousSpamCheckFailedException,
@@ -89,9 +93,37 @@ export async function createRendezVousService(
 
   const createdRendezVous = createdRendezVousList[0]
 
-  await MailService.sendRendezVousCreated(createdRendezVous)
+  // the event in the captain's calendar: Google invites the guest, adds a Meet link and reminds both.
+  // No invitation, no rendez-vous: if Google can't be reached, the booking is undone.
+  let event
+  try {
+    event = await getCalendar().createEvent({
+      start: createdRendezVous.scheduledAt,
+      end: createdRendezVous.endsAt,
+      guestEmail: createdRendezVous.contactEmail,
+      guestName: createdRendezVous.guestName ?? createdRendezVous.contactEmail,
+      topic: createdRendezVous.topic,
+      rendezVousId: createdRendezVous.id,
+    })
+  } catch (error) {
+    if (!(error instanceof CalendarUnavailableError)) throw error
+    console.error(error)
+    await deleteRendezVousRepository([createdRendezVous.id])
+    return new RendezVousCalendarUnavailableException()
+  }
 
-  return { ...createdRendezVous, manageToken }
+  const linked = await updateRendezVousRepository([
+    [
+      createdRendezVous.id,
+      { calendarEventId: event.eventId, meetLink: event.meetLink },
+    ],
+  ])
+  if (linked instanceof DatabaseException) return linked
+
+  return {
+    ...RendezVousEntity.fromRepository(linked[0]),
+    manageToken,
+  }
 }
 
 // the rendez-vous a token opens, or nothing: an unknown id and a wrong token look the same,
@@ -118,10 +150,19 @@ export async function cancelRendezVousService(ids: Array<RendezVous["id"]>) {
       return new RendezVousNotFoundException()
     }
 
-    await deleteRendezVousRepository(ids)
+    // cancel the calendar events first (Google tells the guests); keep the rows if that fails
+    for (const rendezVous of rendezVousList) {
+      if (rendezVous.calendarEventId) {
+        await getCalendar().cancelEvent(rendezVous.calendarEventId)
+      }
+    }
 
-    await MailService.sendCancelRendezVous(rendezVousList)
+    await deleteRendezVousRepository(ids)
   } catch (error) {
+    if (error instanceof CalendarUnavailableError) {
+      console.error(error)
+      return new RendezVousCalendarUnavailableException()
+    }
     // Should be a Service Exception
     throw new DatabaseException("Error deleting rendez-vous", {
       cause: databaseCause(error),
@@ -176,7 +217,29 @@ export async function moveRendezVousService(
 
     const movedRendezVous = movedRendezVousList[0]
 
-    MailService.sendRendezVousMoved(rendezVousToUpdate, movedRendezVous)
+    // move the calendar event (Google tells the guest); put the rendez-vous back if that fails
+    if (movedRendezVous.calendarEventId) {
+      try {
+        await getCalendar().moveEvent(
+          movedRendezVous.calendarEventId,
+          movedRendezVous.scheduledAt,
+          movedRendezVous.endsAt,
+        )
+      } catch (error) {
+        if (!(error instanceof CalendarUnavailableError)) throw error
+        console.error(error)
+        await updateRendezVousRepository([
+          [
+            id,
+            {
+              scheduledAt: rendezVousToUpdate.scheduledAt,
+              endsAt: rendezVousToUpdate.endsAt,
+            },
+          ],
+        ])
+        return new RendezVousCalendarUnavailableException()
+      }
+    }
 
     return movedRendezVous
   } catch (error) {

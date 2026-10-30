@@ -55,6 +55,15 @@ export class RendezVousOutsideAvailabilityException extends DomainException {
   }
 }
 
+export class RendezVousCalendarUnavailableException extends DomainException {
+  readonly code = "1007"
+  readonly description = "The calendar couldn't be reached"
+
+  constructor() {
+    super("The calendar couldn't be reached, please try again in a moment")
+  }
+}
+
 // export function mapRendezVousException(exception: DatabaseException) {
 //   // extract PostgreSQL error code
 //   // extract PostgreSQL database contraint name

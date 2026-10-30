@@ -7,6 +7,7 @@ import {
   RendezVousEntity,
 } from "./rendez-vous.entity.js"
 import {
+  RendezVousCalendarUnavailableException,
   RendezVousInvalidScheduleAtAlreadyTakenException,
   RendezVousInvalidScheduleAtException,
   RendezVousNotFoundException,
@@ -80,6 +81,10 @@ app.openapi(postRendezVousRoute, async (c) => {
     return c.json(result, 429)
   }
 
+  if (result instanceof RendezVousCalendarUnavailableException) {
+    return c.json(result.toDTO(), 503)
+  }
+
   if (result instanceof RendezVousInvalidScheduleAtAlreadyTakenException) {
     return c.json(result, 409)
   }
@@ -106,7 +111,11 @@ app.openapi(cancelRendezVousRoute, async (c) => {
     return c.json(new RendezVousNotFoundException().toDTO(), 404)
   }
 
-  await cancelRendezVousService([id])
+  const cancelled = await cancelRendezVousService([id])
+
+  if (cancelled instanceof RendezVousCalendarUnavailableException) {
+    return c.json(cancelled.toDTO(), 503)
+  }
 
   return c.newResponse(null, 204)
 })
@@ -135,6 +144,9 @@ app.openapi(moveRendezVousRoute, async (c) => {
     movedRendezVous instanceof RendezVousOutsideAvailabilityException
   ) {
     return c.json(movedRendezVous.toDTO(), 422)
+  }
+  if (movedRendezVous instanceof RendezVousCalendarUnavailableException) {
+    return c.json(movedRendezVous.toDTO(), 503)
   }
   if (movedRendezVous instanceof DatabaseException) {
     return c.json(movedRendezVous, 500)

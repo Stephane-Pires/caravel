@@ -2,6 +2,7 @@ import dayjs, { type Dayjs } from "dayjs"
 import timezone from "dayjs/plugin/timezone.js"
 import utc from "dayjs/plugin/utc.js"
 
+import { getCalendar } from "../../utils/google-calendar.js"
 import { getOverlappingRendezVousRepository } from "../rendez-vous/rendez-vous.repository.js"
 import { AVAILABILITY } from "./availability.config.js"
 
@@ -76,10 +77,25 @@ export async function getFreeSlotsService(range?: { from?: Date; to?: Date }) {
     range?.to && dayjs(range.to).isBefore(latest) ? dayjs(range.to) : latest
   if (!from.isBefore(to)) return []
 
-  const busy = await getOverlappingRendezVousRepository(
+  const booked = await getOverlappingRendezVousRepository(
     from.toDate(),
     slotEnd(to.toDate()),
   )
+  // the captain's own calendar: meetings, trips… If Google can't be reached, the bookings
+  // alone decide, and booking that slot is then checked again (and refused if Google is still down)
+  let elsewhere: Array<Slot> = []
+  try {
+    elsewhere = await getCalendar().busyRanges(
+      from.toDate(),
+      slotEnd(to.toDate()),
+    )
+  } catch (error) {
+    console.error(
+      "Busy times unavailable, offering slots from bookings only",
+      error,
+    )
+  }
+  const busy = [...booked, ...elsewhere]
   return offeredSlots(from, to).filter(
     (slot) => !busy.some((booked) => overlaps(slot, booked)),
   )

@@ -10,8 +10,13 @@ import {
 import {
   RendezVousInvalidScheduleAtAlreadyTakenException,
   RendezVousInvalidScheduleAtException,
+  RendezVousCalendarUnavailableException,
   RendezVousOutsideAvailabilityException,
 } from "./rendez-vous.exception.js"
+import {
+  CalendarUnavailableError,
+  getCalendar,
+} from "../../utils/google-calendar.js"
 import { getOverlappingRendezVousRepository } from "./rendez-vous.repository.js"
 
 const RendezVousSchema = z.object({
@@ -23,6 +28,8 @@ const RendezVousSchema = z.object({
   endsAt: z.date(),
   guestName: z.string().nullable(),
   topic: z.string().nullable(),
+  calendarEventId: z.string().nullable(),
+  meetLink: z.string().nullable(),
 })
 
 export type RendezVous = z.infer<typeof RendezVousSchema>
@@ -74,22 +81,30 @@ export const RendezVousQueryParamSchema = z
   )
   .openapi("RendezVousQueryParamSchema")
 
-export const RendezVousDTOSchema = RendezVousSchema.extend({
-  id: RendezVousSchema.shape.id.openapi({
-    example: 1,
-  }),
-  contactEmail: ContactSchema.shape.email.openapi({
-    example: "john.doe@gmail.com",
-  }),
-  scheduledAt: z.date().openapi({
-    example: "2023-10-01T10:00:00Z",
-  }),
-  endsAt: z.date().openapi({
-    example: "2023-10-01T10:30:00Z",
-  }),
-  guestName: z.string().nullable().openapi({ example: "Jack Sparrow" }),
-  topic: z.string().nullable().openapi({ example: "A role on your team" }),
-}).openapi("RendezVousDTO")
+export const RendezVousDTOSchema = RendezVousSchema.omit({
+  calendarEventId: true, // internal: the link to the captain's calendar
+})
+  .extend({
+    id: RendezVousSchema.shape.id.openapi({
+      example: 1,
+    }),
+    contactEmail: ContactSchema.shape.email.openapi({
+      example: "john.doe@gmail.com",
+    }),
+    scheduledAt: z.date().openapi({
+      example: "2023-10-01T10:00:00Z",
+    }),
+    endsAt: z.date().openapi({
+      example: "2023-10-01T10:30:00Z",
+    }),
+    guestName: z.string().nullable().openapi({ example: "Jack Sparrow" }),
+    topic: z.string().nullable().openapi({ example: "A role on your team" }),
+    meetLink: z
+      .string()
+      .nullable()
+      .openapi({ example: "https://meet.google.com/abc-defg-hij" }),
+  })
+  .openapi("RendezVousDTO")
 
 type RendezVousDTO = z.infer<typeof RendezVousDTOSchema>
 
@@ -160,6 +175,8 @@ export const UpdateRendezVousSchema = z
 
 export type UpdateRendezVous = z.infer<typeof UpdateRendezVousSchema> & {
   endsAt?: Date
+  calendarEventId?: string | null
+  meetLink?: string | null
 }
 
 export const MoveRendezVousPayloadSchema = z
@@ -189,6 +206,7 @@ interface InvariantError {
     | RendezVousInvalidScheduleAtException
     | RendezVousInvalidScheduleAtAlreadyTakenException
     | RendezVousOutsideAvailabilityException
+    | RendezVousCalendarUnavailableException
 }
 
 type InvariantResult = Promise<InvariantSuccess | InvariantError>
@@ -239,6 +257,28 @@ export class RendezVousEntity {
       return {
         success: false,
         exception: new RendezVousInvalidScheduleAtAlreadyTakenException(),
+      }
+    }
+
+    // the captain may be busy elsewhere in his calendar (a moving rendez-vous ignores its own event)
+    try {
+      const busy = await getCalendar().busyRanges(
+        rendezVous.scheduledAt,
+        slotEnd(rendezVous.scheduledAt),
+        rendezVous.calendarEventId ? [rendezVous.calendarEventId] : [],
+      )
+      if (busy.length > 0) {
+        return {
+          success: false,
+          exception: new RendezVousInvalidScheduleAtAlreadyTakenException(),
+        }
+      }
+    } catch (error) {
+      if (!(error instanceof CalendarUnavailableError)) throw error
+      console.error(error)
+      return {
+        success: false,
+        exception: new RendezVousCalendarUnavailableException(),
       }
     }
 
