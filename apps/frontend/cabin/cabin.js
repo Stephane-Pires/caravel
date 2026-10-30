@@ -47,7 +47,7 @@ let renderer;
 try {
   renderer = new THREE.WebGLRenderer({ canvas, antialias: true });
 } catch (e) {
-  veil.innerHTML = "<p>This browser can't draw the 3D cabin.<small>The real site would show its plain pages here instead.</small></p>";
+  veil.innerHTML = "<p>This browser can't draw the 3D cabin.<small>Everything in it is also on the <a href='/logbook'>regular pages</a>.</small></p>";
   throw e;
 }
 const pixelRatio = Math.min(devicePixelRatio, small ? 1.5 : 2);
@@ -934,7 +934,6 @@ function el(tag, attrs = {}, ...kids) {
   kids.forEach((k) => e.append(k));
   return e;
 }
-const wouldOpen = (route) => { fNote.textContent = ""; fNote.append("On the real site this opens ", el("code", {}, route), "."); };
 
 function renderFocus(h) {
   fTitle.textContent = h.label;
@@ -943,9 +942,7 @@ function renderFocus(h) {
     fLede.textContent = "Every post is an entry in the captain's logbook. The pages on the table list them too.";
     const ul = el("ul", { class: "list" });
     POSTS.forEach(([t, d, slug]) => {
-      const b = el("button", { type: "button" }, el("span", { class: "t" }, t), el("span", { class: "m" }, d));
-      b.addEventListener("click", () => wouldOpen(`/logbook/${slug}`));
-      ul.append(el("li", {}, b));
+      ul.append(el("li", {}, el("a", { href: `/logbook/${slug}` }, el("span", { class: "t" }, t), el("span", { class: "m" }, d))));
     });
     fBody.append(ul);
   } else if (h.id === "chart") {
@@ -966,15 +963,13 @@ function renderFocus(h) {
     fBody.append(dl, el("div", { class: "actions", style: "margin-top:10px" }, b));
   } else if (h.id === "chest") {
     fLede.textContent = "The lid creaks open: the captain's CV, ready to take away.";
-    const en = el("button", { type: "button" }, "Download CV · English");
-    const fr = el("button", { type: "button" }, "Télécharger le CV · Français");
-    en.addEventListener("click", () => wouldOpen("/api/download/curriculum?language=english"));
-    fr.addEventListener("click", () => wouldOpen("/api/download/curriculum?language=french"));
+    // the same PDFs as the download buttons on /about-me
+    const en = el("a", { href: "/api/download/curriculum?language=english", download: "cv-stephane-pires-english.pdf" }, "Download CV · English");
+    const fr = el("a", { href: "/api/download/curriculum?language=french", download: "cv-stephane-pires-francais.pdf" }, "Télécharger le CV · Français");
     fBody.append(el("div", { class: "actions" }, en, fr));
   } else if (h.id === "bottle") {
     fLede.textContent = "Uncork it to write to the captain and book a rendez-vous.";
     fBody.append(el("p", { class: "detail" }, "The rendez-vous page is hidden for now. When it comes back, this bottle opens the booking form."));
-    wouldOpen("/pourparler");
   } else if (h.id === "musicbox") {
     fLede.textContent = "An original island tune, played live by your browser.";
     const b = el("button", { type: "button" }, playing ? "■ Stop the music" : "♪ Wind it up");
