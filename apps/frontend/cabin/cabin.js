@@ -8,11 +8,12 @@ import { RenderPass } from "three/addons/postprocessing/RenderPass.js";
 import { UnrealBloomPass } from "three/addons/postprocessing/UnrealBloomPass.js";
 import { OutputPass } from "three/addons/postprocessing/OutputPass.js";
 import { INK, grad, toon, glow, mesh, at, group, hot, canvasTex, plankTex, tubeBetween } from "./toolkit.js";
-import { POSTS, PROJECT_LINKS, PROJECTS, ABOUT, ISLANDS } from "./content.js";
+import { POSTS, PROJECT_LINKS, PROJECTS, ABOUT, ISLANDS, LAST_SEEN, setContent } from "./content.js";
 import { drawChart } from "./chart.js";
 import { makeSea, palm, bottle, chest, openBook, puff, cloud, bicycle, gameBox, seaBird, shipCat } from "./props.js";
 
-export async function mountCabin() {
+export async function mountCabin(data) {
+setContent(data); // posts, projects and CV from the server
 // every window listener goes through this controller, so leaving the page removes them
 const ac = new AbortController();
 const addEventListener = (type, fn, opts) => window.addEventListener(type, fn, { ...(typeof opts === "object" ? opts : {}), signal: ac.signal });
@@ -957,7 +958,7 @@ function renderFocus(h) {
   } else if (h.id === "poster") {
     fLede.textContent = "Fullstack developer, looking for challenges and adventures.";
     const dl = el("dl", { class: "facts" });
-    [["Crews", "Figures · Leakmited · Analog Way"] /* Izicrédit hidden for now */, ["Schools", "Isep · Audencia"], ["Shore leave", "Video games · Climbing · Biking · Board games"]]
+    [["Crews", "crews"], ["Schools", "training"], ["Shore leave", "shore"]].map(([label, id]) => [label, ABOUT.find((s) => s.id === id).items.map((it) => it.name).join(" · ")])
       .forEach(([k, v]) => dl.append(el("dt", {}, k), el("dd", {}, v)));
     const b = el("button", { type: "button" }, "Read the full story");
     b.addEventListener("click", () => openScroll(b));
@@ -989,7 +990,7 @@ function buildScroll() {
   const img = el("img", { alt: "Wanted poster: Stéphane Pires, hired or alive, bounty 70,000 euros", width: "400", height: "540" });
   img.src = posterTex.image.toDataURL("image/png");
   const facts = el("dl", { class: "s-facts" });
-  [["Last seen", "Figures, until Oct 2026"], ["Sailing since", "2019"], ["Ships built", `${PROJECTS.length}`], ["Bounty", "€ 70,000-"]]
+  [["Last seen", LAST_SEEN], ["Sailing since", "2019"], ["Ships built", `${PROJECTS.length}`], ["Bounty", "€ 70,000-"]]
     .forEach(([k, v]) => facts.append(el("dt", {}, k), el("dd", {}, v)));
   sheet.append(el("section", { id: "s-bounty", class: "s-sec" },
     el("div", { class: "bounty" }, img, el("div", {},
