@@ -2,6 +2,8 @@
 
 import { useEffect, useSyncExternalStore } from "react"
 
+import { track } from "@/lib/track"
+
 import { CabinFallback } from "./CabinFallback"
 import { CabinOverlay } from "./CabinOverlay"
 import "./cabin.css"
@@ -48,7 +50,13 @@ function checkSupport(params: URLSearchParams): Support {
 const subscribe = () => () => {}
 const serverSupport = (): Support => "checking"
 
-export function CabinClient({ data, fonts }: { data: CabinData; fonts: CabinFonts }) {
+export function CabinClient({
+  data,
+  fonts,
+}: {
+  data: CabinData
+  fonts: CabinFonts
+}) {
   const status = useSyncExternalStore(subscribe, detectSupport, serverSupport)
 
   useEffect(() => {
@@ -60,9 +68,15 @@ export function CabinClient({ data, fonts }: { data: CabinData; fonts: CabinFont
     // dev double-mount, or leaving the page early) never starts a second scene
     async function start() {
       try {
+        const startedAt = performance.now()
         const { mountCabin } = await import("@/cabin/cabin.js")
         if (cancelled) return
-        const cleanup = await mountCabin({ ...data, fonts: fonts.families })
+        const cleanup = await mountCabin({
+          ...data,
+          fonts: fonts.families,
+          track,
+          startedAt,
+        })
         if (cancelled) cleanup()
         else dispose = cleanup
       } catch (error) {

@@ -4,6 +4,8 @@ import Link from "next/link"
 import { usePathname, useRouter } from "next/navigation"
 import { type MouseEvent, useCallback, useMemo } from "react"
 
+import { track } from "@/lib/track"
+
 // Lo-fi is the classic site, hi-fi the 3D cabin. Switching keeps your place:
 // each classic page has a close-up in the cabin, and the other way round.
 // It is pinned to the same corner in both, so switching never moves it.
@@ -35,10 +37,23 @@ export function FidelitySwitch() {
   const hiFi = pathname.startsWith(CABIN)
   // in the cabin there is no close-up to match, so this is plain /cabin
   const hiFiLink = useMemo(() => hiFiHref(pathname), [pathname])
+  const goHiFi = useCallback(
+    () => track("site.fidelity", { to: "hi-fi", from: pathname }),
+    [pathname],
+  )
+  // the side you're already on stays put (no reload of the page or the cabin)
+  const stay = useCallback(
+    (event: MouseEvent<HTMLAnchorElement>) => event.preventDefault(),
+    [],
+  )
 
   const goLoFi = useCallback(
     (event: MouseEvent<HTMLAnchorElement>) => {
       const href = loFiHref(window.location.hash)
+      track("site.fidelity", {
+        to: "lo-fi",
+        from: window.location.hash || "overview",
+      })
       if (href === "/") return
       event.preventDefault()
       router.push(href)
@@ -53,7 +68,7 @@ export function FidelitySwitch() {
     >
       <Link
         href="/"
-        onClick={hiFi ? goLoFi : undefined}
+        onClick={hiFi ? goLoFi : stay}
         aria-current={hiFi ? undefined : "page"}
         title="The classic site"
         className={`${SEGMENT} ${hiFi ? "hover:bg-amber-300/20" : ""}`}
@@ -62,6 +77,7 @@ export function FidelitySwitch() {
       </Link>
       <Link
         href={hiFiLink}
+        onClick={hiFi ? stay : goHiFi}
         aria-current={hiFi ? "page" : undefined}
         title="The 3D captain's cabin"
         className={`${SEGMENT} ${hiFi ? "" : "hover:bg-amber-300/20"}`}
