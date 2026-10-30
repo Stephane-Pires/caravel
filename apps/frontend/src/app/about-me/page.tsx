@@ -166,11 +166,13 @@ export default function AboutMe() {
                 />
               </section>
 
+              {/* Izicrédit is hidden for now, see english.ts
               <section ref={setRefSectionExperience("IZICREDIT")}>
                 <SectionContent
                   section={CURRICULUM_VITAE.EXPERIENCE.section.IZICREDIT}
                 />
               </section>
+              */}
 
               <section ref={setRefSectionExperience("LEAKMITED")}>
                 <SectionContent

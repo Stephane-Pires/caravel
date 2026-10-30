@@ -111,6 +111,8 @@ export const CURRICULUM_VITAE = {
           skills: ["NODEJS", "TYPESCRIPT", "REACT", "REDUX"],
         },
       },
+      // Izicrédit is hidden from the CV for now: remove the comment markers (and the one in about-me/page.tsx) to show it again
+      /*
       IZICREDIT: {
         id: "IZICREDIT",
         label: "Izicrédit",
@@ -140,6 +142,7 @@ export const CURRICULUM_VITAE = {
           ],
         },
       },
+      */
       LEAKMITED: {
         id: "LEAKMITED",
         label: "Leakmited",
