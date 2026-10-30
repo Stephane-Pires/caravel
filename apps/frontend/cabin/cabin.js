@@ -1058,11 +1058,14 @@ function spy() {
   tabsEl.querySelectorAll("button").forEach((b) => b.setAttribute("aria-current", String(b.dataset.sec === current)));
 }
 
+// the sticky timeline marks sit right under the tabs, whose height changes as they wrap (phones, rotation)
+const measureTabs = () => sheet.style.setProperty("--tabs-h", `${navEl.offsetHeight}px`);
+addEventListener("resize", () => { if (!scrollWrap.hidden) measureTabs(); });
 function openScroll(opener) {
   if (!scrollBuilt) buildScroll();
   scrollOpener = opener;
   scrollWrap.hidden = false;
-  sheet.style.setProperty("--tabs-h", `${navEl.offsetHeight}px`);
+  measureTabs();
   sheet.scrollTop = 0;
   spy();
   tabsEl.querySelector("button").focus({ preventScroll: true });
