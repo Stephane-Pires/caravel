@@ -10,7 +10,7 @@ import { OutputPass } from "three/addons/postprocessing/OutputPass.js";
 import { FONTS, setFonts, INK, grad, toon, glow, mesh, at, group, hot, canvasTex, plankTex, tubeBetween } from "./toolkit.js";
 import { POSTS, PROJECT_LINKS, PROJECTS, ABOUT, ISLANDS, LAST_SEEN, setContent } from "./content.js";
 import { drawChart } from "./chart.js";
-import { makeSea, palm, bottle, chest, openBook, puff, cloud, bicycle, gameBox, seaBird, shipCat } from "./props.js";
+import { makeSea, palm, bottle, chest, openBook, drawPages, bookEntries, PAGE_W, PAGE_H, puff, cloud, bicycle, gameBox, seaBird, shipCat } from "./props.js";
 
 export async function mountCabin(data) {
 setContent(data); // posts, projects and CV from the server
@@ -288,11 +288,27 @@ scene.add(chair2);
 // logbook, compass and candle on the table
 const book = at(openBook(), -0.32, 0.99, -1.05, -0.3);
 const quill = at(mesh(new THREE.ConeGeometry(0.04, 0.5, 6), 0xf6ecd6), 0.2, 1.08, -0.85); quill.rotation.z = 1.25; quill.rotation.y = 0.5;
-scene.add(book, quill);
-hotspots.push(hot(group(book, quill), {
+const logbook = group(book, quill); // group() re-parents them, so it's the group that joins the scene
+scene.add(logbook);
+const logHot = hot(logbook, {
   id: "logbook", label: "Logbook", dest: "Logbook", route: "/logbook",
-  view: { pos: [-0.05, 1.95, -0.45], target: [-0.32, 1.0, -1.05] },
-}));
+  view: { pos: [-0.47, 2.0, -0.6], target: [-0.32, 1.08, -1.05] }, // square on to the pages, the way the book faces
+});
+hotspots.push(logHot);
+// the pages list the latest posts: a tap on a line opens it, hovering underlines it in gold
+const bookPages = book.userData.pages, bookMap = bookPages[0].material.map;
+let bookHover = -1;
+function hoverEntry(i) {
+  if (i === bookHover) return;
+  bookHover = i;
+  drawPages(bookMap.image.getContext("2d"), PAGE_W, PAGE_H, i);
+  bookMap.needsUpdate = true;
+}
+function entryAt(hit) {
+  if (!hit || !bookPages.includes(hit.object) || !hit.uv) return -1;
+  const px = hit.uv.x * PAGE_W, py = (1 - hit.uv.y) * PAGE_H;
+  return bookEntries().findIndex(({ box: [bx, by, bw, bh] }) => px >= bx && px <= bx + bw && py >= by && py <= by + bh);
+}
 scene.add(at(mesh(new THREE.CylinderGeometry(0.13, 0.13, 0.04, 20), 0xd9a441), -0.15, 1.01, -1.7));
 const flame = at(new THREE.Mesh(new THREE.ConeGeometry(0.035, 0.11, 8), glow(2.6, 1.8, 0.7)), 0.5, 1.27, -1.55);
 const candleLight = new THREE.PointLight(0xffb15c, 0.6, 3.5, 1.5); candleLight.position.set(0.5, 1.35, -1.55);
@@ -309,10 +325,7 @@ const musicBox = group(
   crank, mbHinge,
 );
 scene.add(at(musicBox, 0.45, 0.99, -0.85, 0.5));
-const musicHot = hot(musicBox, {
-  id: "musicbox", label: "Music box", dest: "the theme", route: "♪",
-  view: { pos: [1.05, 1.5, -0.2], target: [0.45, 1.06, -0.85] },
-});
+const musicHot = hot(musicBox, { id: "musicbox", label: "Music box", dest: "the theme", route: "♪" }); // a tap winds it up or stops it
 hotspots.push(musicHot);
 
 // sea chart and wanted poster on the side wall
@@ -435,19 +448,20 @@ const poster = group(
 poster.children[1].receiveShadow = true;
 poster.position.set(-3.98, 2.45, 1.05); poster.rotation.y = Math.PI / 2; poster.rotation.z = 0.04;
 scene.add(poster);
-hotspots.push(hot(poster, {
+const posterHot = hot(poster, {
   id: "poster", label: "Wanted poster", dest: "About me", route: "/about-me",
   view: { pos: [-2.25, 2.4, 1.05], target: [-3.98, 2.42, 1.05] },
-}));
-hotspots[hotspots.length - 1].glow = poster.children[1].material;
+});
+posterHot.glow = poster.children[1].material;
+hotspots.push(posterHot);
 
 // bottle catching the sun on the sill
 const btl = at(bottle(), 1.05, WIN.y0 + 0.06, -2.88);
 scene.add(btl);
-const bottleHot = hot(btl, {
-  id: "bottle", label: "Message in a bottle", dest: "Pourparler", route: "/pourparler",
-  view: { pos: [1.45, 1.75, -1.55], target: [1.05, 1.42, -2.88] },
-});
+const bottleHot = hot(btl, { id: "bottle", label: "Message in a bottle", tipOnly: true, tip: { name: "Message in a bottle", quality: "uncommon", lines: [
+  ["A note rolled up inside, for booking a rendez-vous with the captain."],
+  ["The rendez-vous page is resting for now.", "flavor"],
+] } });
 hotspots.push(bottleHot);
 
 // treasure chest, barrel, rope
@@ -459,6 +473,23 @@ const chestHot = hot(ch, {
   view: { pos: [1.45, 1.75, 0.6], target: [3.0, 0.5, -0.9] },
 });
 hotspots.push(chestHot);
+// in its close-up, the lid opens on the CV: one scroll per language
+const CV_TIPS = {
+  english: { name: "Captain's CV · English", quality: "epic", lines: [["Use: download it (PDF)", "use"]] },
+  french: { name: "CV du capitaine · Français", quality: "epic", lines: [["Use: le télécharger (PDF)", "use"]] },
+};
+let cvHover = null;
+function cvAt(hit) {
+  if (!hit) return null;
+  for (let o = hit.object; o; o = o.parent) if (o.userData.cv) return o.userData.cv;
+  return null;
+}
+function downloadCv(language) {
+  // the same PDFs as the download buttons on /about-me
+  const a = el("a", { href: `/api/download/curriculum?language=${language}`, download: `cv-stephane-pires-${language}.pdf` });
+  document.body.append(a); a.click(); a.remove();
+  fNote.textContent = language === "french" ? "Le CV est à vous." : "The CV is yours.";
+}
 scene.add(at(mesh(new THREE.CylinderGeometry(0.38, 0.42, 0.9, 16), 0x8a5733), 3.35, 0.45, 2.55));
 [0.25, 0.68].forEach((y) => scene.add(at(mesh(new THREE.TorusGeometry(0.4, 0.025, 6, 24), 0x3a2a1a, { outline: false }), 3.35, y, 2.55).rotateX(Math.PI / 2)));
 
@@ -817,9 +848,10 @@ let focused = null, playing = false;
 const approach = (cur, target, dt, speed = 4) => cur + (target - cur) * Math.min(1, dt * speed);
 ticks.push((t, dt) => {
   treasure.hinge.rotation.x = approach(treasure.hinge.rotation.x, focused === chestHot ? -1.25 : 0, dt);
+  treasure.scrolls.forEach((sc) => { sc.position.y = approach(sc.position.y, 0.58 + (cvHover === sc.userData.cv ? 0.06 : 0), dt, 6); });
   mbHinge.rotation.x = approach(mbHinge.rotation.x, playing ? -1.1 : 0, dt);
   if (playing) crank.rotation.x += dt * 4;
-  const lifted = focused === bottleHot;
+  const lifted = hovered === bottleHot; // it rises off the sill while you look at it
   btl.position.y = approach(btl.position.y, WIN.y0 + 0.06 + (lifted ? 0.18 : 0), dt, 3);
   btl.rotation.y = lifted ? btl.rotation.y + dt * 0.8 : approach(btl.rotation.y, 0, dt, 2);
 });
@@ -861,7 +893,14 @@ function startStems() {
 }
 
 function setMusicUI() {
-  if (focused === musicHot) renderFocus(musicHot);
+  const action = busy ? "Tuning up…" : playing ? "Use: stop the music" : "Use: wind it up";
+  musicHot.tip = { name: "Music box", quality: "rare", lines: [
+    ["An original island tune, played live by your browser."],
+    [musicFailed ? "Jammed: the music couldn't load." : action, musicFailed ? "flavor" : "use"],
+  ] };
+  const key = document.getElementById("chip-musicbox");
+  if (key) { key.setAttribute("aria-pressed", String(playing)); key.querySelector("span").textContent = playing ? "■ stop" : "♪ play"; }
+  if (hovered === musicHot && tipShown) showTip(lastPointer, musicHot.tip);
 }
 
 async function toggleMusic() {
@@ -922,19 +961,16 @@ function framed(view) {
   const target = new THREE.Vector3(...view.target), pos = new THREE.Vector3(...view.pos);
   const k = camera.aspect < 1 ? Math.min(2.1, 1.15 / camera.aspect) : 1;
   pos.sub(target).multiplyScalar(k).add(target);
-  if (camera.aspect >= 1) { // desktop: slide the view so the object sits right of the panel
-    const fwd = target.clone().sub(pos), right = fwd.clone().cross(new THREE.Vector3(0, 1, 0)).normalize();
-    const shift = right.multiplyScalar(-fwd.length() * 0.2);
-    pos.add(shift); target.add(shift);
-  }
   pos.clamp(new THREE.Vector3(-3.8, 0.6, -2.7), new THREE.Vector3(3.8, 4.3, 3.0));
   return { pos, target };
 }
 
-// ---------- panel: overview and close-up content ----------
-const overviewEl = $("overview"), focusEl = $("focus");
+// ---------- the cabin speaks through its objects: a hint at first, a caption in close-ups ----------
+// the keyboard path (#keys) lists the same links; it stays out of sight until it has focus
+const hintEl = $("hint"), focusEl = $("focus"), keysEl = $("keys");
 const fTitle = $("f-title"), fLede = $("f-lede"), fBody = $("f-body"), fNote = $("f-note");
 let hovered = null;
+function dismissHint() { hintEl.hidden = true; }
 
 function el(tag, attrs = {}, ...kids) {
   const e = document.createElement(tag);
@@ -943,49 +979,20 @@ function el(tag, attrs = {}, ...kids) {
   return e;
 }
 
+const CAPTIONS = {
+  logbook: "Tap an entry to read it.",
+  chart: "Tap an island to sail to its site.",
+  poster: "Unrolling the wanted scroll…",
+  chest: "Take a scroll: the CV in English or in French.",
+};
 function renderFocus(h) {
   fTitle.textContent = h.label;
+  fLede.textContent = CAPTIONS[h.id] || "";
   fBody.innerHTML = ""; fNote.textContent = "";
-  if (h.id === "logbook") {
-    fLede.textContent = "Every post is an entry in the captain's logbook. The pages on the table list them too.";
-    const ul = el("ul", { class: "list" });
-    POSTS.forEach(([t, d, slug]) => {
-      ul.append(el("li", {}, el("a", { href: `/logbook/${slug}` }, el("span", { class: "t" }, t), el("span", { class: "m" }, d))));
-    });
-    fBody.append(ul);
-  } else if (h.id === "chart") {
-    fLede.textContent = "One island per project. Tap an island on the chart, or pick one below, to sail to its site.";
-    const ul = el("ul", { class: "list" });
-    PROJECTS.forEach(([name, when, stack]) => {
-      ul.append(el("li", {}, el("a", { href: PROJECT_LINKS[name], target: "_blank", rel: "noopener" },
-        el("span", { class: "t" }, `${name} ↗`), el("span", { class: "m" }, when), el("span", { class: "s" }, stack))));
-    });
-    fBody.append(ul);
-  } else if (h.id === "poster") {
-    fLede.textContent = "Fullstack developer, looking for challenges and adventures.";
-    const dl = el("dl", { class: "facts" });
-    [["Crews", "crews"], ["Schools", "training"], ["Shore leave", "shore"]].map(([label, id]) => [label, ABOUT.find((s) => s.id === id).items.map((it) => it.name).join(" · ")])
-      .forEach(([k, v]) => dl.append(el("dt", {}, k), el("dd", {}, v)));
-    const b = el("button", { type: "button" }, "Read the full story");
-    b.addEventListener("click", () => openScroll(b));
-    fBody.append(dl, el("div", { class: "actions", style: "margin-top:10px" }, b));
-  } else if (h.id === "chest") {
-    fLede.textContent = "The lid creaks open: the captain's CV, ready to take away.";
-    // the same PDFs as the download buttons on /about-me
-    const en = el("a", { href: "/api/download/curriculum?language=english", download: "cv-stephane-pires-english.pdf" }, "Download CV · English");
-    const fr = el("a", { href: "/api/download/curriculum?language=french", download: "cv-stephane-pires-francais.pdf" }, "Télécharger le CV · Français");
-    fBody.append(el("div", { class: "actions" }, en, fr));
-  } else if (h.id === "bottle") {
-    fLede.textContent = "Uncork it to write to the captain and book a rendez-vous.";
-    fBody.append(el("p", { class: "detail" }, "The rendez-vous page is hidden for now. When it comes back, this bottle opens the booking form."));
-  } else if (h.id === "musicbox") {
-    fLede.textContent = "An original island tune, played live by your browser.";
-    const b = el("button", { type: "button", "aria-pressed": String(playing) }, busy ? "Tuning up…" : playing ? "■ Stop the music" : "♪ Wind it up");
-    if (busy) b.disabled = true;
-    b.addEventListener("click", toggleMusic);
-    fBody.append(el("div", { class: "actions" }, b));
-    if (musicFailed) fNote.textContent = "The music box is jammed: the music couldn't load.";
-  }
+  const links = (items) => fBody.append(el("ul", {}, ...items.map(([text, attrs]) => el("li", {}, el("a", attrs, text)))));
+  if (h.id === "logbook") links(bookEntries().map((e) => [`${e.title} (${e.date})`, { href: e.href }]));
+  else if (h.id === "chart") links(PROJECTS.map(([name]) => [`${name} ↗`, { href: PROJECT_LINKS[name], target: "_blank", rel: "noopener" }]));
+  else if (h.id === "chest") links([["CV · English (PDF)", { href: "/api/download/curriculum?language=english", download: "cv-stephane-pires-english.pdf" }], ["CV · Français (PDF)", { href: "/api/download/curriculum?language=french", download: "cv-stephane-pires-french.pdf" }]]);
 }
 
 
@@ -1061,6 +1068,7 @@ function closeScroll() {
   if (scrollWrap.hidden) return false;
   scrollWrap.hidden = true;
   if (scrollOpener && scrollOpener.isConnected) scrollOpener.focus({ preventScroll: true });
+  if (focused === posterHot) backToCabin(); // the poster has nothing else to show
   return true;
 }
 $("scroll-close").addEventListener("click", closeScroll);
@@ -1071,9 +1079,9 @@ function showCloseUp(h) {
   hovered = null;
   controls.enabled = false;
   const v = framed(h.view);
-  flyTo(v.pos, v.target);
+  flyTo(v.pos, v.target, h === posterHot ? () => { if (focused === posterHot) openScroll($("back")); } : null);
   renderFocus(h);
-  overviewEl.hidden = true; focusEl.hidden = false;
+  dismissHint(); keysEl.classList.add("in-focus"); focusEl.hidden = false;
   refreshHighlights();
   $("back").focus({ preventScroll: true });
 }
@@ -1083,9 +1091,12 @@ function leaveCloseUp() {
   const from = focused;
   focused = null;
   flyTo(OVERVIEW.pos, OVERVIEW.target, () => { controls.enabled = true; });
-  overviewEl.hidden = false; focusEl.hidden = true;
+  keysEl.classList.remove("in-focus"); focusEl.hidden = true;
+  hoverEntry(-1); cvHover = null;
   refreshHighlights();
-  const chip = $(`chip-${from.id}`); if (chip) chip.focus({ preventScroll: true });
+  // back on the keyboard path if that's how we came, otherwise on the scene
+  const chip = $(`chip-${from.id}`);
+  if (chip && keysEl.contains(document.activeElement)) chip.focus({ preventScroll: true }); else canvas.focus({ preventScroll: true });
 }
 // close-ups live in the URL (/cabin#chart): links can be shared, and the browser's back button
 // returns to the overview. Native hash navigation, so Next.js's router stays out of it.
@@ -1121,9 +1132,9 @@ function refreshHighlights() {
 
 const chips = $("chips");
 hotspots.forEach((h) => {
-  if (h.secret) return; // the home stone is for those who find it
-  const b = el("button", { type: "button", id: `chip-${h.id}` }, h.label + " ", el("span", {}, h === musicHot ? "♪" : h === lanternHot ? (nightTarget ? "☀ sunset" : "☾ night") : `→ ${h.dest}`));
-  b.addEventListener("click", () => (h === lanternHot ? toggleNight() : focusOn(h)));
+  if (h.secret || !(h.view || h === lanternHot || h === musicHot)) return; // the home stone is for those who find it
+  const b = el("button", { type: "button", id: `chip-${h.id}` }, h.label + " ", el("span", {}, h === musicHot ? "♪ play" : h === lanternHot ? (nightTarget ? "☀ sunset" : "☾ night") : `→ ${h.dest}`));
+  b.addEventListener("click", () => (h === lanternHot ? toggleNight() : h === musicHot ? toggleMusic() : focusOn(h)));
   chips.append(b);
 });
 
@@ -1157,8 +1168,8 @@ function pick(ev) {
   }
   return null;
 }
-let down = null;
-canvas.addEventListener("pointerdown", (e) => { down = { x: e.clientX, y: e.clientY }; });
+let down = null, lastPointer = { clientX: 0, clientY: 0 };
+canvas.addEventListener("pointerdown", (e) => { down = { x: e.clientX, y: e.clientY }; dismissHint(); });
 canvas.addEventListener("pointerup", (e) => {
   if (down && Math.hypot(e.clientX - down.x, e.clientY - down.y) < 6) {
     const h = pick(e);
@@ -1166,20 +1177,32 @@ canvas.addEventListener("pointerup", (e) => {
     else if (h === homeHot) useHomeStone(e);
     else if (h === windowHot) toggleWindow();
     else if (h && h.tipOnly) { showTip(e, h.tip); clearTimeout(tipTimer); tipTimer = setTimeout(hideTip, 2600); } // phones: tap to read
-    else if (h && h !== focused) focusOn(h);
     else if (h === musicHot) toggleMusic();
+    else if (h && h !== focused) focusOn(h);
     else if (h === chartHot) { const isl = islandAt(lastHit); if (isl) sailTo(isl); }
+    else if (h === logHot) { const i = entryAt(lastHit); if (i >= 0) location.assign(bookEntries()[i].href); }
+    else if (h === chestHot) { const cv = cvAt(lastHit); if (cv) downloadCv(cv); }
+    else if (!h && focused) backToCabin(); // a tap beside the object steps back
   }
   down = null;
 });
 canvas.addEventListener("pointermove", (e) => {
   if (e.pointerType !== "mouse" || e.buttons) return;
+  lastPointer = e;
   const h = pick(e);
   if (h !== hovered) { hovered = h; canvas.style.cursor = h ? "pointer" : focused ? "default" : "grab"; refreshHighlights(); }
   if (h && h.tip) { clearTimeout(tipTimer); tipTimer = 0; showTip(e, h.tip); } else if (!tipTimer) hideTip(); // a timed tip (tap, "already home") stays until its timer ends
   if (focused === chartHot) {
     chartHover = h === chartHot ? islandAt(lastHit) : null;
     canvas.style.cursor = chartHover ? "pointer" : "default";
+  } else if (focused === logHot) {
+    const i = h === logHot ? entryAt(lastHit) : -1;
+    hoverEntry(i);
+    canvas.style.cursor = i >= 0 ? "pointer" : "default";
+  } else if (focused === chestHot) {
+    cvHover = h === chestHot ? cvAt(lastHit) : null;
+    canvas.style.cursor = cvHover ? "pointer" : "default";
+    if (cvHover) { clearTimeout(tipTimer); tipTimer = 0; showTip(e, CV_TIPS[cvHover]); } else if (!tipTimer) hideTip();
   }
 });
 

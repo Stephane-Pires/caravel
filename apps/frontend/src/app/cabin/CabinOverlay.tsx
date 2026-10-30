@@ -2,7 +2,7 @@ import { memo } from "react"
 
 import { FidelitySwitch } from "@/components/FidelitySwitch"
 
-// The cabin's overlay: top bar, panel, wanted scroll, tooltip and loading veil.
+// The cabin's overlay: top bar, hint and close-up caption, keyboard path, wanted scroll, tooltip and loading veil.
 // cabin/cabin.js drives it through these ids (it fills the empty containers and toggles `hidden`),
 // so this component is memoized: React renders it once and never re-renders over the scene's changes.
 export const CabinOverlay = memo(function CabinOverlay() {
@@ -22,57 +22,52 @@ export const CabinOverlay = memo(function CabinOverlay() {
         <FidelitySwitch />
       </header>
 
-      <section
-        className="panel"
+      {/* no panel: the objects carry the content. A hint until the first touch, a caption in close-ups */}
+      <p
+        className="hint"
+        id="hint"
+      >
+        Drag to look around · tap what glows
+      </p>
+
+      <div
+        className="caption"
+        id="focus"
+        hidden
         aria-live="polite"
       >
-        <div
-          className="view"
-          id="overview"
+        <button
+          type="button"
+          className="back"
+          id="back"
+          aria-label="Back to the cabin"
         >
-          <h1>Captain&apos;s cabin</h1>
-          <p className="mood">
-            Sunset through the stern windows. Tap anything in the cabin to walk
-            up to it; each object is a page of the site. The lantern switches
-            day and night.
-          </p>
-          <div
-            id="chips"
-            className="chips"
-            role="group"
-            aria-label="Objects in the cabin"
-          />
-          <p className="detail">
-            Drag to look around. Tap an object, or one of the labels above, to
-            zoom in.
-          </p>
-        </div>
-        <div
-          className="view"
-          id="focus"
-          hidden
-        >
-          <div className="focus-head">
-            <h2 id="f-title">Close-up</h2>
-            <button
-              type="button"
-              className="back"
-              id="back"
-            >
-              ← Back to the cabin
-            </button>
-          </div>
-          <p
-            className="lede"
-            id="f-lede"
-          />
-          <div id="f-body" />
-          <p
+          ←
+        </button>
+        <p>
+          <strong id="f-title">Close-up</strong> <span id="f-lede" />
+          <span
             className="note"
             id="f-note"
           />
-        </div>
-      </section>
+        </p>
+      </div>
+
+      {/* the keyboard path: the same places as a list, out of sight until it has focus */}
+      <nav
+        className="keys"
+        id="keys"
+        aria-label="Cabin objects"
+      >
+        <div
+          id="chips"
+          className="chips"
+        />
+        <div
+          id="f-body"
+          className="keys-links"
+        />
+      </nav>
 
       <div
         className="scroll-wrap"

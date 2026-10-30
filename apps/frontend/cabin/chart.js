@@ -1,7 +1,7 @@
 /* eslint-disable */
 // The sea chart: one illustrated island per project, animated while hovered
 import * as THREE from "three";
-import { ISLANDS } from "./content.js";
+import { ISLANDS, PROJECTS } from "./content.js";
 import { FONTS } from "./toolkit.js";
 export function blob(x, cx, cy, r, seed) {
   x.beginPath();
@@ -114,6 +114,20 @@ export function drawChart(x, w, h, title, anim = {}) {
     x.fillStyle = hovered ? "#b5462f" : "#3a2614"; x.font = `700 ${Math.round(w * 0.034)}px ${FONTS.merienda}, Georgia, serif`; x.textAlign = "center";
     x.fillText(name, ix * w, iy * h + w * 0.085);
   });
+  // the hovered island's entry, on a paper slip: when, and built with what (below it, or above for the southern islands)
+  const info = anim.hover && PROJECTS.find(([name]) => name === anim.hover), spot = anim.hover && ISLANDS.find(([name]) => name === anim.hover);
+  if (info && spot) {
+    const [, when, stack] = info, [, ix, iy] = spot, fs = Math.round(w * 0.022), pad = Math.round(fs * 0.7);
+    x.font = `700 ${fs}px ${FONTS.atkinson}, sans-serif`; const ww = x.measureText(when).width;
+    x.font = `${fs}px ${FONTS.atkinson}, sans-serif`; const sw = x.measureText(stack).width;
+    const bw = Math.max(ww, sw) + pad * 2, bh = fs * 2.5 + pad;
+    const bx = Math.min(Math.max(ix * w - bw / 2, 14), w - bw - 14), by = iy > 0.55 ? iy * h - w * 0.1 - bh : iy * h + w * 0.105;
+    x.fillStyle = "#fbf3dc"; x.strokeStyle = "#8a6a3c"; x.lineWidth = 2;
+    x.beginPath(); x.roundRect(bx, by, bw, bh, 8); x.fill(); x.stroke();
+    x.textAlign = "left"; x.textBaseline = "alphabetic";
+    x.fillStyle = "#b5462f"; x.font = `700 ${fs}px ${FONTS.atkinson}, sans-serif`; x.fillText(when, bx + pad, by + pad / 2 + fs);
+    x.fillStyle = "#3a2614"; x.font = `${fs}px ${FONTS.atkinson}, sans-serif`; x.fillText(stack, bx + pad, by + pad / 2 + fs * 2.2);
+  }
   const cx = w * 0.9, cy = h * 0.18, r = w * 0.055; // compass rose
   x.fillStyle = "#3a2614";
   for (let k = 0; k < 4; k++) {
