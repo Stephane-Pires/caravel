@@ -125,8 +125,63 @@ export const CabinOverlay = memo(function CabinOverlay() {
       <div
         className="veil"
         id="veil"
+        role="status"
+        aria-live="polite"
       >
-        <p>Hoisting the sails…</p>
+        {/* plain HTML and CSS, so it sails while three.js is still downloading */}
+        <div className="voyage">
+          <div className="course">
+            <svg
+              className="ship"
+              viewBox="0 0 64 56"
+              aria-hidden="true"
+            >
+              <path
+                className="mast"
+                d="M31 6v36"
+              />
+              <path
+                className="sail"
+                d="M34 9c10 4 14 13 12 24H34z"
+              />
+              <path
+                className="sail"
+                d="M28 13c-8 5-11 12-10 20h10z"
+              />
+              <path
+                className="pennant"
+                d="M31 6l9 3-9 3"
+              />
+              <path
+                className="hull"
+                d="M4 37h56c-2 8-8 13-17 13H21C12 50 6 45 4 37z"
+              />
+            </svg>
+            <svg
+              className="waves"
+              viewBox="0 0 240 16"
+              preserveAspectRatio="none"
+              aria-hidden="true"
+            >
+              <path d="M0 8q10-8 20 0t20 0 20 0 20 0 20 0 20 0 20 0 20 0 20 0 20 0 20 0 20 0 20 0 20 0" />
+            </svg>
+            {/* the stretch already sailed: the same waves, in gold */}
+            <div
+              className="sailed"
+              aria-hidden="true"
+            >
+              <svg
+                className="waves"
+                viewBox="0 0 240 16"
+                preserveAspectRatio="none"
+                aria-hidden="true"
+              >
+                <path d="M0 8q10-8 20 0t20 0 20 0 20 0 20 0 20 0 20 0 20 0 20 0 20 0 20 0 20 0 20 0 20 0" />
+              </svg>
+            </div>
+          </div>
+          <p id="veil-text">Hoisting the sails…</p>
+        </div>
       </div>
     </>
   )
