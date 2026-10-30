@@ -41,7 +41,12 @@ export function SlotPicker({
   value,
   onChange,
 }: SlotPickerProps) {
-  const [day, setDay] = useState<Date | undefined>(undefined)
+  const [pickedDay, setDay] = useState<Date | undefined>(undefined)
+  // a time chosen elsewhere (a restored draft) shows its own day
+  const day = useMemo(
+    () => pickedDay ?? (value ? new Date(value) : undefined),
+    [pickedDay, value],
+  )
 
   const slotsByDay = useMemo(() => {
     const byDay = new Map<string, Array<SlotSchema>>()
@@ -73,6 +78,15 @@ export function SlotPicker({
     (picked: Date | undefined) => {
       setDay(picked)
       onChange("") // a new day: pick its time again
+    },
+    [onChange],
+  )
+
+  // Radix's Select reports "" when its value isn't among the options yet (the slots still
+  // loading): that would wipe a time restored from the draft, so only real picks count
+  const pickTime = useCallback(
+    (start: string) => {
+      if (start) onChange(start)
     },
     [onChange],
   )
@@ -115,7 +129,7 @@ export function SlotPicker({
       </Popover>
 
       <Select
-        onValueChange={onChange}
+        onValueChange={pickTime}
         value={value || undefined}
         disabled={!day || !daySlots.length}
       >

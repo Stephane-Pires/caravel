@@ -28,6 +28,16 @@
 .cabin .brand .tag { font-size: 0.8rem; color: var(--mist); text-transform: uppercase; letter-spacing: 0.12em; }
 /* the Lo-fi/Hi-fi switch is pinned where it sits on the classic site; it stays under the scroll */
 .cabin .fidelity { z-index: 2; }
+/* the bottle's note (CabinNote.tsx) sits over the scene but under the bar: the switch stays usable,
+   and what was typed follows to the classic page. Its day and time pickers open in popups outside
+   the cabin's layer (z-index 100), so they're lifted above it */
+.cabin .note-layer { z-index: 3; }
+.cabin.note-open .bar { z-index: 5; }
+body:has(.cabin) [data-radix-popper-content-wrapper] { z-index: 101 !important; }
+.cabin .note-sheet { animation: unroll 0.7s cubic-bezier(0.2, 0.8, 0.2, 1); }
+@media (prefers-reduced-motion: reduce) {
+.cabin .note-sheet { animation: none; }
+}
 @media (max-width: 767px) { .cabin .bar { --bar-top: 21px; } }
 .cabin button:focus-visible { outline: 3px solid var(--mint); outline-offset: 2px; }
 /* the scene carries the content: a hint at the bottom until the first touch, a small caption in close-ups */
