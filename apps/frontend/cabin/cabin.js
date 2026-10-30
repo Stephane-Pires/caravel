@@ -817,6 +817,8 @@ ticks.push((t, dt) => {
 // ---------- music: the cabin theme, recorded with sampled instruments, played as five synced looping layers ----------
 // (rendered offline from MIDI with FluidSynth + GeneralUser GS; at night the percussion steps back and the tune softens)
 const STEM_IDS = ["ambience", "percussion", "bass", "chords", "melody"];
+const LOOP_SECONDS = 96; // 40 bars at 100 BPM: loop exactly this, so encoder padding never adds a gap
+const AUDIO_EXT = new Audio().canPlayType('audio/ogg; codecs="opus"') ? "opus" : "m4a"; // AAC where Opus isn't supported
 let audioCtx = null, musicMaster = null, stemBuffers = null, stemNodes = [], busy = false;
 const musicBtn = $("music"), musicLabel = $("music-label"), musicIcon = musicBtn.querySelector(".icon");
 
@@ -825,7 +827,7 @@ async function loadMusic() {
   musicMaster = audioCtx.createGain();
   musicMaster.gain.value = 0;
   musicMaster.connect(audioCtx.destination);
-  stemBuffers = await Promise.all(STEM_IDS.map(async (id) => audioCtx.decodeAudioData(await (await fetch(`/cabin/audio/${id}.mp3`)).arrayBuffer())));
+  stemBuffers = await Promise.all(STEM_IDS.map(async (id) => audioCtx.decodeAudioData(await (await fetch(`/cabin/audio/${id}.${AUDIO_EXT}`)).arrayBuffer())));
 }
 
 function applyMusicMood(instant = false) {
@@ -839,7 +841,7 @@ function startStems() {
   const when = audioCtx.currentTime + 0.05; // every layer starts on the same sample, so they stay in sync
   stemNodes = stemBuffers.map((buffer, i) => {
     const src = audioCtx.createBufferSource(), gain = audioCtx.createGain();
-    src.buffer = buffer; src.loop = true;
+    src.buffer = buffer; src.loop = true; src.loopStart = 0; src.loopEnd = Math.min(LOOP_SECONDS, buffer.duration);
     src.connect(gain); gain.connect(musicMaster);
     src.start(when);
     return { id: STEM_IDS[i], src, gain };
