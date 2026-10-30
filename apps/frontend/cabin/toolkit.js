@@ -3,6 +3,9 @@
 import * as THREE from "three";
 
 export const INK = 0x0d1626; // the ink every outline is drawn in
+// canvas text fonts: overwritten with next/font's self-hosted family names by setFonts()
+export const FONTS = { merienda: "Merienda", atkinson: "'Atkinson Hyperlegible'", playfair: "'Playfair Display'", yuji: "'Yuji Syuku'" };
+export function setFonts(families) { if (families) Object.assign(FONTS, families); }
 // ---------- toon toolkit ----------
 // three light bands: shadow, midtone, lit. This one texture is most of the "storybook" look.
 export const grad = new THREE.DataTexture(new Uint8Array([85, 170, 255]), 3, 1, THREE.RedFormat);

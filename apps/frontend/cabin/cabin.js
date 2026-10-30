@@ -7,13 +7,14 @@ import { EffectComposer } from "three/addons/postprocessing/EffectComposer.js";
 import { RenderPass } from "three/addons/postprocessing/RenderPass.js";
 import { UnrealBloomPass } from "three/addons/postprocessing/UnrealBloomPass.js";
 import { OutputPass } from "three/addons/postprocessing/OutputPass.js";
-import { INK, grad, toon, glow, mesh, at, group, hot, canvasTex, plankTex, tubeBetween } from "./toolkit.js";
+import { FONTS, setFonts, INK, grad, toon, glow, mesh, at, group, hot, canvasTex, plankTex, tubeBetween } from "./toolkit.js";
 import { POSTS, PROJECT_LINKS, PROJECTS, ABOUT, ISLANDS, LAST_SEEN, setContent } from "./content.js";
 import { drawChart } from "./chart.js";
 import { makeSea, palm, bottle, chest, openBook, puff, cloud, bicycle, gameBox, seaBird, shipCat } from "./props.js";
 
 export async function mountCabin(data) {
 setContent(data); // posts, projects and CV from the server
+setFonts(data.fonts); // self-hosted fonts for the canvas textures
 // every window listener goes through this controller, so leaving the page removes them
 const ac = new AbortController();
 const addEventListener = (type, fn, opts) => window.addEventListener(type, fn, { ...(typeof opts === "object" ? opts : {}), signal: ac.signal });
@@ -28,11 +29,9 @@ const veil = $("veil");
 
 // the chart and poster paint text onto canvases, so wait for the fonts before building anything
 async function fontsReady() {
-  const link = $("gf");
-  if (!link.sheet) await new Promise((r) => { link.addEventListener("load", r, { once: true }); link.addEventListener("error", r, { once: true }); setTimeout(r, 2500); });
   try {
     await Promise.race([
-      Promise.all([document.fonts.load("700 40px Merienda"), document.fonts.load("400 20px 'Atkinson Hyperlegible'"), document.fonts.load("900 40px 'Playfair Display'"), document.fonts.load("700 40px 'Playfair Display'"), document.fonts.load("40px 'Yuji Syuku'", "七転び八起き")]),
+      Promise.all([document.fonts.load(`700 40px ${FONTS.merienda}`), document.fonts.load(`400 20px ${FONTS.atkinson}`), document.fonts.load(`900 40px ${FONTS.playfair}`), document.fonts.load(`700 40px ${FONTS.playfair}`), document.fonts.load(`40px ${FONTS.yuji}`, "七転び八起き")]),
       new Promise((r) => setTimeout(r, 2500)),
     ]);
   } catch (e) { /* canvas text falls back to Georgia */ }
@@ -326,7 +325,7 @@ hotspots.push(chartHot);
 // the name with a middle dot, and a bounty in berries with the trailing dash
 const posterTex = canvasTex(800, 1080, (x) => {
   x.scale(2, 2);
-  const W = 400, H = 540, INKC = "#2e1a0c", SERIF = "'Playfair Display', Georgia, 'Times New Roman', serif";
+  const W = 400, H = 540, INKC = "#2e1a0c", SERIF = `${FONTS.playfair}, Georgia, 'Times New Roman', serif`;
   let seed = 7; const rnd = () => ((seed = (seed * 16807) % 2147483647) / 2147483647);
 
   // frayed paper edge, parchment, stains and darkened border
@@ -669,7 +668,7 @@ const quoteTex = canvasTex(740, 210, (x, w, hh) => {
   x.strokeStyle = "rgba(60, 35, 15, 0.35)"; x.lineWidth = 3;
   for (let i = 0; i < 7; i++) { x.beginPath(); x.moveTo(0, 20 + i * 28 + Math.sin(i) * 6); x.bezierCurveTo(w * 0.3, 10 + i * 30, w * 0.7, 30 + i * 26, w, 18 + i * 28); x.stroke(); } // wood grain
   x.textAlign = "center"; x.textBaseline = "middle";
-  x.font = "104px 'Yuji Syuku', 'Hiragino Mincho ProN', 'Yu Mincho', serif";
+  x.font = `104px ${FONTS.yuji}, 'Hiragino Mincho ProN', 'Yu Mincho', serif`;
   x.fillStyle = "rgba(255, 225, 170, 0.18)"; x.fillText("七転び八起き", w / 2 + 2, 110); // carved edge catching the light
   x.fillStyle = "#3a1f0e"; x.fillText("七転び八起き", w / 2, 108);
 });
@@ -708,7 +707,7 @@ cat.scale.setScalar(1.3); // a proper ship's cat, visible from the doorway
 cat.position.copy(CAT_HOME);
 cat.rotation.y = 0.5;
 scene.add(cat);
-const zTex = canvasTex(64, 64, (x) => { x.fillStyle = "#f6ecd6"; x.font = "700 46px Merienda, Georgia, serif"; x.textAlign = "center"; x.textBaseline = "middle"; x.fillText("z", 32, 34); });
+const zTex = canvasTex(64, 64, (x) => { x.fillStyle = "#f6ecd6"; x.font = `700 46px ${FONTS.merienda}, Georgia, serif`; x.textAlign = "center"; x.textBaseline = "middle"; x.fillText("z", 32, 34); });
 const zzz = [0, 1, 2].map(() => { const s = new THREE.Sprite(new THREE.SpriteMaterial({ map: zTex, transparent: true, depthWrite: false })); s.scale.setScalar(0.08); s.raycast = () => {}; scene.add(s); return s; });
 hotspots.push(hot(cat, { id: "cat", label: "Ship's cat", secret: true, tipOnly: true, tip: { name: "Ship's cat", quality: "uncommon", lines: [
   ["Use: Do not disturb.", "use"], ["Curled up on the warmest cushion.", null], ["“Dreams of birds.”", "flavor"]] } }));
@@ -1192,7 +1191,7 @@ addEventListener("resize", resize);
 
 resize();
 setMusicUI();
-veil.remove();
+veil.hidden = true; // React owns this node: hide it, never remove it
 syncFromHash(); // /cabin#chart opens on the chart
 
 // redraw the chart while an island is hovered (and once more when the hover ends, to settle it)

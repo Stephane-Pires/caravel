@@ -3,12 +3,10 @@
 import { useEffect, useSyncExternalStore } from "react"
 
 import { CabinFallback } from "./CabinFallback"
+import { CabinOverlay } from "./CabinOverlay"
 import "./cabin.css"
 import type { CabinData } from "./cabinData"
-import { CABIN_MARKUP } from "./markup"
-
-// static markup: one object for the lifetime of the module
-const MARKUP = { __html: CABIN_MARKUP }
+import type { CabinFonts } from "./fonts"
 
 type Support = "checking" | "capable" | "limited"
 
@@ -50,7 +48,7 @@ function checkSupport(params: URLSearchParams): Support {
 const subscribe = () => () => {}
 const serverSupport = (): Support => "checking"
 
-export function CabinClient({ data }: { data: CabinData }) {
+export function CabinClient({ data, fonts }: { data: CabinData; fonts: CabinFonts }) {
   const status = useSyncExternalStore(subscribe, detectSupport, serverSupport)
 
   useEffect(() => {
@@ -64,7 +62,7 @@ export function CabinClient({ data }: { data: CabinData }) {
       try {
         const { mountCabin } = await import("@/cabin/cabin.js")
         if (cancelled) return
-        const cleanup = await mountCabin(data)
+        const cleanup = await mountCabin({ ...data, fonts: fonts.families })
         if (cancelled) cleanup()
         else dispose = cleanup
       } catch (error) {
@@ -77,14 +75,13 @@ export function CabinClient({ data }: { data: CabinData }) {
       cancelled = true
       dispose?.()
     }
-  }, [data, status])
+  }, [data, fonts, status])
 
   if (status === "limited") return <CabinFallback />
 
   return (
-    <div
-      className="cabin"
-      dangerouslySetInnerHTML={MARKUP}
-    />
+    <div className={`cabin ${fonts.className}`}>
+      <CabinOverlay />
+    </div>
   )
 }
