@@ -943,6 +943,9 @@ Object.assign(controls, {
   minPolarAngle: 1.05, maxPolarAngle: 1.72,      // never above the ceiling, never down into the floor
   minAzimuthAngle: -0.25, maxAzimuthAngle: 1.2,  // the stern windows and the chart wall stay in view
 });
+// a portrait phone sees a narrow slice of the cabin, so it may turn further: round to the wanted poster
+// on the left and the treasure chest on the right (resize() picks the range)
+const TURN = { wide: [-0.25, 1.2], narrow: [-1.75, 2.0] }, TILT = { wide: 1.05, narrow: 0.75 }; // phones may also look down over the table
 controls.update();
 
 const composer = new EffectComposer(renderer);
@@ -1214,6 +1217,8 @@ function resize() {
   camera.aspect = w / h;
   camera.fov = w < 600 ? 66 : 54; // a slightly wide lens, wider on phones, so the cabin doesn't feel cramped
   camera.updateProjectionMatrix();
+  [controls.minAzimuthAngle, controls.maxAzimuthAngle] = camera.aspect < 1 ? TURN.narrow : TURN.wide;
+  controls.minPolarAngle = camera.aspect < 1 ? TILT.narrow : TILT.wide;
 }
 addEventListener("resize", resize);
 
