@@ -66,7 +66,13 @@ const ERROR_STYLE = {
   color: "white",
 }
 
-export function TakeRendezVousForm() {
+interface TakeRendezVousFormProps {
+  // the booking went through: show the confirmation by calling `confirm`. Lets the cabin's note
+  // fold away first; without it (the Lo-fi page) the confirmation shows at once
+  onBooked?: (confirm: () => void) => void
+}
+
+export function TakeRendezVousForm({ onBooked }: TakeRendezVousFormProps = {}) {
   const { slots, loading, failed, take } = useFreeSlots()
   const [createRendezVous] = useCreateRendezVous()
   const booked = useBookedRendezVous()
@@ -114,8 +120,14 @@ export function TakeRendezVousForm() {
         topic: values.topic || undefined,
         scheduledAt: values.scheduledAt,
       })
-      take(values.scheduledAt)
-      saveDraft({ ...DEFAULT_VALUES, booked: created })
+      // the slot leaves the list with the confirmation: earlier, it would clear the chosen
+      // time on the note that's still folding away
+      const confirm = () => {
+        take(values.scheduledAt)
+        saveDraft({ ...DEFAULT_VALUES, booked: created })
+      }
+      if (onBooked) onBooked(confirm)
+      else confirm()
       track("site.pourparler", {
         action: "booked",
         topic: Boolean(values.topic),

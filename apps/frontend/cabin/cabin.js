@@ -890,6 +890,64 @@ function uncorkStep(dt) {
 }
 const openBottle = () => { if (uncork === 1) setNote(true); else uncorkTarget = 1; };
 
+// once booked, the note folds into a paper plane (CabinNote.tsx) and flies out through the window
+// behind the bottle, over the sea; then the confirmation unrolls. The windows have no glass.
+function paperPlane() {
+  const geo = new THREE.BufferGeometry();
+  // a paper dart, nose along +z (Object3D.lookAt aims +z): two wings with a little dihedral and a keel
+  const nose = [0, 0, 0.2], tail = [0, 0.012, -0.12], left = [-0.12, 0.035, -0.12], right = [0.12, 0.035, -0.12], keel = [0, -0.05, -0.12];
+  geo.setAttribute("position", new THREE.Float32BufferAttribute([...nose, ...tail, ...left, ...nose, ...right, ...tail, ...nose, ...keel, ...tail], 3));
+  geo.computeVertexNormals();
+  return new THREE.Mesh(geo, toon(0xf6ecd6, { side: THREE.DoubleSide, emissive: 0x6b5a40 })); // its own light: paper reads against the night sky
+}
+let flight = null;
+function flyNoteAway(done) {
+  if (still) { done(); return; }
+  const forward = new THREE.Vector3(); camera.getWorldDirection(forward);
+  const start = camera.position.clone().addScaledVector(forward, 0.45).add(new THREE.Vector3(0, -0.04, 0)); // where the sheet folded
+  // through the middle pane behind the bottle, then away over the sea (the camera looks out meanwhile)
+  const pane = new THREE.Vector3(WIN.xs[2] + WIN.w / 4, WIN.y0 + (WIN.y1 - WIN.y0) / 2, -3.06);
+  const curve = new THREE.CatmullRomCurve3([
+    start,
+    new THREE.Vector3(pane.x + 0.03, pane.y - 0.2, -2.4), // clear of the bottle's neck
+    pane,
+    new THREE.Vector3(pane.x + 0.6, pane.y + 0.3, -7), // banking right, away from the moon and the mullions
+    new THREE.Vector3(pane.x + 3.2, pane.y + 1.1, -26), // away over the sea
+  ]);
+  const plane = paperPlane();
+  plane.position.copy(start); plane.scale.setScalar(0.2);
+  scene.add(plane);
+  flight = { plane, curve, t: 0, done };
+}
+ticks.push((t, dt) => {
+  if (!flight) return;
+  flight.t = Math.min(1, flight.t + dt / 3.8);
+  const k = Math.pow(flight.t, 1.4); // gliding off slowly, then away
+  const { plane, curve } = flight;
+  plane.position.copy(curve.getPointAt(k));
+  plane.lookAt(curve.getPointAt(Math.min(1, k + 0.01)));
+  plane.rotateZ(Math.sin(flight.t * 9) * 0.22); // banking in the breeze
+  plane.scale.setScalar(Math.min(1.3, 0.15 + flight.t * 6)); // the folded sheet opens its wings
+  if (flight.t === 1) {
+    scene.remove(plane); plane.geometry.dispose(); plane.material.dispose();
+    const { done } = flight; flight = null; done();
+  }
+});
+// while it flies, the camera lifts to look out of the window; then it comes back to the bottle
+const LOOK_OUT = { pos: [1.15, 1.8, -1.3], target: [1.9, 2.1, -8] };
+addEventListener("cabin:note-folding", () => { // the camera lifts while the note folds
+  const out = framed(LOOK_OUT);
+  flyTo(out.pos, out.target);
+});
+addEventListener("cabin:note-sent", () => {
+  setNote(false);
+  flyNoteAway(() => {
+    if (focused !== bottleHot) return;
+    const back = framed(bottleHot.view);
+    flyTo(back.pos, back.target, () => { if (focused === bottleHot) setNote(true); }); // the confirmation, once it's gone
+  });
+});
+
 // ---------- music: the cabin theme, recorded with sampled instruments, played as five synced looping layers ----------
 // (rendered offline from MIDI with FluidSynth + GeneralUser GS; at night the percussion steps back and the tune softens)
 const STEM_IDS = ["ambience", "percussion", "bass", "chords", "melody"];
