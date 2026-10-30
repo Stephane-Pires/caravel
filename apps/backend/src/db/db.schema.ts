@@ -1,5 +1,5 @@
-import { contact } from "./schema/contact.js"
-import { rendezVous } from "./schema/rendez-vous.js"
+import { contact } from "./schema/contact.ts"
+import { rendezVous } from "./schema/rendez-vous.ts"
 
 export const dbSchema = {
   contact,

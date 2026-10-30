@@ -1,29 +1,30 @@
-import { slotEnd } from "../availability/availability.service.js"
+import { slotEnd } from "../availability/availability.service.ts"
 import {
   DatabaseException,
   databaseCause,
   isSlotConflict,
-} from "../../utils/exception.js"
-import { assertEnv } from "../../utils/env.js"
+} from "../../utils/exception.ts"
+import { assertEnv } from "../../utils/env.ts"
 import {
   CalendarUnavailableError,
   getCalendar,
-} from "../../utils/google-calendar.js"
-import { createManageToken, tokenMatches } from "../../utils/token.js"
-import { passesTurnstile } from "../../utils/turnstile.js"
+} from "../../utils/google-calendar.ts"
+import { createManageToken, tokenMatches } from "../../utils/token.ts"
+import { reportError } from "../../utils/report.ts"
+import { passesTurnstile } from "../../utils/turnstile.ts"
 import {
   type CreateRendezVousPayload,
   type MoveRendezVousPayload,
   type RendezVous,
   RendezVousEntity,
-} from "./rendez-vous.entity.js"
+} from "./rendez-vous.entity.ts"
 import {
   RendezVousCalendarUnavailableException,
   RendezVousInvalidScheduleAtAlreadyTakenException,
   RendezVousNotFoundException,
   RendezVousSpamCheckFailedException,
   RendezVousTooManyException,
-} from "./rendez-vous.exception.js"
+} from "./rendez-vous.exception.ts"
 import {
   countUpcomingRendezVousRepository,
   deleteRendezVousRepository,
@@ -31,7 +32,7 @@ import {
   getRendezVousRepository,
   persistRendezVousRepository,
   updateRendezVousRepository,
-} from "./rendez-vous.repository.js"
+} from "./rendez-vous.repository.ts"
 
 interface GetRendezVousServiceOptions {
   filter?: {
@@ -109,7 +110,7 @@ export async function createRendezVousService(
     })
   } catch (error) {
     if (!(error instanceof CalendarUnavailableError)) throw error
-    console.error(error)
+    reportError(error)
     await deleteRendezVousRepository([createdRendezVous.id])
     return new RendezVousCalendarUnavailableException()
   }
@@ -172,7 +173,7 @@ export async function cancelRendezVousService(ids: Array<RendezVous["id"]>) {
     await deleteRendezVousRepository(ids)
   } catch (error) {
     if (error instanceof CalendarUnavailableError) {
-      console.error(error)
+      reportError(error)
       return new RendezVousCalendarUnavailableException()
     }
     // Should be a Service Exception
@@ -239,7 +240,7 @@ export async function moveRendezVousService(
         )
       } catch (error) {
         if (!(error instanceof CalendarUnavailableError)) throw error
-        console.error(error)
+        reportError(error)
         await updateRendezVousRepository([
           [
             id,

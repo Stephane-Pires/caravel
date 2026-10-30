@@ -1,6 +1,6 @@
 import { randomUUID } from "node:crypto"
 
-import { assertEnv } from "./env.js"
+import { assertEnv } from "./env.ts"
 
 // The captain's Google Calendar: each rendez-vous is an event there, with a Google Meet link and
 // the guest invited, so Google sends the invitation, the updates, the cancellation and the reminders.

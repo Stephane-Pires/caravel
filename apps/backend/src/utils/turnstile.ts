@@ -1,4 +1,5 @@
-import { assertEnv } from "./env.js"
+import { assertEnv } from "./env.ts"
+import { reportError } from "./report.ts"
 
 const VERIFY_URL = "https://challenges.cloudflare.com/turnstile/v0/siteverify"
 
@@ -16,7 +17,7 @@ export async function passesTurnstile(token: string | undefined, ip?: string) {
     const result = (await response.json()) as { success?: boolean }
     return result.success === true
   } catch (error) {
-    console.error("Turnstile verification failed", error)
+    reportError(error, "Turnstile verification failed")
     return false
   }
 }

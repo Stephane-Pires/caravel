@@ -35,6 +35,7 @@ import { toast } from "sonner"
 import { z } from "zod/v4"
 
 import { SlotPicker } from "./SlotPicker"
+import { TURNSTILE_SITE_KEY, Turnstile } from "./Turnstile"
 
 // oxlint-disable-next-line no-magic-numbers
 const NAME_MAX = 120
@@ -68,6 +69,10 @@ export function TakeRendezVousForm() {
   const { slots, loading, failed, take } = useFreeSlots()
   const [createRendezVous] = useCreateRendezVous()
   const [booked, setBooked] = useState<CreatedRendezVousSchema | null>(null)
+  const [turnstileToken, setTurnstileToken] = useState("")
+  // a token is spent by each attempt: bump to get a fresh one after a refusal
+  const [turnstileReset, setTurnstileReset] = useState(0)
+  const waitingForTurnstile = Boolean(TURNSTILE_SITE_KEY) && !turnstileToken
 
   // the visitor's zone: every time below is shown in it
   const timeZone = useMemo(
@@ -88,10 +93,12 @@ export function TakeRendezVousForm() {
         guestName: values.guestName,
         topic: values.topic || undefined,
         scheduledAt: values.scheduledAt,
+        turnstileToken: turnstileToken || undefined,
       })
       take(values.scheduledAt)
       setBooked(created)
     } catch (error: any) {
+      setTurnstileReset((count) => count + 1)
       toast.error(
         error?.description ||
           "The rendez-vous couldn't be booked. Please try another time.",
@@ -246,12 +253,19 @@ export function TakeRendezVousForm() {
                 render={renderSlotField}
               />
 
+              <Turnstile
+                onToken={setTurnstileToken}
+                resetKey={turnstileReset}
+              />
+
               <CardFooter className="p-0">
                 <Button
                   type="submit"
                   className="w-full"
                   disabled={
-                    !form.formState.isValid || form.formState.isSubmitting
+                    !form.formState.isValid ||
+                    form.formState.isSubmitting ||
+                    waitingForTurnstile
                   }
                 >
                   {form.formState.isSubmitting

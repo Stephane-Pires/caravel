@@ -1,6 +1,6 @@
 import { createRoute, z } from "@hono/zod-openapi"
 
-import { API_TAG } from "../utils/tag.js"
+import { API_TAG } from "../utils/tag.ts"
 
 export const getSeedRoute = createRoute({
   method: "get",

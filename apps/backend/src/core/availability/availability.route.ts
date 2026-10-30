@@ -1,7 +1,7 @@
 import { createRoute, z } from "@hono/zod-openapi"
 
-import { API_TAG } from "../../utils/tag.js"
-import { AVAILABILITY } from "./availability.config.js"
+import { API_TAG } from "../../utils/tag.ts"
+import { AVAILABILITY } from "./availability.config.ts"
 
 export const SlotDTOSchema = z
   .object({

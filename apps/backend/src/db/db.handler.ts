@@ -1,10 +1,10 @@
 import { OpenAPIHono } from "@hono/zod-openapi"
 import { reset } from "drizzle-seed"
 
-import { getDbClient } from "./db.client.js"
-import { getResetRoute, getSeedRoute } from "./db.route.js"
-import { dbSchema } from "./db.schema.js"
-import { seedDb } from "./db.seed.js"
+import { getDbClient } from "./db.client.ts"
+import { getResetRoute, getSeedRoute } from "./db.route.ts"
+import { dbSchema } from "./db.schema.ts"
+import { seedDb } from "./db.seed.ts"
 
 const app = new OpenAPIHono()
 

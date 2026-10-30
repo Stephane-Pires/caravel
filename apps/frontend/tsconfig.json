@@ -11,6 +11,8 @@
     "module": "esnext",
     "moduleResolution": "node",
     "resolveJsonModule": true,
+    // the Pourparler API (apps/backend) imports its own .ts files, as Node and Turbopack run them
+    "allowImportingTsExtensions": true,
     "isolatedModules": true,
     "jsx": "react-jsx",
     "incremental": true,

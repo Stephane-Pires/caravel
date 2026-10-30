@@ -2,7 +2,7 @@ import { pgTable, varchar } from "drizzle-orm/pg-core"
 import { createSelectSchema } from "drizzle-zod"
 import { z } from "zod/v4"
 
-import { auditColumns } from "../db.columns.js"
+import { auditColumns } from "../db.columns.ts"
 
 export const contact = pgTable("contact", {
   email: varchar({ length: 256 }).primaryKey(),

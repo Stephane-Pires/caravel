@@ -1,5 +1,5 @@
-import { ContactEntity } from "./contact.entity.js"
-import { getContactsRepository } from "./contact.repository.js"
+import { ContactEntity } from "./contact.entity.ts"
+import { getContactsRepository } from "./contact.repository.ts"
 
 export async function getContactsService() {
   const contactsDb = await getContactsRepository()

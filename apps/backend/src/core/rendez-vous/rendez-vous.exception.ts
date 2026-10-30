@@ -1,6 +1,7 @@
-import { DomainException } from "../../utils/exception.js"
+import { DomainException } from "../../utils/exception.ts"
 
 export class RendezVousNotFoundException extends DomainException {
+  override readonly name = "RendezVousNotFoundException"
   readonly code = "1001"
   readonly description = "Rendez-vous not found"
 
@@ -10,6 +11,7 @@ export class RendezVousNotFoundException extends DomainException {
 }
 
 export class RendezVousInvalidScheduleAtException extends DomainException {
+  override readonly name = "RendezVousInvalidScheduleAtException"
   readonly code = "1002"
   readonly description = "Rendez-vous scheduled at an invalid time slot"
 
@@ -19,6 +21,7 @@ export class RendezVousInvalidScheduleAtException extends DomainException {
 }
 
 export class RendezVousInvalidScheduleAtAlreadyTakenException extends DomainException {
+  override readonly name = "RendezVousInvalidScheduleAtAlreadyTakenException"
   readonly code = "1003"
   readonly description = "Rendez-vous scheduled at an already taken time slot"
 
@@ -28,6 +31,7 @@ export class RendezVousInvalidScheduleAtAlreadyTakenException extends DomainExce
 }
 
 export class RendezVousTooManyException extends DomainException {
+  override readonly name = "RendezVousTooManyException"
   readonly code = "1004"
   readonly description =
     "This email already has the maximum of upcoming rendez-vous"
@@ -38,6 +42,7 @@ export class RendezVousTooManyException extends DomainException {
 }
 
 export class RendezVousSpamCheckFailedException extends DomainException {
+  override readonly name = "RendezVousSpamCheckFailedException"
   readonly code = "1005"
   readonly description = "The anti-spam check failed"
 
@@ -47,6 +52,7 @@ export class RendezVousSpamCheckFailedException extends DomainException {
 }
 
 export class RendezVousOutsideAvailabilityException extends DomainException {
+  override readonly name = "RendezVousOutsideAvailabilityException"
   readonly code = "1006"
   readonly description = "Rendez-vous outside the offered slots"
 
@@ -56,6 +62,7 @@ export class RendezVousOutsideAvailabilityException extends DomainException {
 }
 
 export class RendezVousCalendarUnavailableException extends DomainException {
+  override readonly name = "RendezVousCalendarUnavailableException"
   readonly code = "1007"
   readonly description = "The calendar couldn't be reached"
 

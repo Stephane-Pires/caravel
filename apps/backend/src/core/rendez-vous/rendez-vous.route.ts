@@ -1,6 +1,6 @@
 import { createRoute } from "@hono/zod-openapi"
 
-import { API_TAG } from "../../utils/tag.js"
+import { API_TAG } from "../../utils/tag.ts"
 import {
   BusySlotDTOSchema,
   CreateRendezVousPayloadSchema,
@@ -10,7 +10,7 @@ import {
   RendezVousDTOSchema,
   RendezVousParamsSchema,
   RendezVousQueryParamSchema,
-} from "./rendez-vous.entity.js"
+} from "./rendez-vous.entity.ts"
 import {
   RendezVousCalendarUnavailableException,
   RendezVousInvalidScheduleAtAlreadyTakenException,
@@ -18,7 +18,7 @@ import {
   RendezVousNotFoundException,
   RendezVousSpamCheckFailedException,
   RendezVousTooManyException,
-} from "./rendez-vous.exception.js"
+} from "./rendez-vous.exception.ts"
 
 // seeing, moving or cancelling a rendez-vous needs the token given at creation
 const manageTokenSecurity = [{ manageToken: [] }]
