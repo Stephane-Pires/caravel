@@ -60,44 +60,81 @@ export function chest(w = 1.1, h = 0.6, d = 0.7) {
   lid.rotation.x = -Math.PI / 2;              // half-cylinder dome, arc facing up
   const lidG = group(lid); lidG.rotation.y = Math.PI / 2; lidG.position.z = r;
   const hinge = group(lidG); hinge.position.set(0, h, -r);
-  const scroll = mesh(new THREE.CylinderGeometry(0.06, 0.06, 0.6, 12), 0xf6ecd6); scroll.rotation.z = Math.PI / 2;
+  // the captain's CV, rolled twice: tied with a red ribbon in English, a blue one in French
+  const scrolls = [["english", "EN", 0xc0392b, "#c0392b", -0.13], ["french", "FR", 0x2a5db0, "#2a5db0", 0.14]].map(([cv, tag, ribbon, ribbonCss, z]) => {
+    const roll = mesh(new THREE.CylinderGeometry(0.06, 0.06, 0.62, 14), 0xf6ecd6); roll.rotation.z = Math.PI / 2;
+    const tie = mesh(new THREE.TorusGeometry(0.064, 0.014, 6, 18), ribbon, { outline: false }); tie.rotation.y = Math.PI / 2;
+    const labelTex = canvasTex(160, 96, (x, cw, chh) => {
+      x.fillStyle = "#f6ecd6"; x.fillRect(0, 0, cw, chh);
+      x.strokeStyle = ribbonCss; x.lineWidth = 10; x.strokeRect(5, 5, cw - 10, chh - 10);
+      x.fillStyle = "#3a2614"; x.font = `700 54px ${FONTS.merienda}, Georgia, serif`; x.textAlign = "center"; x.textBaseline = "middle";
+      x.fillText(tag, cw / 2, chh / 2 + 3);
+    });
+    const label = new THREE.Mesh(new THREE.PlaneGeometry(0.15, 0.09), toon(0xffffff, { map: labelTex, emissive: 0xffffff, emissiveMap: labelTex, emissiveIntensity: 0.35 }));
+    label.rotation.x = -Math.PI / 2; label.position.set(0.11, 0.075, 0);
+    const scroll = group(roll, tie, label);
+    scroll.position.set(0, h - 0.02, z);
+    scroll.userData.cv = cv;
+    return scroll;
+  });
   const g = group(
     at(mesh(new THREE.BoxGeometry(w, h, d), 0x7b4a2a), 0, h / 2, 0),
     at(mesh(new THREE.BoxGeometry(0.08, h + 0.02, d + 0.02), 0xe9b949), -w * 0.36, h / 2, 0),
     at(mesh(new THREE.BoxGeometry(0.08, h + 0.02, d + 0.02), 0xe9b949), w * 0.36, h / 2, 0),
     at(mesh(new THREE.BoxGeometry(0.16, 0.18, 0.06), 0xe9b949), 0, h - 0.05, d / 2 + 0.02),
     at(new THREE.Mesh(new THREE.BoxGeometry(w - 0.12, 0.04, d - 0.12), glow(2.2, 1.7, 0.6)), 0, h - 0.06, 0),
-    at(scroll, 0, h + 0.0, 0.05),
+    ...scrolls,
     hinge,
   );
-  return { g, hinge };
+  return { g, hinge, scrolls };
 }
-export function pageTexture() {
-  return canvasTex(1024, 640, (x, w, h) => {
-    x.fillStyle = "#f6ecd6"; x.fillRect(0, 0, w, h);
-    x.strokeStyle = "rgba(122, 90, 50, 0.25)"; x.lineWidth = 2;
-    x.beginPath(); x.moveTo(w / 2, 0); x.lineTo(w / 2, h); x.stroke();
-    x.fillStyle = "#4a2a14"; x.textAlign = "left";
-    x.font = `700 52px ${FONTS.merienda}, Georgia, serif`; x.fillText("Logbook", 46, 86);
-    x.font = `24px ${FONTS.atkinson}, sans-serif`; x.fillStyle = "#7a5a32"; x.fillText("Latest entries", 48, 124);
-    const draw = (items, x0, y0) => items.forEach(([t, d], i) => {
-      const y = y0 + i * 96;
-      x.fillStyle = "#3a2614"; x.font = `700 27px ${FONTS.merienda}, Georgia, serif`;
-      const title = t.length > 26 ? t.slice(0, 25) + "…" : t;
-      x.fillText(title, x0, y);
-      x.fillStyle = "#8a6a3c"; x.font = `22px ${FONTS.atkinson}, sans-serif`; x.fillText(d, x0, y + 32);
-      x.strokeStyle = "rgba(122, 90, 50, 0.3)"; x.beginPath(); x.moveTo(x0, y + 50); x.lineTo(x0 + 410, y + 50); x.stroke();
-    });
-    draw(POSTS.slice(0, 5).map((p) => [p[0], p[1]]), 48, 190);
-    draw(POSTS.slice(5, 9).map((p) => [p[0], p[1]]), w / 2 + 46, 90);
+// the logbook's open pages list the latest posts, and each line is a link:
+// bookEntries() gives every line's box on the page (in canvas pixels) so a tap can find it
+export const PAGE_W = 1024, PAGE_H = 640;
+export function bookEntries() {
+  const more = POSTS.length > 9;
+  const lines = POSTS.slice(0, more ? 8 : 9).map(([title, date, slug]) => ({ title, date, href: `/logbook/${slug}` }));
+  if (more) lines.push({ title: "All entries →", date: `${POSTS.length} entries`, href: "/logbook" });
+  return lines.map((e, i) => {
+    const left = i < 5, x0 = left ? 48 : PAGE_W / 2 + 46, y = left ? 190 + i * 96 : 90 + (i - 5) * 96;
+    return { ...e, x0, y, box: [x0 - 16, y - 38, 446, 92] };
   });
 }
+export function drawPages(x, w, h, hover = -1) {
+  x.fillStyle = "#f6ecd6"; x.fillRect(0, 0, w, h);
+  x.strokeStyle = "rgba(122, 90, 50, 0.25)"; x.lineWidth = 2;
+  x.beginPath(); x.moveTo(w / 2, 0); x.lineTo(w / 2, h); x.stroke();
+  x.fillStyle = "#4a2a14"; x.textAlign = "left";
+  x.font = `700 52px ${FONTS.merienda}, Georgia, serif`; x.fillText("Logbook", 46, 86);
+  x.font = `24px ${FONTS.atkinson}, sans-serif`; x.fillStyle = "#7a5a32"; x.fillText("Latest entries", 48, 124);
+  bookEntries().forEach(({ title, date, x0, y, box }, i) => {
+    if (i === hover) { x.fillStyle = "rgba(240, 199, 94, 0.45)"; x.beginPath(); x.roundRect(...box, 14); x.fill(); }
+    x.fillStyle = i === hover ? "#b5462f" : "#3a2614"; x.font = `700 27px ${FONTS.merienda}, Georgia, serif`;
+    x.fillText(title.length > 26 ? title.slice(0, 25) + "…" : title, x0, y);
+    x.fillStyle = "#8a6a3c"; x.font = `22px ${FONTS.atkinson}, sans-serif`; x.fillText(date, x0, y + 32);
+    x.strokeStyle = "rgba(122, 90, 50, 0.3)"; x.beginPath(); x.moveTo(x0, y + 50); x.lineTo(x0 + 410, y + 50); x.stroke();
+  });
+}
+export function pageTexture() {
+  return canvasTex(PAGE_W, PAGE_H, (x, w, h) => drawPages(x, w, h));
+}
 export function openBook(cover = 0x8c2f22) {
-  const left = mesh(new THREE.BoxGeometry(0.47, 0.06, 0.6), 0xf6ecd6); left.position.set(-0.245, 0.05, 0); left.rotation.z = 0.07;
-  const right = mesh(new THREE.BoxGeometry(0.47, 0.06, 0.6), 0xf6ecd6); right.position.set(0.245, 0.05, 0); right.rotation.z = -0.07;
-  const page = new THREE.Mesh(new THREE.PlaneGeometry(0.94, 0.58), toon(0xffffff, { map: pageTexture() }));
-  page.rotation.x = -Math.PI / 2; page.position.y = 0.087; page.receiveShadow = true;
-  return group(mesh(new THREE.BoxGeometry(1.0, 0.04, 0.66), cover), left, right, page);
+  // two half-pages tilted towards the spine; each wears its half of the page texture, so a tap's uv still spans the whole spread
+  const map = pageTexture(), mat = toon(0xffffff, { map });
+  const half = (side) => {
+    const block = mesh(new THREE.BoxGeometry(0.47, 0.06, 0.6), 0xf6ecd6);
+    block.position.set(0.245 * side, 0.05, 0); block.rotation.z = -0.07 * side;
+    const geo = new THREE.PlaneGeometry(0.46, 0.58), uv = geo.attributes.uv;
+    for (let i = 0; i < uv.count; i++) uv.setX(i, uv.getX(i) * 0.5 + (side > 0 ? 0.5 : 0));
+    const page = new THREE.Mesh(geo, mat);
+    page.rotation.x = -Math.PI / 2; page.position.y = 0.032; page.receiveShadow = true;
+    block.add(page);
+    return { block, page };
+  };
+  const left = half(-1), right = half(1);
+  const book = group(mesh(new THREE.BoxGeometry(1.0, 0.04, 0.66), cover), left.block, right.block);
+  book.userData.pages = [left.page, right.page];
+  return book;
 }
 // weather on the horizon: drifting sunset clouds, a passing rain shower, circling gulls
 export const puff = (color, emissive) => new THREE.MeshToonMaterial({ color, emissive, gradientMap: grad, fog: false });

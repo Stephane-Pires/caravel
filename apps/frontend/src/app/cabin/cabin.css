@@ -30,48 +30,50 @@
 .cabin .fidelity { z-index: 2; }
 @media (max-width: 767px) { .cabin .bar { --bar-top: 21px; } }
 .cabin button:focus-visible { outline: 3px solid var(--mint); outline-offset: 2px; }
-.cabin .panel {
-  position: fixed; z-index: 2;
-  left: max(16px, env(safe-area-inset-left, 0px));
-  bottom: calc(16px + env(safe-area-inset-bottom, 0px));
-  width: min(470px, calc(100% - 32px));
-  max-height: min(62vh, 560px); overflow-y: auto;
-  background: rgba(13, 22, 38, 0.86); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
-  border: 2px solid var(--ink-soft); border-radius: 16px;
-  padding: 16px 18px;
+/* the scene carries the content: a hint at the bottom until the first touch, a small caption in close-ups */
+.cabin .hint, .cabin .caption {
+  position: fixed; z-index: 2; left: 50%; translate: -50% 0;
+  bottom: calc(18px + env(safe-area-inset-bottom, 0px));
+  max-width: calc(100% - 32px); box-sizing: border-box;
+  background: rgba(13, 22, 38, 0.72); backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px);
+  border: 2px solid var(--ink-soft); border-radius: 999px;
 }
-.cabin .view { display: grid; gap: 10px; }
-.cabin .panel h1, .cabin .panel h2 { margin: 0; font: 700 1.35rem/1.2 var(--display); color: var(--sand); text-wrap: balance; }
-.cabin .mood, .cabin .lede { margin: 0; color: var(--mist); font-size: 0.92rem; line-height: 1.45; }
+.cabin .hint {
+  margin: 0; padding: 8px 18px; font-size: 0.92rem; color: var(--parch); white-space: nowrap; pointer-events: none;
+  animation: cabin-hint 1.2s 1.8s ease-in-out 3 alternate both;
+}
+@keyframes cabin-hint { from { opacity: 0.75; } to { opacity: 1; border-color: var(--sand); } }
+.cabin .caption { display: flex; align-items: center; gap: 12px; padding: 6px 18px 6px 6px; }
+.cabin .caption[hidden] { display: none; }
+.cabin .caption p { margin: 0; font-size: 0.92rem; line-height: 1.35; color: var(--mist); }
+.cabin .caption strong { font: 700 1.05rem var(--display); color: var(--sand); margin-right: 4px; }
+.cabin .back {
+  flex: none; width: 40px; height: 40px; border-radius: 50%; display: grid; place-items: center;
+  font: 700 1.2rem var(--body); color: var(--ink); background: var(--sand); border: 2px solid var(--ink); cursor: pointer;
+}
+.cabin .note { display: block; font-size: 0.85rem; color: var(--mint); }
+.cabin .note:empty { display: none; }
+.cabin .note a { color: var(--mint); }
+/* the keyboard path: visually hidden until something in it has focus, then a small list bottom-left */
+.cabin .keys:not(:focus-within) {
+  position: fixed; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap;
+}
+.cabin .keys:focus-within {
+  position: fixed; z-index: 3; left: 16px; bottom: calc(80px + env(safe-area-inset-bottom, 0px));
+  width: min(360px, calc(100% - 32px)); padding: 12px; border-radius: 14px;
+  background: rgba(13, 22, 38, 0.92); border: 2px solid var(--ink-soft);
+}
+.cabin .keys.in-focus .chips, .cabin .keys:not(.in-focus) .keys-links { display: none; }
 .cabin .chips { display: flex; flex-wrap: wrap; gap: 8px; }
-.cabin .chips button, .cabin .back {
+.cabin .chips button {
   font: 700 0.85rem var(--body); color: var(--ink); background: var(--parch);
   border: 2px solid var(--ink); border-radius: 10px; padding: 5px 10px; cursor: pointer;
-  box-shadow: 0 0 0 1px rgba(246, 236, 214, 0.25);
 }
 .cabin .chips button span { font-weight: 400; color: #4a5a72; }
-.cabin .detail { margin: 0; font-size: 0.95rem; line-height: 1.5; }
-.cabin .detail strong { color: var(--sand); }
+.cabin .keys-links ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 6px; }
+.cabin .keys-links a { color: var(--parch); }
+.cabin .keys a:focus-visible { outline: 3px solid var(--mint); outline-offset: 2px; }
 .cabin code { font-family: ui-monospace, "SF Mono", Menlo, monospace; font-size: 0.85em; background: var(--ink-soft); color: var(--mint); padding: 1px 6px; border-radius: 6px; }
-.cabin .focus-head { display: flex; align-items: center; justify-content: space-between; gap: 10px; flex-wrap: wrap; }
-.cabin .back { background: var(--sand); }
-.cabin .list { list-style: none; margin: 0; padding: 0; display: grid; gap: 6px; }
-.cabin .list button, .cabin .list a {
-  text-decoration: none; box-sizing: border-box;
-  width: 100%; text-align: left; display: grid; grid-template-columns: 1fr auto; gap: 2px 12px; align-items: baseline;
-  font: 400 0.92rem/1.35 var(--body); color: var(--parch); background: var(--ink-soft);
-  border: 1px solid rgba(169, 184, 207, 0.25); border-radius: 10px; padding: 8px 10px; cursor: pointer;
-}
-.cabin .list button:hover, .cabin .list a:hover { border-color: var(--sand); }
-.cabin .list .t { font-weight: 700; min-width: 0; }
-.cabin .list .m { color: var(--mist); font-size: 0.8rem; font-variant-numeric: tabular-nums; white-space: nowrap; }
-.cabin .list .s { grid-column: 1 / -1; color: var(--mist); font-size: 0.8rem; }
-.cabin .facts { margin: 0; display: grid; grid-template-columns: auto 1fr; gap: 4px 12px; font-size: 0.92rem; }
-.cabin .facts dt { color: var(--mist); }
-.cabin .facts dd { margin: 0; }
-.cabin .actions { display: flex; gap: 8px; flex-wrap: wrap; }
-.cabin .actions button, .cabin .actions a { display: inline-block; text-decoration: none; font: 700 0.9rem var(--body); color: var(--ink); background: var(--parch); border: 2px solid var(--ink); border-radius: 10px; padding: 7px 12px; cursor: pointer; }
-.cabin .note { margin: 0; font-size: 0.85rem; color: var(--mint); min-height: 1.2em; }
 .cabin .veil { position: fixed; inset: 0; z-index: 3; display: grid; place-items: center; background: var(--ink); color: var(--sand); font: 700 1.3rem var(--display); text-align: center; padding-inline: max(16px, env(safe-area-inset-left, 0px)) max(16px, env(safe-area-inset-right, 0px)); }
 .cabin .veil p { max-width: 34ch; margin: 0; }
 /* the loading voyage: a caravel crosses the screen as the cabin loads (--progress, 0 to 1, set by cabin.js),
@@ -242,7 +244,6 @@
 .cabin .tip .flavor { color: #ffd166; font-style: italic; }
 @media (max-width: 520px) {
 .cabin .brand .tag { display: none; }
-.cabin .panel { padding: 12px 14px; max-height: 48vh; }
-.cabin .panel h1, .cabin .panel h2 { font-size: 1.15rem; }
-.cabin .mood { display: none; }
+.cabin .hint { font-size: 0.85rem; }
+.cabin .caption { width: calc(100% - 32px); border-radius: 22px; }
 }
