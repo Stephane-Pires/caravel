@@ -46,6 +46,15 @@ export class RendezVousSpamCheckFailedException extends DomainException {
   }
 }
 
+export class RendezVousOutsideAvailabilityException extends DomainException {
+  readonly code = "1006"
+  readonly description = "Rendez-vous outside the offered slots"
+
+  constructor() {
+    super("This time isn't one of the offered slots")
+  }
+}
+
 // export function mapRendezVousException(exception: DatabaseException) {
 //   // extract PostgreSQL error code
 //   // extract PostgreSQL database contraint name

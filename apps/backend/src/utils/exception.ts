@@ -78,6 +78,12 @@ export class DatabaseException extends Error {
   }
 }
 
+// Postgres refused a booking that overlaps another: the exclusion constraint (23P01)
+// or the unique start time (23505)
+const SLOT_CONFLICT_CODES = new Set(["23P01", "23505"])
+export const isSlotConflict = (exception: DatabaseException) =>
+  SLOT_CONFLICT_CODES.has(exception.cause?.code ?? "")
+
 // a caught error's pg cause (drizzle wraps the driver error), if there is one
 export function databaseCause(error: unknown): DatabaseError | undefined {
   if (error instanceof DatabaseError) return error

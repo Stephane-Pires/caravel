@@ -10,6 +10,7 @@ import {
   RendezVousInvalidScheduleAtAlreadyTakenException,
   RendezVousInvalidScheduleAtException,
   RendezVousNotFoundException,
+  RendezVousOutsideAvailabilityException,
   RendezVousSpamCheckFailedException,
   RendezVousTooManyException,
 } from "./rendez-vous.exception.js"
@@ -83,7 +84,10 @@ app.openapi(postRendezVousRoute, async (c) => {
     return c.json(result, 409)
   }
 
-  if (result instanceof RendezVousInvalidScheduleAtException) {
+  if (
+    result instanceof RendezVousInvalidScheduleAtException ||
+    result instanceof RendezVousOutsideAvailabilityException
+  ) {
     return c.json(result, 422)
   }
 
@@ -126,7 +130,10 @@ app.openapi(moveRendezVousRoute, async (c) => {
   ) {
     return c.json(movedRendezVous.toDTO(), 409)
   }
-  if (movedRendezVous instanceof RendezVousInvalidScheduleAtException) {
+  if (
+    movedRendezVous instanceof RendezVousInvalidScheduleAtException ||
+    movedRendezVous instanceof RendezVousOutsideAvailabilityException
+  ) {
     return c.json(movedRendezVous.toDTO(), 422)
   }
   if (movedRendezVous instanceof DatabaseException) {

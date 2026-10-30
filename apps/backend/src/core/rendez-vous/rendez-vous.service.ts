@@ -1,4 +1,9 @@
-import { DatabaseException, databaseCause } from "../../utils/exception.js"
+import { slotEnd } from "../availability/availability.service.js"
+import {
+  DatabaseException,
+  databaseCause,
+  isSlotConflict,
+} from "../../utils/exception.js"
 import { MailService } from "../../utils/mail.js"
 import { createManageToken, tokenMatches } from "../../utils/token.js"
 import { passesTurnstile } from "../../utils/turnstile.js"
@@ -9,6 +14,7 @@ import {
   RendezVousEntity,
 } from "./rendez-vous.entity.js"
 import {
+  RendezVousInvalidScheduleAtAlreadyTakenException,
   RendezVousNotFoundException,
   RendezVousSpamCheckFailedException,
   RendezVousTooManyException,
@@ -65,10 +71,15 @@ export async function createRendezVousService(
   }
 
   const { token: manageToken, hash } = createManageToken()
-  const persistedRendezVous = await persistRendezVousRepository(payload, hash)
+  const persistedRendezVous = await persistRendezVousRepository(
+    { ...payload, endsAt: slotEnd(payload.scheduledAt) },
+    hash,
+  )
 
   if (persistedRendezVous instanceof DatabaseException)
-    return persistedRendezVous
+    return isSlotConflict(persistedRendezVous)
+      ? new RendezVousInvalidScheduleAtAlreadyTakenException() // someone booked it a moment earlier
+      : persistedRendezVous
 
   const createdRendezVousList = await getRendezVousService({
     filter: {
@@ -138,13 +149,26 @@ export async function moveRendezVousService(
     const invariantResult = await RendezVousEntity.checkInvariants({
       ...rendezVousToUpdate,
       ...payload,
-    })
+    }) // its own id is ignored, so it may move to an overlapping slot of its own
 
     if (!invariantResult.success) return invariantResult.exception
 
-    const movedRendezVousDb = await updateRendezVousRepository([[id, payload]])
+    const movedRendezVousDb = await updateRendezVousRepository([
+      [
+        id,
+        {
+          ...payload,
+          endsAt: payload.scheduledAt
+            ? slotEnd(payload.scheduledAt)
+            : undefined,
+        },
+      ],
+    ])
 
-    if (movedRendezVousDb instanceof DatabaseException) return movedRendezVousDb
+    if (movedRendezVousDb instanceof DatabaseException)
+      return isSlotConflict(movedRendezVousDb)
+        ? new RendezVousInvalidScheduleAtAlreadyTakenException()
+        : movedRendezVousDb
 
     const movedRendezVousList = movedRendezVousDb.map(
       RendezVousEntity.fromRepository,
