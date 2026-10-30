@@ -1,0 +1,206 @@
+/* Cabin styles, ported from the prototype and scoped under .cabin so nothing leaks into the rest of the site */
+.cabin { position: fixed; inset: 0; z-index: 100; overflow: hidden; }
+.cabin {
+  --ink: #0d1626;        /* Caravel's night navy */
+  --ink-soft: #1b2a44;
+  --sand: #f0c75e;       /* the polaroid caravel's sail gold */
+  --parch: #f6ecd6;      /* logbook paper */
+  --mint: #a7f0d0;       /* boarding-card stripes */
+  --coral: #ec7f62;
+  --mist: #a9b8cf;
+  --display: "Merienda", Georgia, "Times New Roman", serif;
+  --body: "Atkinson Hyperlegible", system-ui, -apple-system, "Segoe UI", sans-serif;
+  color-scheme: dark;
+}
+.cabin [hidden] { display: none !important; }
+.cabin { background: var(--ink); color: var(--parch); font-family: var(--body); overflow: hidden; }
+.cabin #stage { position: fixed; inset: 0; width: 100%; height: 100%; display: block; touch-action: none; outline: none; }
+.cabin .bar {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 2;
+  display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap;
+  padding-top: calc(12px + env(safe-area-inset-top, 0px)); padding-bottom: 28px;
+  padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px));
+  background: linear-gradient(rgba(13, 22, 38, 0.85), rgba(13, 22, 38, 0));
+  pointer-events: none;
+}
+.cabin .brand { display: flex; align-items: baseline; gap: 10px; }
+.cabin .brand .name { font-family: var(--display); font-weight: 700; font-size: 1.6rem; color: var(--sand); letter-spacing: 0.01em; }
+.cabin .brand .tag { font-size: 0.8rem; color: var(--mist); text-transform: uppercase; letter-spacing: 0.12em; }
+.cabin .music {
+  pointer-events: auto; display: inline-flex; align-items: center; gap: 8px;
+  font: 700 0.95rem var(--body); color: var(--ink); background: var(--sand);
+  border: 2px solid var(--ink); border-radius: 999px; padding: 8px 16px; cursor: pointer;
+  box-shadow: 0 0 0 2px rgba(240, 199, 94, 0.25);
+}
+.cabin .music[aria-pressed="true"] { background: var(--coral); }
+.cabin .music .icon { font-size: 1.05rem; line-height: 1; }
+.cabin .music:disabled { opacity: 0.6; cursor: progress; }
+.cabin button:focus-visible { outline: 3px solid var(--mint); outline-offset: 2px; }
+.cabin .panel {
+  position: fixed; z-index: 2;
+  left: max(16px, env(safe-area-inset-left, 0px));
+  bottom: calc(16px + env(safe-area-inset-bottom, 0px));
+  width: min(470px, calc(100% - 32px));
+  max-height: min(62vh, 560px); overflow-y: auto;
+  background: rgba(13, 22, 38, 0.86); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
+  border: 2px solid var(--ink-soft); border-radius: 16px;
+  padding: 16px 18px;
+}
+.cabin .view { display: grid; gap: 10px; }
+.cabin .panel h1, .cabin .panel h2 { margin: 0; font: 700 1.35rem/1.2 var(--display); color: var(--sand); text-wrap: balance; }
+.cabin .mood, .cabin .lede { margin: 0; color: var(--mist); font-size: 0.92rem; line-height: 1.45; }
+.cabin .chips { display: flex; flex-wrap: wrap; gap: 8px; }
+.cabin .chips button, .cabin .back {
+  font: 700 0.85rem var(--body); color: var(--ink); background: var(--parch);
+  border: 2px solid var(--ink); border-radius: 10px; padding: 5px 10px; cursor: pointer;
+  box-shadow: 0 0 0 1px rgba(246, 236, 214, 0.25);
+}
+.cabin .chips button span { font-weight: 400; color: #4a5a72; }
+.cabin .detail { margin: 0; font-size: 0.95rem; line-height: 1.5; }
+.cabin .detail strong { color: var(--sand); }
+.cabin code { font-family: ui-monospace, "SF Mono", Menlo, monospace; font-size: 0.85em; background: var(--ink-soft); color: var(--mint); padding: 1px 6px; border-radius: 6px; }
+.cabin .focus-head { display: flex; align-items: center; justify-content: space-between; gap: 10px; flex-wrap: wrap; }
+.cabin .back { background: var(--sand); }
+.cabin .list { list-style: none; margin: 0; padding: 0; display: grid; gap: 6px; }
+.cabin .list button, .cabin .list a {
+  text-decoration: none; box-sizing: border-box;
+  width: 100%; text-align: left; display: grid; grid-template-columns: 1fr auto; gap: 2px 12px; align-items: baseline;
+  font: 400 0.92rem/1.35 var(--body); color: var(--parch); background: var(--ink-soft);
+  border: 1px solid rgba(169, 184, 207, 0.25); border-radius: 10px; padding: 8px 10px; cursor: pointer;
+}
+.cabin .list button:hover, .cabin .list a:hover { border-color: var(--sand); }
+.cabin .list .t { font-weight: 700; min-width: 0; }
+.cabin .list .m { color: var(--mist); font-size: 0.8rem; font-variant-numeric: tabular-nums; white-space: nowrap; }
+.cabin .list .s { grid-column: 1 / -1; color: var(--mist); font-size: 0.8rem; }
+.cabin .facts { margin: 0; display: grid; grid-template-columns: auto 1fr; gap: 4px 12px; font-size: 0.92rem; }
+.cabin .facts dt { color: var(--mist); }
+.cabin .facts dd { margin: 0; }
+.cabin .actions { display: flex; gap: 8px; flex-wrap: wrap; }
+.cabin .actions button { font: 700 0.9rem var(--body); color: var(--ink); background: var(--parch); border: 2px solid var(--ink); border-radius: 10px; padding: 7px 12px; cursor: pointer; }
+.cabin .note { margin: 0; font-size: 0.85rem; color: var(--mint); min-height: 1.2em; }
+.cabin .veil { position: fixed; inset: 0; z-index: 3; display: grid; place-items: center; background: var(--ink); color: var(--sand); font: 700 1.3rem var(--display); text-align: center; padding-inline: max(16px, env(safe-area-inset-left, 0px)) max(16px, env(safe-area-inset-right, 0px)); }
+.cabin .veil p { max-width: 34ch; margin: 0; }
+.cabin .veil small { display: block; margin-top: 10px; font: 400 0.95rem/1.5 var(--body); color: var(--mist); }
+.cabin .scroll-wrap {
+  position: fixed; inset: 0; z-index: 4; display: grid; place-items: center;
+  background: rgba(13, 22, 38, 0.55); backdrop-filter: blur(4px); -webkit-backdrop-filter: blur(4px);
+  padding-block: calc(14px + env(safe-area-inset-top, 0px)) calc(14px + env(safe-area-inset-bottom, 0px));
+  padding-left: max(24px, env(safe-area-inset-left, 0px)); padding-right: max(24px, env(safe-area-inset-right, 0px));
+}
+.cabin .scroll { width: min(700px, 100%); height: min(90vh, 940px); display: flex; flex-direction: column; animation: unroll 0.8s cubic-bezier(0.2, 0.8, 0.2, 1); }
+@keyframes unroll { from { clip-path: inset(0 0 100% 0); } to { clip-path: inset(0 0 0 0); } }
+@media (prefers-reduced-motion: reduce) {
+.cabin .scroll { animation: none; }
+}
+.cabin .rod { position: relative; height: 22px; margin: 0 -14px; border-radius: 11px; border: 2px solid var(--ink); background: linear-gradient(#a06a3c, #6b3f24 55%, #3a2614); flex: none; z-index: 2; }
+.cabin .rod::before, .cabin .rod::after { content: ""; position: absolute; top: 50%; width: 20px; height: 20px; margin-top: -10px; border-radius: 50%; border: 2px solid var(--ink); background: var(--sand); }
+.cabin .rod::before { left: -14px; }
+.cabin .rod::after { right: -14px; }
+.cabin .sheet {
+  position: relative; flex: 1; min-height: 0; overflow-y: auto; overscroll-behavior: contain;
+  color: #2e1a0c; padding: 0 30px 34px;
+  background:
+    radial-gradient(circle at 20% 12%, rgba(150, 100, 45, 0.16), transparent 30%),
+    radial-gradient(circle at 85% 55%, rgba(150, 100, 45, 0.14), transparent 28%),
+    radial-gradient(circle at 30% 85%, rgba(150, 100, 45, 0.12), transparent 32%),
+    linear-gradient(90deg, rgba(120, 75, 30, 0.35), transparent 7%, transparent 93%, rgba(120, 75, 30, 0.35)),
+    #e6cd98;
+  font: 400 1rem/1.55 var(--body);
+}
+.cabin .tabs {
+  position: sticky; top: 0; z-index: 1; display: flex; align-items: center; justify-content: space-between; gap: 10px; flex-wrap: wrap;
+  margin: 0 -30px; padding: 12px 30px 10px; background: #e2c78f; border-bottom: 2px dashed rgba(46, 26, 12, 0.35);
+}
+.cabin .tab-list { display: flex; gap: 6px; flex-wrap: wrap; }
+.cabin .tabs button {
+  font: 700 0.8rem var(--body); letter-spacing: 0.08em; text-transform: uppercase; cursor: pointer;
+  color: #2e1a0c; background: transparent; border: 2px solid #2e1a0c; border-radius: 6px; padding: 4px 9px;
+}
+.cabin .tabs button[aria-current="true"] { background: #2e1a0c; color: #e6cd98; }
+.cabin .tabs .roll { border-style: dashed; }
+.cabin .tabs button:focus-visible { outline: 3px solid #b5462f; outline-offset: 2px; }
+.cabin .s-sec { padding-top: 22px; }
+.cabin .s-sec h3 { margin: 0 0 6px; font: 900 1.7rem/1.1 "Playfair Display", Georgia, serif; text-align: center; text-wrap: balance; }
+.cabin .s-sec h3::before, .cabin .s-sec h3::after { content: " ✦ "; font-size: 0.6em; vertical-align: middle; color: #b5462f; }
+.cabin .bounty { display: grid; grid-template-columns: 170px 1fr; gap: 20px; align-items: center; padding-top: 6px; }
+.cabin .bounty img { width: 100%; height: auto; transform: rotate(-2deg); filter: drop-shadow(0 6px 10px rgba(46, 26, 12, 0.35)); }
+.cabin .s-name { margin: 0; font: 900 2rem/1.1 "Playfair Display", Georgia, serif; letter-spacing: 0.02em; text-transform: uppercase; }
+.cabin .s-tag { margin: 6px 0 12px; font-style: italic; }
+.cabin .s-facts { margin: 0; display: grid; grid-template-columns: auto 1fr; gap: 3px 14px; font-size: 0.95rem; }
+.cabin .s-facts dt { font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; font-size: 0.75rem; align-self: center; color: #6b4524; }
+.cabin .s-facts dd { margin: 0; font-variant-numeric: tabular-nums; }
+.cabin .entry { padding: 14px 0; border-bottom: 1px dashed rgba(46, 26, 12, 0.3); }
+.cabin .entry:last-child { border-bottom: 0; }
+.cabin .entry header { display: flex; justify-content: space-between; align-items: baseline; gap: 4px 12px; flex-wrap: wrap; }
+.cabin .e-name { font: 900 1.3rem/1.2 "Playfair Display", Georgia, serif; }
+.cabin .e-when { font-size: 0.85rem; font-style: italic; color: #6b4524; font-variant-numeric: tabular-nums; }
+.cabin .e-kind { margin: 2px 0 6px; font-size: 0.78rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: #6b4524; }
+.cabin .entry p { margin: 0 0 8px; max-width: 62ch; }
+.cabin .missions { list-style: none; margin: 0 0 8px; padding: 0; display: grid; gap: 3px; }
+.cabin .missions li { position: relative; padding-left: 1.5em; }
+.cabin .missions li::before { /* a brass pushpin holding each line to the parchment */
+  content: ""; position: absolute; left: 0.3em; top: 0.42em; width: 0.6em; height: 0.6em; border-radius: 50%;
+  background: radial-gradient(circle at 35% 30%, #fbe7a6, #c99a3e 55%, #7a5418);
+  box-shadow: 0 0 0 1px rgba(46, 26, 12, 0.55), 1px 2px 2px rgba(46, 26, 12, 0.35);
+}
+.cabin .stamps { display: flex; flex-wrap: wrap; gap: 6px; }
+.cabin .stamp { display: inline-block; transform: rotate(var(--r, 0deg)); border: 2px solid #2e1a0c; border-radius: 4px; padding: 1px 7px; font: 700 0.72rem var(--body); letter-spacing: 0.06em; text-transform: uppercase; background: rgba(255, 248, 230, 0.35); }
+.cabin .timeline { position: relative; }
+.cabin .tl-entry { position: relative; display: grid; grid-template-columns: 178px minmax(0, 1fr); gap: 0 22px; padding: 18px 0; }
+.cabin .tl-entry::before { content: ""; position: absolute; left: 17px; top: 0; bottom: 0; border-left: 3px dashed #c99a3e; }
+.cabin .timeline .tl-entry:first-child::before { top: 36px; }
+.cabin .timeline .tl-entry:last-child::before { bottom: auto; height: 36px; }
+.cabin .tl-mark {
+  position: sticky; top: calc(var(--tabs-h, 56px) + 12px); align-self: start; z-index: 0;
+  display: grid; grid-template-columns: 36px minmax(0, 1fr); gap: 2px 10px; align-items: center;
+}
+.cabin .tl-mark a { display: block; border-radius: 50%; }
+.cabin .tl-logo {
+  width: 36px; height: 36px; border-radius: 50%; display: grid; place-items: center; overflow: hidden;
+  background: #fffaf0; border: 2px solid #f0c75e; box-shadow: 0 0 0 2px #2e1a0c;
+}
+.cabin .tl-logo img { width: 92%; height: 92%; object-fit: contain; }
+.cabin .tl-logo.icon img { width: 70%; height: 70%; }
+.cabin .tl-logo.cover img { width: 100%; height: 100%; object-fit: cover; }
+.cabin .tl-name { font: 900 1.05rem/1.15 "Playfair Display", Georgia, serif; }
+.cabin .tl-dates { grid-column: 2; font: 0.78rem/1.45 ui-monospace, "SF Mono", Menlo, monospace; color: #6b4524; font-variant-numeric: tabular-nums; white-space: nowrap; }
+.cabin .tl-body p { margin: 0 0 8px; max-width: 62ch; }
+.cabin .polaroids { display: flex; flex-wrap: wrap; gap: 14px; margin-top: 10px; }
+.cabin .polaroid { margin: 0; width: min(210px, 46%); background: #fffaf0; padding: 7px 7px 10px; box-shadow: 0 6px 14px rgba(46, 26, 12, 0.3); transform: rotate(var(--r, 0deg)); }
+.cabin .polaroid.wide { width: min(360px, 100%); margin: 4px 0 12px; }
+.cabin .polaroid img { display: block; width: 100%; aspect-ratio: 4 / 3; object-fit: cover; background: #d9c39a; }
+.cabin .polaroid figcaption { margin-top: 6px; text-align: center; font: 400 0.85rem var(--display); color: #4a2e16; }
+@media (max-width: 520px) {
+.cabin .tl-entry { grid-template-columns: minmax(0, 1fr); gap: 10px; }
+.cabin .tl-entry::before { display: none; }
+.cabin .tl-mark { margin: 0 -18px; padding: 8px 18px; background: #e2c78f; border-bottom: 2px dashed rgba(46, 26, 12, 0.3); grid-template-columns: 36px auto 1fr; }
+.cabin .tl-dates { grid-column: 3; justify-self: end; text-align: right; }
+}
+@media (max-width: 520px) {
+.cabin .scroll-wrap { padding-left: max(18px, env(safe-area-inset-left, 0px)); padding-right: max(18px, env(safe-area-inset-right, 0px)); }
+.cabin .sheet { padding: 0 18px 28px; }
+.cabin .tabs { margin: 0 -18px; padding: 10px 18px 8px; }
+.cabin .bounty { grid-template-columns: 1fr; justify-items: center; text-align: center; }
+.cabin .bounty img { width: 150px; }
+.cabin .s-facts { justify-content: center; }
+.cabin .s-name { font-size: 1.6rem; }
+}
+.cabin .tip {
+  position: fixed; z-index: 3; pointer-events: none; display: grid; gap: 2px; max-width: 250px;
+  background: rgba(8, 12, 28, 0.94); border: 1px solid #8a94b8; border-radius: 6px; padding: 8px 11px;
+  font: 400 0.85rem/1.35 var(--body); color: #e8e8ee; box-shadow: 0 6px 18px rgba(0, 0, 0, 0.45);
+}
+.cabin .tip strong { color: #4fa3ff; font-size: 0.95rem; }
+.cabin .tip .q-common { color: #ffffff; }
+.cabin .tip .q-uncommon { color: #2fd36b; }
+.cabin .tip .q-rare { color: #4fa3ff; }
+.cabin .tip .q-epic { color: #b26bff; }
+.cabin .tip .use { color: #2fd36b; }
+.cabin .tip .flavor { color: #ffd166; font-style: italic; }
+@media (max-width: 520px) {
+.cabin .brand .tag { display: none; }
+.cabin .panel { padding: 12px 14px; max-height: 48vh; }
+.cabin .panel h1, .cabin .panel h2 { font-size: 1.15rem; }
+.cabin .mood { display: none; }
+.cabin .music { padding: 7px 13px; font-size: 0.9rem; }
+}
