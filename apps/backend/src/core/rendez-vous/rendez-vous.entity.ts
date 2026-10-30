@@ -146,10 +146,6 @@ export const CreateRendezVousPayloadSchema = z
     topic: z.string().trim().max(500).optional().openapi({
       example: "A role on your team",
     }),
-    turnstileToken: z.string().optional().openapi({
-      description:
-        "Cloudflare Turnstile token from the booking form (required when the server has a Turnstile secret)",
-    }),
   })
   .openapi("CreateRendezVousPayload", {
     description: "Payload for creating a new rendez-vous",

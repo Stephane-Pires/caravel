@@ -11,7 +11,6 @@ import {
 } from "../../utils/google-calendar.ts"
 import { createManageToken, tokenMatches } from "../../utils/token.ts"
 import { reportError } from "../../utils/report.ts"
-import { passesTurnstile } from "../../utils/turnstile.ts"
 import {
   type CreateRendezVousPayload,
   type MoveRendezVousPayload,
@@ -22,7 +21,6 @@ import {
   RendezVousCalendarUnavailableException,
   RendezVousInvalidScheduleAtAlreadyTakenException,
   RendezVousNotFoundException,
-  RendezVousSpamCheckFailedException,
   RendezVousTooManyException,
 } from "./rendez-vous.exception.ts"
 import {
@@ -59,12 +57,7 @@ const MAX_UPCOMING_PER_CONTACT = 2
 
 export async function createRendezVousService(
   payload: CreateRendezVousPayload,
-  context: { ip?: string } = {},
 ) {
-  if (!(await passesTurnstile(payload.turnstileToken, context.ip))) {
-    return new RendezVousSpamCheckFailedException()
-  }
-
   const invariantResult = await RendezVousEntity.checkInvariants(payload)
 
   if (!invariantResult.success) return invariantResult.exception
