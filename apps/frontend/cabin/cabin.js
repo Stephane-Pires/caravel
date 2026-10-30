@@ -58,7 +58,7 @@ let renderer;
 try {
   renderer = new THREE.WebGLRenderer({ canvas, antialias: true });
 } catch (e) {
-  veil.innerHTML = "<p>This browser can't draw the 3D cabin.<small>Everything in it is also on the <a href='/logbook'>regular pages</a>.</small></p>";
+  veil.innerHTML = "<p>This browser can't draw the 3D cabin.<small>Everything in it is also on the <a href='/about-me'>regular pages</a>.</small></p>";
   throw e;
 }
 const pixelRatio = Math.min(devicePixelRatio, small ? 1.5 : 2);
@@ -289,12 +289,13 @@ scene.add(chair2);
 const book = at(openBook(), -0.32, 0.99, -1.05, -0.3);
 const quill = at(mesh(new THREE.ConeGeometry(0.04, 0.5, 6), 0xf6ecd6), 0.2, 1.08, -0.85); quill.rotation.z = 1.25; quill.rotation.y = 0.5;
 const logbook = group(book, quill); // group() re-parents them, so it's the group that joins the scene
-scene.add(logbook);
+const SHOW_LOGBOOK = false; // hidden for now: set to true to put the book back on the table
+if (SHOW_LOGBOOK) scene.add(logbook);
 const logHot = hot(logbook, {
   id: "logbook", label: "Logbook", dest: "Logbook", route: "/logbook",
   view: { pos: [-0.47, 2.0, -0.6], target: [-0.32, 1.08, -1.05] }, // square on to the pages, the way the book faces
 });
-hotspots.push(logHot);
+if (SHOW_LOGBOOK) hotspots.push(logHot);
 // the pages list the latest posts: a tap on a line opens it, hovering underlines it in gold
 const bookPages = book.userData.pages, bookMap = bookPages[0].material.map;
 let bookHover = -1;
