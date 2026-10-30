@@ -177,6 +177,12 @@ export default function AboutMe() {
                   section={CURRICULUM_VITAE.EXPERIENCE.section.LEAKMITED}
                 />
               </section>
+
+              <section ref={setRefSectionExperience("FIGURES")}>
+                <SectionContent
+                  section={CURRICULUM_VITAE.EXPERIENCE.section.FIGURES}
+                />
+              </section>
             </article>
 
             <article ref={setRefArticle("HOBBIES")}>
