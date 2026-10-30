@@ -52,7 +52,7 @@ export interface CabinData {
     items: Array<CabinItem>
   }>
   lastSeen: string
-  tools: ReadonlyArray<{ name: string; why: string }>
+  tools: typeof TOOLS
 }
 
 const sections = (

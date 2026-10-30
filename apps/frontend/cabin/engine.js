@@ -107,16 +107,22 @@ export function engineRoom(tools) {
     return { g, pivot, target: SWEEP, tip };
   });
 
-  // the tool rack: a board with engraved brass plates
-  const rackW = 0.86, rackX = W / 2 + 0.16 + rackW / 2;
+  // the tool rack: real tools hanging on a pegboard, each with an engraved tag naming what it stands for
+  const rackW = 1.0, rackX = W / 2 + 0.16 + rackW / 2;
   const rack = new THREE.Group();
-  rack.add(at(mesh(new THREE.BoxGeometry(rackW, H, 0.04), WOOD), 0, 0, 0));
-  rack.add(at(plate("TOOLBOX", 0.34, 0.07, { size: 46 }), 0, H / 2 - 0.075, 0.025));
-  tools.slice(0, 10).forEach((tool, i) => {
-    const col = i % 2, row = Math.floor(i / 2);
-    const p = at(plate(tool.name, 0.36, 0.085, { size: tool.name.length > 11 ? 34 : 40 }), (col - 0.5) * 0.4, H / 2 - 0.2 - row * 0.15, 0.025);
-    rack.add(p);
-    tips.set(p, { name: tool.name, quality: "epic", lines: [[tool.why]] });
+  rack.add(at(new THREE.Mesh(new THREE.BoxGeometry(rackW, H, 0.03), toon(0xffffff, { map: pegboard() })), 0, 0, 0));
+  rack.add(at(plate("TOOLBOX", 0.34, 0.07, { size: 46 }), 0, H / 2 - 0.075, 0.02));
+  const perRow = Math.min(4, Math.ceil(tools.length / 2)), pitch = (rackW - 0.16) / perRow;
+  tools.slice(0, 8).forEach((tool, i) => {
+    const col = i % perRow, row = Math.floor(i / perRow);
+    const x = (col - (perRow - 1) / 2) * pitch, y = H / 2 - 0.34 - row * 0.44;
+    const hook = at(mesh(new THREE.CylinderGeometry(0.006, 0.006, 0.05, 6), 0x8a8f99, { outline: false }), x, y + 0.17, 0.035);
+    hook.rotation.x = Math.PI / 2;
+    const item = at((TOOL_MAKERS[tool.kind] ?? TOOL_MAKERS.wrench)(), x, y, 0.045);
+    const tag = at(plate(tool.name, 0.22, 0.05, { size: tool.name.length > 9 ? 28 : 32 }), x, y - 0.205, 0.02);
+    rack.add(hook, item, tag);
+    const tip = { name: tool.name, quality: "epic", lines: [[tool.why]] };
+    tips.set(item, tip); tips.set(tag, tip);
   });
   rack.position.x = rackX;
 
@@ -203,4 +209,52 @@ function deployTip(d) {
   const label = { ready: "Deployed", error: "Failed", building: "Building", canceled: "Canceled" }[d.state] ?? d.state;
   const when = new Date(d.at).toLocaleString("en-GB", { day: "numeric", month: "short", hour: "2-digit", minute: "2-digit" });
   return { name: `${label} · ${when}`, quality: d.state === "error" ? "common" : "uncommon", lines: [[d.title || "Production deploy"], ...(d.minutes ? [[`Built in ${d.minutes} min`, "flavor"]] : [])] };
+}
+
+// ---- the tools: simple shapes in the cabin's toon style, hanging vertically, about 30 cm long ----
+const STEEL = 0xb8bec6, HANDLE = 0x8a5a33, RED = 0xc0392b;
+// no hull outlines: their thickness suits furniture and would swallow a 30 cm tool
+const cyl = (r, h, color) => mesh(new THREE.CylinderGeometry(r, r, h, 12), color, { outline: false });
+const box = (w, h, d, color) => mesh(new THREE.BoxGeometry(w, h, d), color, { outline: false });
+const part = (geo, color) => mesh(geo, color, { outline: false });
+
+const TOOL_MAKERS = {
+  hammer: () => group(at(cyl(0.011, 0.26, HANDLE), 0, -0.02, 0), at(box(0.11, 0.035, 0.035, 0x5d6168), 0, 0.12, 0)),
+  wrench: () => {
+    const jaw = part(new THREE.TorusGeometry(0.03, 0.011, 8, 18, Math.PI * 1.45), STEEL);
+    jaw.rotation.z = -Math.PI * 0.22; jaw.position.y = 0.13;
+    return group(at(box(0.022, 0.24, 0.008, STEEL), 0, 0, 0), jaw, at(part(new THREE.TorusGeometry(0.018, 0.009, 8, 18), STEEL), 0, -0.13, 0));
+  },
+  screwdriver: () => group(at(cyl(0.017, 0.1, RED), 0, 0.09, 0), at(cyl(0.005, 0.17, STEEL), 0, -0.04, 0), at(box(0.012, 0.012, 0.003, STEEL), 0, -0.13, 0)),
+  saw: () => {
+    const shape = new THREE.Shape([new THREE.Vector2(-0.04, 0.06), new THREE.Vector2(0.04, 0.06), new THREE.Vector2(0.015, -0.17), new THREE.Vector2(-0.015, -0.17)]);
+    const blade = part(new THREE.ExtrudeGeometry(shape, { depth: 0.003, bevelEnabled: false }), STEEL);
+    return group(blade, at(box(0.07, 0.07, 0.02, HANDLE), 0, 0.1, 0));
+  },
+  pliers: () => {
+    const half = (side) => {
+      const g = group(at(box(0.016, 0.16, 0.008, RED), 0, -0.07, 0), at(box(0.012, 0.08, 0.008, STEEL), 0, 0.05, 0));
+      g.rotation.z = side * 0.12; return g;
+    };
+    return group(half(1), half(-1), at(cyl(0.01, 0.014, STEEL), 0, 0, 0.004));
+  },
+  spyglass: () => group(at(cyl(0.022, 0.12, 0x8a5a33), 0, -0.09, 0), at(cyl(0.018, 0.1, 0xd0a85e), 0, 0.02, 0), at(cyl(0.014, 0.08, 0xd0a85e), 0, 0.11, 0), at(cyl(0.025, 0.012, 0xd0a85e), 0, -0.155, 0)),
+  ruler: () => {
+    const segment = (y) => at(box(0.032, 0.09, 0.006, 0xe0c35a), 0, y, 0);
+    const marks = canvasTex(32, 256, (x, w, h) => { x.fillStyle = "#e0c35a"; x.fillRect(0, 0, w, h); x.fillStyle = "#3a2614"; for (let i = 0; i < 26; i++) x.fillRect(0, i * 10, i % 5 ? 8 : 16, 2); });
+    const face = new THREE.Mesh(new THREE.PlaneGeometry(0.03, 0.27), toon(0xffffff, { map: marks }));
+    return group(segment(-0.09), segment(0), segment(0.09), at(face, 0, 0, 0.0035));
+  },
+  oilcan: () => {
+    const spout = at(cyl(0.004, 0.12, STEEL), 0.03, 0.08, 0); spout.rotation.z = -0.5;
+    return group(at(cyl(0.045, 0.08, 0x9a3b2a), 0, -0.06, 0), at(part(new THREE.ConeGeometry(0.045, 0.06, 12), 0x9a3b2a), 0, 0.01, 0), spout, at(box(0.012, 0.06, 0.008, 0x5d6168), -0.05, -0.05, 0));
+  },
+};
+
+function pegboard() {
+  return canvasTex(512, 540, (x, w, h) => {
+    x.fillStyle = "#8a5a33"; x.fillRect(0, 0, w, h);
+    x.fillStyle = "rgba(40, 22, 10, 0.55)";
+    for (let px = 16; px < w; px += 32) for (let py = 16; py < h; py += 32) { x.beginPath(); x.arc(px, py, 3.2, 0, Math.PI * 2); x.fill(); }
+  });
 }
