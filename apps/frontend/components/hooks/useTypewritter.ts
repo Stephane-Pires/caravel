@@ -65,8 +65,12 @@ export function useTypewriter(
   }, [options.cursor])
 
   useEffect(() => {
-    type()
-    typeCursor()
+    // start on the next tick: the loops set state right away, which must not happen synchronously in an effect
+    const start = setTimeout(() => {
+      type()
+      typeCursor()
+    }, 0)
+    return () => clearTimeout(start)
   }, [type, typeCursor])
 
   return `${text}${isTyping ? "|" : cursor}`

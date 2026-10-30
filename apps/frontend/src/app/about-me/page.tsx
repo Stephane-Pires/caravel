@@ -7,11 +7,7 @@ import { DownloadModal } from "@/components/clients/curriculum-vitae/modal/Downl
 import { SectionContent } from "@/components/clients/curriculum-vitae/section/SectionContent"
 import { TimelineContainer } from "@/components/clients/curriculum-vitae/timeline/TimelineContainer"
 import { usePercentScrolled } from "@/components/hooks/usePercentIntersection"
-import {
-  Article,
-  CURRICULUM_VITAE,
-  SectionKey,
-} from "@/content/curriculum-vitae/english"
+import { CURRICULUM_VITAE } from "@/content/curriculum-vitae/english"
 import { useCallback, useEffect, useMemo, useRef, useState } from "react"
 
 export default function AboutMe() {
@@ -35,61 +31,31 @@ export default function AboutMe() {
     new Map<string, HTMLDivElement>(),
   )
 
-  const setRefArticle = (article: Article) => {
-    return (node: HTMLDivElement | null) => {
-      if (node) {
-        articleRef.current.set(CURRICULUM_VITAE[article].id, node)
-      } else {
-        articleRef.current.delete(CURRICULUM_VITAE[article].id)
-      }
+  // Stable ref callbacks: each element names its entry with data-article / data-section,
+  // so no ref is read during render (react-hooks/refs). React 19 runs the returned cleanup on unmount.
+  const registerArticle = useCallback((node: HTMLDivElement | null) => {
+    if (!node) return
+    const id = node.dataset.article ?? ""
+    articleRef.current.set(id, node)
+    return () => {
+      articleRef.current.delete(id)
     }
-  }
+  }, [])
 
-  // Should be generic setRefSectionExperience & setRefSectionHobbies should be one function setRefSection
-  function setRefSectionExperience(section: SectionKey<"EXPERIENCE">) {
-    return (node: HTMLDivElement | null) => {
-      if (node) {
-        sectionExperienceRef.current.set(
-          CURRICULUM_VITAE["EXPERIENCE"].section[section].id,
-          node,
-        )
-      } else {
-        sectionExperienceRef.current.delete(
-          CURRICULUM_VITAE["EXPERIENCE"].section[section].id,
-        )
-      }
+  const registerSection = useCallback((node: HTMLDivElement | null) => {
+    if (!node) return
+    const maps = {
+      EDUCATION: sectionEducationRef.current,
+      EXPERIENCE: sectionExperienceRef.current,
+      HOBBIES: sectionHobbiesRef.current,
     }
-  }
-
-  function setRefSectionHobbies(section: SectionKey<"HOBBIES">) {
-    return (node: HTMLDivElement | null) => {
-      if (node) {
-        sectionHobbiesRef.current.set(
-          CURRICULUM_VITAE["HOBBIES"].section[section].id,
-          node,
-        )
-      } else {
-        sectionHobbiesRef.current.delete(
-          CURRICULUM_VITAE["HOBBIES"].section[section].id,
-        )
-      }
+    const map = maps[node.dataset.article as keyof typeof maps]
+    const id = node.dataset.section ?? ""
+    map.set(id, node)
+    return () => {
+      map.delete(id)
     }
-  }
-
-  function setRefSectionEducation(section: SectionKey<"EDUCATION">) {
-    return (node: HTMLDivElement | null) => {
-      if (node) {
-        sectionEducationRef.current.set(
-          CURRICULUM_VITAE["EDUCATION"].section[section].id,
-          node,
-        )
-      } else {
-        sectionEducationRef.current.delete(
-          CURRICULUM_VITAE["EDUCATION"].section[section].id,
-        )
-      }
-    }
-  }
+  }, [])
 
   const handleDownloadCVClick = useCallback(() => {
     setShowLanguageModal(true)
@@ -138,79 +104,99 @@ export default function AboutMe() {
             Me, myself & I ❤️
           </div>
           <div className="flex flex-col gap-4 font-sans md:gap-10">
-            <article ref={setRefArticle("EDUCATION")}>
+            <article ref={registerArticle} data-article={CURRICULUM_VITAE.EDUCATION.id}>
               <h2 className="my-16 text-center font-sans text-3xl font-bold text-blue-300 underline underline-offset-4">
                 {CURRICULUM_VITAE.EDUCATION.label}
               </h2>
-              <section ref={setRefSectionEducation("ISEP")}>
+              <section ref={registerSection}
+                data-article="EDUCATION"
+                data-section={CURRICULUM_VITAE.EDUCATION.section.ISEP.id}>
                 <SectionContent
                   section={CURRICULUM_VITAE.EDUCATION.section.ISEP}
                 />
               </section>
 
-              <section ref={setRefSectionEducation("AUDENCIA")}>
+              <section ref={registerSection}
+                data-article="EDUCATION"
+                data-section={CURRICULUM_VITAE.EDUCATION.section.AUDENCIA.id}>
                 <SectionContent
                   section={CURRICULUM_VITAE.EDUCATION.section.AUDENCIA}
                 />
               </section>
             </article>
 
-            <article ref={setRefArticle("EXPERIENCE")}>
+            <article ref={registerArticle} data-article={CURRICULUM_VITAE.EXPERIENCE.id}>
               <h2 className="my-16 text-center font-sans text-3xl font-bold text-blue-300 underline underline-offset-4">
                 {CURRICULUM_VITAE.EXPERIENCE.label}
               </h2>
 
-              <section ref={setRefSectionExperience("ANALOG_WAY")}>
+              <section ref={registerSection}
+                data-article="EXPERIENCE"
+                data-section={CURRICULUM_VITAE.EXPERIENCE.section.ANALOG_WAY.id}>
                 <SectionContent
                   section={CURRICULUM_VITAE.EXPERIENCE.section.ANALOG_WAY}
                 />
               </section>
 
               {/* Izicrédit is hidden for now, see english.ts
-              <section ref={setRefSectionExperience("IZICREDIT")}>
+              <section ref={registerSection}
+                data-article="EXPERIENCE"
+                data-section={CURRICULUM_VITAE.EXPERIENCE.section.IZICREDIT.id}>
                 <SectionContent
                   section={CURRICULUM_VITAE.EXPERIENCE.section.IZICREDIT}
                 />
               </section>
               */}
 
-              <section ref={setRefSectionExperience("LEAKMITED")}>
+              <section ref={registerSection}
+                data-article="EXPERIENCE"
+                data-section={CURRICULUM_VITAE.EXPERIENCE.section.LEAKMITED.id}>
                 <SectionContent
                   section={CURRICULUM_VITAE.EXPERIENCE.section.LEAKMITED}
                 />
               </section>
 
-              <section ref={setRefSectionExperience("FIGURES")}>
+              <section ref={registerSection}
+                data-article="EXPERIENCE"
+                data-section={CURRICULUM_VITAE.EXPERIENCE.section.FIGURES.id}>
                 <SectionContent
                   section={CURRICULUM_VITAE.EXPERIENCE.section.FIGURES}
                 />
               </section>
             </article>
 
-            <article ref={setRefArticle("HOBBIES")}>
+            <article ref={registerArticle} data-article={CURRICULUM_VITAE.HOBBIES.id}>
               <h2 className="my-16 text-center font-sans text-3xl font-bold text-blue-300 underline underline-offset-4">
                 {CURRICULUM_VITAE.HOBBIES.label}
               </h2>
 
-              <section ref={setRefSectionHobbies("VIDEO_GAME")}>
+              <section ref={registerSection}
+                data-article="HOBBIES"
+                data-section={CURRICULUM_VITAE.HOBBIES.section.VIDEO_GAME.id}>
                 <SectionContent
                   section={CURRICULUM_VITAE.HOBBIES.section.VIDEO_GAME}
                 />
               </section>
 
-              <section ref={setRefSectionHobbies("CLIMBING")}>
+              <section ref={registerSection}
+                data-article="HOBBIES"
+                data-section={CURRICULUM_VITAE.HOBBIES.section.CLIMBING.id}>
                 <SectionContent
                   section={CURRICULUM_VITAE.HOBBIES.section.CLIMBING}
                 />
               </section>
 
-              <section ref={setRefSectionHobbies("BIKING")}>
+              <section ref={registerSection}
+                data-article="HOBBIES"
+                data-section={CURRICULUM_VITAE.HOBBIES.section.BIKING.id}>
                 <SectionContent
                   section={CURRICULUM_VITAE.HOBBIES.section.BIKING}
                 />
               </section>
 
-              <section ref={setRefSectionHobbies("BOARD_GAME")}>
+              <section ref={registerSection}
+                data-article="HOBBIES"
+                data-section={CURRICULUM_VITAE.HOBBIES.section.BOARD_GAME.id}>
                 <SectionContent
                   section={CURRICULUM_VITAE.HOBBIES.section.BOARD_GAME}
                 />
