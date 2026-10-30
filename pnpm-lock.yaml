@@ -25,7 +25,7 @@ importers:
         version: 0.1.3
       '@trivago/prettier-plugin-sort-imports':
         specifier: 6.0.2
-        version: 6.0.2(@vue/compiler-sfc@3.5.28)(prettier@3.7.4)(supports-color@8.1.1)
+        version: 6.0.2(@vue/compiler-sfc@3.5.28)(prettier@3.9.10)(supports-color@8.1.1)
       better-commits:
         specifier: 1.18.3
         version: 1.18.3
@@ -33,11 +33,11 @@ importers:
         specifier: 9.1.7
         version: 9.1.7
       prettier:
-        specifier: 3.7.4
-        version: 3.7.4
+        specifier: 3.9.10
+        version: 3.9.10
       prettier-plugin-tailwindcss:
         specifier: 0.7.2
-        version: 0.7.2(@prettier/plugin-oxc@0.1.3)(@trivago/prettier-plugin-sort-imports@6.0.2(@vue/compiler-sfc@3.5.28)(prettier@3.7.4)(supports-color@8.1.1))(prettier@3.7.4)
+        version: 0.7.2(@prettier/plugin-oxc@0.1.3)(@trivago/prettier-plugin-sort-imports@6.0.2(@vue/compiler-sfc@3.5.28)(prettier@3.9.10)(supports-color@8.1.1))(prettier@3.9.10)
 
   apps/backend:
     dependencies:
@@ -149,7 +149,7 @@ importers:
         version: 2.1.1
       contentlayer2:
         specifier: 0.5.8
-        version: 0.5.8(acorn@8.15.0)(esbuild@0.27.1)(supports-color@8.1.1)
+        version: 0.5.8(acorn@8.15.0)(supports-color@8.1.1)
       date-fns:
         specifier: ^4.1.0
         version: 4.1.0
@@ -167,7 +167,7 @@ importers:
         version: 16.1.1(@babel/core@7.27.4(supports-color@8.1.1))(@opentelemetry/api@1.9.0)(react-dom@19.2.3(react@19.2.3))(react@19.2.3)
       next-contentlayer2:
         specifier: 0.5.8
-        version: 0.5.8(acorn@8.15.0)(contentlayer2@0.5.8(acorn@8.15.0)(esbuild@0.27.1)(supports-color@8.1.1))(esbuild@0.27.1)(next@16.1.1(@babel/core@7.27.4(supports-color@8.1.1))(@opentelemetry/api@1.9.0)(react-dom@19.2.3(react@19.2.3))(react@19.2.3))(react-dom@19.2.3(react@19.2.3))(react@19.2.3)(supports-color@8.1.1)
+        version: 0.5.8(acorn@8.15.0)(contentlayer2@0.5.8(acorn@8.15.0)(supports-color@8.1.1))(next@16.1.1(@babel/core@7.27.4(supports-color@8.1.1))(@opentelemetry/api@1.9.0)(react-dom@19.2.3(react@19.2.3))(react@19.2.3))(react-dom@19.2.3(react@19.2.3))(react@19.2.3)(supports-color@8.1.1)
       next-themes:
         specifier: ^0.4.6
         version: 0.4.6(react-dom@19.2.3(react@19.2.3))(react@19.2.3)
@@ -231,7 +231,7 @@ importers:
         version: 9.39.2
       '@trivago/prettier-plugin-sort-imports':
         specifier: 6.0.2
-        version: 6.0.2(@vue/compiler-sfc@3.5.28)(prettier@3.7.4)(supports-color@8.1.1)
+        version: 6.0.2(@vue/compiler-sfc@3.5.28)(prettier@3.9.10)(supports-color@8.1.1)
       '@types/node':
         specifier: 24.13.3
         version: 24.13.3
@@ -257,11 +257,11 @@ importers:
         specifier: 1.43.0
         version: 1.43.0
       prettier:
-        specifier: 3.7.4
-        version: 3.7.4
+        specifier: 3.9.10
+        version: 3.9.10
       prettier-plugin-tailwindcss:
         specifier: 0.7.2
-        version: 0.7.2(@prettier/plugin-oxc@0.1.3)(@trivago/prettier-plugin-sort-imports@6.0.2(@vue/compiler-sfc@3.5.28)(prettier@3.7.4)(supports-color@8.1.1))(prettier@3.7.4)
+        version: 0.7.2(@prettier/plugin-oxc@0.1.3)(@trivago/prettier-plugin-sort-imports@6.0.2(@vue/compiler-sfc@3.5.28)(prettier@3.9.10)(supports-color@8.1.1))(prettier@3.9.10)
       tw-animate-css:
         specifier: 1.4.0
         version: 1.4.0
@@ -651,8 +651,14 @@ packages:
   '@contentlayer2/utils@0.5.8':
     resolution: {integrity: sha512-KCC4qp5oCASW2jtUn8o4PLaaF/w0r9675gKnBCpbcpalZzFpZrqeH25VrHOTTMZZp7EeKqoKpiz2/WWq8i66MA==}
     peerDependencies:
+      '@effect-ts/core': '*'
+      '@effect-ts/otel': '*'
       '@effect-ts/otel-node': '*'
     peerDependenciesMeta:
+      '@effect-ts/core':
+        optional: true
+      '@effect-ts/otel':
+        optional: true
       '@effect-ts/otel-node':
         optional: true
 
@@ -1809,6 +1815,7 @@ packages:
   '@opentelemetry/propagator-jaeger@1.30.1':
     resolution: {integrity: sha512-Pj/BfnYEKIOImirH76M4hDaBSx6HyZ2CXUqk+Kj02m6BB80c/yo4BdWkn/1gDFfU+YPY+bPR2U0DKBfdxCKwmg==}
     engines: {node: '>=14'}
+    deprecated: Package no longer supported. See https://github.com/open-telemetry/opentelemetry-js/pull/7077
     peerDependencies:
       '@opentelemetry/api': '>=1.0.0 <1.10.0'
 
@@ -1843,18 +1850,21 @@ packages:
   '@opentelemetry/sdk-trace-base@1.30.1':
     resolution: {integrity: sha512-jVPgBbH1gCy2Lb7X0AVQ8XAfgg0pJ4nvl8/IiQA6nxOsPvS+0zMJaFSs2ltXe0J6C8dqjcnpyqINDJmU30+uOg==}
     engines: {node: '>=14'}
+    deprecated: Use @opentelemetry/sdk-trace package
     peerDependencies:
       '@opentelemetry/api': '>=1.0.0 <1.10.0'
 
   '@opentelemetry/sdk-trace-base@2.2.0':
     resolution: {integrity: sha512-xWQgL0Bmctsalg6PaXExmzdedSp3gyKV8mQBwK/j9VGdCDu2fmXIb2gAehBKbkXCpJ4HPkgv3QfoJWRT4dHWbw==}
     engines: {node: ^18.19.0 || >=20.6.0}
+    deprecated: Use @opentelemetry/sdk-trace package
     peerDependencies:
       '@opentelemetry/api': '>=1.3.0 <1.10.0'
 
   '@opentelemetry/sdk-trace-node@1.30.1':
     resolution: {integrity: sha512-cBjYOINt1JxXdpw1e5MlHmFRc5fgj4GW/86vsKFxJCJ8AL4PdVtYH41gWwl4qd4uQjqEL1oJVrXkSy5cnduAnQ==}
     engines: {node: '>=14'}
+    deprecated: Use @opentelemetry/sdk-trace package
     peerDependencies:
       '@opentelemetry/api': '>=1.0.0 <1.10.0'
 
@@ -3153,9 +3163,6 @@ packages:
   '@types/node@22.19.11':
     resolution: {integrity: sha512-BH7YwL6rA93ReqeQS1c4bsPpcfOmJasG+Fkr6Y59q83f9M1WcBRHR2vM+P9eOisYRcN3ujQoiZY8uk5W+1WL8w==}
 
-  '@types/node@24.10.4':
-    resolution: {integrity: sha512-vnDVpYPMzs4wunl27jHrfmwojOGKya0xyM3sH+UE5iv5uPS6vX7UIoh6m+vQc5LGBq52HBKPIn/zcSZVzeDEZg==}
-
   '@types/node@24.13.3':
     resolution: {integrity: sha512-Dh8vAsV36ig5wa9OX4pXvMc9D3Veibfw2wix0CUwYODLD8nkj9UsLjASr49nPg+2eKzxhBV+v7L8pXvT4e639Q==}
 
@@ -4286,6 +4293,7 @@ packages:
   eslint@9.39.2:
     resolution: {integrity: sha512-LEyamqS7W5HB3ujJyvi0HQK/dtVINZvd5mAAp9eT5S/ujByGjiZLCzPcHVzuXbpJDJF/cxwHlfceVUDZ2lnSTw==}
     engines: {node: ^18.18.0 || ^20.9.0 || >=21.1.0}
+    deprecated: This version is no longer supported. Please see https://eslint.org/version-support for other options.
     hasBin: true
     peerDependencies:
       jiti: '*'
@@ -5863,8 +5871,8 @@ packages:
     engines: {node: '>=10.13.0'}
     hasBin: true
 
-  prettier@3.7.4:
-    resolution: {integrity: sha512-v6UNi1+3hSlVvv8fSaoUbggEM5VErKmmpGA7Pl3HF8V6uKY7rvClBOJlH6yNwQtfTueNkGVpOv/mtWL9L4bgRA==}
+  prettier@3.9.10:
+    resolution: {integrity: sha512-skGHTH1Yb9QvaTC4hWnRTzEYtCpApF0UMBPz+t/0ZPzP8ihefo/btKd+QA7pUE0fEwA1SbS/NmhyEcstdXOIdA==}
     engines: {node: '>=14'}
     hasBin: true
 
@@ -6530,9 +6538,6 @@ packages:
 
   undici-types@6.21.0:
     resolution: {integrity: sha512-iwDZqg0QAGrg9Rav5H4n0M64c3mkR59cJ6wQp+7C4nI0gsmExaedaYLNO44eT4AtBBwjbTiGPMlt2Md0T9H9JQ==}
-
-  undici-types@7.16.0:
-    resolution: {integrity: sha512-Zz+aZWSj8LE6zoxD+xrjh4VfkIG8Ya6LvYkZqtUQGJPZjYl53ypCaUwWqo7eI0x66KBGeRo+mlBEkMSeSZ38Nw==}
 
   undici-types@7.18.2:
     resolution: {integrity: sha512-AsuCzffGHJybSaRrmr5eHr81mwJU3kjw6M+uprWvCXiNeN9SOGwQ3Jn8jb8m3Z6izVgknn1R0FTCEAP2QrLY/w==}
@@ -7573,34 +7578,33 @@ snapshots:
       conventional-commits-parser: 6.2.1
       picocolors: 1.1.1
 
-  '@contentlayer2/cli@0.5.8(acorn@8.15.0)(esbuild@0.27.1)(supports-color@8.1.1)':
+  '@contentlayer2/cli@0.5.8(acorn@8.15.0)(supports-color@8.1.1)':
     dependencies:
-      '@contentlayer2/core': 0.5.8(acorn@8.15.0)(esbuild@0.27.1)(supports-color@8.1.1)
+      '@contentlayer2/core': 0.5.8(acorn@8.15.0)(supports-color@8.1.1)
       '@contentlayer2/utils': 0.5.8
       clipanion: 3.2.1(typanion@3.14.0)
       typanion: 3.14.0
     transitivePeerDependencies:
       - '@effect-ts/otel-node'
       - acorn
-      - esbuild
       - markdown-wasm
       - supports-color
 
-  '@contentlayer2/client@0.5.8(acorn@8.15.0)(esbuild@0.27.1)(supports-color@8.1.1)':
+  '@contentlayer2/client@0.5.8(acorn@8.15.0)(supports-color@8.1.1)':
     dependencies:
-      '@contentlayer2/core': 0.5.8(acorn@8.15.0)(esbuild@0.27.1)(supports-color@8.1.1)
+      '@contentlayer2/core': 0.5.8(acorn@8.15.0)(supports-color@8.1.1)
     transitivePeerDependencies:
       - '@effect-ts/otel-node'
       - acorn
-      - esbuild
       - markdown-wasm
       - supports-color
 
-  '@contentlayer2/core@0.5.8(acorn@8.15.0)(esbuild@0.27.1)(supports-color@8.1.1)':
+  '@contentlayer2/core@0.5.8(acorn@8.15.0)(supports-color@8.1.1)':
     dependencies:
       '@contentlayer2/utils': 0.5.8
       camel-case: 4.1.2
       comment-json: 4.2.5
+      esbuild: 0.27.1
       gray-matter: 4.0.3
       mdx-bundler: 10.1.1(acorn@8.15.0)(esbuild@0.27.1)(supports-color@8.1.1)
       rehype-stringify: 10.0.1
@@ -7610,16 +7614,14 @@ snapshots:
       source-map-support: 0.5.21
       type-fest: 4.41.0
       unified: 11.0.5
-    optionalDependencies:
-      esbuild: 0.27.1
     transitivePeerDependencies:
       - '@effect-ts/otel-node'
       - acorn
       - supports-color
 
-  '@contentlayer2/source-files@0.5.8(acorn@8.15.0)(esbuild@0.27.1)(supports-color@8.1.1)':
+  '@contentlayer2/source-files@0.5.8(acorn@8.15.0)(supports-color@8.1.1)':
     dependencies:
-      '@contentlayer2/core': 0.5.8(acorn@8.15.0)(esbuild@0.27.1)(supports-color@8.1.1)
+      '@contentlayer2/core': 0.5.8(acorn@8.15.0)(supports-color@8.1.1)
       '@contentlayer2/utils': 0.5.8
       chokidar: 3.6.0
       fast-glob: 3.3.3
@@ -7633,19 +7635,17 @@ snapshots:
     transitivePeerDependencies:
       - '@effect-ts/otel-node'
       - acorn
-      - esbuild
       - markdown-wasm
       - supports-color
 
-  '@contentlayer2/source-remote-files@0.5.8(acorn@8.15.0)(esbuild@0.27.1)(supports-color@8.1.1)':
+  '@contentlayer2/source-remote-files@0.5.8(acorn@8.15.0)(supports-color@8.1.1)':
     dependencies:
-      '@contentlayer2/core': 0.5.8(acorn@8.15.0)(esbuild@0.27.1)(supports-color@8.1.1)
-      '@contentlayer2/source-files': 0.5.8(acorn@8.15.0)(esbuild@0.27.1)(supports-color@8.1.1)
+      '@contentlayer2/core': 0.5.8(acorn@8.15.0)(supports-color@8.1.1)
+      '@contentlayer2/source-files': 0.5.8(acorn@8.15.0)(supports-color@8.1.1)
       '@contentlayer2/utils': 0.5.8
     transitivePeerDependencies:
       - '@effect-ts/otel-node'
       - acorn
-      - esbuild
       - markdown-wasm
       - supports-color
 
@@ -9364,7 +9364,7 @@ snapshots:
       '@scalar/openapi-upgrader': 0.1.8
       ajv: 8.17.1
       ajv-draft-04: 1.0.0(ajv@8.17.1)
-      ajv-formats: 3.0.1(ajv@8.17.1)
+      ajv-formats: 3.0.1
       jsonpointer: 5.0.1
       leven: 4.0.0
       yaml: 2.8.0
@@ -10058,7 +10058,7 @@ snapshots:
       '@tanstack/virtual-core': 3.13.10
       vue: 3.5.28(typescript@5.9.3)
 
-  '@trivago/prettier-plugin-sort-imports@6.0.2(@vue/compiler-sfc@3.5.28)(prettier@3.7.4)(supports-color@8.1.1)':
+  '@trivago/prettier-plugin-sort-imports@6.0.2(@vue/compiler-sfc@3.5.28)(prettier@3.9.10)(supports-color@8.1.1)':
     dependencies:
       '@babel/generator': 7.28.5
       '@babel/parser': 7.29.0
@@ -10068,7 +10068,7 @@ snapshots:
       lodash-es: 4.17.21
       minimatch: 9.0.5
       parse-imports-exports: 0.2.4
-      prettier: 3.7.4
+      prettier: 3.9.10
     optionalDependencies:
       '@vue/compiler-sfc': 3.5.28
     transitivePeerDependencies:
@@ -10137,10 +10137,6 @@ snapshots:
   '@types/node@22.19.11':
     dependencies:
       undici-types: 6.21.0
-
-  '@types/node@24.10.4':
-    dependencies:
-      undici-types: 7.16.0
 
   '@types/node@24.13.3':
     dependencies:
@@ -10524,12 +10520,12 @@ snapshots:
     optionalDependencies:
       ajv: 8.17.1
 
-  ajv-formats@2.1.1(ajv@8.17.1):
-    optionalDependencies:
+  ajv-formats@2.1.1:
+    dependencies:
       ajv: 8.17.1
 
-  ajv-formats@3.0.1(ajv@8.17.1):
-    optionalDependencies:
+  ajv-formats@3.0.1:
+    dependencies:
       ajv: 8.17.1
 
   ajv-keywords@5.1.0(ajv@8.17.1):
@@ -10838,18 +10834,17 @@ snapshots:
       write-file-atomic: 3.0.3
       xdg-basedir: 4.0.0
 
-  contentlayer2@0.5.8(acorn@8.15.0)(esbuild@0.27.1)(supports-color@8.1.1):
+  contentlayer2@0.5.8(acorn@8.15.0)(supports-color@8.1.1):
     dependencies:
-      '@contentlayer2/cli': 0.5.8(acorn@8.15.0)(esbuild@0.27.1)(supports-color@8.1.1)
-      '@contentlayer2/client': 0.5.8(acorn@8.15.0)(esbuild@0.27.1)(supports-color@8.1.1)
-      '@contentlayer2/core': 0.5.8(acorn@8.15.0)(esbuild@0.27.1)(supports-color@8.1.1)
-      '@contentlayer2/source-files': 0.5.8(acorn@8.15.0)(esbuild@0.27.1)(supports-color@8.1.1)
-      '@contentlayer2/source-remote-files': 0.5.8(acorn@8.15.0)(esbuild@0.27.1)(supports-color@8.1.1)
+      '@contentlayer2/cli': 0.5.8(acorn@8.15.0)(supports-color@8.1.1)
+      '@contentlayer2/client': 0.5.8(acorn@8.15.0)(supports-color@8.1.1)
+      '@contentlayer2/core': 0.5.8(acorn@8.15.0)(supports-color@8.1.1)
+      '@contentlayer2/source-files': 0.5.8(acorn@8.15.0)(supports-color@8.1.1)
+      '@contentlayer2/source-remote-files': 0.5.8(acorn@8.15.0)(supports-color@8.1.1)
       '@contentlayer2/utils': 0.5.8
     transitivePeerDependencies:
       - '@effect-ts/otel-node'
       - acorn
-      - esbuild
       - markdown-wasm
       - supports-color
 
@@ -12265,7 +12260,7 @@ snapshots:
 
   jest-worker@27.5.1:
     dependencies:
-      '@types/node': 24.10.4
+      '@types/node': 24.13.3
       merge-stream: 2.0.0
       supports-color: 8.1.1
 
@@ -13016,18 +13011,17 @@ snapshots:
 
   neo-async@2.6.2: {}
 
-  next-contentlayer2@0.5.8(acorn@8.15.0)(contentlayer2@0.5.8(acorn@8.15.0)(esbuild@0.27.1)(supports-color@8.1.1))(esbuild@0.27.1)(next@16.1.1(@babel/core@7.27.4(supports-color@8.1.1))(@opentelemetry/api@1.9.0)(react-dom@19.2.3(react@19.2.3))(react@19.2.3))(react-dom@19.2.3(react@19.2.3))(react@19.2.3)(supports-color@8.1.1):
+  next-contentlayer2@0.5.8(acorn@8.15.0)(contentlayer2@0.5.8(acorn@8.15.0)(supports-color@8.1.1))(next@16.1.1(@babel/core@7.27.4(supports-color@8.1.1))(@opentelemetry/api@1.9.0)(react-dom@19.2.3(react@19.2.3))(react@19.2.3))(react-dom@19.2.3(react@19.2.3))(react@19.2.3)(supports-color@8.1.1):
     dependencies:
-      '@contentlayer2/core': 0.5.8(acorn@8.15.0)(esbuild@0.27.1)(supports-color@8.1.1)
+      '@contentlayer2/core': 0.5.8(acorn@8.15.0)(supports-color@8.1.1)
       '@contentlayer2/utils': 0.5.8
-      contentlayer2: 0.5.8(acorn@8.15.0)(esbuild@0.27.1)(supports-color@8.1.1)
+      contentlayer2: 0.5.8(acorn@8.15.0)(supports-color@8.1.1)
       next: 16.1.1(@babel/core@7.27.4(supports-color@8.1.1))(@opentelemetry/api@1.9.0)(react-dom@19.2.3(react@19.2.3))(react@19.2.3)
       react: 19.2.3
       react-dom: 19.2.3(react@19.2.3)
     transitivePeerDependencies:
       - '@effect-ts/otel-node'
       - acorn
-      - esbuild
       - markdown-wasm
       - supports-color
 
@@ -13341,16 +13335,16 @@ snapshots:
 
   prelude-ls@1.2.1: {}
 
-  prettier-plugin-tailwindcss@0.7.2(@prettier/plugin-oxc@0.1.3)(@trivago/prettier-plugin-sort-imports@6.0.2(@vue/compiler-sfc@3.5.28)(prettier@3.7.4)(supports-color@8.1.1))(prettier@3.7.4):
+  prettier-plugin-tailwindcss@0.7.2(@prettier/plugin-oxc@0.1.3)(@trivago/prettier-plugin-sort-imports@6.0.2(@vue/compiler-sfc@3.5.28)(prettier@3.9.10)(supports-color@8.1.1))(prettier@3.9.10):
     dependencies:
-      prettier: 3.7.4
+      prettier: 3.9.10
     optionalDependencies:
       '@prettier/plugin-oxc': 0.1.3
-      '@trivago/prettier-plugin-sort-imports': 6.0.2(@vue/compiler-sfc@3.5.28)(prettier@3.7.4)(supports-color@8.1.1)
+      '@trivago/prettier-plugin-sort-imports': 6.0.2(@vue/compiler-sfc@3.5.28)(prettier@3.9.10)(supports-color@8.1.1)
 
   prettier@2.8.8: {}
 
-  prettier@3.7.4: {}
+  prettier@3.9.10: {}
 
   pretty-bytes@7.1.0: {}
 
@@ -13777,7 +13771,7 @@ snapshots:
     dependencies:
       '@types/json-schema': 7.0.15
       ajv: 8.17.1
-      ajv-formats: 2.1.1(ajv@8.17.1)
+      ajv-formats: 2.1.1
       ajv-keywords: 5.1.0(ajv@8.17.1)
 
   section-matter@1.0.0:
@@ -14220,8 +14214,6 @@ snapshots:
       which-boxed-primitive: 1.1.1
 
   undici-types@6.21.0: {}
-
-  undici-types@7.16.0: {}
 
   undici-types@7.18.2: {}
 
