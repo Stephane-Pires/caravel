@@ -1,5 +1,6 @@
 "use client"
 
+import { FrontDoor } from "@/components/FrontDoor"
 import { Polaroid } from "@/components/Polaroid"
 import { useTypewriter } from "@/components/hooks/useTypewritter"
 
@@ -23,6 +24,7 @@ export default function Home() {
 
   return (
     <main className="grid min-h-screen grid-rows-2 p-8 sm:p-24">
+      <FrontDoor />
       <div className="row-span-2 flex flex-row items-center justify-around">
         <div className="flex flex-col gap-10">
           <div>
