@@ -1,5 +1,51 @@
 # backend
 
+## 0.2.0
+
+### Minor Changes
+
+- [#461](https://github.com/Stephane-Pires/caravel/pull/461) [`830ac85`](https://github.com/Stephane-Pires/caravel/commit/830ac8544e0b0aba4585b7a5dcfcd7b44820d712) Thanks [@Stephane-Pires](https://github.com/Stephane-Pires)! - Offer only free slots in the captain's hours (every day 08:00–20:00 Paris time), make double booking impossible in the database, and ask for the guest's name and topic
+
+- [#462](https://github.com/Stephane-Pires/caravel/pull/462) [`329dbd2`](https://github.com/Stephane-Pires/caravel/commit/329dbd21ca771b9875da6616e5edb20861d38974) Thanks [@Stephane-Pires](https://github.com/Stephane-Pires)! - Book each rendez-vous in the captain's Google Calendar with a Meet link, the guest invited and reminders, and skip slots when he's busy there; the Gmail emails are gone
+
+- [#459](https://github.com/Stephane-Pires/caravel/pull/459) [`18ae67f`](https://github.com/Stephane-Pires/caravel/commit/18ae67fb6e3d89cf980ca2ac1c17d8798629545a) Thanks [@Stephane-Pires](https://github.com/Stephane-Pires)! - Pourparler goes online: the API runs inside the site at `/api/pourparler` (Vercel + Neon), migrates the database at deploy, reports errors to Sentry, and forgets bookings 30 days after the rendez-vous. Adds the `/privacy` page.
+
+- [#461](https://github.com/Stephane-Pires/caravel/pull/461) [`2fe7939`](https://github.com/Stephane-Pires/caravel/commit/2fe79398ed414c61bf3babd1be6e3a1e4991fb8c) Thanks [@Stephane-Pires](https://github.com/Stephane-Pires)! - Let guests reschedule or cancel their rendez-vous from a private link, in the Google invitation and on the booking confirmation
+
+- [#462](https://github.com/Stephane-Pires/caravel/pull/462) [`694d214`](https://github.com/Stephane-Pires/caravel/commit/694d214af58d56b5bde6ccd7b17070bc1b7929f0) Thanks [@Stephane-Pires](https://github.com/Stephane-Pires)! - Booking no longer asks a Cloudflare Turnstile check: no third party in the form, no `TURNSTILE_SECRET_KEY` to set. The limits that stay: two upcoming rendez-vous per email, offered free slots only, no overlaps. Error code 1005 is retired.
+
+- [#459](https://github.com/Stephane-Pires/caravel/pull/459) [`37ee4cc`](https://github.com/Stephane-Pires/caravel/commit/37ee4ccff6bf3d50cff09eb12e4cd84eea25fbf8) Thanks [@Stephane-Pires](https://github.com/Stephane-Pires)! - Make the Pourparler API safe to put online: no secrets or guest emails exposed, development-only database routes, a secret token to manage each rendez-vous, and spam limits
+
+### Patch Changes
+
+- [#403](https://github.com/Stephane-Pires/caravel/pull/403) [`3953131`](https://github.com/Stephane-Pires/caravel/commit/3953131f3ec57f46328cadc1503da88235ec6be9) Thanks [@renovate](https://github.com/apps/renovate)! - chore(backend): 🧹 Update @hono/zod-openapi from 1.2.0 to v1.2.1
+
+- [#404](https://github.com/Stephane-Pires/caravel/pull/404) [`590588f`](https://github.com/Stephane-Pires/caravel/commit/590588fc31e7c5582a7a34420445dbec516cc054) Thanks [@renovate](https://github.com/apps/renovate)! - chore(backend): 🧹 Update dotenv from 17.2.3 to v17.2.4
+
+- [#405](https://github.com/Stephane-Pires/caravel/pull/405) [`260b1c6`](https://github.com/Stephane-Pires/caravel/commit/260b1c65c00988af1746926b77a4286d599da05c) Thanks [@renovate](https://github.com/apps/renovate)! - chore(backend): 🧹 Update drizzle-kit from 0.31.8 to v0.31.9
+
+- [#406](https://github.com/Stephane-Pires/caravel/pull/406) [`d066789`](https://github.com/Stephane-Pires/caravel/commit/d066789546065e91b3574fb34550593ed2d058db) Thanks [@renovate](https://github.com/apps/renovate)! - chore(backend): 🧹 Update @scalar/openapi-to-markdown from 0.3.43 to v0.3.41
+
+- [#408](https://github.com/Stephane-Pires/caravel/pull/408) [`00ecd46`](https://github.com/Stephane-Pires/caravel/commit/00ecd46f3cca822ed78070c1368efdf06aeebd20) Thanks [@renovate](https://github.com/apps/renovate)! - chore(backend): 🧹 Update hono from 4.11.3 to v4.11.9
+
+- [#409](https://github.com/Stephane-Pires/caravel/pull/409) [`6cddd3f`](https://github.com/Stephane-Pires/caravel/commit/6cddd3f43582ff15a41d3e6bcad3c435488b34b7) Thanks [@renovate](https://github.com/apps/renovate)! - chore(backend): 🧹 Update nodemailer from 7.0.12 to v7.0.13
+
+- [#411](https://github.com/Stephane-Pires/caravel/pull/411) [`9f226be`](https://github.com/Stephane-Pires/caravel/commit/9f226beb1e86fc2faaa7f71c0a456c962d9aef6d) Thanks [@renovate](https://github.com/apps/renovate)! - chore(backend): 🧹 Update scalar monorepo
+
+- [#414](https://github.com/Stephane-Pires/caravel/pull/414) [`cced747`](https://github.com/Stephane-Pires/caravel/commit/cced7472066866aa8c3c99e6b924f30a725c290e) Thanks [@renovate](https://github.com/apps/renovate)! - chore(app): 🧹 Update Node.js from v24.12.0 to v24.18.0
+
+- [#416](https://github.com/Stephane-Pires/caravel/pull/416) [`9b8f86a`](https://github.com/Stephane-Pires/caravel/commit/9b8f86a04b75b06c7ffc77d07fd5a2a0b0dc846d) Thanks [@renovate](https://github.com/apps/renovate)! - chore(backend): 🧹 Update pg from 8.16.3 to v8.23.1
+
+- [#417](https://github.com/Stephane-Pires/caravel/pull/417) [`7bb6950`](https://github.com/Stephane-Pires/caravel/commit/7bb6950b6ace8544f02ef287656cfe207475e26a) Thanks [@renovate](https://github.com/apps/renovate)! - chore(backend): 🧹 Update dotenv from 17.2.4 to v17.4.2
+
+- [#447](https://github.com/Stephane-Pires/caravel/pull/447) [`77aa33d`](https://github.com/Stephane-Pires/caravel/commit/77aa33d19399655241bae1f723cf99b22db8d661) Thanks [@renovate](https://github.com/apps/renovate)! - chore(backend): 🧹 Update @hono/node-server from 1.19.9 to v1.19.17
+
+- [#454](https://github.com/Stephane-Pires/caravel/pull/454) [`33c95c4`](https://github.com/Stephane-Pires/caravel/commit/33c95c4767f4b0265ce6b286b6643168a2334f44) Thanks [@renovate](https://github.com/apps/renovate)! - chore(backend): 🧹 Update drizzle-kit from 0.31.9 to v0.31.11
+
+- [#456](https://github.com/Stephane-Pires/caravel/pull/456) [`015cfdd`](https://github.com/Stephane-Pires/caravel/commit/015cfdd1ef538781df479deff18fc0f1f76bfcb3) Thanks [@renovate](https://github.com/apps/renovate)! - chore(backend): 🧹 Update drizzle-orm from 0.45.1 to v0.45.4
+
+- [#463](https://github.com/Stephane-Pires/caravel/pull/463) [`6b730bf`](https://github.com/Stephane-Pires/caravel/commit/6b730bf6fbc897f6c5dd9266d7c7b7d5c2b5a2b5) Thanks [@renovate](https://github.com/apps/renovate)! - chore(frontend): 🧹 Update dayjs from 1.11.19 to v1.11.23
+
 ## 0.1.1
 
 ### Patch Changes

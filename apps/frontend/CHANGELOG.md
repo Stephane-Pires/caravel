@@ -1,5 +1,124 @@
 # Changelog
 
+## 0.9.0
+
+### Minor Changes
+
+- [#465](https://github.com/Stephane-Pires/caravel/pull/465) [`c412bf9`](https://github.com/Stephane-Pires/caravel/commit/c412bf9376d0f05319ce01f4e66a89bef2ce7780) Thanks [@Stephane-Pires](https://github.com/Stephane-Pires)! - About Me, rewritten short and impact-first: most recent roles and studies first, 1–2 sentences and 3 measured bullets per role, compact education and hobbies, trimmed stack lists. The phone number is no longer shipped to the browser.
+
+- [#466](https://github.com/Stephane-Pires/caravel/pull/466) [`cf029df`](https://github.com/Stephane-Pires/caravel/commit/cf029df9c77b39ff7d1d6b5d6fb650415e896d94) Thanks [@Stephane-Pires](https://github.com/Stephane-Pires)! - The cabin has an engine room: a brass panel on the wall by the door shows how this site runs, live. GitHub activity lights a lamp per day, Vercel's last deploys fly as flags beside a bell, and Sentry's crash-free rate, page load and errors move three gauges. A tool rack beside it names the tools I build with. Data comes from `/api/engine-room` (server-side tokens, cached 15 minutes, aggregates only).
+
+- [#450](https://github.com/Stephane-Pires/caravel/pull/450) [`92cc834`](https://github.com/Stephane-Pires/caravel/commit/92cc834fcafd658c9445797616296970cc1df636) Thanks [@Stephane-Pires](https://github.com/Stephane-Pires)! - Open the 3D cabin from the home page on devices that draw it smoothly, remembering visitors who choose the classic site
+
+- [#443](https://github.com/Stephane-Pires/caravel/pull/443) [`f585d52`](https://github.com/Stephane-Pires/caravel/commit/f585d52c3c003ce844ebddbf337b3796e7af0b80) Thanks [@Stephane-Pires](https://github.com/Stephane-Pires)! - Sail a small caravel across the screen while the cabin loads, then open onto it through a spyglass
+
+- [#444](https://github.com/Stephane-Pires/caravel/pull/444) [`2043674`](https://github.com/Stephane-Pires/caravel/commit/2043674fd46d5c7d37d02a87bcb648c9e5443472) Thanks [@Stephane-Pires](https://github.com/Stephane-Pires)! - Let the cabin's objects carry its content: no more panel, a readable logbook, CV scrolls in the chest and project slips on the chart
+
+- [#433](https://github.com/Stephane-Pires/caravel/pull/433) [`69e3dfd`](https://github.com/Stephane-Pires/caravel/commit/69e3dfd7674b33f27b7082f53b716eea9e99c8bf) Thanks [@Stephane-Pires](https://github.com/Stephane-Pires)! - Add the /cabin route: the interactive 3D captain's cabin (Three.js), ported from the prototype
+
+- [#461](https://github.com/Stephane-Pires/caravel/pull/461) [`15f2830`](https://github.com/Stephane-Pires/caravel/commit/15f2830ba31028abc362459671278041e4cb7364) Thanks [@Stephane-Pires](https://github.com/Stephane-Pires)! - Log how the cabin is used and how smoothly it runs as Sentry logs, with no cookies and no identifiers
+
+- [#442](https://github.com/Stephane-Pires/caravel/pull/442) [`f1027c5`](https://github.com/Stephane-Pires/caravel/commit/f1027c5bcfd66018241413ba7b6d5bea89e88d20) Thanks [@Stephane-Pires](https://github.com/Stephane-Pires)! - Add a Lo-fi / Hi-fi switch between the classic site and the 3D cabin, and let the cabin's music box be its only music control
+
+- [#478](https://github.com/Stephane-Pires/caravel/pull/478) [`4e1d61d`](https://github.com/Stephane-Pires/caravel/commit/4e1d61d419efb5279821acba1592fbbf5cd844e4) Thanks [@Stephane-Pires](https://github.com/Stephane-Pires)! - Pourparler: a calendar with full days struck through, times split into morning, afternoon and evening, icons instead of hints, one- or two-word buttons, cancel with a confirmation, readable contrast and no overflow on phones
+
+- [#459](https://github.com/Stephane-Pires/caravel/pull/459) [`2fda0a6`](https://github.com/Stephane-Pires/caravel/commit/2fda0a68e8db6347c152ede34a4ab872e1dd6565) Thanks [@Stephane-Pires](https://github.com/Stephane-Pires)! - In the 3D cabin, the message in a bottle uncorks: the cork pops onto the sill, the rolled note slides out, and it unrolls as the booking form, the same one as on /pourparler. What's typed (and a booking made) follows the visitor between the Hi-fi cabin and the Lo-fi page, for the length of the tab.
+
+- [#461](https://github.com/Stephane-Pires/caravel/pull/461) [`830ac85`](https://github.com/Stephane-Pires/caravel/commit/830ac8544e0b0aba4585b7a5dcfcd7b44820d712) Thanks [@Stephane-Pires](https://github.com/Stephane-Pires)! - Offer only free slots in the captain's hours (every day 08:00–20:00 Paris time), make double booking impossible in the database, and ask for the guest's name and topic
+
+- [#459](https://github.com/Stephane-Pires/caravel/pull/459) [`18ae67f`](https://github.com/Stephane-Pires/caravel/commit/18ae67fb6e3d89cf980ca2ac1c17d8798629545a) Thanks [@Stephane-Pires](https://github.com/Stephane-Pires)! - Pourparler goes online: the API runs inside the site at `/api/pourparler` (Vercel + Neon), migrates the database at deploy, reports errors to Sentry, and forgets bookings 30 days after the rendez-vous. Adds the `/privacy` page.
+
+- [#461](https://github.com/Stephane-Pires/caravel/pull/461) [`2fe7939`](https://github.com/Stephane-Pires/caravel/commit/2fe79398ed414c61bf3babd1be6e3a1e4991fb8c) Thanks [@Stephane-Pires](https://github.com/Stephane-Pires)! - Let guests reschedule or cancel their rendez-vous from a private link, in the Google invitation and on the booking confirmation
+
+- [#462](https://github.com/Stephane-Pires/caravel/pull/462) [`9a6318e`](https://github.com/Stephane-Pires/caravel/commit/9a6318ee77f5452be5850cf79f55c78c26549227) Thanks [@Stephane-Pires](https://github.com/Stephane-Pires)! - In the 3D cabin, booking from the bottle's note sends it off: the note folds into a paper plane while the camera turns to the window, the plane glides out over the sea, then the confirmation unrolls. The Lo-fi page confirms at once, as before; reduced motion skips the flight.
+
+- [#461](https://github.com/Stephane-Pires/caravel/pull/461) [`08d5a1a`](https://github.com/Stephane-Pires/caravel/commit/08d5a1a0269de97171229790c6b1f1bff29393cd) Thanks [@Stephane-Pires](https://github.com/Stephane-Pires)! - Pourparler is open again: the page is back in the navigation, and in the 3D cabin the message in a bottle has its own close-up, where a tap uncorks the booking page. Bookings, moves and cancellations are counted as `site.pourparler` events.
+
+### Patch Changes
+
+- [#465](https://github.com/Stephane-Pires/caravel/pull/465) [`ee75ebd`](https://github.com/Stephane-Pires/caravel/commit/ee75ebd3408d7a368c652f52b3994dcca8bde8b7) Thanks [@Stephane-Pires](https://github.com/Stephane-Pires)! - About Me shows Experience before Education.
+
+- [#407](https://github.com/Stephane-Pires/caravel/pull/407) [`ac39322`](https://github.com/Stephane-Pires/caravel/commit/ac393223259b7cc84b1f25da337f9fc2e76e6b0b) Thanks [@Stephane-Pires](https://github.com/Stephane-Pires)! - Adding SERVERLESS to SKILLS in FARAWAY
+
+- [#436](https://github.com/Stephane-Pires/caravel/pull/436) [`594c28b`](https://github.com/Stephane-Pires/caravel/commit/594c28bfc962a344fd42bd59a300fd7305677820) Thanks [@Stephane-Pires](https://github.com/Stephane-Pires)! - Cabin close-ups have URLs (/cabin#chart): shareable, and the back button returns to the overview
+
+- [#438](https://github.com/Stephane-Pires/caravel/pull/438) [`3de2275`](https://github.com/Stephane-Pires/caravel/commit/3de22753dbceb9bd255c2d4eb771f10c07638abb) Thanks [@Stephane-Pires](https://github.com/Stephane-Pires)! - The cabin checks the device first: browsers without a real GPU get the plain pages, with a way in anyway
+
+- [#460](https://github.com/Stephane-Pires/caravel/pull/460) [`560962f`](https://github.com/Stephane-Pires/caravel/commit/560962f2cbf42104ab144705007b6bc74e89a4f5) Thanks [@Stephane-Pires](https://github.com/Stephane-Pires)! - The cabin's lantern burns at night only: unlit with dull amber glass at sunset, lit and flickering at night, fading with the change.
+
+- [#437](https://github.com/Stephane-Pires/caravel/pull/437) [`8d23216`](https://github.com/Stephane-Pires/caravel/commit/8d23216b728f32adf43e7e0729dcc4ff06201cca) Thanks [@Stephane-Pires](https://github.com/Stephane-Pires)! - Cabin music: committed render and analysis scripts, Opus/AAC layers and exact gapless loops
+
+- [#439](https://github.com/Stephane-Pires/caravel/pull/439) [`a5536a7`](https://github.com/Stephane-Pires/caravel/commit/a5536a7b81de3d97f90b319c87644c5d822b7018) Thanks [@Stephane-Pires](https://github.com/Stephane-Pires)! - Render the cabin overlay as JSX and self-host its fonts with next/font
+
+- [#446](https://github.com/Stephane-Pires/caravel/pull/446) [`de1d75b`](https://github.com/Stephane-Pires/caravel/commit/de1d75b8c76654f2476e7b6dbb1267068398d303) Thanks [@Stephane-Pires](https://github.com/Stephane-Pires)! - Let portrait phones turn round to the wanted poster and look down to the treasure chest in the cabin
+
+- [#435](https://github.com/Stephane-Pires/caravel/pull/435) [`7412188`](https://github.com/Stephane-Pires/caravel/commit/74121881bb23effa529b8d41ede19a17cfb812c6) Thanks [@Stephane-Pires](https://github.com/Stephane-Pires)! - The cabin now reads posts from Contentlayer and the CV from english.ts instead of copies
+
+- [#441](https://github.com/Stephane-Pires/caravel/pull/441) [`a5b28c4`](https://github.com/Stephane-Pires/caravel/commit/a5b28c4dbca462664915f02208257a5478a02bb1) Thanks [@Stephane-Pires](https://github.com/Stephane-Pires)! - Make the cabin's CV download and logbook entries real links
+
+- [#467](https://github.com/Stephane-Pires/caravel/pull/467) [`58ed363`](https://github.com/Stephane-Pires/caravel/commit/58ed3639436bff4d02778d7ccecca0d5dfec399e) Thanks [@Stephane-Pires](https://github.com/Stephane-Pires)! - The CV downloads as `cv-stephane-pires-english.pdf` / `cv-stephane-pires-french.pdf` instead of an extensionless file, and an unknown language falls back to English instead of failing.
+
+- [#426](https://github.com/Stephane-Pires/caravel/pull/426) [`08de017`](https://github.com/Stephane-Pires/caravel/commit/08de017dfb3d79369302b4723a6c0190cd71d0d9) Thanks [@Stephane-Pires](https://github.com/Stephane-Pires)! - Add the Figures experience to the CV and end Leakmited in March 2026
+
+- [#410](https://github.com/Stephane-Pires/caravel/pull/410) [`bdc9fd0`](https://github.com/Stephane-Pires/caravel/commit/bdc9fd0163575a41067a24deefa38d3f287f5503) Thanks [@renovate](https://github.com/apps/renovate)! - chore(frontend): 🧹 Update nextjs monorepo from 16.1.1 to v16.4.3
+
+- [#412](https://github.com/Stephane-Pires/caravel/pull/412) [`517913e`](https://github.com/Stephane-Pires/caravel/commit/517913e85ddee8350f8e5f42df1a8be060e83215) Thanks [@renovate](https://github.com/apps/renovate)! - chore(frontend): 🧹 Update react monorepo
+
+- [#413](https://github.com/Stephane-Pires/caravel/pull/413) [`43f7f0d`](https://github.com/Stephane-Pires/caravel/commit/43f7f0d71acdd4e4a4f54214cf60a7f139643c79) Thanks [@renovate](https://github.com/apps/renovate)! - chore(frontend): 🧹 Update react-day-picker from 9.13.0 to v9.14.0
+
+- [#414](https://github.com/Stephane-Pires/caravel/pull/414) [`cced747`](https://github.com/Stephane-Pires/caravel/commit/cced7472066866aa8c3c99e6b924f30a725c290e) Thanks [@renovate](https://github.com/apps/renovate)! - chore(app): 🧹 Update Node.js from v24.12.0 to v24.18.0
+
+- [#415](https://github.com/Stephane-Pires/caravel/pull/415) [`989b3b1`](https://github.com/Stephane-Pires/caravel/commit/989b3b1ecee512bafab5853d678ac9147d769824) Thanks [@renovate](https://github.com/apps/renovate)! - chore(app): 🧹 Update prettier from 3.7.4 to v3.9.10
+
+- [#418](https://github.com/Stephane-Pires/caravel/pull/418) [`56e1b6f`](https://github.com/Stephane-Pires/caravel/commit/56e1b6f98d8f9915c75acc0c52e5d0517e48516e) Thanks [@renovate](https://github.com/apps/renovate)! - chore(frontend): 🧹 Update @sentry/nextjs from 10.32.1 to v10.76.2
+
+- [#458](https://github.com/Stephane-Pires/caravel/pull/458) [`709fcd3`](https://github.com/Stephane-Pires/caravel/commit/709fcd35ed000fa481d8d899e0cbf835695d02aa) Thanks [@renovate](https://github.com/apps/renovate)! - chore(frontend): 🧹 Update @headlessui/react from 2.2.9 to v2.2.10
+
+- [#463](https://github.com/Stephane-Pires/caravel/pull/463) [`6b730bf`](https://github.com/Stephane-Pires/caravel/commit/6b730bf6fbc897f6c5dd9266d7c7b7d5c2b5a2b5) Thanks [@renovate](https://github.com/apps/renovate)! - chore(frontend): 🧹 Update dayjs from 1.11.19 to v1.11.23
+
+- [#469](https://github.com/Stephane-Pires/caravel/pull/469) [`e06c7e1`](https://github.com/Stephane-Pires/caravel/commit/e06c7e17b484eae0512ad6d80da491ef1d5f0c3c) Thanks [@renovate](https://github.com/apps/renovate)! - chore(frontend): 🧹 Update eslint monorepo from 9.39.2 to v9.39.5
+
+- [#470](https://github.com/Stephane-Pires/caravel/pull/470) [`9331ba7`](https://github.com/Stephane-Pires/caravel/commit/9331ba7a117e5ebc8cb25562b8fb203c16b70329) Thanks [@renovate](https://github.com/apps/renovate)! - chore(frontend): 🧹 Update postcss from 8.5.6 to v8.5.32
+
+- [#471](https://github.com/Stephane-Pires/caravel/pull/471) [`56150ec`](https://github.com/Stephane-Pires/caravel/commit/56150eca07658c7065525ebe00d700febc504309) Thanks [@renovate](https://github.com/apps/renovate)! - chore(frontend): 🧹 Update radix-ui-primitives monorepo
+
+- [#474](https://github.com/Stephane-Pires/caravel/pull/474) [`d98d647`](https://github.com/Stephane-Pires/caravel/commit/d98d6478302ac949d7234385bf3b3c3a29eb778f) Thanks [@renovate](https://github.com/apps/renovate)! - chore(frontend): 🧹 Update rehype-pretty-code from 0.14.1 to v0.14.5
+
+- [#476](https://github.com/Stephane-Pires/caravel/pull/476) [`50c68cc`](https://github.com/Stephane-Pires/caravel/commit/50c68cce49b2d224dcff2cf43730aa9f3108f26d) Thanks [@renovate](https://github.com/apps/renovate)! - chore(frontend): 🧹 Update sonner from 2.0.7 to v2.0.8
+
+- [#477](https://github.com/Stephane-Pires/caravel/pull/477) [`26caa96`](https://github.com/Stephane-Pires/caravel/commit/26caa96c6f765a0d3b74cc506d867276a85034cd) Thanks [@Stephane-Pires](https://github.com/Stephane-Pires)! - Engine room: read page-load speed from Sentry's spans so the LOAD gauge shows data
+
+- [#430](https://github.com/Stephane-Pires/caravel/pull/430) [`4c731e2`](https://github.com/Stephane-Pires/caravel/commit/4c731e26a450e8a3f6ccd629de3916c51a61dcd8) Thanks [@Stephane-Pires](https://github.com/Stephane-Pires)! - Fix the react-hooks lint errors from the Next 16.4 upgrade and dedupe zod so the CV form type-checks
+
+- [#445](https://github.com/Stephane-Pires/caravel/pull/445) [`f504f07`](https://github.com/Stephane-Pires/caravel/commit/f504f078ca45ce5efdaf5f501219efac976c0575) Thanks [@Stephane-Pires](https://github.com/Stephane-Pires)! - Replace framer-motion with its new package name, motion
+
+- [#428](https://github.com/Stephane-Pires/caravel/pull/428) [`f033449`](https://github.com/Stephane-Pires/caravel/commit/f033449a607865d0c418a0e2223ad4c18ec05d40) Thanks [@Stephane-Pires](https://github.com/Stephane-Pires)! - Hide the Izicrédit experience from the CV (commented out, not deleted)
+
+- [#420](https://github.com/Stephane-Pires/caravel/pull/420) [`34ecf08`](https://github.com/Stephane-Pires/caravel/commit/34ecf0856a5d25ee65cf572d92f31e492a886205) Thanks [@Stephane-Pires](https://github.com/Stephane-Pires)! - Hide Pourparler (take rendez-vous) page
+
+- [#468](https://github.com/Stephane-Pires/caravel/pull/468) [`4bee04c`](https://github.com/Stephane-Pires/caravel/commit/4bee04c716d5d9cbf47a12884f054edb14809f61) Thanks [@Stephane-Pires](https://github.com/Stephane-Pires)! - Hide the logbook in Lo-fi and Hi-fi
+
+- [#425](https://github.com/Stephane-Pires/caravel/pull/425) [`eb4842e`](https://github.com/Stephane-Pires/caravel/commit/eb4842e78b82bc2f979f98fe9a253cb13f6c658c) Thanks [@Stephane-Pires](https://github.com/Stephane-Pires)! - Use the official Leakmited icon on the about-me timeline
+
+- [#462](https://github.com/Stephane-Pires/caravel/pull/462) [`329dbd2`](https://github.com/Stephane-Pires/caravel/commit/329dbd21ca771b9875da6616e5edb20861d38974) Thanks [@Stephane-Pires](https://github.com/Stephane-Pires)! - Book each rendez-vous in the captain's Google Calendar with a Meet link, the guest invited and reminders, and skip slots when he's busy there; the Gmail emails are gone
+
+- [#462](https://github.com/Stephane-Pires/caravel/pull/462) [`694d214`](https://github.com/Stephane-Pires/caravel/commit/694d214af58d56b5bde6ccd7b17070bc1b7929f0) Thanks [@Stephane-Pires](https://github.com/Stephane-Pires)! - Booking no longer asks a Cloudflare Turnstile check: no third party in the form, no `TURNSTILE_SECRET_KEY` to set. The limits that stay: two upcoming rendez-vous per email, offered free slots only, no overlaps. Error code 1005 is retired.
+
+- [#459](https://github.com/Stephane-Pires/caravel/pull/459) [`37ee4cc`](https://github.com/Stephane-Pires/caravel/commit/37ee4ccff6bf3d50cff09eb12e4cd84eea25fbf8) Thanks [@Stephane-Pires](https://github.com/Stephane-Pires)! - Make the Pourparler API safe to put online: no secrets or guest emails exposed, development-only database routes, a secret token to manage each rendez-vous, and spam limits
+
+- [#449](https://github.com/Stephane-Pires/caravel/pull/449) [`9a7d971`](https://github.com/Stephane-Pires/caravel/commit/9a7d971213a5fa4c4ce010f9cbf38a8be2ee4c25) Thanks [@Stephane-Pires](https://github.com/Stephane-Pires)! - Keep the wanted scroll's sticky timeline marks opaque and flush under the tabs on phones
+
+- [#434](https://github.com/Stephane-Pires/caravel/pull/434) [`99d42bb`](https://github.com/Stephane-Pires/caravel/commit/99d42bb071686e2d76d445a980076a082a7497e3) Thanks [@Stephane-Pires](https://github.com/Stephane-Pires)! - Split the cabin scene into modules: toolkit, content, chart, props and the scene assembly
+
+- [#431](https://github.com/Stephane-Pires/caravel/pull/431) [`558d0ad`](https://github.com/Stephane-Pires/caravel/commit/558d0adbc698dcbb7f357219bad598899909f685) Thanks [@Stephane-Pires](https://github.com/Stephane-Pires)! - Update the downloadable CVs (English and French) with the Figures experience
+
+- [#475](https://github.com/Stephane-Pires/caravel/pull/475) [`3a507fb`](https://github.com/Stephane-Pires/caravel/commit/3a507fbcb44cff9096d995ae8f97778e9c9a1c48) Thanks [@Stephane-Pires](https://github.com/Stephane-Pires)! - Install and build on Vercel with the repo's pnpm version
+
+- [#473](https://github.com/Stephane-Pires/caravel/pull/473) [`aee1d6a`](https://github.com/Stephane-Pires/caravel/commit/aee1d6aebe7b7b484e73128b2d5c7a5387e3fce1) Thanks [@Stephane-Pires](https://github.com/Stephane-Pires)! - Stop preview deployments on PR branches to stay under the Vercel daily cap
+
+- Updated dependencies [[`3953131`](https://github.com/Stephane-Pires/caravel/commit/3953131f3ec57f46328cadc1503da88235ec6be9), [`590588f`](https://github.com/Stephane-Pires/caravel/commit/590588fc31e7c5582a7a34420445dbec516cc054), [`260b1c6`](https://github.com/Stephane-Pires/caravel/commit/260b1c65c00988af1746926b77a4286d599da05c), [`d066789`](https://github.com/Stephane-Pires/caravel/commit/d066789546065e91b3574fb34550593ed2d058db), [`00ecd46`](https://github.com/Stephane-Pires/caravel/commit/00ecd46f3cca822ed78070c1368efdf06aeebd20), [`6cddd3f`](https://github.com/Stephane-Pires/caravel/commit/6cddd3f43582ff15a41d3e6bcad3c435488b34b7), [`9f226be`](https://github.com/Stephane-Pires/caravel/commit/9f226beb1e86fc2faaa7f71c0a456c962d9aef6d), [`cced747`](https://github.com/Stephane-Pires/caravel/commit/cced7472066866aa8c3c99e6b924f30a725c290e), [`9b8f86a`](https://github.com/Stephane-Pires/caravel/commit/9b8f86a04b75b06c7ffc77d07fd5a2a0b0dc846d), [`7bb6950`](https://github.com/Stephane-Pires/caravel/commit/7bb6950b6ace8544f02ef287656cfe207475e26a), [`77aa33d`](https://github.com/Stephane-Pires/caravel/commit/77aa33d19399655241bae1f723cf99b22db8d661), [`33c95c4`](https://github.com/Stephane-Pires/caravel/commit/33c95c4767f4b0265ce6b286b6643168a2334f44), [`015cfdd`](https://github.com/Stephane-Pires/caravel/commit/015cfdd1ef538781df479deff18fc0f1f76bfcb3), [`6b730bf`](https://github.com/Stephane-Pires/caravel/commit/6b730bf6fbc897f6c5dd9266d7c7b7d5c2b5a2b5), [`830ac85`](https://github.com/Stephane-Pires/caravel/commit/830ac8544e0b0aba4585b7a5dcfcd7b44820d712), [`329dbd2`](https://github.com/Stephane-Pires/caravel/commit/329dbd21ca771b9875da6616e5edb20861d38974), [`18ae67f`](https://github.com/Stephane-Pires/caravel/commit/18ae67fb6e3d89cf980ca2ac1c17d8798629545a), [`2fe7939`](https://github.com/Stephane-Pires/caravel/commit/2fe79398ed414c61bf3babd1be6e3a1e4991fb8c), [`694d214`](https://github.com/Stephane-Pires/caravel/commit/694d214af58d56b5bde6ccd7b17070bc1b7929f0), [`37ee4cc`](https://github.com/Stephane-Pires/caravel/commit/37ee4ccff6bf3d50cff09eb12e4cd84eea25fbf8)]:
+  - backend@0.2.0
+
 ## 0.8.1
 
 ### Patch Changes
