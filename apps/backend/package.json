@@ -13,7 +13,7 @@
     "db:studio": "NODE_OPTIONS='--import tsx' drizzle-kit studio --host 0.0.0.0 --port 3002 --verbose"
   },
   "dependencies": {
-    "@hono/node-server": "^1.19.9",
+    "@hono/node-server": "^1.19.17",
     "@hono/swagger-ui": "^0.5.3",
     "@hono/zod-openapi": "^1.2.1",
     "@hono/zod-validator": "^0.7.6",
