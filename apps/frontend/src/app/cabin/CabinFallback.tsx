@@ -20,12 +20,6 @@ export function CabinFallback() {
         className="flex flex-wrap justify-center gap-3"
       >
         <Link
-          href="/logbook"
-          className="rounded-lg border-2 border-amber-300 px-4 py-2 font-bold text-amber-300 hover:bg-amber-300 hover:text-slate-900"
-        >
-          Logbook
-        </Link>
-        <Link
           href="/projects"
           className="rounded-lg border-2 border-amber-300 px-4 py-2 font-bold text-amber-300 hover:bg-amber-300 hover:text-slate-900"
         >

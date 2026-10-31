@@ -19,11 +19,6 @@ const NAVIGATION = {
     name: "Pourparler",
     pathname: "/pourparler",
   },
-  LOGBOOK: {
-    icon: "sticky-note",
-    name: "Logbook",
-    pathname: "/logbook",
-  },
   PROJECTS: {
     icon: "code",
     name: "Projects",

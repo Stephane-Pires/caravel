@@ -11,7 +11,6 @@ import { track } from "@/lib/track"
 // each classic page has a close-up in the cabin, and the other way round.
 // It is pinned to the same corner in both, so switching never moves it.
 const CLOSE_UPS = [
-  { pathname: "/logbook", closeUp: "logbook" },
   { pathname: "/projects", closeUp: "chart" },
   { pathname: "/about-me", closeUp: "poster" },
   { pathname: "/pourparler", closeUp: "bottle" },
