@@ -15,6 +15,13 @@ import { makeSea, palm, bottle, chest, openBook, drawPages, bookEntries, PAGE_W,
 export async function mountCabin(data) {
 setContent(data); // posts, projects and CV from the server
 setFonts(data.fonts); // self-hosted fonts for the canvas textures
+// usage events (lib/track.ts): what was tapped, opened, downloaded, and how smoothly it ran.
+// Every event says which kind of device and how long after the cabin started loading.
+const startedAt = data.startedAt ?? performance.now();
+const DEVICE = !matchMedia("(pointer: coarse)").matches ? "desktop" : Math.min(screen.width, screen.height) < 600 ? "phone" : "tablet";
+const track = (event, attributes = {}) => {
+  try { data.track?.(event, { ...attributes, device: DEVICE, seconds: Math.round((performance.now() - startedAt) / 100) / 10 }); } catch (e) { /* never let measuring break the cabin */ }
+};
 // every window listener goes through this controller, so leaving the page removes them
 const ac = new AbortController();
 const addEventListener = (type, fn, opts) => window.addEventListener(type, fn, { ...(typeof opts === "object" ? opts : {}), signal: ac.signal });
@@ -489,6 +496,7 @@ function downloadCv(language) {
   const a = el("a", { href: `/api/download/curriculum?language=${language}`, download: `cv-stephane-pires-${language}.pdf` });
   document.body.append(a); a.click(); a.remove();
   fNote.textContent = language === "french" ? "Le CV est à vous." : "The CV is yours.";
+  track("cabin.cv", { language });
 }
 scene.add(at(mesh(new THREE.CylinderGeometry(0.38, 0.42, 0.9, 16), 0x8a5733), 3.35, 0.45, 2.55));
 [0.25, 0.68].forEach((y) => scene.add(at(mesh(new THREE.TorusGeometry(0.4, 0.025, 6, 24), 0x3a2a1a, { outline: false }), 3.35, y, 2.55).rotateX(Math.PI / 2)));
@@ -931,6 +939,7 @@ async function toggleMusic() {
   } finally {
     busy = false;
     setMusicUI();
+    track("cabin.music", { on: playing, failed: musicFailed });
   }
 }
 
@@ -952,6 +961,7 @@ Object.assign(controls, {
 const TURN = { wide: [-0.25, 1.2], narrow: [-1.75, 2.0] }, TILT = { wide: 1.05, narrow: 0.75 }; // phones may also look down over the table
 controls.update();
 
+renderer.info.autoReset = false; // frame() resets it, so a frame's count spans every pass
 const composer = new EffectComposer(renderer);
 composer.addPass(new RenderPass(scene, camera));
 const bloom = new UnrealBloomPass(new THREE.Vector2(1, 1), 0.5, 0.55, 0.9); // only the brightest things glow: sun, lantern, candle, gold
@@ -1064,6 +1074,7 @@ function spy() {
 
 function openScroll(opener) {
   if (!scrollBuilt) buildScroll();
+  track("cabin.scroll");
   scrollOpener = opener;
   scrollWrap.hidden = false;
   sheet.style.setProperty("--tabs-h", `${navEl.offsetHeight}px`);
@@ -1082,6 +1093,7 @@ $("scroll-close").addEventListener("click", closeScroll);
 scrollWrap.addEventListener("click", (e) => { if (e.target === scrollWrap) closeScroll(); });
 
 function showCloseUp(h) {
+  track("cabin.closeup", { id: h.id });
   focused = h;
   hovered = null;
   controls.enabled = false;
@@ -1154,6 +1166,7 @@ function islandAt(hit) {
   return found ? found[0] : null;
 }
 function sailTo(name) {
+  track("cabin.island", { name });
   const url = PROJECT_LINKS[name];
   const a = el("a", { href: url, target: "_blank", rel: "noopener" }, name);
   document.body.append(a); a.click(); a.remove(); // a real link click, which opens the site in a new tab
@@ -1180,6 +1193,7 @@ canvas.addEventListener("pointerdown", (e) => { down = { x: e.clientX, y: e.clie
 canvas.addEventListener("pointerup", (e) => {
   if (down && Math.hypot(e.clientX - down.x, e.clientY - down.y) < 6) {
     const h = pick(e);
+    track("cabin.tap", { hit: h ? h.id : "nothing", view: focused ? focused.id : "overview", x: Math.round((e.clientX / innerWidth) * 100) / 100, y: Math.round((e.clientY / innerHeight) * 100) / 100 });
     if (h === lanternHot) toggleNight();
     else if (h === homeHot) useHomeStone(e);
     else if (h === windowHot) toggleWindow();
@@ -1187,7 +1201,7 @@ canvas.addEventListener("pointerup", (e) => {
     else if (h === musicHot) toggleMusic();
     else if (h && h !== focused) focusOn(h);
     else if (h === chartHot) { const isl = islandAt(lastHit); if (isl) sailTo(isl); }
-    else if (h === logHot) { const i = entryAt(lastHit); if (i >= 0) location.assign(bookEntries()[i].href); }
+    else if (h === logHot) { const i = entryAt(lastHit); if (i >= 0) { track("cabin.post", { href: bookEntries()[i].href }); location.assign(bookEntries()[i].href); } }
     else if (h === chestHot) { const cv = cvAt(lastHit); if (cv) downloadCv(cv); }
     else if (!h && focused) backToCabin(); // a tap beside the object steps back
   }
@@ -1241,7 +1255,21 @@ ticks.push((t) => {
 
 const clock = new THREE.Clock();
 let t = 0;
+// frame times over the first ten seconds on screen, reported once
+const perf = { times: [], last: 0, sent: false };
+function measure(now) {
+  if (perf.sent) return;
+  if (perf.last) perf.times.push(now - perf.last);
+  perf.last = now;
+  if (perf.times.length && perf.times.reduce((a, b) => a + b, 0) > 10000) {
+    perf.sent = true;
+    const sorted = [...perf.times].sort((a, b) => a - b), p = (q) => Math.round(sorted[Math.floor(sorted.length * q)] * 10) / 10;
+    const { render, memory } = renderer.info; // counted across every pass of the last frame (autoReset is off)
+    track("cabin.perf", { fps: Math.round(1000 / p(0.5)), medianMs: p(0.5), p95Ms: p(0.95), drawCalls: render.calls, triangles: render.triangles, textures: memory.textures, geometries: memory.geometries, pixelRatio, width: innerWidth, height: innerHeight });
+  }
+}
 function frame() {
+  measure(performance.now());
   const dt = Math.min(clock.getDelta(), 0.05);
   if (!still) t += dt;
   ticks.forEach((f) => f(t, still ? 0 : dt));
@@ -1255,6 +1283,7 @@ function frame() {
     controls.update();
     camera.position.clamp(ROOM_MIN, ROOM_MAX); // stay inside the cabin
   }
+  renderer.info.reset(); // one frame's draw calls across all passes, for the perf event
   composer.render();
 }
 
@@ -1269,6 +1298,7 @@ async function reveal() {
   await nextFrame();
   await voyage(1, "Land ho!");
   if (ac.signal.aborted) return;
+  track("cabin.ready", { loadMs: Math.round(performance.now() - startedAt), closeUp: location.hash.slice(1) || "overview" });
   const done = () => { veil.hidden = true; veil.classList.remove("open"); }; // React owns this node: hide it, never remove it
   veil.addEventListener("animationend", done, { once: true, signal: ac.signal });
   setTimeout(done, 1800); // in case the animation never runs (hidden tab)
