@@ -2,9 +2,13 @@ import dayjs, { type Dayjs } from "dayjs"
 import timezone from "dayjs/plugin/timezone.js"
 import utc from "dayjs/plugin/utc.js"
 
-import { getCalendar } from "../../utils/google-calendar.js"
-import { getOverlappingRendezVousRepository } from "../rendez-vous/rendez-vous.repository.js"
-import { AVAILABILITY } from "./availability.config.js"
+import { getCalendar } from "../../utils/google-calendar.ts"
+import { reportError } from "../../utils/report.ts"
+import {
+  deleteEndedRendezVousRepository,
+  getOverlappingRendezVousRepository,
+} from "../rendez-vous/rendez-vous.repository.ts"
+import { AVAILABILITY } from "./availability.config.ts"
 
 dayjs.extend(utc)
 dayjs.extend(timezone)
@@ -63,6 +67,20 @@ function offeredSlots(from: Dayjs, to: Dayjs): Array<Slot> {
   return slots
 }
 
+// the privacy page promises it: a guest's name, email and topic are kept until
+// 30 days after the rendez-vous. Cleaned whenever someone looks for a slot (no cron needed).
+const RETENTION_DAYS = 30
+
+async function forgetEndedRendezVous() {
+  try {
+    await deleteEndedRendezVousRepository(
+      dayjs().subtract(RETENTION_DAYS, "day").toDate(),
+    )
+  } catch (error) {
+    reportError(error, "Ended rendez-vous couldn't be forgotten")
+  }
+}
+
 const overlaps = (slot: Slot, busy: Slot) =>
   slot.start < busy.end && busy.start < slot.end
 
@@ -77,6 +95,8 @@ export async function getFreeSlotsService(range?: { from?: Date; to?: Date }) {
     range?.to && dayjs(range.to).isBefore(latest) ? dayjs(range.to) : latest
   if (!from.isBefore(to)) return []
 
+  await forgetEndedRendezVous()
+
   const booked = await getOverlappingRendezVousRepository(
     from.toDate(),
     slotEnd(to.toDate()),
@@ -90,9 +110,9 @@ export async function getFreeSlotsService(range?: { from?: Date; to?: Date }) {
       slotEnd(to.toDate()),
     )
   } catch (error) {
-    console.error(
-      "Busy times unavailable, offering slots from bookings only",
+    reportError(
       error,
+      "Busy times unavailable, offering slots from bookings only",
     )
   }
   const busy = [...booked, ...elsewhere]

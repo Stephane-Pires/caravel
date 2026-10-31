@@ -24,6 +24,7 @@
     "@radix-ui/react-tooltip": "^1.2.8",
     "@sentry/nextjs": "10.76.2",
     "@tailwindcss/postcss": "4.1.18",
+    "backend": "workspace:*",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "contentlayer2": "0.5.8",

@@ -2,19 +2,29 @@ import z from "zod/v4"
 
 const envSchema = z
   .object({
-    POSTGRES_USER: z.string().nonempty().meta({
+    DATABASE_URL: z.url().optional().meta({
+      description:
+        "Connection string of the database (Neon's pooled URL on Vercel); wins over the POSTGRES_* parts",
+    }),
+    POSTGRES_USER: z.string().nonempty().optional().meta({
       description: "The username for the PostgreSQL database",
     }),
-    POSTGRES_PASSWORD: z.string().nonempty().meta({
+    POSTGRES_PASSWORD: z.string().nonempty().optional().meta({
       description: "The password for the PostgreSQL database",
     }),
-    POSTGRES_DB: z.string().nonempty().meta({
+    POSTGRES_DB: z.string().nonempty().optional().meta({
       description: "The name of the PostgreSQL database",
     }),
-    POSTGRES_PORT: z.coerce.number().positive().min(1).max(65535).meta({
-      description: "The port number for the PostgreSQL database",
-    }),
-    POSTGRES_HOST: z.string().nonempty().meta({
+    POSTGRES_PORT: z.coerce
+      .number()
+      .positive()
+      .min(1)
+      .max(65535)
+      .optional()
+      .meta({
+        description: "The port number for the PostgreSQL database",
+      }),
+    POSTGRES_HOST: z.string().nonempty().optional().meta({
       description: "The host address for the PostgreSQL database",
     }),
     NODE_ENV: z
@@ -50,10 +60,29 @@ const envSchema = z
       description:
         "Cloudflare Turnstile secret; when set, creating a rendez-vous needs a valid challenge token",
     }),
+    VERCEL_ENV: z
+      .enum(["development", "preview", "production"])
+      .optional()
+      .meta({
+        description:
+          "Set by Vercel: previews run with NODE_ENV=production but aren't the live site",
+      }),
   })
   .refine(
     (env) =>
-      env.NODE_ENV !== "production" ||
+      Boolean(
+        env.DATABASE_URL ||
+        (env.POSTGRES_HOST &&
+          env.POSTGRES_PORT &&
+          env.POSTGRES_USER &&
+          env.POSTGRES_PASSWORD &&
+          env.POSTGRES_DB),
+      ),
+    { message: "Set DATABASE_URL, or every POSTGRES_* variable" },
+  )
+  .refine(
+    (env) =>
+      (env.VERCEL_ENV ?? env.NODE_ENV) !== "production" ||
       Boolean(
         env.GOOGLE_CLIENT_ID &&
         env.GOOGLE_CLIENT_SECRET &&
@@ -61,7 +90,7 @@ const envSchema = z
       ),
     {
       message:
-        "Production needs GOOGLE_CLIENT_ID, GOOGLE_CLIENT_SECRET and GOOGLE_REFRESH_TOKEN (run scripts/google-auth.mjs)",
+        "The live site needs GOOGLE_CLIENT_ID, GOOGLE_CLIENT_SECRET and GOOGLE_REFRESH_TOKEN (run scripts/google-auth.mjs)",
     },
   )
   .meta({

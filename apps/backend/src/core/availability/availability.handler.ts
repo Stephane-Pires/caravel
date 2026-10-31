@@ -1,8 +1,8 @@
 import { OpenAPIHono } from "@hono/zod-openapi"
 
-import { AVAILABILITY } from "./availability.config.js"
-import { getSlotsRoute } from "./availability.route.js"
-import { getFreeSlotsService } from "./availability.service.js"
+import { AVAILABILITY } from "./availability.config.ts"
+import { getSlotsRoute } from "./availability.route.ts"
+import { getFreeSlotsService } from "./availability.service.ts"
 
 const app = new OpenAPIHono()
 

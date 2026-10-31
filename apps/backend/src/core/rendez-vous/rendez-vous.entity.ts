@@ -1,23 +1,24 @@
 import { z } from "@hono/zod-openapi"
 import dayjs from "dayjs"
 
-import type { RendezVousDb } from "../../db/schema/rendez-vous.js"
-import { ContactSchema } from "../contact/contact.entity.js"
+import type { RendezVousDb } from "../../db/schema/rendez-vous.ts"
+import { ContactSchema } from "../contact/contact.entity.ts"
 import {
   isOfferedSlotStart,
   slotEnd,
-} from "../availability/availability.service.js"
+} from "../availability/availability.service.ts"
 import {
   RendezVousInvalidScheduleAtAlreadyTakenException,
   RendezVousInvalidScheduleAtException,
   RendezVousCalendarUnavailableException,
   RendezVousOutsideAvailabilityException,
-} from "./rendez-vous.exception.js"
+} from "./rendez-vous.exception.ts"
 import {
   CalendarUnavailableError,
   getCalendar,
-} from "../../utils/google-calendar.js"
-import { getOverlappingRendezVousRepository } from "./rendez-vous.repository.js"
+} from "../../utils/google-calendar.ts"
+import { reportError } from "../../utils/report.ts"
+import { getOverlappingRendezVousRepository } from "./rendez-vous.repository.ts"
 
 const RendezVousSchema = z.object({
   id: z.number().min(1).openapi({
@@ -275,7 +276,7 @@ export class RendezVousEntity {
       }
     } catch (error) {
       if (!(error instanceof CalendarUnavailableError)) throw error
-      console.error(error)
+      reportError(error)
       return {
         success: false,
         exception: new RendezVousCalendarUnavailableException(),

@@ -1,11 +1,11 @@
 import { OpenAPIHono } from "@hono/zod-openapi"
 
-import { DatabaseException } from "../../utils/exception.js"
-import { bearerToken } from "../../utils/token.js"
+import { DatabaseException } from "../../utils/exception.ts"
+import { bearerToken } from "../../utils/token.ts"
 import {
   CreatedRendezVousDTOSchema,
   RendezVousEntity,
-} from "./rendez-vous.entity.js"
+} from "./rendez-vous.entity.ts"
 import {
   RendezVousCalendarUnavailableException,
   RendezVousInvalidScheduleAtAlreadyTakenException,
@@ -14,21 +14,21 @@ import {
   RendezVousOutsideAvailabilityException,
   RendezVousSpamCheckFailedException,
   RendezVousTooManyException,
-} from "./rendez-vous.exception.js"
+} from "./rendez-vous.exception.ts"
 import {
   cancelRendezVousRoute,
   getRendezVousByIdRoute,
   getRendezVousRoute,
   moveRendezVousRoute,
   postRendezVousRoute,
-} from "./rendez-vous.route.js"
+} from "./rendez-vous.route.ts"
 import {
   cancelRendezVousService,
   createRendezVousService,
   findManagedRendezVousService,
   getRendezVousService,
   moveRendezVousService,
-} from "./rendez-vous.service.js"
+} from "./rendez-vous.service.ts"
 
 const app = new OpenAPIHono()
 

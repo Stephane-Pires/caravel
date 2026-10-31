@@ -2,8 +2,8 @@ import { pgTable, serial, timestamp, varchar } from "drizzle-orm/pg-core"
 import { createSelectSchema } from "drizzle-zod"
 import type { z } from "zod/v4"
 
-import { auditColumns } from "../db.columns.js"
-import { contact } from "./contact.js"
+import { auditColumns } from "../db.columns.ts"
+import { contact } from "./contact.ts"
 
 export const rendezVous = pgTable("rendez_vous", {
   id: serial().primaryKey(),

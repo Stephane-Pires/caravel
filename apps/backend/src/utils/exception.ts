@@ -34,6 +34,7 @@ export abstract class DomainException extends Error {
 
   constructor(message: string, options?: { cause?: unknown }) {
     super(message, options)
+    // each exception also spells its name out: bundlers minify class names (the API runs bundled in Next.js)
     this.name = new.target.name
     Object.setPrototypeOf(this, new.target.prototype)
 
@@ -65,7 +66,7 @@ export class DatabaseException extends Error {
 
   constructor(message: string, options?: { cause?: DatabaseError }) {
     super(message)
-    this.name = new.target.name
+    this.name = "DatabaseException"
     Object.setPrototypeOf(this, new.target.prototype)
 
     if (options?.cause) {

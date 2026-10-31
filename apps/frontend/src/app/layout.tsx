@@ -3,6 +3,7 @@ import { Toaster } from "@/components/ui/sonner"
 import type { Metadata } from "next"
 import { Atkinson_Hyperlegible, Merienda } from "next/font/google"
 import localFont from "next/font/local"
+import Link from "next/link"
 
 import "./globals.css"
 
@@ -48,8 +49,14 @@ export default function RootLayout({
 
         {children}
 
-        <footer className="bg-primary-600 flex flex-row justify-center p-2 text-blue-900">
-          Made by Stéphane Pires with ❤️
+        <footer className="bg-primary-600 flex flex-row justify-center gap-4 p-2 text-blue-900">
+          <span>Made by Stéphane Pires with ❤️</span>
+          <Link
+            className="underline"
+            href="/privacy"
+          >
+            Privacy
+          </Link>
         </footer>
         <Toaster />
       </body>

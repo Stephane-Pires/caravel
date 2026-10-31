@@ -3,9 +3,10 @@
 import { useCallback, useEffect, useState } from "react"
 import z from "zod/v4"
 
-// the Pourparler API (same-origin once it's hosted inside the site, DEV-138)
+// the Pourparler API, served by the site itself (src/app/api/pourparler). Point it at
+// the standalone server (http://localhost:3001/api/pourparler) to develop the API alone.
 export const POURPARLER_API =
-  process.env.NEXT_PUBLIC_POURPARLER_API ?? "http://localhost:3001"
+  process.env.NEXT_PUBLIC_POURPARLER_API ?? "/api/pourparler"
 
 export const rendezVousSchema = z.object({
   // oxlint-disable-next-line no-magic-numbers
@@ -88,6 +89,8 @@ export interface CreateRendezVousInput {
   guestName: string
   topic?: string
   scheduledAt: string
+  // Cloudflare Turnstile's proof the visitor is human (when the site has a key)
+  turnstileToken?: string
 }
 
 type UseCreateRendezVousReturn = [
