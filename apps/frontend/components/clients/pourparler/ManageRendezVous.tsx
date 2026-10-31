@@ -39,11 +39,6 @@ const readHash = () => window.location.hash.replace("#", "")
 const noHashOnServer = () => ""
 
 const HTTP_NOT_FOUND = 404
-// seconds a cancel can still be undone before it's sent, counted down one by one
-const UNDO_SECONDS = 5
-const TICK = 1
-const NOT_CANCELLING = 0
-const SECOND = 1000
 
 type View =
   | { name: "loading" }
@@ -144,8 +139,8 @@ export function ManageRendezVous({ id }: { id: number }) {
   const token = useSyncExternalStore(subscribeHash, readHash, noHashOnServer)
   const [view, setView] = useState<View>({ name: "loading" })
   const [rescheduling, setRescheduling] = useState(false)
-  // seconds left before a cancel is sent: 0 when none is waiting
-  const [cancelIn, setCancelIn] = useState(NOT_CANCELLING)
+  // the guest asked to cancel and has to confirm it
+  const [confirming, setConfirming] = useState(false)
   const [notice, setNotice] = useState("")
 
   const timeZone = useMemo(
@@ -214,44 +209,21 @@ export function ManageRendezVous({ id }: { id: number }) {
           : "The rendez-vous couldn't be cancelled. Try again.",
       )
     } finally {
-      setCancelIn(NOT_CANCELLING)
+      setConfirming(false)
     }
   }, [id, token])
-
-  // the countdown: one tick a second, the cancel goes out when it reaches the end
-  useEffect(() => {
-    if (cancelIn === NOT_CANCELLING) return
-    const tick = setTimeout(() => {
-      if (cancelIn === TICK) void cancel()
-      else setCancelIn(cancelIn - TICK)
-    }, SECOND)
-    return () => clearTimeout(tick)
-  }, [cancel, cancelIn])
-
-  // leaving during the countdown still cancels: the guest asked for it
-  const waiting = cancelIn !== NOT_CANCELLING
-  useEffect(() => {
-    if (!waiting) return
-    const leave = () => {
-      void cancelManagedRendezVous(id, token, { keepalive: true }).catch(
-        () => null,
-      )
-    }
-    window.addEventListener("pagehide", leave)
-    return () => window.removeEventListener("pagehide", leave)
-  }, [id, token, waiting])
 
   const openReschedule = useCallback(() => {
     setNotice("")
     setRescheduling(true)
   }, [])
   const closeReschedule = useCallback(() => setRescheduling(false), [])
-  const startCancel = useCallback(() => {
+  const askCancel = useCallback(() => {
     setNotice("")
     setRescheduling(false)
-    setCancelIn(UNDO_SECONDS)
+    setConfirming(true)
   }, [])
-  const undoCancel = useCallback(() => setCancelIn(NOT_CANCELLING), [])
+  const keep = useCallback(() => setConfirming(false), [])
 
   const missingLink = !token
 
@@ -292,27 +264,32 @@ export function ManageRendezVous({ id }: { id: number }) {
           </>
         ) : (
           <>
-            <Facts
-              className={waiting ? "line-through" : ""}
-              facts={factsOf(view.rendezVous, timeZone)}
-            />
+            <Facts facts={factsOf(view.rendezVous, timeZone)} />
 
             {notice && <p role="status">{notice}</p>}
 
             {isPast(new Date(view.rendezVous.scheduledAt)) ? (
               <p>This rendez-vous has passed.</p>
-            ) : waiting ? (
-              <div
-                role="status"
-                className="flex items-center gap-4"
-              >
-                <p>Cancelling in {cancelIn} s</p>
-                <Button
-                  type="button"
-                  onClick={undoCancel}
-                >
-                  Undo
-                </Button>
+            ) : confirming ? (
+              <div className="flex flex-col gap-3">
+                <p className="font-semibold">Cancel it?</p>
+                <div className="flex gap-2">
+                  {/* red-700: white on it reads at 6.5:1 */}
+                  <Button
+                    type="button"
+                    className="bg-red-700 text-white hover:bg-red-800"
+                    onClick={cancel}
+                  >
+                    Confirm
+                  </Button>
+                  <Button
+                    type="button"
+                    variant="ghost"
+                    onClick={keep}
+                  >
+                    Keep
+                  </Button>
+                </div>
               </div>
             ) : rescheduling ? (
               <Reschedule
@@ -349,7 +326,7 @@ export function ManageRendezVous({ id }: { id: number }) {
                   type="button"
                   variant="ghost"
                   className="px-3"
-                  onClick={startCancel}
+                  onClick={askCancel}
                 >
                   Cancel
                 </Button>
