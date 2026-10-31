@@ -99,7 +99,7 @@ function NoteSheet() {
           className="rounded-full border-2 border-dashed border-[#f6ecd6] px-4 py-1 font-bold text-[#f6ecd6]"
           onClick={close}
         >
-          Roll it up ✕
+          Close <span aria-hidden="true">✕</span>
         </button>
       </div>
     </div>

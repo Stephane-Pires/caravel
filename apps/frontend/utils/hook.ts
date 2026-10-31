@@ -193,5 +193,9 @@ export const moveManagedRendezVous = (
     body: JSON.stringify({ scheduledAt }),
   })
 
-export const cancelManagedRendezVous = (id: number, token: string) =>
-  manageCall(id, token, { method: "DELETE" })
+// `keepalive` lets the request finish while the page closes (a cancel still in its undo window)
+export const cancelManagedRendezVous = (
+  id: number,
+  token: string,
+  { keepalive = false } = {},
+) => manageCall(id, token, { method: "DELETE", keepalive })
