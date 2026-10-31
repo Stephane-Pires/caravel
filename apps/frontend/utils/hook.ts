@@ -132,3 +132,65 @@ export function useCreateRendezVous(): UseCreateRendezVousReturn {
 
   return [createRendezVous, loading]
 }
+
+// the guest's private page for a rendez-vous; the token rides in the fragment (#…),
+// which browsers never send to a server
+export const manageHref = (id: number, token: string) => ({
+  pathname: `/pourparler/rendez-vous/${id}` as const,
+  hash: token,
+})
+
+const HTTP_NO_CONTENT = 204
+
+export class ManageError extends Error {
+  constructor(
+    readonly status: number,
+    message: string,
+  ) {
+    super(message)
+  }
+}
+
+async function manageCall(
+  id: number,
+  token: string,
+  init: RequestInit & { path?: string } = {},
+) {
+  const response = await fetch(
+    `${POURPARLER_API}/rendez-vous/${id}${init.path ?? ""}`,
+    {
+      ...init,
+      headers: {
+        authorization: `Bearer ${token}`,
+        "content-type": "application/json",
+        ...init.headers,
+      },
+    },
+  )
+  if (response.status === HTTP_NO_CONTENT) return null // cancelled
+  const data = await response.json().catch(() => null)
+  if (!response.ok) {
+    throw new ManageError(
+      response.status,
+      data?.description ?? data?.message ?? "Something went wrong",
+    )
+  }
+  return rendezVousSchema.parse(data)
+}
+
+export const getManagedRendezVous = (id: number, token: string) =>
+  manageCall(id, token)
+
+export const moveManagedRendezVous = (
+  id: number,
+  token: string,
+  scheduledAt: string,
+) =>
+  manageCall(id, token, {
+    method: "PATCH",
+    path: "/move",
+    body: JSON.stringify({ scheduledAt }),
+  })
+
+export const cancelManagedRendezVous = (id: number, token: string) =>
+  manageCall(id, token, { method: "DELETE" })

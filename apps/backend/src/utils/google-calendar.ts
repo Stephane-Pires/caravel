@@ -14,6 +14,8 @@ export interface CalendarEventInput {
   guestName: string
   topic?: string | null
   rendezVousId: number
+  // the guest's private page to reschedule or cancel (shown in the invitation)
+  manageUrl: string
 }
 
 export interface CalendarEvent {
@@ -128,6 +130,7 @@ function googleCalendar(credentials: {
       const description = [
         `Rendez-vous booked on Caravel by ${input.guestName} (${input.guestEmail}).`,
         input.topic ? `Topic: ${input.topic}` : null,
+        `Need another time? Reschedule or cancel here: ${input.manageUrl}`,
       ]
         .filter(Boolean)
         .join("\n\n")

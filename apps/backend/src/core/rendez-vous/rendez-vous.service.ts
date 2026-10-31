@@ -4,6 +4,7 @@ import {
   databaseCause,
   isSlotConflict,
 } from "../../utils/exception.js"
+import { assertEnv } from "../../utils/env.js"
 import {
   CalendarUnavailableError,
   getCalendar,
@@ -104,6 +105,7 @@ export async function createRendezVousService(
       guestName: createdRendezVous.guestName ?? createdRendezVous.contactEmail,
       topic: createdRendezVous.topic,
       rendezVousId: createdRendezVous.id,
+      manageUrl: manageUrl(createdRendezVous.id, manageToken),
     })
   } catch (error) {
     if (!(error instanceof CalendarUnavailableError)) throw error
@@ -124,6 +126,16 @@ export async function createRendezVousService(
     ...RendezVousEntity.fromRepository(linked[0]),
     manageToken,
   }
+}
+
+// the guest's page to see, reschedule or cancel the rendez-vous. The token rides in the
+// fragment (#…), which browsers never send to a server, so it stays out of logs and referrers.
+export function manageUrl(id: RendezVous["id"], token: string) {
+  const { PUBLIC_SITE_URL } = assertEnv(process.env)
+  return new URL(
+    `/pourparler/rendez-vous/${id}#${token}`,
+    PUBLIC_SITE_URL,
+  ).toString()
 }
 
 // the rendez-vous a token opens, or nothing: an unknown id and a wrong token look the same,
