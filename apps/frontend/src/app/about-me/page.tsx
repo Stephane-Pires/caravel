@@ -111,9 +111,17 @@ export default function AboutMe() {
 
               <section ref={registerSection}
                 data-article="EXPERIENCE"
-                data-section={CURRICULUM_VITAE.EXPERIENCE.section.ANALOG_WAY.id}>
+                data-section={CURRICULUM_VITAE.EXPERIENCE.section.FIGURES.id}>
                 <SectionContent
-                  section={CURRICULUM_VITAE.EXPERIENCE.section.ANALOG_WAY}
+                  section={CURRICULUM_VITAE.EXPERIENCE.section.FIGURES}
+                />
+              </section>
+
+              <section ref={registerSection}
+                data-article="EXPERIENCE"
+                data-section={CURRICULUM_VITAE.EXPERIENCE.section.LEAKMITED.id}>
+                <SectionContent
+                  section={CURRICULUM_VITAE.EXPERIENCE.section.LEAKMITED}
                 />
               </section>
 
@@ -126,20 +134,11 @@ export default function AboutMe() {
                 />
               </section>
               */}
-
               <section ref={registerSection}
                 data-article="EXPERIENCE"
-                data-section={CURRICULUM_VITAE.EXPERIENCE.section.LEAKMITED.id}>
+                data-section={CURRICULUM_VITAE.EXPERIENCE.section.ANALOG_WAY.id}>
                 <SectionContent
-                  section={CURRICULUM_VITAE.EXPERIENCE.section.LEAKMITED}
-                />
-              </section>
-
-              <section ref={registerSection}
-                data-article="EXPERIENCE"
-                data-section={CURRICULUM_VITAE.EXPERIENCE.section.FIGURES.id}>
-                <SectionContent
-                  section={CURRICULUM_VITAE.EXPERIENCE.section.FIGURES}
+                  section={CURRICULUM_VITAE.EXPERIENCE.section.ANALOG_WAY}
                 />
               </section>
             </article>
@@ -150,17 +149,17 @@ export default function AboutMe() {
               </h2>
               <section ref={registerSection}
                 data-article="EDUCATION"
-                data-section={CURRICULUM_VITAE.EDUCATION.section.ISEP.id}>
+                data-section={CURRICULUM_VITAE.EDUCATION.section.AUDENCIA.id}>
                 <SectionContent
-                  section={CURRICULUM_VITAE.EDUCATION.section.ISEP}
+                  section={CURRICULUM_VITAE.EDUCATION.section.AUDENCIA}
                 />
               </section>
 
               <section ref={registerSection}
                 data-article="EDUCATION"
-                data-section={CURRICULUM_VITAE.EDUCATION.section.AUDENCIA.id}>
+                data-section={CURRICULUM_VITAE.EDUCATION.section.ISEP.id}>
                 <SectionContent
-                  section={CURRICULUM_VITAE.EDUCATION.section.AUDENCIA}
+                  section={CURRICULUM_VITAE.EDUCATION.section.ISEP}
                 />
               </section>
             </article>
