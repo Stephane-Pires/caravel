@@ -1,10 +1,11 @@
 "use client"
 
-import { useEffect, useSyncExternalStore } from "react"
+import { useEffect, useState, useSyncExternalStore } from "react"
 
 import { track } from "@/lib/track"
 
 import { CabinFallback } from "./CabinFallback"
+import { CabinNote } from "./CabinNote"
 import { CabinOverlay } from "./CabinOverlay"
 import "./cabin.css"
 import type { CabinData } from "./cabinData"
@@ -22,6 +23,8 @@ export function CabinClient({
   fonts: CabinFonts
 }) {
   const status = useSyncExternalStore(subscribe, detectSupport, serverSupport)
+  // the bottle's note (the booking form) is React's; the scene says when it's unrolled
+  const [noteOpen, setNoteOpen] = useState(false)
 
   useEffect(() => {
     if (status !== "capable") return
@@ -40,6 +43,7 @@ export function CabinClient({
           fonts: fonts.families,
           track,
           startedAt,
+          onNote: setNoteOpen,
         })
         if (cancelled) cleanup()
         else dispose = cleanup
@@ -58,8 +62,9 @@ export function CabinClient({
   if (status === "limited") return <CabinFallback />
 
   return (
-    <div className={`cabin ${fonts.className}`}>
+    <div className={`cabin ${fonts.className}${noteOpen ? " note-open" : ""}`}>
       <CabinOverlay />
+      <CabinNote open={noteOpen} />
     </div>
   )
 }

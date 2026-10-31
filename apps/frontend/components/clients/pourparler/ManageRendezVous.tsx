@@ -2,6 +2,7 @@
 
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
+import { track } from "@/lib/track"
 import {
   ManageError,
   type RendezVousSchema,
@@ -141,6 +142,7 @@ export function ManageRendezVous({ id }: { id: number }) {
       try {
         const moved = await moveManagedRendezVous(id, token, start)
         if (moved) setView({ name: "ready", rendezVous: moved })
+        track("site.pourparler", { action: "moved" })
         setMode("idle")
         setNotice(
           "Moved. Google Calendar sends the updated invitation to your email.",
@@ -160,6 +162,7 @@ export function ManageRendezVous({ id }: { id: number }) {
     try {
       await cancelManagedRendezVous(id, token)
       setView({ name: "cancelled" })
+      track("site.pourparler", { action: "cancelled" })
     } catch (error) {
       setNotice(
         error instanceof ManageError

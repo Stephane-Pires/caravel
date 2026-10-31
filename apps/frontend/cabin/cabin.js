@@ -25,6 +25,13 @@ const track = (event, attributes = {}) => {
 // every window listener goes through this controller, so leaving the page removes them
 const ac = new AbortController();
 const addEventListener = (type, fn, opts) => window.addEventListener(type, fn, { ...(typeof opts === "object" ? opts : {}), signal: ac.signal });
+// the bottle's note is the booking form itself, drawn by React over the scene (CabinNote.tsx)
+let noteOpen = false;
+const setNote = (open) => {
+  if (open === noteOpen) return;
+  noteOpen = open;
+  try { data.onNote?.(open); } catch (e) { /* the scene goes on without it */ }
+};
 
 
 const SAND = 0xf0c75e, MINT = 0xa7f0d0;
@@ -465,10 +472,11 @@ hotspots.push(posterHot);
 // bottle catching the sun on the sill
 const btl = at(bottle(), 1.05, WIN.y0 + 0.06, -2.88);
 scene.add(btl);
-const bottleHot = hot(btl, { id: "bottle", label: "Message in a bottle", tipOnly: true, tip: { name: "Message in a bottle", quality: "uncommon", lines: [
-  ["A note rolled up inside, for booking a rendez-vous with the captain."],
-  ["The rendez-vous page is resting for now.", "flavor"],
-] } });
+// the note inside books a rendez-vous with the captain (Pourparler)
+const bottleHot = hot(btl, {
+  id: "bottle", label: "Message in a bottle", dest: "Rendez-vous", route: "/pourparler",
+  view: { pos: [1.05, WIN.y0 + 0.75, -1.75], target: [1.05, WIN.y0 + 0.3, -2.88] }, // eye level with the sill, the sea behind
+});
 hotspots.push(bottleHot);
 
 // treasure chest, barrel, rope
@@ -863,10 +871,28 @@ ticks.push((t, dt) => {
   treasure.scrolls.forEach((sc) => { sc.position.y = approach(sc.position.y, 0.58 + (cvHover === sc.userData.cv ? 0.06 : 0), dt, 6); });
   mbHinge.rotation.x = approach(mbHinge.rotation.x, playing ? -1.1 : 0, dt);
   if (playing) crank.rotation.x += dt * 4;
-  const lifted = hovered === bottleHot; // it rises off the sill while you look at it
+  const lifted = hovered === bottleHot && focused !== bottleHot; // it rises off the sill while you look at it
   btl.position.y = approach(btl.position.y, WIN.y0 + 0.06 + (lifted ? 0.18 : 0), dt, 3);
   btl.rotation.y = lifted ? btl.rotation.y + dt * 0.8 : approach(btl.rotation.y, 0, dt, 2);
+  uncorkStep(dt);
 });
+
+// uncorking, in the bottle's close-up: the cork pops off, the rolled note slides up out of the neck,
+// then the note unrolls on screen as the booking form (CabinNote.tsx). Leaving rolls it all back.
+const [, , , cork, rolledNote] = btl.children; // body, shoulder, neck, cork, note (props.js bottle())
+let uncork = 0, uncorkTarget = 0;
+const clamp01 = (x) => Math.min(1, Math.max(0, x));
+function uncorkStep(dt) {
+  if (uncork === uncorkTarget) return;
+  uncork = still ? uncorkTarget : uncorkTarget > uncork ? Math.min(1, uncork + dt / 1.3) : Math.max(0, uncork - dt / 0.6);
+  const c = ease(clamp01(uncork / 0.3)), n = ease(clamp01((uncork - 0.25) / 0.75));
+  cork.position.set(0.22 * c, 0.55 + 0.3 * Math.sin(Math.PI * c) - 0.5 * c * c, 0); // pops up, arcs aside, lands on the sill
+  cork.rotation.z = -(Math.PI / 2) * c; // lying on its side
+  rolledNote.position.y = 0.17 + 0.4 * n; // half out of the neck, in the close-up's frame
+  rolledNote.rotation.y = 2.5 * n;
+  if (uncork === 1 && focused === bottleHot) setNote(true);
+}
+const openBottle = () => { if (uncork === 1) setNote(true); else uncorkTarget = 1; };
 
 // ---------- music: the cabin theme, recorded with sampled instruments, played as five synced looping layers ----------
 // (rendered offline from MIDI with FluidSynth + GeneralUser GS; at night the percussion steps back and the tune softens)
@@ -1001,6 +1027,7 @@ const CAPTIONS = {
   chart: "Tap an island to sail to its site.",
   poster: "Unrolling the wanted scroll…",
   chest: "Take a scroll: the CV in English or in French.",
+  bottle: "A note for the captain: book a 30-minute video call.",
 };
 function renderFocus(h) {
   fTitle.textContent = h.label;
@@ -1009,6 +1036,7 @@ function renderFocus(h) {
   const links = (items) => fBody.append(el("ul", {}, ...items.map(([text, attrs]) => el("li", {}, el("a", attrs, text)))));
   if (h.id === "logbook") links(bookEntries().map((e) => [`${e.title} (${e.date})`, { href: e.href }]));
   else if (h.id === "chart") links(PROJECTS.map(([name]) => [`${name} ↗`, { href: PROJECT_LINKS[name], target: "_blank", rel: "noopener" }]));
+  else if (h.id === "bottle") links([["Book a rendez-vous →", { href: "/pourparler" }]]);
   else if (h.id === "chest") links([["CV · English (PDF)", { href: "/api/download/curriculum?language=english", download: "cv-stephane-pires-english.pdf" }], ["CV · Français (PDF)", { href: "/api/download/curriculum?language=french", download: "cv-stephane-pires-french.pdf" }]]);
 }
 
@@ -1101,7 +1129,8 @@ function showCloseUp(h) {
   hovered = null;
   controls.enabled = false;
   const v = framed(h.view);
-  flyTo(v.pos, v.target, h === posterHot ? () => { if (focused === posterHot) openScroll($("back")); } : null);
+  flyTo(v.pos, v.target, h === posterHot ? () => { if (focused === posterHot) openScroll($("back")); }
+    : h === bottleHot ? () => { if (focused === bottleHot) { track("cabin.bottle"); openBottle(); } } : null);
   renderFocus(h);
   dismissHint(); keysEl.classList.add("in-focus"); focusEl.hidden = false;
   refreshHighlights();
@@ -1112,6 +1141,8 @@ function leaveCloseUp() {
   if (!focused) return;
   const from = focused;
   focused = null;
+  setNote(false);
+  uncorkTarget = 0; // the note slides back in, the cork on top
   flyTo(OVERVIEW.pos, OVERVIEW.target, () => { controls.enabled = true; });
   keysEl.classList.remove("in-focus"); focusEl.hidden = true;
   hoverEntry(-1); cvHover = null;
@@ -1141,7 +1172,8 @@ function syncFromHash() {
 }
 addEventListener("hashchange", syncFromHash);
 $("back").addEventListener("click", backToCabin);
-addEventListener("keydown", (e) => { if (e.key === "Escape" && !closeScroll()) backToCabin(); });
+addEventListener("keydown", (e) => { if (e.key === "Escape" && !noteOpen && !closeScroll()) backToCabin(); }); // the note closes itself
+addEventListener("cabin:note-closed", () => { if (focused === bottleHot) backToCabin(); });
 
 function setOutline(h, color) { h.outlines.forEach((m) => m.color.setHex(color)); }
 function refreshHighlights() {
@@ -1206,6 +1238,7 @@ canvas.addEventListener("pointerup", (e) => {
     else if (h === chartHot) { const isl = islandAt(lastHit); if (isl) sailTo(isl); }
     else if (h === logHot) { const i = entryAt(lastHit); if (i >= 0) { track("cabin.post", { href: bookEntries()[i].href }); location.assign(bookEntries()[i].href); } }
     else if (h === chestHot) { const cv = cvAt(lastHit); if (cv) downloadCv(cv); }
+    else if (h === bottleHot) openBottle(); // unroll the note again
     else if (!h && focused) backToCabin(); // a tap beside the object steps back
   }
   down = null;

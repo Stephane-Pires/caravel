@@ -20,21 +20,23 @@ import {
   FormMessage,
 } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
-import {
-  type CreatedRendezVousSchema,
-  manageHref,
-  useCreateRendezVous,
-  useFreeSlots,
-} from "@/utils/hook"
+import { track } from "@/lib/track"
+import { manageHref, useCreateRendezVous, useFreeSlots } from "@/utils/hook"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { format } from "date-fns"
 import Link from "next/link"
-import { useCallback, useMemo, useState } from "react"
+import { useCallback, useEffect, useMemo, useState } from "react"
 import { useForm } from "react-hook-form"
 import { toast } from "sonner"
 import { z } from "zod/v4"
 
 import { SlotPicker } from "./SlotPicker"
+import {
+  clearDraft,
+  readDraft,
+  saveDraft,
+  useBookedRendezVous,
+} from "./rendezVousDraft"
 import { TURNSTILE_SITE_KEY, Turnstile } from "./Turnstile"
 
 // oxlint-disable-next-line no-magic-numbers
@@ -68,7 +70,7 @@ const ERROR_STYLE = {
 export function TakeRendezVousForm() {
   const { slots, loading, failed, take } = useFreeSlots()
   const [createRendezVous] = useCreateRendezVous()
-  const [booked, setBooked] = useState<CreatedRendezVousSchema | null>(null)
+  const booked = useBookedRendezVous()
   const [turnstileToken, setTurnstileToken] = useState("")
   // a token is spent by each attempt: bump to get a fresh one after a refusal
   const [turnstileReset, setTurnstileReset] = useState(0)
@@ -86,6 +88,29 @@ export function TakeRendezVousForm() {
     mode: "onChange",
   })
 
+  // the same booking follows the visitor between /pourparler and the cabin's bottle: restore
+  // it after the first render (the server can't see sessionStorage), then save every change
+  useEffect(() => {
+    const { guestName, contactEmail, topic, scheduledAt } = readDraft()
+    const values = { guestName, contactEmail, topic, scheduledAt }
+    if (Object.values(values).some(Boolean)) {
+      form.reset(values, { keepDefaultValues: true })
+      void form.trigger()
+    }
+    return form.subscribe({
+      formState: { values: true },
+      callback: ({ values }) => saveDraft(values),
+    })
+  }, [form])
+
+  // a saved time someone else took meanwhile (or that went past) is dropped once the slots load
+  useEffect(() => {
+    const chosen = form.getValues("scheduledAt")
+    if (loading || !chosen || slots.some((slot) => slot.start === chosen))
+      return
+    form.setValue("scheduledAt", "", { shouldValidate: true })
+  }, [form, loading, slots])
+
   async function onSubmit(values: RendezVousFormSchema) {
     try {
       const created = await createRendezVous({
@@ -96,9 +121,17 @@ export function TakeRendezVousForm() {
         turnstileToken: turnstileToken || undefined,
       })
       take(values.scheduledAt)
-      setBooked(created)
+      saveDraft({ ...DEFAULT_VALUES, booked: created })
+      track("site.pourparler", {
+        action: "booked",
+        topic: Boolean(values.topic),
+      })
     } catch (error: any) {
       setTurnstileReset((count) => count + 1)
+      track("site.pourparler", {
+        action: "refused",
+        code: error?.code ?? "unknown",
+      })
       toast.error(
         error?.description ||
           "The rendez-vous couldn't be booked. Please try another time.",
@@ -108,8 +141,8 @@ export function TakeRendezVousForm() {
   }
 
   const bookAnother = useCallback(() => {
-    setBooked(null)
     form.reset(DEFAULT_VALUES)
+    clearDraft() // after the reset, which saves the emptied fields
   }, [form])
 
   const renderNameField = useCallback(
