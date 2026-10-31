@@ -168,7 +168,7 @@ async function sentry(
       get("events/", {
         field: "p75(measurements.lcp)",
         query: `project:${project} transaction.op:pageload`,
-        dataset: "transactions",
+        dataset: "spans", // Sentry stores page loads as spans now; "transactions" comes back empty
         statsPeriod: "7d",
       }),
     ),
