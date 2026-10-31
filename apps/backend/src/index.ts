@@ -10,9 +10,11 @@ import packageJson from "../package.json" with { type: "json" }
 import contact from "./core/contact/contact.handler.js"
 import rendezVous from "./core/rendez-vous/rendez-vous.handler.js"
 import database from "./db/db.handler.js"
-import { assertEnv } from "./utils/env.js"
+import { assertEnv, isProduction } from "./utils/env.js"
 
 dotenv.config()
+
+const env = assertEnv(process.env) // fail fast on a bad configuration, at startup
 
 const app = new OpenAPIHono()
 
@@ -20,24 +22,32 @@ app.use(logger())
 app.use(
   "*",
   cors({
-    origin: ["http://localhost:3000"],
+    origin: env.CORS_ORIGINS,
     allowHeaders: [
       "Content-Type",
       "Authorization",
       "Upgrade-Insecure-Requests",
     ],
-    allowMethods: ["GET", "POST", "DELETE"],
+    allowMethods: ["GET", "POST", "PATCH", "DELETE"],
     exposeHeaders: ["Content-Length", "Content-Type"],
   }),
 )
 
-app.route("/", contact)
-app.route("/database/", database)
+// development only: listing every contact, seeding and wiping the database
+if (!isProduction()) {
+  app.route("/", contact)
+  app.route("/database/", database)
+}
 app.route("/", rendezVous)
 
-app.get("/", (c) => {
-  return c.json(assertEnv(process.env))
+app.openAPIRegistry.registerComponent("securitySchemes", "manageToken", {
+  type: "http",
+  scheme: "bearer",
+  description: "The manage token returned when the rendez-vous was created",
 })
+
+// health check: never echo the configuration (it holds the database and mail passwords)
+app.get("/", (c) => c.json({ status: "ok", version: packageJson.version }))
 
 app.doc31("/doc", {
   openapi: "3.1.0",

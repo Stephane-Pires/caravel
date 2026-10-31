@@ -13,11 +13,25 @@ export const rendezVousSchema = z.object({
 
 export type RendezVousSchema = z.infer<typeof rendezVousSchema>
 
+// what the API shares publicly: when the captain is busy, not who with
+export const busySlotSchema = z.object({
+  scheduledAt: z.iso.datetime(),
+})
+
+export type BusySlotSchema = z.infer<typeof busySlotSchema>
+
+// the created rendez-vous comes with its secret manage token (to move or cancel it later)
+export const createdRendezVousSchema = rendezVousSchema.extend({
+  manageToken: z.string().nonempty(),
+})
+
+export type CreatedRendezVousSchema = z.infer<typeof createdRendezVousSchema>
+
 type UseCreateRendezVousReturn = [
   (
     input: RendezVousFormSchema,
     // ERROR should be the ones form the API, not a generic Error
-  ) => Promise<RendezVousSchema>,
+  ) => Promise<CreatedRendezVousSchema>,
   boolean,
 ]
 
@@ -48,7 +62,7 @@ export function useCreateRendezVous(): UseCreateRendezVousReturn {
 
         throw error
       }
-      return data
+      return createdRendezVousSchema.parse(data)
     } finally {
       setLoading(false)
     }

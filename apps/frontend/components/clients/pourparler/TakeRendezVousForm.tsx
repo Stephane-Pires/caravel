@@ -39,8 +39,8 @@ import {
 } from "@/components/ui/tooltip"
 import { cn } from "@/lib/utils"
 import {
-  rendezVousSchema,
-  RendezVousSchema,
+  busySlotSchema,
+  BusySlotSchema,
   useCreateRendezVous,
 } from "@/utils/hook"
 import { CalendarIcon } from "@heroicons/react/24/solid"
@@ -83,7 +83,7 @@ const rendezVousFormSchema = z
 export type RendezVousFormSchema = z.infer<typeof rendezVousFormSchema>
 
 export function TakeRendezVousForm() {
-  const [rendezVous, setRendezVous] = useState<Array<RendezVousSchema>>([])
+  const [rendezVous, setRendezVous] = useState<Array<BusySlotSchema>>([])
   const [createRendezVous] = useCreateRendezVous()
 
   useEffect(() => {
@@ -95,7 +95,7 @@ export function TakeRendezVousForm() {
         if (!response.ok) {
           throw new Error(`HTTP error! status: ${response.status}`)
         }
-        const data = rendezVousSchema.array().parse(await response.json())
+        const data = busySlotSchema.array().parse(await response.json())
 
         setRendezVous(data)
       } catch (error) {
@@ -175,7 +175,7 @@ export function TakeRendezVousForm() {
                 {...field}
               />
             </div>
-            <div className="basis-1/8 flex items-center justify-end">
+            <div className="flex basis-1/8 items-center justify-end">
               <Tooltip>
                 <TooltipTrigger>
                   <CircleHelpIcon />
@@ -327,7 +327,7 @@ export function TakeRendezVousForm() {
               </FormControl>
             </div>
 
-            <div className="basis-1/8 flex items-center justify-end">
+            <div className="flex basis-1/8 items-center justify-end">
               <Tooltip>
                 <TooltipTrigger asChild>
                   <CircleHelpIcon />
@@ -345,7 +345,7 @@ export function TakeRendezVousForm() {
     [isDateDisabled, modifiers, modifiersClassNames],
   )
   return (
-    <Card className="min-w-sm container w-full max-w-sm p-4 lg:max-w-md">
+    <Card className="container w-full max-w-sm min-w-sm p-4 lg:max-w-md">
       <CardHeader>
         <CardTitle className="text-2xl font-semibold">
           Take &quot;Rendez-Vous&quot;

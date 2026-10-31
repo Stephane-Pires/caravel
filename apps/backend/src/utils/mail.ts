@@ -7,16 +7,20 @@ import { assertEnv } from "./env.js"
 
 const env = assertEnv(process.env)
 
-const transporter = nodemailer.createTransport({
-  host: "smtp.gmail.com",
-  port: 587,
-  secure: false,
-  service: "gmail",
-  auth: {
-    user: "caravel.blog@gmail.com",
-    pass: env.GMAIL_PASSWORD,
-  },
-})
+// in tests, emails are built but never sent (nodemailer's JSON transport)
+const transporter =
+  env.NODE_ENV === "test"
+    ? nodemailer.createTransport({ jsonTransport: true })
+    : nodemailer.createTransport({
+        host: "smtp.gmail.com",
+        port: 587,
+        secure: false,
+        service: "gmail",
+        auth: {
+          user: "caravel.blog@gmail.com",
+          pass: env.GMAIL_PASSWORD,
+        },
+      })
 
 export class MailService {
   static async sendRendezVousCreated({
