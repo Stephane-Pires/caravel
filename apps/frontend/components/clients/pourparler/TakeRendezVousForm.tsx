@@ -14,6 +14,7 @@ import {
 import {
   Form,
   FormControl,
+  FormDescription,
   FormField,
   FormItem,
   FormLabel,
@@ -32,161 +33,141 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select"
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipTrigger,
-} from "@/components/ui/tooltip"
 import { cn } from "@/lib/utils"
-import {
-  busySlotSchema,
-  BusySlotSchema,
-  useCreateRendezVous,
-} from "@/utils/hook"
+import { useCreateRendezVous, useFreeSlots } from "@/utils/hook"
 import { CalendarIcon } from "@heroicons/react/24/solid"
 import { zodResolver } from "@hookform/resolvers/zod"
-import {
-  format,
-  isBefore,
-  isSameDay,
-  setHours,
-  setMinutes,
-  setSeconds,
-  startOfDay,
-} from "date-fns"
-import { CircleHelpIcon } from "lucide-react"
-import { useCallback, useEffect, useMemo, useState } from "react"
+import { format } from "date-fns"
+import { useCallback, useMemo, useState } from "react"
 import { useForm } from "react-hook-form"
 import { toast } from "sonner"
 import { z } from "zod/v4"
 
-const DEFAULT_SCHEDULED_AT_HOUR = "18:30:00"
+// oxlint-disable-next-line no-magic-numbers
+const NAME_MAX = 120
+// oxlint-disable-next-line no-magic-numbers
+const TOPIC_MAX = 500
 
-const [hours, minutes, seconds] =
-  DEFAULT_SCHEDULED_AT_HOUR.split(":").map(Number)
-
-const defaultScheduledAt = setSeconds(
-  setMinutes(setHours(new Date(), hours), minutes),
-  seconds,
-)
-
-// Should reference the rendezVousDTO entity
 const rendezVousFormSchema = z
   .object({
-    contactEmail: z.email().nonempty(),
-    scheduledAt: z.date().min(new Date(), {
-      message: "Date couldn't be in the past.",
-    }),
+    guestName: z.string().trim().nonempty("Your name, please.").max(NAME_MAX),
+    contactEmail: z.email("An email to send the invitation to."),
+    topic: z.string().trim().max(TOPIC_MAX).optional(),
+    scheduledAt: z.iso.datetime({ message: "Pick a time." }),
   })
   .strict()
 
 export type RendezVousFormSchema = z.infer<typeof rendezVousFormSchema>
 
+const DEFAULT_VALUES = {
+  guestName: "",
+  contactEmail: "",
+  topic: "",
+  scheduledAt: "",
+}
+
+// slots are grouped by the visitor's own calendar day
+const dayKey = (date: Date) => format(date, "yyyy-MM-dd")
+
+const ERROR_STYLE = {
+  background: "var(--color-urgence-500)",
+  color: "white",
+}
+const SUCCESS_STYLE = { background: "var(--color-accent-400)" }
+
 export function TakeRendezVousForm() {
-  const [rendezVous, setRendezVous] = useState<Array<BusySlotSchema>>([])
+  const { slots, loading, failed, take } = useFreeSlots()
   const [createRendezVous] = useCreateRendezVous()
+  const [day, setDay] = useState<Date | undefined>(undefined)
 
-  useEffect(() => {
-    async function fetchData() {
-      try {
-        const response = await fetch("http://localhost:3001/rendez-vous", {
-          method: "GET",
-        })
-        if (!response.ok) {
-          throw new Error(`HTTP error! status: ${response.status}`)
-        }
-        const data = busySlotSchema.array().parse(await response.json())
+  // the visitor's zone: every time below is shown in it
+  const timeZone = useMemo(
+    () => Intl.DateTimeFormat().resolvedOptions().timeZone,
+    [],
+  )
 
-        setRendezVous(data)
-      } catch (error) {
-        console.error("Error fetching rendez-vous:", error)
-        // setError(err.message)
-      } finally {
-        // setLoading(false)
-      }
+  const slotsByDay = useMemo(() => {
+    const byDay = new Map<string, typeof slots>()
+    for (const slot of slots) {
+      const key = dayKey(new Date(slot.start))
+      byDay.set(key, [...(byDay.get(key) ?? []), slot])
     }
+    return byDay
+  }, [slots])
 
-    fetchData()
-  }, [])
+  const daySlots = useMemo(
+    () => (day ? (slotsByDay.get(dayKey(day)) ?? []) : []),
+    [day, slotsByDay],
+  )
 
-  const form = useForm<z.infer<typeof rendezVousFormSchema>>({
+  // the calendar opens on the first bookable month and can't wander outside the bookable range
+  const [firstDay, lastDay] = useMemo(() => {
+    const [first] = slots
+    const last = slots.findLast(Boolean)
+    return [first && new Date(first.start), last && new Date(last.start)]
+  }, [slots])
+
+  const isDayFull = useCallback(
+    (date: Date) => !slotsByDay.has(dayKey(date)),
+    [slotsByDay],
+  )
+
+  const form = useForm<RendezVousFormSchema>({
     resolver: zodResolver(rendezVousFormSchema),
-    defaultValues: {
-      contactEmail: "",
-      scheduledAt: defaultScheduledAt,
-    },
+    defaultValues: DEFAULT_VALUES,
+    mode: "onChange",
   })
 
-  async function onSubmit(values: z.infer<typeof rendezVousFormSchema>) {
-    try {
-      const createRendezVousPromise = createRendezVous({
-        contactEmail: values.contactEmail,
-        scheduledAt: values.scheduledAt,
-      })
+  const pickDay = useCallback(
+    (picked: Date | undefined) => {
+      setDay(picked)
+      form.setValue("scheduledAt", "", { shouldValidate: false })
+    },
+    [form],
+  )
 
+  async function onSubmit(values: RendezVousFormSchema) {
+    try {
       await toast.promise(
-        createRendezVousPromise.then((rendezVousCreated) => {
-          setRendezVous((prev) => [...prev, rendezVousCreated])
-          return rendezVousCreated
+        createRendezVous({
+          contactEmail: values.contactEmail,
+          guestName: values.guestName,
+          topic: values.topic || undefined,
+          scheduledAt: values.scheduledAt,
+        }).then((created) => {
+          take(values.scheduledAt)
+          form.setValue("scheduledAt", "", { shouldValidate: true }) // the slot is gone: pick another
+          return created
         }),
         {
-          loading: "Creating rendez-vous...",
-          success: (rendezVousCreated) => {
-            return {
-              message: `Rendez-vous created successfully!\nFor ${format(new Date(rendezVousCreated.scheduledAt), "EEEE, MMMM do yyyy 'at' h:mm a")}`,
-              style: {
-                background: "var(--color-accent-400)",
-              },
-            }
-          },
-          error: (err: any) => {
-            return {
-              message:
-                err?.description ||
-                "An error occurred while creating the rendez-vous.",
-              style: {
-                background: "var(--color-urgence-500)",
-                color: "white",
-              },
-            }
-          },
+          loading: "Booking your rendez-vous…",
+          success: (created) => ({
+            message: `Booked for ${format(new Date(created.scheduledAt), "EEEE d MMMM 'at' HH:mm")}. The invitation is on its way to ${created.contactEmail}.`,
+            style: SUCCESS_STYLE,
+          }),
+          error: (error: any) => ({
+            message:
+              error?.description ||
+              "The rendez-vous couldn't be booked. Please try another time.",
+            style: ERROR_STYLE,
+          }),
         },
       )
     } catch (error) {
       console.error("error creating rendez-vous", error)
-      toast.error("An error occurred while creating the rendez-vous.", {
-        style: {
-          background: "var(--color-urgence-500)",
-          color: "white",
-        },
-      })
     }
   }
 
-  const renderContactEmailField = useCallback(
+  const renderNameField = useCallback(
     ({ field }: { field: any }) => (
       <FormItem>
-        <FormLabel>Email</FormLabel>
+        <FormLabel>Name</FormLabel>
         <FormControl>
-          <div className="flex flex-row gap-4">
-            <div className="basis-7/8">
-              <Input
-                placeholder="jack.sparrow@captain.com"
-                {...field}
-              />
-            </div>
-            <div className="flex basis-1/8 items-center justify-end">
-              <Tooltip>
-                <TooltipTrigger>
-                  <CircleHelpIcon />
-                </TooltipTrigger>
-                <TooltipContent>
-                  The email address is necessary to contact you regarding the
-                  rendez-vous.{" "}
-                </TooltipContent>
-              </Tooltip>
-            </div>
-          </div>
+          <Input
+            placeholder="Jack Sparrow"
+            autoComplete="name"
+            {...field}
+          />
         </FormControl>
         <FormMessage />
       </FormItem>
@@ -194,156 +175,123 @@ export function TakeRendezVousForm() {
     [],
   )
 
-  const isDateDisabled = useCallback(
-    (date: Date) => {
-      const today = startOfDay(new Date())
-
-      // Disable past dates
-      if (isBefore(date, today)) return true
-
-      // Disable dates with scheduled rendez-vous
-      // Should be typed with the RendezVousDTO type
-      return rendezVous.some((rendezVous) =>
-        isSameDay(new Date(rendezVous.scheduledAt), date),
-      )
-    },
-    [rendezVous],
-  )
-
-  const modifiers = useMemo(() => {
-    return {
-      // Should be typed with the RendezVousDTO type
-      occupied: rendezVous.map((rdv) => startOfDay(new Date(rdv.scheduledAt))),
-    }
-  }, [rendezVous])
-
-  const modifiersClassNames = useMemo(
-    () => ({
-      occupied: "bg-warning-200 text-warning-800 rounded-md",
-    }),
+  const renderEmailField = useCallback(
+    ({ field }: { field: any }) => (
+      <FormItem>
+        <FormLabel>Email</FormLabel>
+        <FormControl>
+          <Input
+            type="email"
+            placeholder="jack.sparrow@captain.com"
+            autoComplete="email"
+            {...field}
+          />
+        </FormControl>
+        <FormDescription>The invitation is sent here.</FormDescription>
+        <FormMessage />
+      </FormItem>
+    ),
     [],
   )
 
-  const renderScheduledAtField = useCallback(
-    ({ field }: { field: any }) => {
-      // oxlint-disable-next-line jsx-no-new-function-as-prop
-      const handleTimePickerChange = (value: string | undefined) => {
-        if (!value) return
-
-        const [hours, minutes, seconds] = value.split(":").map(Number)
-
-        const baseDate = field.value ? new Date(field.value) : new Date()
-        const updatedDate = setSeconds(
-          setMinutes(setHours(baseDate, hours), minutes),
-          seconds,
-        )
-
-        field.onChange(updatedDate)
-      }
-
-      // oxlint-disable-next-line jsx-no-new-function-as-prop
-      const handleCalendarDateChange = (selectedDate: Date | undefined) => {
-        if (!selectedDate) return
-
-        const currentDate = field.value ? new Date(field.value) : new Date()
-
-        const mergedDate = setSeconds(
-          setMinutes(
-            setHours(selectedDate, currentDate.getHours()),
-            currentDate.getMinutes(),
-          ),
-          currentDate.getSeconds(),
-        )
-
-        field.onChange(mergedDate)
-      }
-
-      return (
-        <FormItem className="flex flex-col gap-4">
-          <FormLabel>Date of Rendez-vous</FormLabel>
-
-          {/* Date Picker */}
-          <div className="flex flex-row gap-4">
-            <div className="basis-5/8">
-              <Popover>
-                <PopoverTrigger asChild>
-                  <FormControl>
-                    <Button
-                      variant="input"
-                      className={cn(
-                        "w-full pl-3 text-left font-normal",
-                        !field.value && "text-muted-foreground",
-                      )}
-                    >
-                      {field.value ? (
-                        format(field.value, "PPP")
-                      ) : (
-                        <span>Pick a date</span>
-                      )}
-                      <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
-                    </Button>
-                  </FormControl>
-                </PopoverTrigger>
-                <PopoverContent
-                  className="w-auto p-0"
-                  align="start"
-                >
-                  <Calendar
-                    mode="single"
-                    selected={field.value}
-                    onSelect={handleCalendarDateChange}
-                    modifiers={modifiers}
-                    modifiersClassNames={modifiersClassNames}
-                    disabled={isDateDisabled}
-                    captionLayout="dropdown"
-                  />
-                </PopoverContent>
-              </Popover>
-            </div>
-
-            {/* Time Picker */}
-            <div className="basis-2/8">
-              <FormControl>
-                <Select
-                  onValueChange={handleTimePickerChange}
-                  value={
-                    field.value
-                      ? format(new Date(field.value), "HH:mm:ss")
-                      : undefined
-                  }
-                >
-                  <SelectTrigger
-                    id="time-picker"
-                    className="w-full"
-                  >
-                    <SelectValue placeholder="Select a time" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="18:30:00">18h30</SelectItem>
-                    <SelectItem value="19:00:00">19h00</SelectItem>
-                    <SelectItem value="19:30:00">19h30</SelectItem>
-                  </SelectContent>
-                </Select>
-              </FormControl>
-            </div>
-
-            <div className="flex basis-1/8 items-center justify-end">
-              <Tooltip>
-                <TooltipTrigger asChild>
-                  <CircleHelpIcon />
-                </TooltipTrigger>
-                <TooltipContent>
-                  The date is necessary to schedule the rendez-vous.
-                </TooltipContent>
-              </Tooltip>
-            </div>
-          </div>
-          <FormMessage />
-        </FormItem>
-      )
-    },
-    [isDateDisabled, modifiers, modifiersClassNames],
+  const renderTopicField = useCallback(
+    ({ field }: { field: any }) => (
+      <FormItem>
+        <FormLabel>What would you like to talk about? (optional)</FormLabel>
+        <FormControl>
+          <Input
+            placeholder="A role on your team, a project, a question…"
+            {...field}
+          />
+        </FormControl>
+        <FormMessage />
+      </FormItem>
+    ),
+    [],
   )
+
+  const renderSlotField = useCallback(
+    ({ field }: { field: any }) => (
+      <FormItem className="flex flex-col gap-3">
+        <FormLabel>When</FormLabel>
+        <div className="flex flex-row gap-3">
+          <Popover>
+            <PopoverTrigger asChild>
+              <Button
+                variant="input"
+                disabled={loading || failed}
+                className={cn(
+                  "basis-3/5 pl-3 text-left font-normal",
+                  !day && "text-muted-foreground",
+                )}
+              >
+                {loading
+                  ? "Loading available slots…"
+                  : day
+                    ? format(day, "EEE d MMM")
+                    : "Pick a day"}
+                <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
+              </Button>
+            </PopoverTrigger>
+            <PopoverContent
+              className="w-auto p-0"
+              align="start"
+            >
+              <Calendar
+                mode="single"
+                selected={day}
+                onSelect={pickDay}
+                disabled={isDayFull}
+                defaultMonth={day ?? firstDay}
+                startMonth={firstDay}
+                endMonth={lastDay}
+              />
+            </PopoverContent>
+          </Popover>
+
+          <FormControl>
+            <Select
+              onValueChange={field.onChange}
+              value={field.value || undefined}
+              disabled={!day || !daySlots.length}
+            >
+              <SelectTrigger className="basis-2/5">
+                <SelectValue placeholder="Time" />
+              </SelectTrigger>
+              <SelectContent>
+                {daySlots.map((slot) => (
+                  <SelectItem
+                    key={slot.start}
+                    value={slot.start}
+                  >
+                    {format(new Date(slot.start), "HH:mm")}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+          </FormControl>
+        </div>
+        <FormDescription>
+          {failed
+            ? "The calendar couldn't be loaded. Please try again later."
+            : `30 minutes, by video call. Times are in your time zone (${timeZone}).`}
+        </FormDescription>
+        <FormMessage />
+      </FormItem>
+    ),
+    [
+      day,
+      daySlots,
+      failed,
+      firstDay,
+      isDayFull,
+      lastDay,
+      loading,
+      pickDay,
+      timeZone,
+    ],
+  )
+
   return (
     <Card className="container w-full max-w-sm min-w-sm p-4 lg:max-w-md">
       <CardHeader>
@@ -355,17 +303,27 @@ export function TakeRendezVousForm() {
         <Form {...form}>
           <form
             onSubmit={form.handleSubmit(onSubmit)}
-            className="space-y-8"
+            className="space-y-6"
           >
             <FormField
               control={form.control}
+              name="guestName"
+              render={renderNameField}
+            />
+            <FormField
+              control={form.control}
               name="contactEmail"
-              render={renderContactEmailField}
+              render={renderEmailField}
+            />
+            <FormField
+              control={form.control}
+              name="topic"
+              render={renderTopicField}
             />
             <FormField
               control={form.control}
               name="scheduledAt"
-              render={renderScheduledAtField}
+              render={renderSlotField}
             />
 
             <CardFooter className="p-0">
@@ -376,7 +334,7 @@ export function TakeRendezVousForm() {
                   !form.formState.isValid || form.formState.isSubmitting
                 }
               >
-                Submit
+                Book this rendez-vous
               </Button>
             </CardFooter>
           </form>

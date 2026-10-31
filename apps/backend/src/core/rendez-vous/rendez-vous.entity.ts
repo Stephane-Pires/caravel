@@ -4,10 +4,15 @@ import dayjs from "dayjs"
 import type { RendezVousDb } from "../../db/schema/rendez-vous.js"
 import { ContactSchema } from "../contact/contact.entity.js"
 import {
+  isOfferedSlotStart,
+  slotEnd,
+} from "../availability/availability.service.js"
+import {
   RendezVousInvalidScheduleAtAlreadyTakenException,
   RendezVousInvalidScheduleAtException,
+  RendezVousOutsideAvailabilityException,
 } from "./rendez-vous.exception.js"
-import { getRendezVousService } from "./rendez-vous.service.js"
+import { getOverlappingRendezVousRepository } from "./rendez-vous.repository.js"
 
 const RendezVousSchema = z.object({
   id: z.number().min(1).openapi({
@@ -15,6 +20,9 @@ const RendezVousSchema = z.object({
   }),
   contactEmail: ContactSchema.shape.email,
   scheduledAt: z.date(),
+  endsAt: z.date(),
+  guestName: z.string().nullable(),
+  topic: z.string().nullable(),
 })
 
 export type RendezVous = z.infer<typeof RendezVousSchema>
@@ -76,6 +84,11 @@ export const RendezVousDTOSchema = RendezVousSchema.extend({
   scheduledAt: z.date().openapi({
     example: "2023-10-01T10:00:00Z",
   }),
+  endsAt: z.date().openapi({
+    example: "2023-10-01T10:30:00Z",
+  }),
+  guestName: z.string().nullable().openapi({ example: "Jack Sparrow" }),
+  topic: z.string().nullable().openapi({ example: "A role on your team" }),
 }).openapi("RendezVousDTO")
 
 type RendezVousDTO = z.infer<typeof RendezVousDTOSchema>
@@ -111,6 +124,12 @@ export const CreateRendezVousPayloadSchema = z
     scheduledAt: z.iso.datetime().pipe(z.coerce.date()).openapi({
       example: "2023-10-01T10:00:00Z",
     }),
+    guestName: z.string().trim().min(1).max(120).openapi({
+      example: "Jack Sparrow",
+    }),
+    topic: z.string().trim().max(500).optional().openapi({
+      example: "A role on your team",
+    }),
     turnstileToken: z.string().optional().openapi({
       description:
         "Cloudflare Turnstile token from the booking form (required when the server has a Turnstile secret)",
@@ -122,6 +141,8 @@ export const CreateRendezVousPayloadSchema = z
     example: {
       contactEmail: "john.doe@gmail.com",
       scheduledAt: "2023-10-01T10:00:00Z",
+      guestName: "John Doe",
+      topic: "A role on your team",
     },
   })
 
@@ -137,7 +158,9 @@ export const UpdateRendezVousSchema = z
   })
   .partial()
 
-export type UpdateRendezVous = z.infer<typeof UpdateRendezVousSchema>
+export type UpdateRendezVous = z.infer<typeof UpdateRendezVousSchema> & {
+  endsAt?: Date
+}
 
 export const MoveRendezVousPayloadSchema = z
   .object({
@@ -165,6 +188,7 @@ interface InvariantError {
   exception:
     | RendezVousInvalidScheduleAtException
     | RendezVousInvalidScheduleAtAlreadyTakenException
+    | RendezVousOutsideAvailabilityException
 }
 
 type InvariantResult = Promise<InvariantSuccess | InvariantError>
@@ -184,36 +208,37 @@ export class RendezVousEntity {
     return BusySlotDTOSchema.parse({ scheduledAt: rendezVous.scheduledAt })
   }
 
+  // a rendez-vous must start on an offered slot that nobody else holds
+  // (the database's exclusion constraint is the final word when two guests book at once)
   static async checkInvariants(
     rendezVous: Partial<RendezVous>,
   ): InvariantResult {
-    if (
-      rendezVous.scheduledAt &&
-      dayjs(rendezVous.scheduledAt).isBefore(dayjs())
-    ) {
+    if (!rendezVous.scheduledAt) return { success: true }
+
+    if (dayjs(rendezVous.scheduledAt).isBefore(dayjs())) {
       return {
         success: false,
         exception: new RendezVousInvalidScheduleAtException(),
       }
     }
 
-    if (rendezVous.scheduledAt) {
-      const scheduledAt = dayjs(rendezVous.scheduledAt)
+    if (!isOfferedSlotStart(rendezVous.scheduledAt)) {
+      return {
+        success: false,
+        exception: new RendezVousOutsideAvailabilityException(),
+      }
+    }
 
-      const rendezVousSaved = await getRendezVousService({
-        filter: {
-          dateRange: {
-            start: scheduledAt.subtract(30, "minute").toDate(),
-            end: scheduledAt.add(30, "minute").toDate(),
-          },
-        },
-      })
+    const taken = await getOverlappingRendezVousRepository(
+      rendezVous.scheduledAt,
+      slotEnd(rendezVous.scheduledAt),
+      rendezVous.id,
+    )
 
-      if (rendezVousSaved.length > 0) {
-        return {
-          success: false,
-          exception: new RendezVousInvalidScheduleAtAlreadyTakenException(),
-        }
+    if (taken.length > 0) {
+      return {
+        success: false,
+        exception: new RendezVousInvalidScheduleAtAlreadyTakenException(),
       }
     }
 

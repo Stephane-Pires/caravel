@@ -13,7 +13,12 @@ export const rendezVous = pgTable("rendez_vous", {
       onUpdate: "cascade",
     })
     .notNull(),
-  scheduledAt: timestamp().notNull().unique(),
+  // instants (timestamptz): shown in each visitor's own zone
+  scheduledAt: timestamp({ withTimezone: true }).notNull().unique(),
+  // the booked range is [scheduledAt, endsAt); an exclusion constraint forbids overlapping ranges
+  endsAt: timestamp({ withTimezone: true }).notNull(),
+  guestName: varchar({ length: 120 }),
+  topic: varchar({ length: 500 }),
   // SHA-256 of the secret token that lets the guest manage this rendez-vous (utils/token.ts)
   manageTokenHash: varchar({ length: 64 }),
   ...auditColumns,

@@ -1,4 +1,4 @@
-import { SQL, and, between, count, eq, gt, inArray } from "drizzle-orm"
+import { SQL, and, between, count, eq, gt, inArray, lt, ne } from "drizzle-orm"
 
 import { getDbClient } from "../../db/db.client.js"
 import { dbSchema } from "../../db/db.schema.js"
@@ -58,6 +58,27 @@ export const getRendezVousRepository = async (
   return await query.execute()
 }
 
+// rendez-vous whose booked range [scheduledAt, endsAt) overlaps [start, end), optionally ignoring one
+export const getOverlappingRendezVousRepository = async (
+  start: Date,
+  end: Date,
+  excludeId?: RendezVous["id"],
+) => {
+  const filters: SQL[] = [
+    lt(dbSchema.rendezVous.scheduledAt, end),
+    gt(dbSchema.rendezVous.endsAt, start),
+  ]
+  if (excludeId) filters.push(ne(dbSchema.rendezVous.id, excludeId))
+  return await getDbClient()
+    .select({
+      start: dbSchema.rendezVous.scheduledAt,
+      end: dbSchema.rendezVous.endsAt,
+    })
+    .from(dbSchema.rendezVous)
+    .where(and(...filters))
+    .execute()
+}
+
 // the stored token hash of one rendez-vous (kept out of the entity, so it never reaches a DTO)
 export const getManageTokenHashRepository = async (id: RendezVous["id"]) => {
   const [row] = await getDbClient()
@@ -85,7 +106,7 @@ export const countUpcomingRendezVousRepository = async (
 }
 
 export const persistRendezVousRepository = async (
-  data: CreateRendezVousPayload,
+  data: CreateRendezVousPayload & { endsAt: Date },
   manageTokenHash: string,
 ) => {
   const db = getDbClient()
@@ -102,6 +123,9 @@ export const persistRendezVousRepository = async (
       .values({
         contactEmail: data.contactEmail,
         scheduledAt: data.scheduledAt,
+        endsAt: data.endsAt,
+        guestName: data.guestName,
+        topic: data.topic,
         manageTokenHash,
       })
       .returning({ id: dbSchema.rendezVous.id })

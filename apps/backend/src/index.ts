@@ -7,6 +7,7 @@ import { cors } from "hono/cors"
 import { logger } from "hono/logger"
 
 import packageJson from "../package.json" with { type: "json" }
+import availability from "./core/availability/availability.handler.js"
 import contact from "./core/contact/contact.handler.js"
 import rendezVous from "./core/rendez-vous/rendez-vous.handler.js"
 import database from "./db/db.handler.js"
@@ -39,6 +40,7 @@ if (!isProduction()) {
   app.route("/database/", database)
 }
 app.route("/", rendezVous)
+app.route("/", availability)
 
 app.openAPIRegistry.registerComponent("securitySchemes", "manageToken", {
   type: "http",
