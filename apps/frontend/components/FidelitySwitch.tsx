@@ -4,6 +4,7 @@ import Link from "next/link"
 import { usePathname, useRouter } from "next/navigation"
 import { type MouseEvent, useCallback, useMemo } from "react"
 
+import { setFidelity } from "@/lib/fidelity"
 import { track } from "@/lib/track"
 
 // Lo-fi is the classic site, hi-fi the 3D cabin. Switching keeps your place:
@@ -37,10 +38,10 @@ export function FidelitySwitch() {
   const hiFi = pathname.startsWith(CABIN)
   // in the cabin there is no close-up to match, so this is plain /cabin
   const hiFiLink = useMemo(() => hiFiHref(pathname), [pathname])
-  const goHiFi = useCallback(
-    () => track("site.fidelity", { to: "hi-fi", from: pathname }),
-    [pathname],
-  )
+  const goHiFi = useCallback(() => {
+    setFidelity("hi-fi")
+    track("site.fidelity", { to: "hi-fi", from: pathname })
+  }, [pathname])
   // the side you're already on stays put (no reload of the page or the cabin)
   const stay = useCallback(
     (event: MouseEvent<HTMLAnchorElement>) => event.preventDefault(),
@@ -50,6 +51,7 @@ export function FidelitySwitch() {
   const goLoFi = useCallback(
     (event: MouseEvent<HTMLAnchorElement>) => {
       const href = loFiHref(window.location.hash)
+      setFidelity("lo-fi") // remembered, so the front door (/) doesn't send them back
       track("site.fidelity", {
         to: "lo-fi",
         from: window.location.hash || "overview",
