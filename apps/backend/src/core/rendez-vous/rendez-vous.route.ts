@@ -12,6 +12,7 @@ import {
   RendezVousQueryParamSchema,
 } from "./rendez-vous.entity.js"
 import {
+  RendezVousCalendarUnavailableException,
   RendezVousInvalidScheduleAtAlreadyTakenException,
   RendezVousInvalidScheduleAtException,
   RendezVousNotFoundException,
@@ -112,6 +113,15 @@ export const postRendezVousRoute = createRoute({
         },
       },
     },
+    503: {
+      description:
+        "The captain's calendar couldn't be reached; nothing was changed",
+      content: {
+        "application/json": {
+          schema: new RendezVousCalendarUnavailableException().toSchema(),
+        },
+      },
+    },
     400: {
       description: "Invalid request parameters",
     },
@@ -147,6 +157,15 @@ export const cancelRendezVousRoute = createRoute({
   responses: {
     204: {
       description: "Delete rendez-vous",
+    },
+    503: {
+      description:
+        "The captain's calendar couldn't be reached; nothing was changed",
+      content: {
+        "application/json": {
+          schema: new RendezVousCalendarUnavailableException().toSchema(),
+        },
+      },
     },
     400: {
       description: "Invalid request parameters",
@@ -184,6 +203,15 @@ export const moveRendezVousRoute = createRoute({
       content: {
         "application/json": {
           schema: RendezVousDTOSchema,
+        },
+      },
+    },
+    503: {
+      description:
+        "The captain's calendar couldn't be reached; nothing was changed",
+      content: {
+        "application/json": {
+          schema: new RendezVousCalendarUnavailableException().toSchema(),
         },
       },
     },

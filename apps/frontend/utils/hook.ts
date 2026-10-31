@@ -15,6 +15,7 @@ export const rendezVousSchema = z.object({
   endsAt: z.iso.datetime(),
   guestName: z.string().nullable(),
   topic: z.string().nullable(),
+  meetLink: z.string().nullable().optional(),
 })
 
 export type RendezVousSchema = z.infer<typeof rendezVousSchema>
@@ -115,9 +116,11 @@ export function useCreateRendezVous(): UseCreateRendezVousReturn {
       const data = await response.json()
 
       if (!response.ok) {
-        const error = new Error(data?.description || "Unexpected error")
+        // domain errors carry a description (or, for some, only a message)
+        const description = data?.description ?? data?.message
+        const error = new Error(description || "Unexpected error")
         ;(error as any).code = data?.code
-        ;(error as any).description = data?.description
+        ;(error as any).description = description
 
         throw error
       }

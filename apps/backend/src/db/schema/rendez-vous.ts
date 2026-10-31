@@ -19,6 +19,9 @@ export const rendezVous = pgTable("rendez_vous", {
   endsAt: timestamp({ withTimezone: true }).notNull(),
   guestName: varchar({ length: 120 }),
   topic: varchar({ length: 500 }),
+  // the event in the captain's Google Calendar (invitation, Meet link, reminders)
+  calendarEventId: varchar({ length: 256 }),
+  meetLink: varchar({ length: 256 }),
   // SHA-256 of the secret token that lets the guest manage this rendez-vous (utils/token.ts)
   manageTokenHash: varchar({ length: 64 }),
   ...auditColumns,

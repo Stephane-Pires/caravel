@@ -17,9 +17,6 @@ const envSchema = z
     POSTGRES_HOST: z.string().nonempty().meta({
       description: "The host address for the PostgreSQL database",
     }),
-    GMAIL_PASSWORD: z.string().nonempty().meta({
-      description: "The password for the Gmail account used to send emails",
-    }),
     NODE_ENV: z
       .enum(["development", "test", "production"])
       .default("development")
@@ -32,11 +29,37 @@ const envSchema = z
       .default("http://localhost:3000")
       .transform((origins) => origins.split(",").map((o) => o.trim()))
       .meta({ description: "Comma-separated origins allowed to call the API" }),
+    GOOGLE_CLIENT_ID: z.string().optional().meta({
+      description:
+        "OAuth client of the captain's Google Calendar (scripts/google-auth.mjs)",
+    }),
+    GOOGLE_CLIENT_SECRET: z.string().optional().meta({
+      description: "Secret of that OAuth client",
+    }),
+    GOOGLE_REFRESH_TOKEN: z.string().optional().meta({
+      description: "Refresh token from the captain's one-time consent",
+    }),
+    GOOGLE_CALENDAR_ID: z.string().default("primary").meta({
+      description: "The calendar that holds the rendez-vous",
+    }),
     TURNSTILE_SECRET_KEY: z.string().optional().meta({
       description:
         "Cloudflare Turnstile secret; when set, creating a rendez-vous needs a valid challenge token",
     }),
   })
+  .refine(
+    (env) =>
+      env.NODE_ENV !== "production" ||
+      Boolean(
+        env.GOOGLE_CLIENT_ID &&
+        env.GOOGLE_CLIENT_SECRET &&
+        env.GOOGLE_REFRESH_TOKEN,
+      ),
+    {
+      message:
+        "Production needs GOOGLE_CLIENT_ID, GOOGLE_CLIENT_SECRET and GOOGLE_REFRESH_TOKEN (run scripts/google-auth.mjs)",
+    },
+  )
   .meta({
     description: "Schema to parse environnement variables",
   })

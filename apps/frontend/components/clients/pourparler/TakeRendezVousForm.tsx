@@ -142,7 +142,7 @@ export function TakeRendezVousForm() {
         {
           loading: "Booking your rendez-vous…",
           success: (created) => ({
-            message: `Booked for ${format(new Date(created.scheduledAt), "EEEE d MMMM 'at' HH:mm")}. The invitation is on its way to ${created.contactEmail}.`,
+            message: `Booked for ${format(new Date(created.scheduledAt), "EEEE d MMMM 'at' HH:mm")}. A Google Calendar invitation with the video link is on its way to ${created.contactEmail}.`,
             style: SUCCESS_STYLE,
           }),
           error: (error: any) => ({
