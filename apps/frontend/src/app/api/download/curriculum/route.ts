@@ -6,10 +6,11 @@ import path from "path"
 const CACHE_WEEK = 604800
 
 export async function GET(req: NextRequest) {
-  // should be checked by zod via a controller.
-  const language: LOCAL_SUPPORTED = req.nextUrl.searchParams.get(
-    "language",
-  ) as LOCAL_SUPPORTED
+  // English unless French is asked for: an unknown value must not crash the download
+  const language: LOCAL_SUPPORTED =
+    req.nextUrl.searchParams.get("language") === LOCAL_SUPPORTED.FRENCH
+      ? LOCAL_SUPPORTED.FRENCH
+      : LOCAL_SUPPORTED.ENGLISH
 
   const pdfPath = path.resolve(
     "./public/about-me",
@@ -20,7 +21,8 @@ export async function GET(req: NextRequest) {
   return new NextResponse(await pdfFile, {
     headers: {
       "Cache-control": `public, max-age=${CACHE_WEEK}`,
-      "Content-Disposition": "filename=cv-stephane-pires",
+      // a real file name, with its extension: browsers save exactly this
+      "Content-Disposition": `attachment; filename="cv-stephane-pires-${language}.pdf"`,
       "Content-Type": "application/pdf",
     },
   })

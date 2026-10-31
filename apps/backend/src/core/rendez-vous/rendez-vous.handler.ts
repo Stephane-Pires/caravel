@@ -1,25 +1,33 @@
 import { OpenAPIHono } from "@hono/zod-openapi"
 
-import { DatabaseException } from "../../utils/exception.js"
-import { RendezVousEntity } from "./rendez-vous.entity.js"
+import { DatabaseException } from "../../utils/exception.ts"
+import { bearerToken } from "../../utils/token.ts"
 import {
+  CreatedRendezVousDTOSchema,
+  RendezVousEntity,
+} from "./rendez-vous.entity.ts"
+import {
+  RendezVousCalendarUnavailableException,
   RendezVousInvalidScheduleAtAlreadyTakenException,
   RendezVousInvalidScheduleAtException,
   RendezVousNotFoundException,
-} from "./rendez-vous.exception.js"
+  RendezVousOutsideAvailabilityException,
+  RendezVousTooManyException,
+} from "./rendez-vous.exception.ts"
 import {
   cancelRendezVousRoute,
   getRendezVousByIdRoute,
   getRendezVousRoute,
   moveRendezVousRoute,
   postRendezVousRoute,
-} from "./rendez-vous.route.js"
+} from "./rendez-vous.route.ts"
 import {
   cancelRendezVousService,
   createRendezVousService,
+  findManagedRendezVousService,
   getRendezVousService,
   moveRendezVousService,
-} from "./rendez-vous.service.js"
+} from "./rendez-vous.service.ts"
 
 const app = new OpenAPIHono()
 
@@ -41,23 +49,20 @@ app.openapi(getRendezVousRoute, async (c) => {
 
   const rendezVous = await getRendezVousService(options)
 
-  return c.json(rendezVous.map(RendezVousEntity.toDto))
+  return c.json(rendezVous.map(RendezVousEntity.toBusySlotDto))
 })
 
 app.openapi(getRendezVousByIdRoute, async (c) => {
   const { id } = c.req.valid("param")
+  const token = bearerToken(c.req.valid("header").authorization)
 
-  const rendezVous = await getRendezVousService({
-    filter: {
-      ids: [id],
-    },
-  })
+  const rendezVous = await findManagedRendezVousService(id, token)
 
-  if (rendezVous.length === 0) {
+  if (!rendezVous) {
     return c.json(new RendezVousNotFoundException().toDTO(), 404)
   }
 
-  return c.json(RendezVousEntity.toDto(rendezVous[0]), 200)
+  return c.json(RendezVousEntity.toDto(rendezVous), 200)
 })
 
 app.openapi(postRendezVousRoute, async (c) => {
@@ -65,11 +70,22 @@ app.openapi(postRendezVousRoute, async (c) => {
 
   const result = await createRendezVousService(payload)
 
+  if (result instanceof RendezVousTooManyException) {
+    return c.json(result, 429)
+  }
+
+  if (result instanceof RendezVousCalendarUnavailableException) {
+    return c.json(result.toDTO(), 503)
+  }
+
   if (result instanceof RendezVousInvalidScheduleAtAlreadyTakenException) {
     return c.json(result, 409)
   }
 
-  if (result instanceof RendezVousInvalidScheduleAtException) {
+  if (
+    result instanceof RendezVousInvalidScheduleAtException ||
+    result instanceof RendezVousOutsideAvailabilityException
+  ) {
     return c.json(result, 422)
   }
 
@@ -77,23 +93,22 @@ app.openapi(postRendezVousRoute, async (c) => {
     return c.json(result, 500)
   }
 
-  return c.json(RendezVousEntity.toDto(result), 201)
+  return c.json(CreatedRendezVousDTOSchema.parse(result), 201)
 })
 
 app.openapi(cancelRendezVousRoute, async (c) => {
   const { id } = c.req.valid("param")
+  const token = bearerToken(c.req.valid("header").authorization)
 
-  const rendezVous = await getRendezVousService({
-    filter: {
-      ids: [id],
-    },
-  })
-
-  if (rendezVous.length === 0) {
+  if (!(await findManagedRendezVousService(id, token))) {
     return c.json(new RendezVousNotFoundException().toDTO(), 404)
   }
 
-  await cancelRendezVousService([id])
+  const cancelled = await cancelRendezVousService([id])
+
+  if (cancelled instanceof RendezVousCalendarUnavailableException) {
+    return c.json(cancelled.toDTO(), 503)
+  }
 
   return c.newResponse(null, 204)
 })
@@ -101,6 +116,11 @@ app.openapi(cancelRendezVousRoute, async (c) => {
 app.openapi(moveRendezVousRoute, async (c) => {
   const { id } = c.req.valid("param")
   const payload = c.req.valid("json")
+  const token = bearerToken(c.req.valid("header").authorization)
+
+  if (!(await findManagedRendezVousService(id, token))) {
+    return c.json(new RendezVousNotFoundException().toDTO(), 404)
+  }
 
   const movedRendezVous = await moveRendezVousService(id, payload)
 
@@ -112,8 +132,14 @@ app.openapi(moveRendezVousRoute, async (c) => {
   ) {
     return c.json(movedRendezVous.toDTO(), 409)
   }
-  if (movedRendezVous instanceof RendezVousInvalidScheduleAtException) {
+  if (
+    movedRendezVous instanceof RendezVousInvalidScheduleAtException ||
+    movedRendezVous instanceof RendezVousOutsideAvailabilityException
+  ) {
     return c.json(movedRendezVous.toDTO(), 422)
+  }
+  if (movedRendezVous instanceof RendezVousCalendarUnavailableException) {
+    return c.json(movedRendezVous.toDTO(), 503)
   }
   if (movedRendezVous instanceof DatabaseException) {
     return c.json(movedRendezVous, 500)

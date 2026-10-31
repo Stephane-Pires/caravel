@@ -1,8 +1,8 @@
 import { sql } from "drizzle-orm"
 import { seed } from "drizzle-seed"
 
-import { getDbClient } from "./db.client.js"
-import { dbSchema } from "./db.schema.js"
+import { getDbClient } from "./db.client.ts"
+import { dbSchema } from "./db.schema.ts"
 
 export async function seedDb() {
   await seed(getDbClient(), dbSchema).refine((funcs) => ({

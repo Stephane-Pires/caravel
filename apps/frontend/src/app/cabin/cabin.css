@@ -28,6 +28,24 @@
 .cabin .brand .tag { font-size: 0.8rem; color: var(--mist); text-transform: uppercase; letter-spacing: 0.12em; }
 /* the Lo-fi/Hi-fi switch is pinned where it sits on the classic site; it stays under the scroll */
 .cabin .fidelity { z-index: 2; }
+/* the bottle's note (CabinNote.tsx) sits over the scene but under the bar: the switch stays usable,
+   and what was typed follows to the classic page. Its day and time pickers open in popups outside
+   the cabin's layer (z-index 100), so they're lifted above it */
+.cabin .note-layer { z-index: 3; }
+.cabin.note-open .bar { z-index: 5; }
+body:has(.cabin) [data-radix-popper-content-wrapper] { z-index: 101 !important; }
+.cabin .note-sheet { animation: unroll 0.7s cubic-bezier(0.2, 0.8, 0.2, 1); }
+/* booked: the sheet folds into a dart (four corners pinch to a point) and shrinks away; the 3D paper
+   plane takes over in the scene where it vanished */
+.cabin .note-sheet.folding { pointer-events: none; animation: note-fold 1s cubic-bezier(0.55, 0, 0.75, 0.2) forwards; }
+@keyframes note-fold {
+  0% { clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%); transform: none; opacity: 1; }
+  45% { clip-path: polygon(50% 0, 50% 0, 100% 70%, 0 70%); transform: scale(0.7, 0.55); opacity: 1; }
+  100% { clip-path: polygon(50% 0, 50% 0, 100% 70%, 0 70%); transform: translateY(10vh) scale(0.08) rotate(-18deg); opacity: 0; }
+}
+@media (prefers-reduced-motion: reduce) {
+.cabin .note-sheet { animation: none; }
+}
 @media (max-width: 767px) { .cabin .bar { --bar-top: 21px; } }
 .cabin button:focus-visible { outline: 3px solid var(--mint); outline-offset: 2px; }
 /* the scene carries the content: a hint at the bottom until the first touch, a small caption in close-ups */
@@ -153,7 +171,7 @@
   font: 400 1rem/1.55 var(--body);
 }
 .cabin .tabs {
-  position: sticky; top: 0; z-index: 1; display: flex; align-items: center; justify-content: space-between; gap: 10px; flex-wrap: wrap;
+  position: sticky; top: 0; z-index: 3; display: flex; align-items: center; justify-content: space-between; gap: 10px; flex-wrap: wrap;
   margin: 0 -30px; padding: 12px 30px 10px; background: #e2c78f; border-bottom: 2px dashed rgba(46, 26, 12, 0.35);
 }
 .cabin .tab-list { display: flex; gap: 6px; flex-wrap: wrap; }
@@ -196,7 +214,8 @@
 .cabin .timeline .tl-entry:first-child::before { top: 36px; }
 .cabin .timeline .tl-entry:last-child::before { bottom: auto; height: 36px; }
 .cabin .tl-mark {
-  position: sticky; top: calc(var(--tabs-h, 56px) + 12px); align-self: start; z-index: 0;
+  /* above the entry's content (bullets and rotated polaroids make their own layers), under the tabs */
+  position: sticky; top: calc(var(--tabs-h, 56px) + 12px); align-self: start; z-index: 2;
   display: grid; grid-template-columns: 36px minmax(0, 1fr); gap: 2px 10px; align-items: center;
 }
 .cabin .tl-mark a { display: block; border-radius: 50%; }
@@ -218,7 +237,7 @@
 @media (max-width: 520px) {
 .cabin .tl-entry { grid-template-columns: minmax(0, 1fr); gap: 10px; }
 .cabin .tl-entry::before { display: none; }
-.cabin .tl-mark { margin: 0 -18px; padding: 8px 18px; background: #e2c78f; border-bottom: 2px dashed rgba(46, 26, 12, 0.3); grid-template-columns: 36px auto 1fr; }
+.cabin .tl-mark { top: var(--tabs-h, 56px); margin: 0 -18px; padding: 8px 18px; background: #e2c78f; border-bottom: 2px dashed rgba(46, 26, 12, 0.3); grid-template-columns: 36px auto 1fr; }
 .cabin .tl-dates { grid-column: 3; justify-self: end; text-align: right; }
 }
 @media (max-width: 520px) {

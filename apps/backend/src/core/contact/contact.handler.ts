@@ -1,8 +1,8 @@
 import { OpenAPIHono } from "@hono/zod-openapi"
 
-import { ContactEntity } from "./contact.entity.js"
-import { getContactsRoute } from "./contact.route.js"
-import { getContactsService } from "./contact.service.js"
+import { ContactEntity } from "./contact.entity.ts"
+import { getContactsRoute } from "./contact.route.ts"
+import { getContactsService } from "./contact.service.ts"
 
 const app = new OpenAPIHono()
 

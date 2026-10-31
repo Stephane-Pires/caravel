@@ -1,12 +1,21 @@
 /* eslint-disable @typescript-eslint/no-require-imports */
 
 const { withContentlayer } = require("next-contentlayer2")
+const path = require("path")
+
+// the pnpm workspace: the Pourparler API lives in apps/backend
+const monorepoRoot = path.join(__dirname, "../..")
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   experimental: {
     typedRoutes: true,
   },
+  // the API is TypeScript source: compile it with the site
+  transpilePackages: ["backend"],
+  // trace and bundle files outside apps/frontend (the backend, the root node_modules)
+  outputFileTracingRoot: monorepoRoot,
+  turbopack: { root: monorepoRoot },
 }
 
 module.exports = withContentlayer(nextConfig)

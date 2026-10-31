@@ -14,10 +14,10 @@ const NAVIGATION = {
     name: "About Me",
     pathname: "/about-me",
   },
-  LOGBOOK: {
-    icon: "sticky-note",
-    name: "Logbook",
-    pathname: "/logbook",
+  POURPARLER: {
+    icon: "chat",
+    name: "Pourparler",
+    pathname: "/pourparler",
   },
   PROJECTS: {
     icon: "code",

@@ -104,27 +104,6 @@ export default function AboutMe() {
             Me, myself & I ❤️
           </div>
           <div className="flex flex-col gap-4 font-sans md:gap-10">
-            <article ref={registerArticle} data-article={CURRICULUM_VITAE.EDUCATION.id}>
-              <h2 className="my-16 text-center font-sans text-3xl font-bold text-blue-300 underline underline-offset-4">
-                {CURRICULUM_VITAE.EDUCATION.label}
-              </h2>
-              <section ref={registerSection}
-                data-article="EDUCATION"
-                data-section={CURRICULUM_VITAE.EDUCATION.section.ISEP.id}>
-                <SectionContent
-                  section={CURRICULUM_VITAE.EDUCATION.section.ISEP}
-                />
-              </section>
-
-              <section ref={registerSection}
-                data-article="EDUCATION"
-                data-section={CURRICULUM_VITAE.EDUCATION.section.AUDENCIA.id}>
-                <SectionContent
-                  section={CURRICULUM_VITAE.EDUCATION.section.AUDENCIA}
-                />
-              </section>
-            </article>
-
             <article ref={registerArticle} data-article={CURRICULUM_VITAE.EXPERIENCE.id}>
               <h2 className="my-16 text-center font-sans text-3xl font-bold text-blue-300 underline underline-offset-4">
                 {CURRICULUM_VITAE.EXPERIENCE.label}
@@ -132,9 +111,17 @@ export default function AboutMe() {
 
               <section ref={registerSection}
                 data-article="EXPERIENCE"
-                data-section={CURRICULUM_VITAE.EXPERIENCE.section.ANALOG_WAY.id}>
+                data-section={CURRICULUM_VITAE.EXPERIENCE.section.FIGURES.id}>
                 <SectionContent
-                  section={CURRICULUM_VITAE.EXPERIENCE.section.ANALOG_WAY}
+                  section={CURRICULUM_VITAE.EXPERIENCE.section.FIGURES}
+                />
+              </section>
+
+              <section ref={registerSection}
+                data-article="EXPERIENCE"
+                data-section={CURRICULUM_VITAE.EXPERIENCE.section.LEAKMITED.id}>
+                <SectionContent
+                  section={CURRICULUM_VITAE.EXPERIENCE.section.LEAKMITED}
                 />
               </section>
 
@@ -147,20 +134,32 @@ export default function AboutMe() {
                 />
               </section>
               */}
-
               <section ref={registerSection}
                 data-article="EXPERIENCE"
-                data-section={CURRICULUM_VITAE.EXPERIENCE.section.LEAKMITED.id}>
+                data-section={CURRICULUM_VITAE.EXPERIENCE.section.ANALOG_WAY.id}>
                 <SectionContent
-                  section={CURRICULUM_VITAE.EXPERIENCE.section.LEAKMITED}
+                  section={CURRICULUM_VITAE.EXPERIENCE.section.ANALOG_WAY}
+                />
+              </section>
+            </article>
+
+            <article ref={registerArticle} data-article={CURRICULUM_VITAE.EDUCATION.id}>
+              <h2 className="my-16 text-center font-sans text-3xl font-bold text-blue-300 underline underline-offset-4">
+                {CURRICULUM_VITAE.EDUCATION.label}
+              </h2>
+              <section ref={registerSection}
+                data-article="EDUCATION"
+                data-section={CURRICULUM_VITAE.EDUCATION.section.AUDENCIA.id}>
+                <SectionContent
+                  section={CURRICULUM_VITAE.EDUCATION.section.AUDENCIA}
                 />
               </section>
 
               <section ref={registerSection}
-                data-article="EXPERIENCE"
-                data-section={CURRICULUM_VITAE.EXPERIENCE.section.FIGURES.id}>
+                data-article="EDUCATION"
+                data-section={CURRICULUM_VITAE.EDUCATION.section.ISEP.id}>
                 <SectionContent
-                  section={CURRICULUM_VITAE.EXPERIENCE.section.FIGURES}
+                  section={CURRICULUM_VITAE.EDUCATION.section.ISEP}
                 />
               </section>
             </article>

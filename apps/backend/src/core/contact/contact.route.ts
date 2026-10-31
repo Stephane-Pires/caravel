@@ -1,7 +1,7 @@
 import { createRoute } from "@hono/zod-openapi"
 
-import { API_TAG } from "../../utils/tag.js"
-import { ContactDTOSchema } from "./contact.entity.js"
+import { API_TAG } from "../../utils/tag.ts"
+import { ContactDTOSchema } from "./contact.entity.ts"
 
 export const getContactsRoute = createRoute({
   method: "get",

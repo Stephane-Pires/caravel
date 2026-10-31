@@ -1,6 +1,6 @@
 import { z } from "@hono/zod-openapi"
 
-import type { ContactDb } from "../../db/schema/contact.js"
+import type { ContactDb } from "../../db/schema/contact.ts"
 
 export const ContactSchema = z.object({
   email: z.string().email().min(1).max(256),

@@ -8,16 +8,31 @@ import { RenderPass } from "three/addons/postprocessing/RenderPass.js";
 import { UnrealBloomPass } from "three/addons/postprocessing/UnrealBloomPass.js";
 import { OutputPass } from "three/addons/postprocessing/OutputPass.js";
 import { FONTS, setFonts, INK, grad, toon, glow, mesh, at, group, hot, canvasTex, plankTex, tubeBetween } from "./toolkit.js";
-import { POSTS, PROJECT_LINKS, PROJECTS, ABOUT, ISLANDS, LAST_SEEN, setContent } from "./content.js";
+import { POSTS, PROJECT_LINKS, PROJECTS, ABOUT, ISLANDS, LAST_SEEN, TOOLS, setContent } from "./content.js";
+import { engineRoom } from "./engine.js";
 import { drawChart } from "./chart.js";
 import { makeSea, palm, bottle, chest, openBook, drawPages, bookEntries, PAGE_W, PAGE_H, puff, cloud, bicycle, gameBox, seaBird, shipCat } from "./props.js";
 
 export async function mountCabin(data) {
 setContent(data); // posts, projects and CV from the server
 setFonts(data.fonts); // self-hosted fonts for the canvas textures
+// usage events (lib/track.ts): what was tapped, opened, downloaded, and how smoothly it ran.
+// Every event says which kind of device and how long after the cabin started loading.
+const startedAt = data.startedAt ?? performance.now();
+const DEVICE = !matchMedia("(pointer: coarse)").matches ? "desktop" : Math.min(screen.width, screen.height) < 600 ? "phone" : "tablet";
+const track = (event, attributes = {}) => {
+  try { data.track?.(event, { ...attributes, device: DEVICE, seconds: Math.round((performance.now() - startedAt) / 100) / 10 }); } catch (e) { /* never let measuring break the cabin */ }
+};
 // every window listener goes through this controller, so leaving the page removes them
 const ac = new AbortController();
 const addEventListener = (type, fn, opts) => window.addEventListener(type, fn, { ...(typeof opts === "object" ? opts : {}), signal: ac.signal });
+// the bottle's note is the booking form itself, drawn by React over the scene (CabinNote.tsx)
+let noteOpen = false;
+const setNote = (open) => {
+  if (open === noteOpen) return;
+  noteOpen = open;
+  try { data.onNote?.(open); } catch (e) { /* the scene goes on without it */ }
+};
 
 
 const SAND = 0xf0c75e, MINT = 0xa7f0d0;
@@ -58,7 +73,7 @@ let renderer;
 try {
   renderer = new THREE.WebGLRenderer({ canvas, antialias: true });
 } catch (e) {
-  veil.innerHTML = "<p>This browser can't draw the 3D cabin.<small>Everything in it is also on the <a href='/logbook'>regular pages</a>.</small></p>";
+  veil.innerHTML = "<p>This browser can't draw the 3D cabin.<small>Everything in it is also on the <a href='/about-me'>regular pages</a>.</small></p>";
   throw e;
 }
 const pixelRatio = Math.min(devicePixelRatio, small ? 1.5 : 2);
@@ -289,12 +304,13 @@ scene.add(chair2);
 const book = at(openBook(), -0.32, 0.99, -1.05, -0.3);
 const quill = at(mesh(new THREE.ConeGeometry(0.04, 0.5, 6), 0xf6ecd6), 0.2, 1.08, -0.85); quill.rotation.z = 1.25; quill.rotation.y = 0.5;
 const logbook = group(book, quill); // group() re-parents them, so it's the group that joins the scene
-scene.add(logbook);
+const SHOW_LOGBOOK = false; // hidden for now: set to true to put the book back on the table
+if (SHOW_LOGBOOK) scene.add(logbook);
 const logHot = hot(logbook, {
   id: "logbook", label: "Logbook", dest: "Logbook", route: "/logbook",
   view: { pos: [-0.47, 2.0, -0.6], target: [-0.32, 1.08, -1.05] }, // square on to the pages, the way the book faces
 });
-hotspots.push(logHot);
+if (SHOW_LOGBOOK) hotspots.push(logHot);
 // the pages list the latest posts: a tap on a line opens it, hovering underlines it in gold
 const bookPages = book.userData.pages, bookMap = bookPages[0].material.map;
 let bookHover = -1;
@@ -458,10 +474,11 @@ hotspots.push(posterHot);
 // bottle catching the sun on the sill
 const btl = at(bottle(), 1.05, WIN.y0 + 0.06, -2.88);
 scene.add(btl);
-const bottleHot = hot(btl, { id: "bottle", label: "Message in a bottle", tipOnly: true, tip: { name: "Message in a bottle", quality: "uncommon", lines: [
-  ["A note rolled up inside, for booking a rendez-vous with the captain."],
-  ["The rendez-vous page is resting for now.", "flavor"],
-] } });
+// the note inside books a rendez-vous with the captain (Pourparler)
+const bottleHot = hot(btl, {
+  id: "bottle", label: "Message in a bottle", dest: "Rendez-vous", route: "/pourparler",
+  view: { pos: [1.05, WIN.y0 + 0.75, -1.75], target: [1.05, WIN.y0 + 0.3, -2.88] }, // eye level with the sill, the sea behind
+});
 hotspots.push(bottleHot);
 
 // treasure chest, barrel, rope
@@ -473,6 +490,22 @@ const chestHot = hot(ch, {
   view: { pos: [1.45, 1.75, 0.6], target: [3.0, 0.5, -0.9] },
 });
 hotspots.push(chestHot);
+
+// the engine room, on the wall by the door: how this site is built, shipped and running (engine.js),
+// and the tools it's built with. The live numbers arrive once the scene is up.
+const engine = engineRoom(TOOLS);
+engine.root.position.set(3.97, 2.35, -1.75); engine.root.rotation.y = -Math.PI / 2;
+scene.add(engine.root);
+const engineHot = hot(engine.root, {
+  id: "engine", label: "Engine room", dest: "how this site runs", route: "/api/engine-room",
+  view: { pos: [1.85, 2.35, -1.24], target: [3.97, 2.3, -1.24] }, // the panel and the tool rack side by side
+});
+hotspots.push(engineHot);
+ticks.push((t, dt) => engine.tick(t, dt));
+fetch("/api/engine-room", { signal: ac.signal })
+  .then((response) => (response.ok ? response.json() : null))
+  .then((data) => { if (data) engine.update(data); })
+  .catch(() => { /* the instruments stay at rest */ });
 // in its close-up, the lid opens on the CV: one scroll per language
 const CV_TIPS = {
   english: { name: "Captain's CV · English", quality: "epic", lines: [["Use: download it (PDF)", "use"]] },
@@ -489,6 +522,7 @@ function downloadCv(language) {
   const a = el("a", { href: `/api/download/curriculum?language=${language}`, download: `cv-stephane-pires-${language}.pdf` });
   document.body.append(a); a.click(); a.remove();
   fNote.textContent = language === "french" ? "Le CV est à vous." : "The CV is yours.";
+  track("cabin.cv", { language });
 }
 scene.add(at(mesh(new THREE.CylinderGeometry(0.38, 0.42, 0.9, 16), 0x8a5733), 3.35, 0.45, 2.55));
 [0.25, 0.68].forEach((y) => scene.add(at(mesh(new THREE.TorusGeometry(0.4, 0.025, 6, 24), 0x3a2a1a, { outline: false }), 3.35, y, 2.55).rotateX(Math.PI / 2)));
@@ -558,11 +592,14 @@ const rope = mesh(new THREE.TorusGeometry(0.3, 0.07, 8, 24), 0xc9a26b); rope.rot
 scene.add(at(rope, 3.2, 0.07, -2.0));
 
 // hanging lantern
-const lamp = new THREE.PointLight(0xffb85c, 2.2, 8, 1.5);
+const lamp = new THREE.PointLight(0xffb85c, 0, 8, 1.5);
+// the lantern burns at night only: by day its glass is a dull amber, at night it glows (and blooms)
+const LANTERN_LIT = new THREE.Color().setRGB(2.2, 1.6, 0.7), LANTERN_OUT = new THREE.Color(0x8a6a3c);
+const lanternGlass = glow(2.2, 1.6, 0.7);
 const lantern = group(
   at(mesh(new THREE.CylinderGeometry(0.015, 0.015, 1.1, 4), 0x3a2a1a, { outline: false, shadow: false }), 0, -0.55, 0),
   at(mesh(new THREE.ConeGeometry(0.2, 0.18, 6), 0x2b2b33, { shadow: false }), 0, -1.18, 0),
-  at(new THREE.Mesh(new THREE.CylinderGeometry(0.14, 0.14, 0.32, 6), glow(2.2, 1.6, 0.7)), 0, -1.43, 0),
+  at(new THREE.Mesh(new THREE.CylinderGeometry(0.14, 0.14, 0.32, 6), lanternGlass), 0, -1.43, 0),
   at(mesh(new THREE.CylinderGeometry(0.18, 0.18, 0.05, 6), 0x2b2b33, { shadow: false }), 0, -1.61, 0),
   at(lamp, 0, -1.43, 0),
 );
@@ -640,7 +677,8 @@ ticks.push((t, dt) => {
 ticks.push((t) => {
   lantern.rotation.z = Math.sin(t * 1.3) * 0.06;
   lantern.rotation.x = Math.cos(t * 0.9) * 0.035;
-  lamp.intensity = 2.2 + nightK * 1.4 + Math.sin(t * 7) * 0.12;
+  lamp.intensity = nightK * (3.6 + Math.sin(t * 7) * 0.12); // off by day, lit (and flickering) at night
+  lanternGlass.color.copy(LANTERN_OUT).lerp(LANTERN_LIT, nightK);
 });
 
 // a mug of hot chocolate on the table, still steaming
@@ -851,9 +889,88 @@ ticks.push((t, dt) => {
   treasure.scrolls.forEach((sc) => { sc.position.y = approach(sc.position.y, 0.58 + (cvHover === sc.userData.cv ? 0.06 : 0), dt, 6); });
   mbHinge.rotation.x = approach(mbHinge.rotation.x, playing ? -1.1 : 0, dt);
   if (playing) crank.rotation.x += dt * 4;
-  const lifted = hovered === bottleHot; // it rises off the sill while you look at it
+  const lifted = hovered === bottleHot && focused !== bottleHot; // it rises off the sill while you look at it
   btl.position.y = approach(btl.position.y, WIN.y0 + 0.06 + (lifted ? 0.18 : 0), dt, 3);
   btl.rotation.y = lifted ? btl.rotation.y + dt * 0.8 : approach(btl.rotation.y, 0, dt, 2);
+  uncorkStep(dt);
+});
+
+// uncorking, in the bottle's close-up: the cork pops off, the rolled note slides up out of the neck,
+// then the note unrolls on screen as the booking form (CabinNote.tsx). Leaving rolls it all back.
+const [, , , cork, rolledNote] = btl.children; // body, shoulder, neck, cork, note (props.js bottle())
+let uncork = 0, uncorkTarget = 0;
+const clamp01 = (x) => Math.min(1, Math.max(0, x));
+function uncorkStep(dt) {
+  if (uncork === uncorkTarget) return;
+  uncork = still ? uncorkTarget : uncorkTarget > uncork ? Math.min(1, uncork + dt / 1.3) : Math.max(0, uncork - dt / 0.6);
+  const c = ease(clamp01(uncork / 0.3)), n = ease(clamp01((uncork - 0.25) / 0.75));
+  cork.position.set(0.22 * c, 0.55 + 0.3 * Math.sin(Math.PI * c) - 0.5 * c * c, 0); // pops up, arcs aside, lands on the sill
+  cork.rotation.z = -(Math.PI / 2) * c; // lying on its side
+  rolledNote.position.y = 0.17 + 0.4 * n; // half out of the neck, in the close-up's frame
+  rolledNote.rotation.y = 2.5 * n;
+  if (uncork === 1 && focused === bottleHot) setNote(true);
+}
+const openBottle = () => { if (uncork === 1) setNote(true); else uncorkTarget = 1; };
+
+// once booked, the note folds into a paper plane (CabinNote.tsx) and flies out through the window
+// behind the bottle, over the sea; then the confirmation unrolls. The windows have no glass.
+function paperPlane() {
+  const geo = new THREE.BufferGeometry();
+  // a paper dart, nose along +z (Object3D.lookAt aims +z): two wings with a little dihedral and a keel
+  const nose = [0, 0, 0.2], tail = [0, 0.012, -0.12], left = [-0.12, 0.035, -0.12], right = [0.12, 0.035, -0.12], keel = [0, -0.05, -0.12];
+  geo.setAttribute("position", new THREE.Float32BufferAttribute([...nose, ...tail, ...left, ...nose, ...right, ...tail, ...nose, ...keel, ...tail], 3));
+  geo.computeVertexNormals();
+  return new THREE.Mesh(geo, toon(0xf6ecd6, { side: THREE.DoubleSide, emissive: 0x6b5a40 })); // its own light: paper reads against the night sky
+}
+let flight = null;
+function flyNoteAway(done) {
+  if (still) { done(); return; }
+  const forward = new THREE.Vector3(); camera.getWorldDirection(forward);
+  const start = camera.position.clone().addScaledVector(forward, 0.45).add(new THREE.Vector3(0, -0.04, 0)); // where the sheet folded
+  // out through the casement next to the lantern, the one window that opens (its sash swings in on
+  // its left hinge, so the plane keeps to the right of the opening), then away over the sea
+  const gap = new THREE.Vector3(WIN.xs[OPEN_WIN] + WIN.w / 4, WIN.y0 + (WIN.y1 - WIN.y0) / 2, -3.06);
+  const curve = new THREE.CatmullRomCurve3([
+    start,
+    new THREE.Vector3(gap.x + 0.25, gap.y - 0.2, -2.4),
+    gap,
+    new THREE.Vector3(gap.x + 0.6, gap.y + 0.3, -7), // banking right, away from the moon
+    new THREE.Vector3(gap.x + 3.2, gap.y + 1.1, -26), // away over the sea
+  ]);
+  const plane = paperPlane();
+  plane.position.copy(start); plane.scale.setScalar(0.2);
+  scene.add(plane);
+  flight = { plane, curve, t: 0, done };
+}
+ticks.push((t, dt) => {
+  if (!flight) return;
+  flight.t = Math.min(1, flight.t + dt / 4.75);
+  const k = Math.pow(flight.t, 1.4); // gliding off slowly, then away
+  const { plane, curve } = flight;
+  plane.position.copy(curve.getPointAt(k));
+  plane.lookAt(curve.getPointAt(Math.min(1, k + 0.01)));
+  plane.rotateZ(Math.sin(flight.t * 9) * 0.22); // banking in the breeze
+  plane.scale.setScalar(Math.min(1.3, 0.15 + flight.t * 6)); // the folded sheet opens its wings
+  if (flight.t === 1) {
+    scene.remove(plane); plane.geometry.dispose(); plane.material.dispose();
+    const { done } = flight; flight = null; done();
+  }
+});
+// while it flies, the camera lifts to look out of the window; then it comes back to the bottle
+const LOOK_OUT = { pos: [0.45, 1.8, -1.2], target: [0.1, 2.1, -8] }; // the open casement on the left, the sea ahead
+addEventListener("cabin:note-folding", () => { // the camera turns to the window and it swings open while the note folds
+  const out = framed(LOOK_OUT);
+  flyTo(out.pos, out.target);
+  sashOpen = true;
+});
+addEventListener("cabin:note-sent", () => {
+  setNote(false);
+  flyNoteAway(() => {
+    if (!windowOpen) sashOpen = false; // closed again, unless the visitor had opened it
+    if (focused !== bottleHot) return;
+    const back = framed(bottleHot.view);
+    flyTo(back.pos, back.target, () => { if (focused === bottleHot) setNote(true); }); // the confirmation, once it's gone
+  });
 });
 
 // ---------- music: the cabin theme, recorded with sampled instruments, played as five synced looping layers ----------
@@ -927,6 +1044,7 @@ async function toggleMusic() {
   } finally {
     busy = false;
     setMusicUI();
+    track("cabin.music", { on: playing, failed: musicFailed });
   }
 }
 
@@ -948,6 +1066,7 @@ Object.assign(controls, {
 const TURN = { wide: [-0.25, 1.2], narrow: [-1.75, 2.0] }, TILT = { wide: 1.05, narrow: 0.75 }; // phones may also look down over the table
 controls.update();
 
+renderer.info.autoReset = false; // frame() resets it, so a frame's count spans every pass
 const composer = new EffectComposer(renderer);
 composer.addPass(new RenderPass(scene, camera));
 const bloom = new UnrealBloomPass(new THREE.Vector2(1, 1), 0.5, 0.55, 0.9); // only the brightest things glow: sun, lantern, candle, gold
@@ -987,6 +1106,8 @@ const CAPTIONS = {
   chart: "Tap an island to sail to its site.",
   poster: "Unrolling the wanted scroll…",
   chest: "Take a scroll: the CV in English or in French.",
+  bottle: "A note for the captain: book a 30-minute video call.",
+  engine: "How this site is built and runs, live. Hover an instrument or a tool.",
 };
 function renderFocus(h) {
   fTitle.textContent = h.label;
@@ -995,6 +1116,7 @@ function renderFocus(h) {
   const links = (items) => fBody.append(el("ul", {}, ...items.map(([text, attrs]) => el("li", {}, el("a", attrs, text)))));
   if (h.id === "logbook") links(bookEntries().map((e) => [`${e.title} (${e.date})`, { href: e.href }]));
   else if (h.id === "chart") links(PROJECTS.map(([name]) => [`${name} ↗`, { href: PROJECT_LINKS[name], target: "_blank", rel: "noopener" }]));
+  else if (h.id === "bottle") links([["Book a rendez-vous →", { href: "/pourparler" }]]);
   else if (h.id === "chest") links([["CV · English (PDF)", { href: "/api/download/curriculum?language=english", download: "cv-stephane-pires-english.pdf" }], ["CV · Français (PDF)", { href: "/api/download/curriculum?language=french", download: "cv-stephane-pires-french.pdf" }]]);
 }
 
@@ -1058,11 +1180,15 @@ function spy() {
   tabsEl.querySelectorAll("button").forEach((b) => b.setAttribute("aria-current", String(b.dataset.sec === current)));
 }
 
+// the sticky timeline marks sit right under the tabs, whose height changes as they wrap (phones, rotation)
+const measureTabs = () => sheet.style.setProperty("--tabs-h", `${navEl.offsetHeight}px`);
+addEventListener("resize", () => { if (!scrollWrap.hidden) measureTabs(); });
 function openScroll(opener) {
   if (!scrollBuilt) buildScroll();
+  track("cabin.scroll");
   scrollOpener = opener;
   scrollWrap.hidden = false;
-  sheet.style.setProperty("--tabs-h", `${navEl.offsetHeight}px`);
+  measureTabs();
   sheet.scrollTop = 0;
   spy();
   tabsEl.querySelector("button").focus({ preventScroll: true });
@@ -1078,11 +1204,13 @@ $("scroll-close").addEventListener("click", closeScroll);
 scrollWrap.addEventListener("click", (e) => { if (e.target === scrollWrap) closeScroll(); });
 
 function showCloseUp(h) {
+  track("cabin.closeup", { id: h.id });
   focused = h;
   hovered = null;
   controls.enabled = false;
   const v = framed(h.view);
-  flyTo(v.pos, v.target, h === posterHot ? () => { if (focused === posterHot) openScroll($("back")); } : null);
+  flyTo(v.pos, v.target, h === posterHot ? () => { if (focused === posterHot) openScroll($("back")); }
+    : h === bottleHot ? () => { if (focused === bottleHot) { track("cabin.bottle"); openBottle(); } } : null);
   renderFocus(h);
   dismissHint(); keysEl.classList.add("in-focus"); focusEl.hidden = false;
   refreshHighlights();
@@ -1093,6 +1221,8 @@ function leaveCloseUp() {
   if (!focused) return;
   const from = focused;
   focused = null;
+  setNote(false);
+  uncorkTarget = 0; // the note slides back in, the cork on top
   flyTo(OVERVIEW.pos, OVERVIEW.target, () => { controls.enabled = true; });
   keysEl.classList.remove("in-focus"); focusEl.hidden = true;
   hoverEntry(-1); cvHover = null;
@@ -1122,7 +1252,8 @@ function syncFromHash() {
 }
 addEventListener("hashchange", syncFromHash);
 $("back").addEventListener("click", backToCabin);
-addEventListener("keydown", (e) => { if (e.key === "Escape" && !closeScroll()) backToCabin(); });
+addEventListener("keydown", (e) => { if (e.key === "Escape" && !noteOpen && !closeScroll()) backToCabin(); }); // the note closes itself
+addEventListener("cabin:note-closed", () => { if (focused === bottleHot) backToCabin(); });
 
 function setOutline(h, color) { h.outlines.forEach((m) => m.color.setHex(color)); }
 function refreshHighlights() {
@@ -1150,6 +1281,7 @@ function islandAt(hit) {
   return found ? found[0] : null;
 }
 function sailTo(name) {
+  track("cabin.island", { name });
   const url = PROJECT_LINKS[name];
   const a = el("a", { href: url, target: "_blank", rel: "noopener" }, name);
   document.body.append(a); a.click(); a.remove(); // a real link click, which opens the site in a new tab
@@ -1176,6 +1308,7 @@ canvas.addEventListener("pointerdown", (e) => { down = { x: e.clientX, y: e.clie
 canvas.addEventListener("pointerup", (e) => {
   if (down && Math.hypot(e.clientX - down.x, e.clientY - down.y) < 6) {
     const h = pick(e);
+    track("cabin.tap", { hit: h ? h.id : "nothing", view: focused ? focused.id : "overview", x: Math.round((e.clientX / innerWidth) * 100) / 100, y: Math.round((e.clientY / innerHeight) * 100) / 100 });
     if (h === lanternHot) toggleNight();
     else if (h === homeHot) useHomeStone(e);
     else if (h === windowHot) toggleWindow();
@@ -1183,8 +1316,10 @@ canvas.addEventListener("pointerup", (e) => {
     else if (h === musicHot) toggleMusic();
     else if (h && h !== focused) focusOn(h);
     else if (h === chartHot) { const isl = islandAt(lastHit); if (isl) sailTo(isl); }
-    else if (h === logHot) { const i = entryAt(lastHit); if (i >= 0) location.assign(bookEntries()[i].href); }
+    else if (h === logHot) { const i = entryAt(lastHit); if (i >= 0) { track("cabin.post", { href: bookEntries()[i].href }); location.assign(bookEntries()[i].href); } }
     else if (h === chestHot) { const cv = cvAt(lastHit); if (cv) downloadCv(cv); }
+    else if (h === bottleHot) openBottle(); // unroll the note again
+    else if (h === engineHot) { const info = engine.tipAt(lastHit); if (info) { showTip(e, info); clearTimeout(tipTimer); tipTimer = setTimeout(hideTip, 2600); } } // phones: tap to read
     else if (!h && focused) backToCabin(); // a tap beside the object steps back
   }
   down = null;
@@ -1206,6 +1341,10 @@ canvas.addEventListener("pointermove", (e) => {
     cvHover = h === chestHot ? cvAt(lastHit) : null;
     canvas.style.cursor = cvHover ? "pointer" : "default";
     if (cvHover) { clearTimeout(tipTimer); tipTimer = 0; showTip(e, CV_TIPS[cvHover]); } else if (!tipTimer) hideTip();
+  } else if (focused === engineHot) {
+    const info = h === engineHot ? engine.tipAt(lastHit) : null; // a day's lamp, a deploy's flag, a gauge, a tool
+    canvas.style.cursor = "default";
+    if (info) { clearTimeout(tipTimer); tipTimer = 0; showTip(e, info); } else if (!tipTimer) hideTip();
   }
 });
 
@@ -1237,7 +1376,21 @@ ticks.push((t) => {
 
 const clock = new THREE.Clock();
 let t = 0;
+// frame times over the first ten seconds on screen, reported once
+const perf = { times: [], last: 0, sent: false };
+function measure(now) {
+  if (perf.sent) return;
+  if (perf.last) perf.times.push(now - perf.last);
+  perf.last = now;
+  if (perf.times.length && perf.times.reduce((a, b) => a + b, 0) > 10000) {
+    perf.sent = true;
+    const sorted = [...perf.times].sort((a, b) => a - b), p = (q) => Math.round(sorted[Math.floor(sorted.length * q)] * 10) / 10;
+    const { render, memory } = renderer.info; // counted across every pass of the last frame (autoReset is off)
+    track("cabin.perf", { fps: Math.round(1000 / p(0.5)), medianMs: p(0.5), p95Ms: p(0.95), drawCalls: render.calls, triangles: render.triangles, textures: memory.textures, geometries: memory.geometries, pixelRatio, width: innerWidth, height: innerHeight });
+  }
+}
 function frame() {
+  measure(performance.now());
   const dt = Math.min(clock.getDelta(), 0.05);
   if (!still) t += dt;
   ticks.forEach((f) => f(t, still ? 0 : dt));
@@ -1251,6 +1404,7 @@ function frame() {
     controls.update();
     camera.position.clamp(ROOM_MIN, ROOM_MAX); // stay inside the cabin
   }
+  renderer.info.reset(); // one frame's draw calls across all passes, for the perf event
   composer.render();
 }
 
@@ -1265,6 +1419,7 @@ async function reveal() {
   await nextFrame();
   await voyage(1, "Land ho!");
   if (ac.signal.aborted) return;
+  track("cabin.ready", { loadMs: Math.round(performance.now() - startedAt), closeUp: location.hash.slice(1) || "overview" });
   const done = () => { veil.hidden = true; veil.classList.remove("open"); }; // React owns this node: hide it, never remove it
   veil.addEventListener("animationend", done, { once: true, signal: ac.signal });
   setTimeout(done, 1800); // in case the animation never runs (hidden tab)

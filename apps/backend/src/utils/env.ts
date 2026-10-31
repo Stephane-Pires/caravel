@@ -2,25 +2,93 @@ import z from "zod/v4"
 
 const envSchema = z
   .object({
-    POSTGRES_USER: z.string().nonempty().meta({
+    DATABASE_URL: z.url().optional().meta({
+      description:
+        "Connection string of the database (Neon's pooled URL on Vercel); wins over the POSTGRES_* parts",
+    }),
+    POSTGRES_USER: z.string().nonempty().optional().meta({
       description: "The username for the PostgreSQL database",
     }),
-    POSTGRES_PASSWORD: z.string().nonempty().meta({
+    POSTGRES_PASSWORD: z.string().nonempty().optional().meta({
       description: "The password for the PostgreSQL database",
     }),
-    POSTGRES_DB: z.string().nonempty().meta({
+    POSTGRES_DB: z.string().nonempty().optional().meta({
       description: "The name of the PostgreSQL database",
     }),
-    POSTGRES_PORT: z.coerce.number().positive().min(1).max(65535).meta({
-      description: "The port number for the PostgreSQL database",
-    }),
-    POSTGRES_HOST: z.string().nonempty().meta({
+    POSTGRES_PORT: z.coerce
+      .number()
+      .positive()
+      .min(1)
+      .max(65535)
+      .optional()
+      .meta({
+        description: "The port number for the PostgreSQL database",
+      }),
+    POSTGRES_HOST: z.string().nonempty().optional().meta({
       description: "The host address for the PostgreSQL database",
     }),
-    GMAIL_PASSWORD: z.string().nonempty().meta({
-      description: "The password for the Gmail account used to send emails",
+    NODE_ENV: z
+      .enum(["development", "test", "production"])
+      .default("development")
+      .meta({
+        description:
+          "production hides the development routes and the query log",
+      }),
+    CORS_ORIGINS: z
+      .string()
+      .default("http://localhost:3000")
+      .transform((origins) => origins.split(",").map((o) => o.trim()))
+      .meta({ description: "Comma-separated origins allowed to call the API" }),
+    GOOGLE_CLIENT_ID: z.string().optional().meta({
+      description:
+        "OAuth client of the captain's Google Calendar (scripts/google-auth.mjs)",
     }),
+    GOOGLE_CLIENT_SECRET: z.string().optional().meta({
+      description: "Secret of that OAuth client",
+    }),
+    GOOGLE_REFRESH_TOKEN: z.string().optional().meta({
+      description: "Refresh token from the captain's one-time consent",
+    }),
+    GOOGLE_CALENDAR_ID: z.string().default("primary").meta({
+      description: "The calendar that holds the rendez-vous",
+    }),
+    PUBLIC_SITE_URL: z.url().default("http://localhost:3000").meta({
+      description:
+        "The site's public address, for the guest's manage link in the invitation",
+    }),
+    VERCEL_ENV: z
+      .enum(["development", "preview", "production"])
+      .optional()
+      .meta({
+        description:
+          "Set by Vercel: previews run with NODE_ENV=production but aren't the live site",
+      }),
   })
+  .refine(
+    (env) =>
+      Boolean(
+        env.DATABASE_URL ||
+        (env.POSTGRES_HOST &&
+          env.POSTGRES_PORT &&
+          env.POSTGRES_USER &&
+          env.POSTGRES_PASSWORD &&
+          env.POSTGRES_DB),
+      ),
+    { message: "Set DATABASE_URL, or every POSTGRES_* variable" },
+  )
+  .refine(
+    (env) =>
+      (env.VERCEL_ENV ?? env.NODE_ENV) !== "production" ||
+      Boolean(
+        env.GOOGLE_CLIENT_ID &&
+        env.GOOGLE_CLIENT_SECRET &&
+        env.GOOGLE_REFRESH_TOKEN,
+      ),
+    {
+      message:
+        "The live site needs GOOGLE_CLIENT_ID, GOOGLE_CLIENT_SECRET and GOOGLE_REFRESH_TOKEN (run scripts/google-auth.mjs)",
+    },
+  )
   .meta({
     description: "Schema to parse environnement variables",
   })
@@ -37,3 +105,5 @@ export function assertEnv(
 
   return result.data
 }
+
+export const isProduction = () => process.env.NODE_ENV === "production"

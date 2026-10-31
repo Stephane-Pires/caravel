@@ -1,21 +1,33 @@
 import { drizzle } from "drizzle-orm/node-postgres"
 
-const db = await drizzle({
-  connection: {
-    host: process.env.POSTGRES_HOST,
-    port: Number(process.env.POSTGRES_PORT),
-    user: process.env.POSTGRES_USER,
-    password: process.env.POSTGRES_PASSWORD,
-    database: process.env.POSTGRES_DB,
-  },
-  logger: true,
-  casing: "snake_case",
-})
+import { assertEnv, isProduction } from "../utils/env.ts"
 
-// Should create a class probably :thinking: with a singleton pattern
+// opened on the first query, not on import: the Next.js build loads this module without a database
+let db: ReturnType<typeof connect> | undefined
+
+function connect() {
+  const env = assertEnv(process.env)
+  return drizzle({
+    connection: env.DATABASE_URL
+      ? {
+          connectionString: env.DATABASE_URL,
+          // a serverless instance serves a few requests at once; Neon's pooler holds the rest
+          max: 5,
+          idleTimeoutMillis: 10_000,
+        }
+      : {
+          host: env.POSTGRES_HOST,
+          port: env.POSTGRES_PORT,
+          user: env.POSTGRES_USER,
+          password: env.POSTGRES_PASSWORD,
+          database: env.POSTGRES_DB,
+        },
+    logger: !isProduction(), // queries carry guests' emails: never log them in production
+    casing: "snake_case",
+  })
+}
+
 export function getDbClient() {
-  if (!db) {
-    throw new Error("Database not initialized")
-  }
+  db ??= connect()
   return db
 }

@@ -34,6 +34,7 @@ export abstract class DomainException extends Error {
 
   constructor(message: string, options?: { cause?: unknown }) {
     super(message, options)
+    // each exception also spells its name out: bundlers minify class names (the API runs bundled in Next.js)
     this.name = new.target.name
     Object.setPrototypeOf(this, new.target.prototype)
 
@@ -65,7 +66,7 @@ export class DatabaseException extends Error {
 
   constructor(message: string, options?: { cause?: DatabaseError }) {
     super(message)
-    this.name = new.target.name
+    this.name = "DatabaseException"
     Object.setPrototypeOf(this, new.target.prototype)
 
     if (options?.cause) {
@@ -76,4 +77,17 @@ export class DatabaseException extends Error {
       Error.captureStackTrace(this, new.target)
     }
   }
+}
+
+// Postgres refused a booking that overlaps another: the exclusion constraint (23P01)
+// or the unique start time (23505)
+const SLOT_CONFLICT_CODES = new Set(["23P01", "23505"])
+export const isSlotConflict = (exception: DatabaseException) =>
+  SLOT_CONFLICT_CODES.has(exception.cause?.code ?? "")
+
+// a caught error's pg cause (drizzle wraps the driver error), if there is one
+export function databaseCause(error: unknown): DatabaseError | undefined {
+  if (error instanceof DatabaseError) return error
+  const cause = (error as { cause?: unknown } | null)?.cause
+  return cause instanceof DatabaseError ? cause : undefined
 }
