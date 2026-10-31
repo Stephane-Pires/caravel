@@ -13,7 +13,6 @@ import {
 import {
   Form,
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
   FormLabel,
@@ -22,14 +21,22 @@ import {
 import { Input } from "@/components/ui/input"
 import { track } from "@/lib/track"
 import { manageHref, useCreateRendezVous, useFreeSlots } from "@/utils/hook"
+import {
+  CalendarDaysIcon,
+  ClockIcon,
+  EnvelopeIcon,
+  GlobeEuropeAfricaIcon,
+  VideoCameraIcon,
+} from "@heroicons/react/24/outline"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { format } from "date-fns"
 import Link from "next/link"
 import { useCallback, useEffect, useMemo } from "react"
-import { useForm } from "react-hook-form"
+import { useForm, useWatch } from "react-hook-form"
 import { toast } from "sonner"
 import { z } from "zod/v4"
 
+import { type Fact, Facts } from "./Facts"
 import { SlotPicker } from "./SlotPicker"
 import {
   clearDraft,
@@ -61,8 +68,9 @@ const DEFAULT_VALUES = {
   scheduledAt: "",
 }
 
+// red-700: white on it reads at 6.5:1 (the brand pink only reaches 3.9:1)
 const ERROR_STYLE = {
-  background: "var(--color-urgence-500)",
+  background: "#b91c1c",
   color: "white",
 }
 
@@ -86,7 +94,8 @@ export function TakeRendezVousForm({ onBooked }: TakeRendezVousFormProps = {}) {
   const form = useForm<RendezVousFormSchema>({
     resolver: zodResolver(rendezVousFormSchema),
     defaultValues: DEFAULT_VALUES,
-    mode: "onChange",
+    // errors show once a field is left or on Book, never while typing the first letters
+    mode: "onTouched",
   })
 
   // the same booking follows the visitor between /pourparler and the cabin's bottle: restore
@@ -96,7 +105,6 @@ export function TakeRendezVousForm({ onBooked }: TakeRendezVousFormProps = {}) {
     const values = { guestName, contactEmail, topic, scheduledAt }
     if (Object.values(values).some(Boolean)) {
       form.reset(values, { keepDefaultValues: true })
-      void form.trigger()
     }
     return form.subscribe({
       formState: { values: true },
@@ -174,12 +182,12 @@ export function TakeRendezVousForm({ onBooked }: TakeRendezVousFormProps = {}) {
         <FormControl>
           <Input
             type="email"
+            inputMode="email"
             placeholder="jack.sparrow@captain.com"
             autoComplete="email"
             {...field}
           />
         </FormControl>
-        <FormDescription>The invitation is sent here.</FormDescription>
         <FormMessage />
       </FormItem>
     ),
@@ -189,10 +197,10 @@ export function TakeRendezVousForm({ onBooked }: TakeRendezVousFormProps = {}) {
   const renderTopicField = useCallback(
     ({ field }: { field: any }) => (
       <FormItem>
-        <FormLabel>What would you like to talk about? (optional)</FormLabel>
+        <FormLabel>Topic (optional)</FormLabel>
         <FormControl>
           <Input
-            placeholder="A role on your team, a project, a question…"
+            placeholder="A role, a project, a question…"
             {...field}
           />
         </FormControl>
@@ -203,73 +211,101 @@ export function TakeRendezVousForm({ onBooked }: TakeRendezVousFormProps = {}) {
   )
 
   const renderSlotField = useCallback(
-    ({ field }: { field: any }) => (
-      <FormItem className="flex flex-col gap-3">
-        <FormLabel>When</FormLabel>
-        <FormControl>
-          <SlotPicker
-            slots={slots}
-            loading={loading}
-            failed={failed}
-            value={field.value}
-            onChange={field.onChange}
-          />
-        </FormControl>
-        <FormDescription>
-          {failed
-            ? "The calendar couldn't be loaded. Please try again later."
-            : `30 minutes, by video call. Times are in your time zone (${timeZone}).`}
-        </FormDescription>
+    ({ field, fieldState }: { field: any; fieldState: any }) => (
+      <FormItem>
+        {/* a heading, not a <label>: the day and time radios carry their own */}
+        <p
+          className={`text-sm font-medium ${fieldState.error ? "text-red-800" : ""}`}
+        >
+          When
+        </p>
+        <SlotPicker
+          slots={slots}
+          loading={loading}
+          failed={failed}
+          value={field.value}
+          onChange={field.onChange}
+        />
         <FormMessage />
       </FormItem>
     ),
-    [failed, loading, slots, timeZone],
+    [failed, loading, slots],
   )
 
+  // what every rendez-vous is, then what this booking became
+  const meetingFacts = useMemo<Array<Fact>>(
+    () => [
+      [ClockIcon, "30 min"],
+      [VideoCameraIcon, "Google Meet"],
+      [GlobeEuropeAfricaIcon, timeZone],
+    ],
+    [timeZone],
+  )
+  const bookedFacts = useMemo<Array<Fact>>(
+    () =>
+      booked
+        ? [
+            [
+              CalendarDaysIcon,
+              <strong key="when">
+                {format(new Date(booked.scheduledAt), "EEE d MMM · HH:mm")}
+              </strong>,
+            ],
+            [EnvelopeIcon, `Invitation sent to ${booked.contactEmail}`],
+          ]
+        : [],
+    [booked],
+  )
+
+  const chosen = useWatch({ control: form.control, name: "scheduledAt" })
+
   return (
-    <Card className="container w-full max-w-sm min-w-sm p-4 lg:max-w-md">
+    <Card className="w-full max-w-md p-2 sm:p-4">
       <CardHeader>
         <CardTitle className="text-2xl font-semibold">
-          {booked ? "See you soon!" : "Take “Rendez-Vous”"}
+          {booked ? "Booked" : "Rendez-vous"}
         </CardTitle>
       </CardHeader>
       <CardContent>
         {booked ? (
-          <div className="flex flex-col gap-4">
-            <p>
-              Your rendez-vous is booked for{" "}
-              <strong>
-                {format(new Date(booked.scheduledAt), "EEEE d MMMM 'at' HH:mm")}
-              </strong>{" "}
-              ({timeZone}).
+          <div className="flex flex-col gap-5">
+            <Facts facts={bookedFacts} />
+            <p className="text-sm">
+              To reschedule or cancel, use Manage or the link in your
+              invitation.
             </p>
-            <p>
-              A Google Calendar invitation with the video link is on its way to{" "}
-              <strong>{booked.contactEmail}</strong>.
-            </p>
-            <p>
-              Need another time? Keep this private link: it lets you reschedule
-              or cancel (it&apos;s also in the invitation).
-            </p>
-            <Button asChild>
-              <Link href={manageHref(booked.id, booked.manageToken)}>
-                Manage my rendez-vous
-              </Link>
-            </Button>
-            <Button
-              type="button"
-              variant="ghost"
-              onClick={bookAnother}
-            >
-              Book another one
-            </Button>
+            <div className="flex flex-wrap gap-3">
+              <Button asChild>
+                <Link href={manageHref(booked.id, booked.manageToken)}>
+                  Manage
+                </Link>
+              </Button>
+              <Button
+                type="button"
+                variant="ghost"
+                onClick={bookAnother}
+              >
+                Book again
+              </Button>
+            </div>
           </div>
         ) : (
           <Form {...form}>
+            <Facts
+              inline
+              className="mb-6 text-sm"
+              facts={meetingFacts}
+            />
             <form
               onSubmit={form.handleSubmit(onSubmit)}
               className="space-y-6"
+              noValidate
             >
+              <FormField
+                control={form.control}
+                name="scheduledAt"
+                render={renderSlotField}
+              />
               <FormField
                 control={form.control}
                 name="guestName"
@@ -285,23 +321,19 @@ export function TakeRendezVousForm({ onBooked }: TakeRendezVousFormProps = {}) {
                 name="topic"
                 render={renderTopicField}
               />
-              <FormField
-                control={form.control}
-                name="scheduledAt"
-                render={renderSlotField}
-              />
 
               <CardFooter className="p-0">
                 <Button
                   type="submit"
-                  className="w-full"
-                  disabled={
-                    !form.formState.isValid || form.formState.isSubmitting
-                  }
+                  size="lg"
+                  className="w-full text-base"
+                  disabled={form.formState.isSubmitting}
                 >
                   {form.formState.isSubmitting
-                    ? "Booking your rendez-vous…"
-                    : "Book this rendez-vous"}
+                    ? "Booking…"
+                    : chosen
+                      ? `Book ${format(new Date(chosen), "HH:mm")}`
+                      : "Book"}
                 </Button>
               </CardFooter>
             </form>
