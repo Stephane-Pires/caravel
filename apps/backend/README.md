@@ -35,6 +35,6 @@ The site and the API deploy together on Vercel (`apps/frontend/vercel.json`); th
 
 - **Database**: Vercel → Storage → Neon (region Frankfurt). Give it to **Production only**: previews then answer 503 instead of touching real bookings.
 - **Migrations**: `pnpm --filter backend db:deploy` runs in Vercel's production build, before the new version goes live. It uses `DATABASE_URL_UNPOOLED` (Neon's direct connection), and skips previews and local builds.
-- **Environment (Production)**: `DATABASE_URL` (added by Neon), `GOOGLE_CLIENT_ID`, `GOOGLE_CLIENT_SECRET`, `GOOGLE_REFRESH_TOKEN`, `PUBLIC_SITE_URL`, `TURNSTILE_SECRET_KEY`, and `NEXT_PUBLIC_TURNSTILE_SITE_KEY` for the form (read at build time: redeploy after changing it).
+- **Environment (Production)**: `DATABASE_URL` (added by Neon), `GOOGLE_CLIENT_ID`, `GOOGLE_CLIENT_SECRET`, `GOOGLE_REFRESH_TOKEN`, and `PUBLIC_SITE_URL`.
 - **Errors**: handled failures (Google down, a refused query…) go to Sentry through `setErrorReporter`.
 - **Privacy**: bookings, and the guest's email with them, are deleted 30 days after the rendez-vous (see `/privacy`).

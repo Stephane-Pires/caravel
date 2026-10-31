@@ -89,8 +89,6 @@ export interface CreateRendezVousInput {
   guestName: string
   topic?: string
   scheduledAt: string
-  // Cloudflare Turnstile's proof the visitor is human (when the site has a key)
-  turnstileToken?: string
 }
 
 type UseCreateRendezVousReturn = [

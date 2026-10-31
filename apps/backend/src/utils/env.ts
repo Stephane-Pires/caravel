@@ -56,10 +56,6 @@ const envSchema = z
       description:
         "The site's public address, for the guest's manage link in the invitation",
     }),
-    TURNSTILE_SECRET_KEY: z.string().optional().meta({
-      description:
-        "Cloudflare Turnstile secret; when set, creating a rendez-vous needs a valid challenge token",
-    }),
     VERCEL_ENV: z
       .enum(["development", "preview", "production"])
       .optional()

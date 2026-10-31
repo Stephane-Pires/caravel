@@ -76,11 +76,6 @@ export default function Privacy() {
           </li>
         </ul>
         <p>
-          To check that you are a person and not a bot, the booking form uses
-          Cloudflare Turnstile. It looks at your browser, not at who you are,
-          and doesn&apos;t use cookies for advertising.
-        </p>
-        <p>
           The legal basis is your request: you ask for a call, and this is what
           it takes to set it up.
         </p>
@@ -109,8 +104,8 @@ export default function Privacy() {
 
       <Section title="Your rights">
         <p>
-          Under the GDPR you can ask to see, correct or delete what I keep
-          about you, or object to it. Write to{" "}
+          Under the GDPR you can ask to see, correct or delete what I keep about
+          you, or object to it. Write to{" "}
           <a
             className="underline"
             href={`mailto:${CONTACT_EMAIL}`}
@@ -125,9 +120,9 @@ export default function Privacy() {
       <Section title="Google Calendar">
         <p>
           The site connects to one Google account only: mine, to place
-          rendez-vous in my own calendar and to know when I&apos;m busy. Of
-          my other events it uses only their times, and it never asks for
-          access to your Google account.
+          rendez-vous in my own calendar and to know when I&apos;m busy. Of my
+          other events it uses only their times, and it never asks for access to
+          your Google account.
         </p>
       </Section>
 

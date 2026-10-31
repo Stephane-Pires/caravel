@@ -16,7 +16,6 @@ import {
   RendezVousInvalidScheduleAtAlreadyTakenException,
   RendezVousInvalidScheduleAtException,
   RendezVousNotFoundException,
-  RendezVousSpamCheckFailedException,
   RendezVousTooManyException,
 } from "./rendez-vous.exception.ts"
 
@@ -96,14 +95,6 @@ export const postRendezVousRoute = createRoute({
       },
       description:
         "Create a new rendez-vous (the response carries its manage token, once)",
-    },
-    403: {
-      description: "The anti-spam check failed",
-      content: {
-        "application/json": {
-          schema: new RendezVousSpamCheckFailedException().toSchema(),
-        },
-      },
     },
     429: {
       description: "Too many upcoming rendez-vous for this email",

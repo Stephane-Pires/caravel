@@ -12,7 +12,6 @@ import {
   RendezVousInvalidScheduleAtException,
   RendezVousNotFoundException,
   RendezVousOutsideAvailabilityException,
-  RendezVousSpamCheckFailedException,
   RendezVousTooManyException,
 } from "./rendez-vous.exception.ts"
 import {
@@ -69,13 +68,7 @@ app.openapi(getRendezVousByIdRoute, async (c) => {
 app.openapi(postRendezVousRoute, async (c) => {
   const payload = c.req.valid("json")
 
-  const result = await createRendezVousService(payload, {
-    ip: c.req.header("x-forwarded-for")?.split(",")[0]?.trim(),
-  })
-
-  if (result instanceof RendezVousSpamCheckFailedException) {
-    return c.json(result, 403)
-  }
+  const result = await createRendezVousService(payload)
 
   if (result instanceof RendezVousTooManyException) {
     return c.json(result, 429)

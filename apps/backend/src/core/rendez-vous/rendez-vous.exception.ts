@@ -41,15 +41,7 @@ export class RendezVousTooManyException extends DomainException {
   }
 }
 
-export class RendezVousSpamCheckFailedException extends DomainException {
-  override readonly name = "RendezVousSpamCheckFailedException"
-  readonly code = "1005"
-  readonly description = "The anti-spam check failed"
-
-  constructor() {
-    super("The anti-spam check failed, please try again")
-  }
-}
+// 1005 was the anti-spam check (Cloudflare Turnstile), dropped: the code stays retired
 
 export class RendezVousOutsideAvailabilityException extends DomainException {
   override readonly name = "RendezVousOutsideAvailabilityException"
