@@ -78,7 +78,22 @@ const options = {
   theme: "github-dark",
 }
 
+// Posts kept in content/logbook but hidden from the site (the logbook, their own page and the cabin's book).
+// Comment a line out to bring that post back.
+const HIDDEN_POSTS = [
+  "code-me-an-input.mdx",
+  "functional-notes.mdx",
+  "mythical-man-month.mdx",
+  "peopleware.mdx",
+  "team-topologies.mdx",
+  "time-bang.mdx",
+  "water-part-1.mdx",
+  "water-part-2.mdx",
+  "webnotes.mdx",
+]
+
 export default makeSource({
+  contentDirExclude: HIDDEN_POSTS,
   contentDirPath: "content/logbook",
   documentTypes: [Content],
   mdx: {
