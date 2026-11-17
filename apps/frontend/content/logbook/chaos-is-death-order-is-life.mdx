@@ -1,0 +1,292 @@
+---
+title: "Chaos is death, order is life"
+image: "chaos-is-death-order-is-life.png"
+date: "2026-11-14"
+subject: "CODE"
+category: "THOUGH"
+star: "THREE"
+---
+
+# Chaos is death, order is life
+
+## Preambule
+
+I have been working long enough into software to know that without a structure growing software end-up in as a <u>big ball of mud</u> where the **entropy** is high and the system becomes hard to understand.
+
+The **entropy** in system is created one new feature at a time, it is the death by a thousand cut
+
+The solution against it is **<u>energy</u>** and **<u>structure</u>** which create **<u>order</u>**
+
+The **<u>energy</u>** is the constant effort a software engineer do to maintain the system he growth
+
+The **<u>structure</u>** is the mental model he uses to handle the entropy of the software
+
+This article describe the concepts around the structure i believe helps software system to handle the **<u>entropy</u>**
+
+Concepts :
+
+- Layered architecture
+- Vertical Slicing
+- Domain modeling
+- Errors as values
+- Tooling
+  - Mono-repo
+  - Linting & Formating
+- Testing
+
+## Layered architecture
+
+Let's imagine you are at the new house friend, everything is fine, you are enjoying a good drink. She is going to prepare the table for everyone and ask you to put some trash into the bin. You go open the "placard" under the "évier" - nothing, there are plates here and some "torchon". She then say really casually "oh the bin is in the garage". You should be confused and rightly if you ask me. The garage **<u>responsability</u>** is not to handle the bin which you will use really regularly while you are cooking. The expected place is in the kitchen.
+
+In software system the place where you put code should be **<u>layer</u>**, a layer as responsibilities it's a mental model that help you structure your code by having one point of entry where you handle one concept
+
+The different layers are :
+
+- Core:Domain
+- Core:Ports
+- Core:Use-cases
+- Adapter:Storage : Driven
+- Adapter:Connector : Driven
+- Adapter:System : Driven
+- Adapter:Controller : Driving
+- Adapter:Presenter : Driving
+
+We divide them in two category :
+
+- **Core** : Which is the the heart of the system, where the business logic belongs
+- **Adapter** : Which is the implementation of the port interface they invert the dependency between the core and the adapter so that the core doesn't depend on the implementation and technologic and can stay dependency free
+
+**Important : One key aspect of this architecture is to isolate the business logic so we don't have to change it later in case of a switch or technology. We don't want to pollute the business logic with implementation details, tech choices, etc..**
+
+### Core:Domain :
+
+- **Responsability** : Handling business logic we will store inside Domain rules, Invariants, Domain errors, Entity schema.
+- **Coupling** : It decouple the business logic from what is related to it (such has technology choices)
+- **Reason to change** : The business changes its mind (such as a new rules get added to the system, or an old one is updated)
+
+### Core:Use-cases :
+
+- **Responsability** : Fulfil one user intention. Loads through ports, applies domain rules, saves through ports, in that order. The only layer that mixes I/O and rules
+- **Coupling** : Imports Domain and the Ports it declares. Receives adapters as arguments, never imports one. Knows no protocol, no database, no host
+- **Reason to change** : The user wants to do something new, or do an existing thing in a different order
+
+### Core:Ports :
+
+- **Responsability** : Declare, in domain vocabulary, what the core needs from the outside world: what it must fetch, store, call or know. Types only, no behaviour
+- **Coupling** : Imports Domain and nothing else. Used by Use cases, implemented by Adapters. Never names a technology, a library type or a wire format
+- **Reason to change** : A use case needs something new from the outside world. Never because an adapter changed how it provides it
+
+### Adapters:Storage(driven) :
+
+- **Responsability** : Load and save one aggregate, whole and atomically, behind its port. Translates between domain shape and storage shape in both directions.
+- **Coupling** : Implements one Storage port. Imports Domain, the port, and one storage library.
+- **Reason to change** : The port grew a method, the storage technology changed, or the aggregate's shape changed and the mapping must follow
+
+### Adapters:Connector(driven) :
+
+- **Responsability** : Talk to one external system we do not control. Handles its protocol, auth, paging and retries, and maps its shape into the port's domain vocabulary
+- **Coupling** : Implements one Connector port. Imports Domain, the port, and the vendor's SDK or HTTP client. Never a use case, another adapter, or an app
+- **Reason to change** : The vendor changed its API, its auth, or its limits we swapped vendors or a use case needs one more thing from it
+
+### Adapters:System(driven) :
+
+- **Responsability** : Provide one fact about the world or the process: current time, fresh identifiers, configuration, environment, randomness. One question, one answer
+- **Coupling** : Implement the SystemPort
+- **Reason to change** : Swap in technology such has the date technology. This Adapter almost never change it handle System technology at one place which don't change often in order to keep the core free
+
+### Adapters:Controler(driving) :
+
+- **Responsability** : Receive a request in one protocol, authenticate it, parse and validate the input against a Contract, call one use case, hand the result to a Presenter
+- **Coupling** : Imports Use cases, Contracts, and one protocol SDK. Imports no Domain internals, no Storage, no Connector. The only piece that knows both the protocol and the use case
+- **Reason to change :** The protocol or host changed, or a use case is newly exposed or exposed differently.
+
+### Adapters:Presenter(driving) :
+
+- **Responsability** : Shape one use case result for one audience. Chooses which fields to show, how to label and format them, and what to say about an error
+- **Coupling** : Imports Contracts and nothing else from the core. Called by the Controller
+- **Reason to change :** The audience wants to see something differently: a new field, a different wording, a changed layout
+
+<ImageMdx
+  src="/logbook/chaos-is-death-order-is-life/layered-architecture.png"
+  alt="Diagram of the layers: the core holds Domain, Contracts and Use-cases behind Ports; the driven adapters (Repository, Connector, System) implement the ports; the driving adapters (Controller, Presenter) call the use cases and the contracts"
+/>
+
+### Composition Root :
+
+Once we have theses layers in place the application need to compose them (adapter, port, etc..), in order to that we use a container file that is responsible for knowing which adapter goes to which port
+
+It lives in the app because it is the only place that knows which database, which vendor, which clock. It imports every adapter and every entity's controller, and nothing imports it.
+
+<ImageMdx
+  src="/logbook/chaos-is-death-order-is-life/composition-root.png"
+  alt="Diagram of a package holding one entity with its core and adapters, and the apps (web-app, server) each holding a composition root that points to the package"
+/>
+
+## Domain Modeling
+
+### Schema First
+
+The domain is modelled as schemas, not as types. A schema is a runtime value, so one declaration gives four things that would otherwise be written by hand and drift apart: the static type, inferred from it; the validator, run at every boundary where data enters;
+
+#### Schema:Entity
+
+A shape with an identity. It stays the same thing as its fields change, so it has an id, a storage, and the invariants that make it valid. Built only by the domain, it is the canonical form of the data and never leaves the core.
+
+#### Schema:ValueObject
+
+A shape with no identity. Equal to any other value with the same fields, never modified but only replaced, validated once at construction and valid everywhere after. Branded so that two values of the same primitive type cannot be confused.
+
+#### Schema:Contract
+
+A shape that leaves the core. Derived from an entity by pick, omit and extend, with no rules of its own, it is what controllers, presenters and views depend on instead of the entity, so that the entity can change without breaking them. Lives in contracts, next to the function that builds it from the entity
+
+### Errors
+
+There are three kinds of error :
+
+#### Error:Domain.
+
+An invariant or a rule was not satisfied. They are defined in Core:Domain, next to the rule that issues them, because the refusal is part of the rule.
+
+#### Error:NotFound.
+
+Something expected is absent. It returns the absence as a value and the use case decides whether that absence is an error. So NotFound is defined in the application layer, produced only by use cases, and shown to the user like a domain error.
+
+#### Error:System
+
+The system failed for reasons unrelated to the business: network down, database unreachable, a provider throttling us, a configuration value missing. These are born in an adapter, at the first line that can throw, and wrapped into a value with the original cause attached. Only the operator can fix them, so they are logged with their cause, retried when transient, and shown to the user as a plain failure with nothing from the inside.
+
+Two concepts carry all three.
+
+#### Errors as values
+
+An error is data with a tag, returned rather than thrown. The only place an exception is allowed is the controller, when the protocol demands one.
+
+#### Result monad
+
+Every function that can fail returns Result\<T, E\>. The signature lists what can go wrong, the caller cannot ignore it, and a switch on the tag with no default stops compiling the day a new error is added. Ports declare the error union of each method, so a use case sees a closed set and chooses what to do with each case: retry, switch source, skip, or pass it up.
+
+Each error is translated exactly once, at a boundary. The adapter turns an exception into a value. The controller turns the value into the protocol's vocabulary: an HTTP status, an MCP isError, an exit code. Nothing in between touches it, which is why a tag created in a repository arrives at the controller unchanged.
+
+Because errors are typed data rather than stack traces, an external system calling ours receives a precise error it can act on.
+
+## Vertical Slicing
+
+Code is grouped by capability first and by layer second. A slice is one thing the user does and the aggregate it touches, and it is one folder that holds every layer it needs:
+
+```text
+entity/
+  domain/
+  application/
+  contracts/
+  storage/
+  connectors/
+```
+
+## Typesafe
+
+The goal is to learn about a mistake at **<u>compile time</u>** rather than in **<u>run time</u>**. How much a language lets you do that depends on whether its type system is sound.
+
+**<u>A sound</u>** type system guarantees that a value of type T is really a T at runtime. Rust is sound outside unsafe: the program may still panic, but it will never hold a string where it believes there is an integer.
+
+**<u>An unsound</u>** type system accepts programs where a value can carry a type it does not have. TypeScript is unsound by design: any, as, JSON.parse
+
+## Tooling
+
+### Monorepo
+
+The whole system lives in one repository. A change to runs touches its domain, its storage, its contracts and the app that exposes it in a single commit: no package versions to bump between them, no release order to get right. You can also check architecture rules as everything is in the repo.
+
+```text
+package/
+  entity/
+    domain/
+    application/
+    contracts/
+    storage/
+    connectors/
+    controllers/
+    presenters/
+  config/
+    tsconfig.json
+    eslint.json
+apps/
+  web-app/
+    container.ts
+  server/
+    container.ts
+  server-mcp/
+    container.ts
+```
+
+Each entity folder is one slice and one workspace package, complete from domain to controller. An app is a composition root and nothing else: it builds the adapters, then hands a server and a deps bag to each entity's controller.
+
+### Linting
+
+Linting. A linter reads the code and refuses patterns we have agreed are mistakes. It catches the small things that are tedious to review by hand. A linter runs in seconds, on save and in CI.
+
+Each coupling row of the cards becomes one import rule: the domain may not import a database library, the application may not import an adapter, a controller may only import its own slice. A no-cycle rule keeps slices out of each other.
+
+### Formatting
+
+One formatter, no options, run on save and in CI
+
+### DevTools
+
+Dev tools make life easier and application more understandable i like to use :
+
+- Google Chrome DevTools
+- Drizzle UI for Databases
+- Scalar UI for APIs
+
+## Testing
+
+Usually when testing there is a known pyramid
+
+<ImageMdx
+  src="/logbook/chaos-is-death-order-is-life/testing-pyramid.png"
+  alt="Testing pyramid: unit tests at the base check the logic and functions inside a module, integration tests in the middle check how a package integrates, end-to-end tests at the top check how the whole system reacts"
+/>
+
+### Unit
+
+I like to unit test function to test **<u>edge cases</u>** and make sure they are **<u>Total functions</u>**
+
+It's also a good documentation when you discover a case that could go wrong you can create an associated unit test to bit.
+
+Knowing every possible edge cases in advance could be hard but it's simple to test from a pure function perspective
+
+### Integration
+
+Integration test are from the perspective of a package/slice. They are here to ensure a part of the system behave has expected. The classical case is calling the controller knowing the inputs and expecting outputs. The test shouldn't know about how the module/package works and internals or dependencies and which layer get traversed
+
+### End-to-end (E2E)
+
+The end-to-end test are from the user interface point of view
+
+They are slow and can break often. But they provide a good check if the system is working correctly
+
+I used them to check happy path only - or really important edge case that that happened in production and i want a **<u>Tripwire</u>** on
+
+<ImageMdx
+  src="/logbook/chaos-is-death-order-is-life/testing-scopes.png"
+  alt="Diagram of the test scopes: an end-to-end test wraps the whole system, an integration test wraps each package, and unit tests sit inside each package"
+/>
+
+## Documentation
+
+### ADR
+
+This document describes the structure; a project's ADRs record where and why it deviated. Keep them in docs/adr/, numbered, one decision per file, each with a status, a date, the decision in a few lines, and the evidence that led to it. The first three are always the same: the architecture and its enforcement, the storage choice, and the error and validation stack. Record the spike that justified each, with its date, so a later reader can tell a tested choice from a habit. An ADR is amended, never rewritten: when a decision changes, a new ADR supersedes the old one and both say so.
+
+### Infrastructure
+
+One page and one diagram: which processes exist, where each runs, what it talks to, what configuration and secrets it needs, and how it gets deployed. It is the only place the real constraints behind the code are visible, and the first thing an on-call reader opens. It changes rarely, so it is written by hand and reviewed with every deployment change.
+
+### Database (EntityRelationship Diagram)
+
+An entity relationship diagram generated from the schema definitions, on every build. Never drawn by hand: a drawn diagram is a snapshot, and the schema moves.
+
+### APIs
+
+A reference of every endpoint, its inputs, outputs and errors, with examples. Schema first makes this free: the contracts produce an OpenAPI document and a renderer such as Scalar serves it. Nobody maintains it, so it is never out of date.
