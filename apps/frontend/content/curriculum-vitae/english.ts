@@ -23,7 +23,7 @@ export const CURRICULUM_VITAE = {
         label: "Contact",
         content: {
           email: "pires.stephane.pro@gmail.com",
-          site: "https://caravel-mocha.vercel.app/",
+          site: "https://stephanepires.com/",
         },
       },
     },
@@ -245,7 +245,7 @@ export const CURRICULUM_VITAE = {
         id: "CARAVEL",
         label: "Caravel",
         icon: "/projects/caravel.png",
-        url: "https://caravel-mocha.vercel.app/",
+        url: "https://stephanepires.com/",
         duration: {
           start: "19 April 2023",
           end: "On going",
