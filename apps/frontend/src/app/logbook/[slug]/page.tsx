@@ -59,7 +59,10 @@ export default async function BlogContent({ params }: BlogContentProps) {
         </div>
       </div>
       <Star star={content.star as STAR} />
-      <Mdx code={content.body.code} />
+      <Mdx
+        code={content.body.code}
+        raw={content.body.raw}
+      />
 
       <div className="relative bottom-0 -z-10 hidden h-[125px] w-screen sm:block">
         <Image

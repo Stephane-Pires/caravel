@@ -3,7 +3,21 @@
 
 import { useMDXComponent } from "next-contentlayer2/hooks"
 import Link from "next/link"
-import { HTMLProps, useMemo } from "react"
+import { Children, HTMLProps, ReactNode, isValidElement, useMemo } from "react"
+
+import { slugify } from "@/utils/slug"
+
+// The text column: about 70 characters a line at 18px (WCAG 1.4.8 asks for 80 at most).
+// `max-w-prose` (65ch) is not enough here: `ch` is the width of "0", wider than an average letter.
+const MEASURE = "mx-auto w-full max-w-[37rem] px-2"
+
+function textOf(node: ReactNode): string {
+  if (typeof node === "string" || typeof node === "number") return String(node)
+  if (Array.isArray(node)) return node.map(textOf).join("")
+  if (isValidElement<{ children?: ReactNode }>(node))
+    return textOf(node.props.children)
+  return ""
+}
 
 interface Quote {
   author: string
@@ -12,11 +26,11 @@ interface Quote {
 
 function Quote({ author, quote }: Quote) {
   return (
-    <div className="m-2 flex flex-col">
-      <div className="font-script mx-2 my-4 text-base italic leading-relaxed text-blue-100 sm:text-lg">
+    <div className={`${MEASURE} my-2 flex flex-col`}>
+      <div className="font-script mx-2 my-4 text-base leading-relaxed text-blue-100 italic sm:text-lg">
         {quote}
       </div>
-      <div className="font-script mx-2 self-end text-sm italic text-blue-100 underline underline-offset-2 sm:text-base">
+      <div className="font-script mx-2 self-end text-sm text-blue-100 italic underline underline-offset-2 sm:text-base">
         &quot;{author}&quot;
       </div>
     </div>
@@ -33,7 +47,10 @@ function h1({ children }: HTMLProps<HTMLHeadingElement>) {
 
 function h2({ children }: HTMLProps<HTMLHeadingElement>) {
   return (
-    <h2 className="m-6 text-center text-3xl font-semibold text-blue-300">
+    <h2
+      id={slugify(textOf(children))}
+      className={`${MEASURE} mt-14 mb-4 border-t border-slate-700 pt-8 text-3xl font-semibold text-blue-300`}
+    >
       {children}
     </h2>
   )
@@ -41,7 +58,10 @@ function h2({ children }: HTMLProps<HTMLHeadingElement>) {
 
 function h3({ children }: HTMLProps<HTMLHeadingElement>) {
   return (
-    <h3 className="m-4 text-center text-2xl font-semibold text-blue-300">
+    <h3
+      id={slugify(textOf(children))}
+      className={`${MEASURE} mt-10 mb-3 text-2xl font-semibold text-blue-300`}
+    >
       {children}
     </h3>
   )
@@ -49,7 +69,7 @@ function h3({ children }: HTMLProps<HTMLHeadingElement>) {
 
 function h4({ children }: HTMLProps<HTMLHeadingElement>) {
   return (
-    <h4 className="font-script m-2 text-center text-xl text-blue-300">
+    <h4 className={`${MEASURE} mt-7 mb-1 text-xl font-semibold text-blue-300`}>
       {children}
     </h4>
   )
@@ -57,13 +77,42 @@ function h4({ children }: HTMLProps<HTMLHeadingElement>) {
 
 function p({ children }: HTMLProps<HTMLParagraphElement>) {
   return (
-    <p className="m-2 max-w-prose font-sans text-base text-blue-100 sm:text-lg">
+    <p
+      className={`${MEASURE} my-2 font-sans text-base text-blue-100 sm:text-lg`}
+    >
       {children}
     </p>
   )
 }
 
+// "**Label** : description" items read as a definition: the label gets its own column
+// (its own line on a phone), so the same label can be found again from one block to the next.
 function li({ children }: HTMLProps<HTMLLIElement>) {
+  const [first, ...rest] = Children.toArray(children).filter(
+    (child) => typeof child !== "string" || child.trim() !== "",
+  )
+
+  if (isValidElement(first) && first.type === "strong" && rest.length) {
+    const label = textOf(first)
+      .replace(/\s*:\s*$/, "")
+      .trim()
+    const [next, ...others] = rest
+    const description =
+      typeof next === "string"
+        ? [next.replace(/^\s*:\s*/, ""), ...others]
+        : rest
+
+    return (
+      <li
+        data-labelled
+        className="grid gap-x-4 gap-y-1 font-sans text-base text-blue-100 sm:grid-cols-[9.5rem_1fr] sm:text-lg"
+      >
+        <strong className="text-blue-300">{label}</strong>
+        <span>{description}</span>
+      </li>
+    )
+  }
+
   return (
     <li className="list-item font-sans text-base text-blue-100 sm:text-lg">
       {children}
@@ -73,7 +122,9 @@ function li({ children }: HTMLProps<HTMLLIElement>) {
 
 function ul({ children }: HTMLProps<HTMLUListElement>) {
   return (
-    <ul className="m-2 my-4 flex list-outside list-none flex-col gap-2 sm:list-disc sm:list-image-[url(/logbook/mdx/chevron-right.svg)]">
+    <ul
+      className={`${MEASURE} my-4 flex list-outside list-disc list-image-[url(/logbook/mdx/chevron-right.svg)] flex-col gap-3 pl-8 has-[>li[data-labelled]]:list-none has-[>li[data-labelled]]:gap-5 has-[>li[data-labelled]]:rounded-lg has-[>li[data-labelled]]:border-l-2 has-[>li[data-labelled]]:border-blue-300/50 has-[>li[data-labelled]]:bg-slate-800/60 has-[>li[data-labelled]]:p-4 [li>&]:my-2 [li>&]:px-0 [li>&]:pl-6`}
+    >
       {children}
     </ul>
   )
@@ -99,7 +150,9 @@ function A({ children, href }: HTMLProps<HTMLAnchorElement>) {
 
 function blockquote({ children }: HTMLProps<HTMLQuoteElement>) {
   return (
-    <blockquote className="my-4 rounded-lg border-s-4 border-slate-50 bg-slate-800 p-4 text-xl font-medium italic leading-relaxed">
+    <blockquote
+      className={`${MEASURE} my-4 rounded-lg border-s-4 border-slate-50 bg-slate-800 p-4 text-xl leading-relaxed font-medium italic`}
+    >
       {children}
     </blockquote>
   )
@@ -117,15 +170,22 @@ function ImageMdx({ alt, src }: HTMLProps<HTMLImageElement>) {
   }
 
   return (
-    <div className="m-4 flex flex-row justify-center">
-      <div className="relative h-fit w-fit p-4">
+    <div className="my-4 flex flex-row justify-center">
+      {/* the picture opens at full size: a diagram's labels are too small to read on a phone */}
+      <a
+        href={src}
+        target="_blank"
+        rel="noreferrer"
+        title="Open the picture at full size"
+        className="relative block h-fit w-fit p-2 sm:p-4"
+      >
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
           src={src}
           alt={alt}
           className="rounded-md object-contain"
         />
-      </div>
+      </a>
     </div>
   )
 }
@@ -144,11 +204,86 @@ const mdxHTMLComponents = {
 
 const MDX_COMPONENTS = { ImageMdx, Quote, ...mdxHTMLComponents }
 
-export function Mdx({ code }: { code: string }) {
-  const MDXContent = useMDXComponent(code)
+export interface TableOfContentsEntry {
+  title: string
+  slug: string
+}
+
+function TableOfContents({
+  entries,
+}: {
+  entries: Array<TableOfContentsEntry>
+}) {
   return (
-    <div className="flex flex-col sm:max-w-3xl">
-      <MDXContent components={MDX_COMPONENTS} />
+    <nav
+      aria-label="On this page"
+      className={`${MEASURE} my-4 font-sans text-base sm:text-lg`}
+    >
+      <div className="rounded-lg bg-slate-800/60 p-4">
+        <p className="mb-2 text-sm font-bold tracking-wide text-blue-300 uppercase">
+          On this page
+        </p>
+        <ol className="grid list-inside list-decimal gap-x-6 gap-y-1 text-blue-100 sm:grid-cols-2">
+          {entries.map(({ title, slug }) => (
+            <li key={slug}>
+              <a
+                href={`#${slug}`}
+                className="underline decoration-blue-300/60 underline-offset-4 hover:decoration-blue-300"
+              >
+                {title}
+              </a>
+            </li>
+          ))}
+        </ol>
+      </div>
+    </nav>
+  )
+}
+
+const MIN_SECTIONS_FOR_A_TABLE_OF_CONTENTS = 2
+
+// the post's sections: its "## " headings, outside code blocks
+function sectionsOf(raw: string): Array<TableOfContentsEntry> {
+  return raw
+    .replace(/```[\s\S]*?```/g, "")
+    .split("\n")
+    .filter((line) => line.startsWith("## "))
+    .map((line) =>
+      line
+        .replace(/^##\s+/, "")
+        .replace(/[*_`]/g, "")
+        .trim(),
+    )
+    .map((title) => ({ title, slug: slugify(title) }))
+}
+
+export function Mdx({
+  code,
+  raw = "",
+}: {
+  code: string
+  // the post's markdown source: its sections are listed under the title
+  raw?: string
+}) {
+  const MDXContent = useMDXComponent(code)
+  const components = useMemo(() => {
+    const toc = sectionsOf(raw)
+    return {
+      ...MDX_COMPONENTS,
+      h1: (props: HTMLProps<HTMLHeadingElement>) => (
+        <>
+          {h1(props)}
+          {toc.length >= MIN_SECTIONS_FOR_A_TABLE_OF_CONTENTS && (
+            <TableOfContents entries={toc} />
+          )}
+        </>
+      ),
+    }
+  }, [raw])
+
+  return (
+    <div className="flex w-full flex-col sm:max-w-3xl [&_figure]:mx-auto [&_figure]:my-4 [&_figure]:w-full [&_figure]:max-w-[37rem] [&_figure]:px-2 [&_pre]:overflow-x-auto [&_pre]:rounded-md [&_pre]:p-4 [&_pre]:text-sm">
+      <MDXContent components={components} />
     </div>
   )
 }
