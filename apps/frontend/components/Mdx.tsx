@@ -135,7 +135,7 @@ function li({ children }: HTMLProps<HTMLLIElement>) {
 function ul({ children }: HTMLProps<HTMLUListElement>) {
   return (
     <ul
-      className={`${MEASURE} my-4 [h3+&]:has-[>li[data-labelled]]:mt-0 [h3+&]:has-[>li[data-labelled]]:rounded-t-none flex list-outside list-disc list-image-[url(/logbook/mdx/chevron-right.svg)] flex-col gap-3 pl-8 has-[>li[data-labelled]]:list-none has-[>li[data-labelled]]:gap-5 has-[>li[data-labelled]]:rounded-lg has-[>li[data-labelled]]:border-l-2 has-[>li[data-labelled]]:border-blue-300/50 has-[>li[data-labelled]]:bg-slate-800/60 has-[>li[data-labelled]]:p-4 [li>&]:my-2 [li>&]:px-0 [li>&]:pl-6`}
+      className={`${MEASURE} my-4 flex list-outside list-disc list-image-[url(/logbook/mdx/chevron-right.svg)] flex-col gap-3 pl-8 has-[>li[data-labelled]]:list-none has-[>li[data-labelled]]:gap-5 has-[>li[data-labelled]]:rounded-lg has-[>li[data-labelled]]:border-l-2 has-[>li[data-labelled]]:border-blue-300/50 has-[>li[data-labelled]]:bg-slate-800/60 has-[>li[data-labelled]]:p-4 [h3+&]:has-[>li[data-labelled]]:mt-0 [h3+&]:has-[>li[data-labelled]]:rounded-t-none [li>&]:my-2 [li>&]:px-0 [li>&]:pl-6`}
     >
       {children}
     </ul>
@@ -170,7 +170,14 @@ function blockquote({ children }: HTMLProps<HTMLQuoteElement>) {
   )
 }
 
-function ImageMdx({ alt, src }: HTMLProps<HTMLImageElement>) {
+function ImageMdx({
+  alt,
+  caption,
+  src,
+}: HTMLProps<HTMLImageElement> & {
+  // what the picture shows, in one short line under it
+  caption?: string
+}) {
   if (!src) {
     throw new Error("You can not create an image with an undefined src")
   }
@@ -182,7 +189,11 @@ function ImageMdx({ alt, src }: HTMLProps<HTMLImageElement>) {
   }
 
   return (
-    <div className="my-4 flex flex-row justify-center">
+    <div
+      role="figure"
+      aria-label={caption ?? alt}
+      className="my-4 flex flex-col items-center"
+    >
       {/* the picture opens at full size: a diagram's labels are too small to read on a phone */}
       <a
         href={src}
@@ -198,6 +209,13 @@ function ImageMdx({ alt, src }: HTMLProps<HTMLImageElement>) {
           className="rounded-md object-contain"
         />
       </a>
+      {caption && (
+        <p
+          className={`${MEASURE} text-center font-sans text-sm text-blue-100 italic sm:text-base`}
+        >
+          {caption}
+        </p>
+      )}
     </div>
   )
 }
