@@ -1,8 +1,6 @@
 import { Content, allContents } from "contentlayer/generated"
 import { Mdx } from "@/components/Mdx"
 import { PostHeader } from "@/components/PostHeader"
-import { STAR } from "@/enums/stars"
-import { CATEGORY, SUBJECT } from "@/enums/tag"
 import Image from "next/image"
 import { notFound } from "next/navigation"
 
@@ -50,9 +48,6 @@ export default async function BlogContent({ params }: BlogContentProps) {
         lede={content.lede}
         date={content.date}
         updated={content.updated}
-        star={content.star as STAR}
-        subject={content.subject as SUBJECT}
-        category={content.category as CATEGORY}
       />
       <Mdx
         code={content.body.code}
