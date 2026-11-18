@@ -22,17 +22,30 @@ function textOf(node: ReactNode): string {
 interface Quote {
   author: string
   quote: string
+  // where the author wrote or said it
+  source?: string
 }
 
-function Quote({ author, quote }: Quote) {
+function Quote({ author, quote, source }: Quote) {
   return (
-    <div className={`${MEASURE} my-2 flex flex-col`}>
-      <div className="font-script mx-2 my-4 text-base leading-relaxed text-blue-100 italic sm:text-lg">
-        {quote}
-      </div>
-      <div className="font-script mx-2 self-end text-sm text-blue-100 italic underline underline-offset-2 sm:text-base">
-        &quot;{author}&quot;
-      </div>
+    <div className={`${MEASURE} my-8`}>
+      <blockquote className="relative rounded-lg border-l-2 border-blue-300/50 bg-slate-800/60 px-6 pt-8 pb-5 font-sans">
+        <span
+          aria-hidden
+          className="font-script absolute -top-5 left-4 text-6xl leading-none text-blue-300 select-none"
+        >
+          “
+        </span>
+        <p className="text-xl leading-snug text-blue-100 italic sm:text-2xl sm:leading-snug">
+          {quote}
+        </p>
+        <footer className="mt-4 text-sm text-blue-100">
+          <span className="font-bold tracking-wide text-blue-300 uppercase">
+            {author}
+          </span>
+          {source && <cite className="italic">, {source}</cite>}
+        </footer>
+      </blockquote>
     </div>
   )
 }
