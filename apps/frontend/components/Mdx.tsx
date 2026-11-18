@@ -1,6 +1,7 @@
 /* eslint-disable react-hooks/static-components */
 /* eslint-disable react-hooks/preserve-manual-memoization */
 
+import { LinkIcon } from "@heroicons/react/24/solid"
 import { useMDXComponent } from "next-contentlayer2/hooks"
 import Link from "next/link"
 import { Children, HTMLProps, ReactNode, isValidElement, useMemo } from "react"
@@ -58,13 +59,34 @@ function h1({ children }: HTMLProps<HTMLHeadingElement>) {
   )
 }
 
+// A section can be shared on its own: its heading carries a link to itself.
+// Shown on hover with a mouse, always shown (dimmed) on a touch screen.
+function SectionLink({ id }: { id: string }) {
+  return (
+    <a
+      href={`#${id}`}
+      aria-label="Link to this section"
+      title="Link to this section"
+      className="ml-2 inline-block align-middle text-blue-300/50 hover:text-blue-300 focus-visible:text-blue-300 sm:opacity-0 sm:group-hover:opacity-100 sm:focus-visible:opacity-100"
+    >
+      <LinkIcon
+        aria-hidden
+        className="size-4"
+      />
+    </a>
+  )
+}
+
 function h2({ children }: HTMLProps<HTMLHeadingElement>) {
+  const id = slugify(textOf(children))
+
   return (
     <h2
-      id={slugify(textOf(children))}
-      className={`${MEASURE} mt-14 mb-4 border-t border-slate-700 pt-8 text-3xl font-semibold text-blue-300`}
+      id={id}
+      className={`${MEASURE} group mt-14 mb-4 scroll-mt-24 border-t border-slate-700 pt-8 text-3xl font-semibold text-blue-300`}
     >
       {children}
+      <SectionLink id={id} />
     </h2>
   )
 }
@@ -79,12 +101,15 @@ function tidy(children: ReactNode) {
 
 // Followed by a definition block, an h3 becomes the title of that block instead of a section heading.
 function h3({ children }: HTMLProps<HTMLHeadingElement>) {
+  const id = slugify(textOf(children))
+
   return (
     <h3
-      id={slugify(textOf(children))}
-      className={`${MEASURE} mt-10 mb-3 text-2xl font-semibold text-blue-300 has-[+ul>li[data-labelled]]:mt-6 has-[+ul>li[data-labelled]]:mb-0 has-[+ul>li[data-labelled]]:rounded-t-lg has-[+ul>li[data-labelled]]:border-l-2 has-[+ul>li[data-labelled]]:border-blue-300/50 has-[+ul>li[data-labelled]]:bg-slate-800/60 has-[+ul>li[data-labelled]]:px-4 has-[+ul>li[data-labelled]]:pt-4 has-[+ul>li[data-labelled]]:text-lg sm:has-[+ul>li[data-labelled]]:text-xl`}
+      id={id}
+      className={`${MEASURE} group mt-10 mb-3 scroll-mt-24 text-2xl font-semibold text-blue-300 has-[+ul>li[data-labelled]]:mt-6 has-[+ul>li[data-labelled]]:mb-0 has-[+ul>li[data-labelled]]:rounded-t-lg has-[+ul>li[data-labelled]]:border-l-2 has-[+ul>li[data-labelled]]:border-blue-300/50 has-[+ul>li[data-labelled]]:bg-slate-800/60 has-[+ul>li[data-labelled]]:px-4 has-[+ul>li[data-labelled]]:pt-4 has-[+ul>li[data-labelled]]:text-lg sm:has-[+ul>li[data-labelled]]:text-xl`}
     >
       {tidy(children)}
+      <SectionLink id={id} />
     </h3>
   )
 }
@@ -103,7 +128,7 @@ function h4({ children }: HTMLProps<HTMLHeadingElement>) {
 function p({ children }: HTMLProps<HTMLParagraphElement>) {
   return (
     <p
-      className={`${MEASURE} my-2 font-sans text-base text-blue-100 sm:text-lg [h4+&]:mt-0`}
+      className={`${MEASURE} my-2 font-sans text-base text-blue-200 sm:text-lg [h4+&]:mt-0`}
     >
       {children}
     </p>
@@ -130,7 +155,7 @@ function li({ children }: HTMLProps<HTMLLIElement>) {
     return (
       <li
         data-labelled
-        className="grid gap-x-4 gap-y-1 font-sans text-base text-blue-100 sm:grid-cols-[9.5rem_1fr] sm:text-lg"
+        className="grid gap-x-4 gap-y-1 font-sans text-base text-blue-200 sm:grid-cols-[9.5rem_1fr] sm:text-lg"
       >
         <strong className="text-blue-300">{label}</strong>
         <span>{description}</span>
@@ -139,7 +164,7 @@ function li({ children }: HTMLProps<HTMLLIElement>) {
   }
 
   return (
-    <li className="list-item font-sans text-base text-blue-100 sm:text-lg">
+    <li className="list-item font-sans text-base text-blue-200 sm:text-lg">
       {children}
     </li>
   )
@@ -319,7 +344,7 @@ export function Mdx({
   const sections = useMemo(() => sectionsOf(raw), [raw])
 
   return (
-    <div className="flex w-full flex-col sm:max-w-3xl [&_figure]:mx-auto [&_figure]:my-4 [&_figure]:w-full [&_figure]:max-w-[37rem] [&_figure]:px-2 [&_pre]:overflow-x-auto [&_pre]:rounded-md [&_pre]:p-4 [&_pre]:text-sm">
+    <div className="flex w-full flex-col sm:max-w-3xl [&_figure]:mx-auto [&_figure]:my-4 [&_figure]:w-full [&_figure]:max-w-[37rem] [&_figure]:px-2 [&_pre]:overflow-x-auto [&_pre]:rounded-md [&_pre]:p-4 [&_pre]:text-sm [&>p:first-of-type]:first-letter:float-left [&>p:first-of-type]:first-letter:mt-1 [&>p:first-of-type]:first-letter:mr-3 [&>p:first-of-type]:first-letter:text-6xl [&>p:first-of-type]:first-letter:leading-[0.8] [&>p:first-of-type]:first-letter:font-bold [&>p:first-of-type]:first-letter:text-blue-300">
       {sections.length >= MIN_SECTIONS_FOR_A_TABLE_OF_CONTENTS && (
         <TableOfContents entries={sections} />
       )}
