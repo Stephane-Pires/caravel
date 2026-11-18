@@ -29,6 +29,12 @@ export const Content = defineDocumentType(() => ({
       required: true,
       type: "string",
     },
+    lede: {
+      description: "The claim of the content, one sentence per item",
+      of: { type: "string" },
+      required: false,
+      type: "list",
+    },
     star: {
       description: "How much i like this content",
       required: true,
@@ -43,6 +49,11 @@ export const Content = defineDocumentType(() => ({
       description: "The title of the Content",
       required: true,
       type: "string",
+    },
+    updated: {
+      description: "The date the content was last changed",
+      required: false,
+      type: "date",
     },
   },
   filePathPattern: `**/*.mdx`,

@@ -26,6 +26,7 @@ const merienda = Merienda({
 
 const atkinson = Atkinson_Hyperlegible({
   display: "swap",
+  style: ["normal", "italic"],
   subsets: ["latin"],
   weight: ["400", "700"],
   variable: "--font-atkinson",
