@@ -227,11 +227,11 @@ Linting. A linter reads the code and refuses patterns we have agreed are mistake
 
 Each coupling row of the cards becomes one import rule: the domain may not import a database library, the application may not import an adapter, a controller may only import its own slice. A no-cycle rule keeps slices out of each other.
 
-### Formatting
+#### Formatting
 
 One formatter, no options, run on save and in CI
 
-### DevTools
+#### DevTools
 
 Dev tools make life easier and application more understandable i like to use :
 
@@ -248,7 +248,7 @@ Usually when testing there is a known pyramid
   alt="Testing pyramid: unit tests at the base check the logic and functions inside a module, integration tests in the middle check how a package integrates, end-to-end tests at the top check how the whole system reacts"
 />
 
-### Unit
+#### Unit
 
 I like to unit test function to test **<u>edge cases</u>** and make sure they are **<u>Total functions</u>**
 
@@ -256,11 +256,11 @@ It's also a good documentation when you discover a case that could go wrong you 
 
 Knowing every possible edge cases in advance could be hard but it's simple to test from a pure function perspective
 
-### Integration
+#### Integration
 
 Integration test are from the perspective of a package/slice. They are here to ensure a part of the system behave has expected. The classical case is calling the controller knowing the inputs and expecting outputs. The test shouldn't know about how the module/package works and internals or dependencies and which layer get traversed
 
-### End-to-end (E2E)
+#### End-to-end (E2E)
 
 The end-to-end test are from the user interface point of view
 
@@ -275,18 +275,18 @@ I used them to check happy path only - or really important edge case that that h
 
 ## Documentation
 
-### ADR
+#### ADR
 
 This document describes the structure; a project's ADRs record where and why it deviated. Keep them in docs/adr/, numbered, one decision per file, each with a status, a date, the decision in a few lines, and the evidence that led to it. The first three are always the same: the architecture and its enforcement, the storage choice, and the error and validation stack. Record the spike that justified each, with its date, so a later reader can tell a tested choice from a habit. An ADR is amended, never rewritten: when a decision changes, a new ADR supersedes the old one and both say so.
 
-### Infrastructure
+#### Infrastructure
 
 One page and one diagram: which processes exist, where each runs, what it talks to, what configuration and secrets it needs, and how it gets deployed. It is the only place the real constraints behind the code are visible, and the first thing an on-call reader opens. It changes rarely, so it is written by hand and reviewed with every deployment change.
 
-### Database (EntityRelationship Diagram)
+#### Database (EntityRelationship Diagram)
 
 An entity relationship diagram generated from the schema definitions, on every build. Never drawn by hand: a drawn diagram is a snapshot, and the schema moves.
 
-### APIs
+#### APIs
 
 A reference of every endpoint, its inputs, outputs and errors, with examples. Schema first makes this free: the contracts produce an OpenAPI document and a renderer such as Scalar serves it. Nobody maintains it, so it is never out of date.
