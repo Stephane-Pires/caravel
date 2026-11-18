@@ -43,14 +43,19 @@ In software system the place where you put code should be **<u>layer</u>**, a la
 
 The different layers are :
 
-- Core:Domain
-- Core:Ports
-- Core:Use-cases
-- Adapter:Storage : Driven
-- Adapter:Connector : Driven
-- Adapter:System : Driven
-- Adapter:Controller : Driving
-- Adapter:Presenter : Driving
+<Table
+  head={["Layer", "Part", "Side"]}
+  rows={[
+    [{ text: "Domain", href: "#core-domain" }, "Core", "-"],
+    [{ text: "Ports", href: "#core-ports" }, "Core", "-"],
+    [{ text: "Use-cases", href: "#core-use-cases" }, "Core", "-"],
+    [{ text: "Storage", href: "#adapters-storage-driven" }, "Adapter", "Driven"],
+    [{ text: "Connector", href: "#adapters-connector-driven" }, "Adapter", "Driven"],
+    [{ text: "System", href: "#adapters-system-driven" }, "Adapter", "Driven"],
+    [{ text: "Controller", href: "#adapters-controler-driving" }, "Adapter", "Driving"],
+    [{ text: "Presenter", href: "#adapters-presenter-driving" }, "Adapter", "Driving"],
+  ]}
+/>
 
 We divide them in two category :
 

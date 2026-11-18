@@ -1,15 +1,6 @@
 import { MEASURE } from "@/components/Mdx"
-import { Tag } from "@/components/Tag"
-import { STAR } from "@/enums/stars"
-import { CATEGORY, SUBJECT } from "@/enums/tag"
 import dayjs from "dayjs"
 import Link from "next/link"
-
-const WIND: Record<STAR, { name: string; stars: string }> = {
-  ONE: { name: "Light breeze", stars: "★" },
-  THREE: { name: "High wind", stars: "★★★" },
-  TWO: { name: "Fresh breeze", stars: "★★" },
-}
 
 const DATE_FORMAT = "D MMMM YYYY"
 
@@ -19,22 +10,9 @@ interface PostHeaderProps {
   lede?: Array<string>
   date: string
   updated?: string
-  star: STAR
-  subject: SUBJECT
-  category: CATEGORY
 }
 
-export function PostHeader({
-  title,
-  lede,
-  date,
-  updated,
-  star,
-  subject,
-  category,
-}: PostHeaderProps) {
-  const wind = WIND[star]
-
+export function PostHeader({ title, lede, date, updated }: PostHeaderProps) {
   return (
     <header className={`${MEASURE} flex flex-col pt-4 font-sans sm:pt-10`}>
       <Link
@@ -61,7 +39,7 @@ export function PostHeader({
         </p>
       )}
 
-      <div className="mt-6 flex flex-wrap items-center justify-between gap-x-6 gap-y-1 border-t border-slate-700 pt-3 text-sm text-blue-100">
+      <div className="mt-6 border-t border-slate-700 pt-3 text-sm text-blue-100">
         <p className="flex flex-wrap items-center gap-x-2">
           <time dateTime={date}>{dayjs(date).format(DATE_FORMAT)}</time>
           {updated && (
@@ -76,17 +54,6 @@ export function PostHeader({
             </>
           )}
         </p>
-        <div className="flex flex-row items-center gap-2 text-sm">
-          <span
-            title={wind.name}
-            aria-label={`Rating: ${wind.name}`}
-            className="text-accent-500 tracking-widest"
-          >
-            {wind.stars}
-          </span>
-          <Tag tag={subject} />
-          <Tag tag={category} />
-        </div>
       </div>
     </header>
   )

@@ -80,6 +80,66 @@ function Reference({ author, href, note, title, year }: Reference) {
   )
 }
 
+type TableCell = string | { href: string; text: string }
+
+interface Table {
+  head: Array<string>
+  rows: Array<Array<TableCell>>
+}
+
+// A small table of the post. A cell can link to another place, such as a section of the same page.
+function Table({ head, rows }: Table) {
+  return (
+    <div className={`${MEASURE} my-4`}>
+      <table className="w-full overflow-hidden rounded-lg bg-slate-800/60 text-left font-sans text-base text-blue-200 sm:text-lg">
+        <thead>
+          <tr>
+            {head.map((title) => (
+              <th
+                key={title}
+                scope="col"
+                className="px-4 pt-4 pb-2 text-sm font-bold tracking-wide text-blue-300 uppercase"
+              >
+                {title}
+              </th>
+            ))}
+          </tr>
+        </thead>
+        <tbody>
+          {rows.map((cells) => (
+            <tr
+              key={cells.map((cell) => textOfCell(cell)).join("|")}
+              className="border-t border-slate-700"
+            >
+              {cells.map((cell, column) => (
+                <td
+                  key={head[column]}
+                  className="px-4 py-2"
+                >
+                  {typeof cell === "string" ? (
+                    cell
+                  ) : (
+                    <a
+                      href={cell.href}
+                      className="font-bold text-blue-300 underline decoration-blue-300/50 underline-offset-4 hover:decoration-blue-300"
+                    >
+                      {cell.text}
+                    </a>
+                  )}
+                </td>
+              ))}
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  )
+}
+
+function textOfCell(cell: TableCell) {
+  return typeof cell === "string" ? cell : cell.text
+}
+
 function h1({ children }: HTMLProps<HTMLHeadingElement>) {
   return (
     <h1 className="m-8 text-center text-4xl font-bold text-blue-300">
@@ -310,6 +370,7 @@ const MDX_COMPONENTS = {
   ImageMdx,
   Quote,
   Reference,
+  Table,
   ...mdxHTMLComponents,
 }
 
