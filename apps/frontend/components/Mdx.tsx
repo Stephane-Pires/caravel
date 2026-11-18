@@ -56,21 +56,33 @@ function h2({ children }: HTMLProps<HTMLHeadingElement>) {
   )
 }
 
+// A heading that only names the item defined right below it ("Core:Domain :", "Error:System.")
+// loses its trailing punctuation on screen; the text of the post is left as written.
+function tidy(children: ReactNode) {
+  return typeof children === "string"
+    ? children.replace(/\s*[:.]\s*$/, "")
+    : children
+}
+
+// Followed by a definition block, an h3 becomes the title of that block instead of a section heading.
 function h3({ children }: HTMLProps<HTMLHeadingElement>) {
   return (
     <h3
       id={slugify(textOf(children))}
-      className={`${MEASURE} mt-10 mb-3 text-2xl font-semibold text-blue-300`}
+      className={`${MEASURE} mt-10 mb-3 text-2xl font-semibold text-blue-300 has-[+ul>li[data-labelled]]:mt-6 has-[+ul>li[data-labelled]]:mb-0 has-[+ul>li[data-labelled]]:rounded-t-lg has-[+ul>li[data-labelled]]:border-l-2 has-[+ul>li[data-labelled]]:border-blue-300/50 has-[+ul>li[data-labelled]]:bg-slate-800/60 has-[+ul>li[data-labelled]]:px-4 has-[+ul>li[data-labelled]]:pt-4 has-[+ul>li[data-labelled]]:text-lg sm:has-[+ul>li[data-labelled]]:text-xl`}
     >
-      {children}
+      {tidy(children)}
     </h3>
   )
 }
 
+// The smallest level is a label, not a heading: body size, sitting right on its paragraph.
 function h4({ children }: HTMLProps<HTMLHeadingElement>) {
   return (
-    <h4 className={`${MEASURE} mt-7 mb-1 text-xl font-semibold text-blue-300`}>
-      {children}
+    <h4
+      className={`${MEASURE} mt-6 mb-0 text-base font-semibold text-blue-300 sm:text-lg`}
+    >
+      {tidy(children)}
     </h4>
   )
 }
@@ -78,7 +90,7 @@ function h4({ children }: HTMLProps<HTMLHeadingElement>) {
 function p({ children }: HTMLProps<HTMLParagraphElement>) {
   return (
     <p
-      className={`${MEASURE} my-2 font-sans text-base text-blue-100 sm:text-lg`}
+      className={`${MEASURE} my-2 font-sans text-base text-blue-100 sm:text-lg [h4+&]:mt-0`}
     >
       {children}
     </p>
@@ -123,7 +135,7 @@ function li({ children }: HTMLProps<HTMLLIElement>) {
 function ul({ children }: HTMLProps<HTMLUListElement>) {
   return (
     <ul
-      className={`${MEASURE} my-4 flex list-outside list-disc list-image-[url(/logbook/mdx/chevron-right.svg)] flex-col gap-3 pl-8 has-[>li[data-labelled]]:list-none has-[>li[data-labelled]]:gap-5 has-[>li[data-labelled]]:rounded-lg has-[>li[data-labelled]]:border-l-2 has-[>li[data-labelled]]:border-blue-300/50 has-[>li[data-labelled]]:bg-slate-800/60 has-[>li[data-labelled]]:p-4 [li>&]:my-2 [li>&]:px-0 [li>&]:pl-6`}
+      className={`${MEASURE} my-4 [h3+&]:has-[>li[data-labelled]]:mt-0 [h3+&]:has-[>li[data-labelled]]:rounded-t-none flex list-outside list-disc list-image-[url(/logbook/mdx/chevron-right.svg)] flex-col gap-3 pl-8 has-[>li[data-labelled]]:list-none has-[>li[data-labelled]]:gap-5 has-[>li[data-labelled]]:rounded-lg has-[>li[data-labelled]]:border-l-2 has-[>li[data-labelled]]:border-blue-300/50 has-[>li[data-labelled]]:bg-slate-800/60 has-[>li[data-labelled]]:p-4 [li>&]:my-2 [li>&]:px-0 [li>&]:pl-6`}
     >
       {children}
     </ul>
