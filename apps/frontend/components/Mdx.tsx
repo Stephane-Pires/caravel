@@ -174,6 +174,7 @@ function ImageMdx({
   alt,
   caption,
   src,
+  title,
 }: HTMLProps<HTMLImageElement> & {
   // what the picture shows, in one short line under it
   caption?: string
@@ -188,34 +189,38 @@ function ImageMdx({
     )
   }
 
+  // the title and the caption hug the picture and share its edges, so they read as part of it
   return (
     <div
       role="figure"
-      aria-label={caption ?? alt}
-      className="my-4 flex flex-col items-center"
+      aria-label={title ?? caption ?? alt}
+      className="my-8 flex flex-col items-center px-2"
     >
-      {/* the picture opens at full size: a diagram's labels are too small to read on a phone */}
-      <a
-        href={src}
-        target="_blank"
-        rel="noreferrer"
-        title="Open the picture at full size"
-        className="relative block h-fit w-fit p-2 sm:p-4"
-      >
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img
-          src={src}
-          alt={alt}
-          className="rounded-md object-contain"
-        />
-      </a>
-      {caption && (
-        <p
-          className={`${MEASURE} text-center font-sans text-sm text-blue-100 italic sm:text-base`}
+      <div className="flex w-fit max-w-full flex-col gap-2">
+        {title && (
+          <p className="font-sans text-sm font-bold tracking-wide text-blue-300 uppercase">
+            {title}
+          </p>
+        )}
+        {/* the picture opens at full size: a diagram's labels are too small to read on a phone */}
+        <a
+          href={src}
+          target="_blank"
+          rel="noreferrer"
+          title="Open the picture at full size"
+          className="block"
         >
-          {caption}
-        </p>
-      )}
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src={src}
+            alt={alt}
+            className="rounded-md object-contain"
+          />
+        </a>
+        {caption && (
+          <p className="font-sans text-sm text-blue-100 italic">{caption}</p>
+        )}
+      </div>
     </div>
   )
 }
