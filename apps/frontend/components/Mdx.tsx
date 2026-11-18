@@ -216,7 +216,18 @@ const mdxHTMLComponents = {
 
 const MDX_COMPONENTS = { ImageMdx, Quote, ...mdxHTMLComponents }
 
-export interface TableOfContentsEntry {
+export // The post's opening claim: what a reader keeps if they stop after ten seconds.
+function Lede({ children }: { children: ReactNode }) {
+  return (
+    <p
+      className={`${MEASURE} mt-2 mb-6 border-l-2 border-blue-300/50 pl-4 font-sans text-xl leading-snug font-semibold text-blue-100 sm:text-2xl sm:leading-snug`}
+    >
+      {children}
+    </p>
+  )
+}
+
+interface TableOfContentsEntry {
   title: string
   slug: string
 }
@@ -279,15 +290,24 @@ export function Mdx({
 }) {
   const MDXContent = useMDXComponent(code)
   const components = useMemo(() => {
-    const toc = sectionsOf(raw)
+    const sections = sectionsOf(raw)
+    const toc = sections.length >= MIN_SECTIONS_FOR_A_TABLE_OF_CONTENTS && (
+      <TableOfContents entries={sections} />
+    )
+    // the sections are listed under the opening claim when the post has one, under the title otherwise
+    const hasLede = raw.includes("<Lede>")
     return {
       ...MDX_COMPONENTS,
+      Lede: (props: { children: ReactNode }) => (
+        <>
+          {Lede(props)}
+          {toc}
+        </>
+      ),
       h1: (props: HTMLProps<HTMLHeadingElement>) => (
         <>
           {h1(props)}
-          {toc.length >= MIN_SECTIONS_FOR_A_TABLE_OF_CONTENTS && (
-            <TableOfContents entries={toc} />
-          )}
+          {!hasLede && toc}
         </>
       ),
     }
