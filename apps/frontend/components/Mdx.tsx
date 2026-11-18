@@ -9,7 +9,7 @@ import { slugify } from "@/utils/slug"
 
 // The text column: about 70 characters a line at 18px (WCAG 1.4.8 asks for 80 at most).
 // `max-w-prose` (65ch) is not enough here: `ch` is the width of "0", wider than an average letter.
-const MEASURE = "mx-auto w-full max-w-[37rem] px-2"
+export const MEASURE = "mx-auto w-full max-w-[37rem] px-2"
 
 function textOf(node: ReactNode): string {
   if (typeof node === "string" || typeof node === "number") return String(node)
@@ -216,18 +216,7 @@ const mdxHTMLComponents = {
 
 const MDX_COMPONENTS = { ImageMdx, Quote, ...mdxHTMLComponents }
 
-export // The post's opening claim: what a reader keeps if they stop after ten seconds.
-function Lede({ children }: { children: ReactNode }) {
-  return (
-    <p
-      className={`${MEASURE} mt-2 mb-6 border-l-2 border-blue-300/50 pl-4 font-sans text-xl leading-snug font-semibold text-blue-100 sm:text-2xl sm:leading-snug`}
-    >
-      {children}
-    </p>
-  )
-}
-
-interface TableOfContentsEntry {
+export interface TableOfContentsEntry {
   title: string
   slug: string
 }
@@ -285,37 +274,18 @@ export function Mdx({
   raw = "",
 }: {
   code: string
-  // the post's markdown source: its sections are listed under the title
+  // the post's markdown source: its sections are listed above the text
   raw?: string
 }) {
   const MDXContent = useMDXComponent(code)
-  const components = useMemo(() => {
-    const sections = sectionsOf(raw)
-    const toc = sections.length >= MIN_SECTIONS_FOR_A_TABLE_OF_CONTENTS && (
-      <TableOfContents entries={sections} />
-    )
-    // the sections are listed under the opening claim when the post has one, under the title otherwise
-    const hasLede = raw.includes("<Lede>")
-    return {
-      ...MDX_COMPONENTS,
-      Lede: (props: { children: ReactNode }) => (
-        <>
-          {Lede(props)}
-          {toc}
-        </>
-      ),
-      h1: (props: HTMLProps<HTMLHeadingElement>) => (
-        <>
-          {h1(props)}
-          {!hasLede && toc}
-        </>
-      ),
-    }
-  }, [raw])
+  const sections = useMemo(() => sectionsOf(raw), [raw])
 
   return (
     <div className="flex w-full flex-col sm:max-w-3xl [&_figure]:mx-auto [&_figure]:my-4 [&_figure]:w-full [&_figure]:max-w-[37rem] [&_figure]:px-2 [&_pre]:overflow-x-auto [&_pre]:rounded-md [&_pre]:p-4 [&_pre]:text-sm">
-      <MDXContent components={components} />
+      {sections.length >= MIN_SECTIONS_FOR_A_TABLE_OF_CONTENTS && (
+        <TableOfContents entries={sections} />
+      )}
+      <MDXContent components={MDX_COMPONENTS} />
     </div>
   )
 }

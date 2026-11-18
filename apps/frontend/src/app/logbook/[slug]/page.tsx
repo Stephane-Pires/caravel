@@ -1,7 +1,8 @@
 import { Content, allContents } from "contentlayer/generated"
 import { Mdx } from "@/components/Mdx"
-import { Star } from "@/components/Star"
+import { PostHeader } from "@/components/PostHeader"
 import { STAR } from "@/enums/stars"
+import { CATEGORY, SUBJECT } from "@/enums/tag"
 import Image from "next/image"
 import { notFound } from "next/navigation"
 
@@ -43,22 +44,16 @@ export default async function BlogContent({ params }: BlogContentProps) {
   const content = findContent(slug)
 
   return (
-    <main className="flex min-h-screen flex-col items-center gap-10 px-2 pt-20 sm:justify-between sm:px-10">
-      <div className="absolute -z-10 hidden h-[400px] w-full sm:block">
-        <Image
-          src={`/logbook/card/${content.image}`}
-          alt="My Image"
-          fill
-          className="object-cover"
-        />
-
-        <div className="relative size-full bg-black/60 text-center align-middle">
-          <div className="font-script relative top-40 text-6xl text-blue-300">
-            {content.title}
-          </div>
-        </div>
-      </div>
-      <Star star={content.star as STAR} />
+    <main className="flex min-h-screen flex-col items-center gap-6 px-2 pt-20 sm:justify-between sm:px-10">
+      <PostHeader
+        title={content.title}
+        lede={content.lede}
+        date={content.date}
+        updated={content.updated}
+        star={content.star as STAR}
+        subject={content.subject as SUBJECT}
+        category={content.category as CATEGORY}
+      />
       <Mdx
         code={content.body.code}
         raw={content.body.raw}
