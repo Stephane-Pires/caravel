@@ -95,9 +95,12 @@ We divide them in two category :
 - **Coupling** : Imports Contracts and nothing else from the core. Called by the Controller
 - **Reason to change :** The audience wants to see something differently: a new field, a different wording, a changed layout
 
+The layers and their dependencies.
+
 <ImageMdx
   src="/logbook/chaos-is-death-order-is-life/layered-architecture.png"
   alt="Diagram of the layers: the core holds Domain, Contracts and Use-cases behind Ports; the driven adapters (Repository, Connector, System) implement the ports; the driving adapters (Controller, Presenter) call the use cases and the contracts"
+  caption="Every arrow points towards the core."
 />
 
 ### Composition Root :
@@ -106,9 +109,12 @@ Once we have theses layers in place the application need to compose them (adapte
 
 It lives in the app because it is the only place that knows which database, which vendor, which clock. It imports every adapter and every entity's controller, and nothing imports it.
 
+One package, two apps.
+
 <ImageMdx
   src="/logbook/chaos-is-death-order-is-life/composition-root.png"
   alt="Diagram of a package holding one entity with its core and adapters, and the apps (web-app, server) each holding a composition root that points to the package"
+  caption="The apps depend on the package, never the reverse."
 />
 
 ## Domain Modeling
@@ -230,11 +236,12 @@ Dev tools make life easier and application more understandable i like to use :
 
 ## Testing
 
-Usually when testing there is a known pyramid
+The three levels of tests.
 
 <ImageMdx
   src="/logbook/chaos-is-death-order-is-life/testing-pyramid.png"
   alt="Testing pyramid: unit tests at the base check the logic and functions inside a module, integration tests in the middle check how a package integrates, end-to-end tests at the top check how the whole system reacts"
+  caption="Wider means more tests. Higher means slower and more costly."
 />
 
 #### Unit
@@ -257,9 +264,12 @@ They are slow and can break often. But they provide a good check if the system i
 
 I used them to check happy path only - or really important edge case that that happened in production and i want a **<u>Tripwire</u>** on
 
+What each kind of test covers.
+
 <ImageMdx
   src="/logbook/chaos-is-death-order-is-life/testing-scopes.png"
   alt="Diagram of the test scopes: an end-to-end test wraps the whole system, an integration test wraps each package, and unit tests sit inside each package"
+  caption="Unit: one function. Integration: one package. End-to-end: the whole system."
 />
 
 ## Documentation
