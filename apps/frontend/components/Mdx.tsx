@@ -51,6 +51,35 @@ function Quote({ author, quote, source }: Quote) {
   )
 }
 
+interface Reference {
+  author: string
+  href: string
+  // what the reference covers, in one line
+  note: string
+  title: string
+  year: string
+}
+
+// One source behind the post: it opens in a new tab, since it leaves the site.
+function Reference({ author, href, note, title, year }: Reference) {
+  return (
+    <div className={`${MEASURE} my-3 font-sans`}>
+      <a
+        href={href}
+        target="_blank"
+        rel="noreferrer"
+        className="text-base font-bold text-blue-300 underline decoration-blue-300/50 underline-offset-4 hover:decoration-blue-300 sm:text-lg"
+      >
+        {title}
+      </a>
+      <p className="text-sm text-blue-100">
+        {author}, {year}
+      </p>
+      <p className="mt-1 text-base text-blue-200 sm:text-lg">{note}</p>
+    </div>
+  )
+}
+
 function h1({ children }: HTMLProps<HTMLHeadingElement>) {
   return (
     <h1 className="m-8 text-center text-4xl font-bold text-blue-300">
@@ -277,7 +306,12 @@ const mdxHTMLComponents = {
   blockquote,
 }
 
-const MDX_COMPONENTS = { ImageMdx, Quote, ...mdxHTMLComponents }
+const MDX_COMPONENTS = {
+  ImageMdx,
+  Quote,
+  Reference,
+  ...mdxHTMLComponents,
+}
 
 export interface TableOfContentsEntry {
   title: string
