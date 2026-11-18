@@ -189,7 +189,7 @@ function ImageMdx({
     )
   }
 
-  // the title and the caption hug the picture and share its edges, so they read as part of it
+  // the title and the caption hug the picture and are centred on it, so they read as part of it
   return (
     <div
       role="figure"
@@ -198,7 +198,7 @@ function ImageMdx({
     >
       <div className="flex w-fit max-w-full flex-col gap-2">
         {title && (
-          <p className="font-sans text-sm font-bold tracking-wide text-blue-300 uppercase">
+          <p className="text-center font-sans text-sm font-bold tracking-wide text-blue-300 uppercase">
             {title}
           </p>
         )}
@@ -218,7 +218,9 @@ function ImageMdx({
           />
         </a>
         {caption && (
-          <p className="font-sans text-sm text-blue-100 italic">{caption}</p>
+          <p className="text-center font-sans text-sm text-blue-100 italic">
+            {caption}
+          </p>
         )}
       </div>
     </div>
