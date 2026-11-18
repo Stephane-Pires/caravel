@@ -15,6 +15,12 @@ I have been working long enough into software to know that without a structure g
 
 The **entropy** in system is created one new feature at a time, it is the death by a thousand cut
 
+<Quote
+  quote="As an evolving program is continually changed, its complexity, reflecting deteriorating structure, increases unless work is done to maintain or reduce it."
+  author="Meir M. Lehman"
+  source="Programs, Life Cycles, and Laws of Software Evolution, 1980"
+/>
+
 The solution against it is **<u>energy</u>** and **<u>structure</u>** which create **<u>order</u>**
 
 The **<u>energy</u>** is the constant effort a software engineer do to maintain the system he growth
@@ -24,6 +30,12 @@ The **<u>structure</u>** is the mental model he uses to handle the entropy of th
 This article describe the concepts around the structure i believe helps software system to handle the **<u>entropy</u>**
 
 ## Layered architecture
+
+<Quote
+  quote="Source code dependencies can only point inwards."
+  author="Robert C. Martin"
+  source="The Clean Architecture, 2012"
+/>
 
 Let's imagine you are at the new house friend, everything is fine, you are enjoying a good drink. She is going to prepare the table for everyone and ask you to put some trash into the bin. You go open the "placard" under the "évier" - nothing, there are plates here and some "torchon". She then say really casually "oh the bin is in the garage". You should be confused and rightly if you ask me. The garage **<u>responsability</u>** is not to handle the bin which you will use really regularly while you are cooking. The expected place is in the kitchen.
 
@@ -165,6 +177,12 @@ Because errors are typed data rather than stack traces, an external system calli
 
 ## Vertical Slicing
 
+<Quote
+  quote="Minimize coupling between slices, and maximize coupling in a slice."
+  author="Jimmy Bogard"
+  source="Vertical Slice Architecture, 2018"
+/>
+
 Code is grouped by capability first and by layer second. A slice is one thing the user does and the aggregate it touches, and it is one folder that holds every layer it needs:
 
 ```text
@@ -177,6 +195,12 @@ entity/
 ```
 
 ## Typesafe
+
+<Quote
+  quote="Well-type programs cannot “go wrong”."
+  author="Robin Milner"
+  source="A Theory of Type Polymorphism in Programming, 1978"
+/>
 
 The goal is to learn about a mistake at **<u>compile time</u>** rather than in **<u>run time</u>**. How much a language lets you do that depends on whether its type system is sound.
 
