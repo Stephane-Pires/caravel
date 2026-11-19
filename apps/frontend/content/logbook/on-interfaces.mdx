@@ -1,0 +1,135 @@
+---
+title: "On interfaces"
+image: "on-interfaces.png"
+date: "2026-11-19"
+lede:
+  - "An interface hides a system behind a few entries."
+  - "The best one reaches every desired state with the fewest of them."
+subject: "CODE"
+category: "THOUGH"
+star: "THREE"
+---
+
+For a very long time i thought an interface was everything that was on the screen of my computer that was clickable. It was only later that this meaning evolved to me.
+
+An interface is an abstraction that declares entries into the system.
+
+It **<u>hides</u>** the complexity of the system and makes it **<u>convenient</u>** for the user to manipulate it through the interface entries.
+
+Therefore : The best interface lets you control and achieve the **<u>desired</u>** state of the system with the **<u>maximum flexibility</u>** and the **<u>minimum entries</u>** possible.
+
+## Drive me everywhere
+
+Let's take an example to be more concrete.
+
+If you have ever driven a car you should know you must sit at the front left seat (in Europe - France at least).
+
+By doing so you can expect :
+
+- A wheel
+- Brake pedal
+- Accelerator pedal
+
+You can expect the wheel to turn left/right and have a maximum left/right turn which represents the angle of the wheel and how much direction you can control (turn angle), this is a **<u>constraint</u>** on the entry.
+
+You can expect the brake to gradually stop the car on how much pressure you put on it - this is **<u>flexibility</u>**.
+
+Same for the accelerator, with only 3 inputs and flexibility on them you can control your car and go anywhere (as long as you have the energy to do so).
+
+<ImageMdx
+  title="Three entries, one system"
+  src="/logbook/card/on-interfaces.png"
+  alt="Diagram of a car's interface: three entries (wheel, brake pedal, accelerator pedal) point to one system, the car; the arrows are labelled constraint, flexibility and minimum entries"
+  caption="Every entry is constrained, flexible, and there are as few as possible."
+/>
+
+## Pretending break-down
+
+There is another property of a good interface we didn't talk about : conflicting inputs.
+
+When designing an interface you should make sure that different entries can't be set so that the system enters into an error. You should aim for a conflict free interface :
+
+- By **<u>minimizing</u>** the entries in the interface (again). By doing so you reduce the potential conflicts
+- By having each input control a different **<u>vertical</u>** of the system
+
+Sadly, sometimes an interface can't do the second one in order to control the system.
+
+What do you think happens if you push the accelerator and the brake at the same time ?
+
+The car stops. It's called the **brake-throttle override** system. What is amazing to me is that this system invented in the 80s took 30 years and accidents to become an industry standard.
+
+## Interfaces are everywhere
+
+- The light switch
+- The cockpit of your car
+- The SaaS website you use at work
+- The chat for the latest trendy LLM
+- The function/component you are designing
+
+They can all apply the previous rules/concepts we are talking about.
+
+They all are interfaces that abstract the complexity of the system they control.
+
+To sum up, the best practices in designing interfaces are :
+
+- Make the interface flexible enough so it controls with enough granularity the desired state of the system
+- Make the interface as small and as low input as you can without breaking the previous best practice
+- Make sure the system handles entries conflict in a safe way for the user and surfaces actionable errors
+
+## Sidenote : Chat interface VS Standard interface
+
+It was 2024, i was working at Leakmited, we were still relatively early and were renting a co-working space with another company, Formality. I had the opportunity to have a conversation with the CEO, he told me that he believed in the future all interfaces would be chat.
+
+I strongly disagree with this position.
+
+I believe the future would be a mix of chat and standard interfaces, sometimes separated, sometimes melted.
+
+My point is that chat interfaces have :
+
+- Maximum flexibility
+- Maximum inputs (they are not constrained !!!)
+
+Therefore a pattern i often see in companies implementing a chat interface is, they implement one, without understanding what the user is trying to achieve with the interface in the first place. It's what happened to us at Leakmited when we designed a chat interface which was able to answer about information regarding the water system of our client. They already had all these informations in our current SaaS system, and they had trouble understanding what question and answer they could get from the chat.
+
+Don't get me wrong, chat interfaces are amazing because they are flexible - but this flexibility comes with a high cost, you must understand what your client is trying to achieve, understand his issue and how to solve it. This should be clear in order to not design a chat interface he does not understand.
+
+Anyway, you should always understand your user intention and problem, it's just that i believe it's easier with traditional interfaces (a.k.a : buttons).
+
+Traditional interfaces have :
+
+- Minimum flexibility
+- Minimum inputs (when designed well)
+
+This makes them **<u>auto-discoverable</u>**, also the tooling and patterns to observe and make this kind of interfaces are really mature. Using observability tools you can track what was clicked, when and why.
+
+Which is not the case as far as i know at time of writing for chat interfaces. I'm pretty sure the tooling will evolve (and is currently evolving) in order to design, track and design chat interfaces that handle well the user intention and flow.
+
+In the end if you are able to :
+
+- Understand the user pain point
+- Create the system that is able to address it
+- Map the workflow to solve the user pain point
+
+A chat interface is "**<u>just</u>**" categorizing the user input and routing it to the corresponding workflow.
+
+## Sidenote : User Interface & User Experience
+
+User interface (UI) : Is by definition an interface that is controlled by the final user.
+
+A UI follows rules :
+
+- **<u>Colors</u>** : should have meaning (error, success, CTA primary/brand, etc..)
+- **<u>Spacing</u>** : should be standardized (scaling should be consistent, layout should be grid)
+- **<u>Edge</u>** : rounding should be scaled and consistent across elements
+- **<u>Motion</u>** : transition of state, action, etc.. (my personal advice : soft touch, non intrusive, motion should always help the interface become more understandable)
+- **<u>Tone & Typography</u>** : Tone should be constant across the interface, typography should be **<u>legible</u>**. Text in buttons should be one or two words maximum that should be **<u>actions</u>**
+- **<u>Iconography</u>** : Icons should represent notions in the application and help understanding the interface
+
+User Experience (UX)
+
+For me user experience is how well we have understood what the user is trying to achieve and how fast/simple/flexible the interface/system are in order to help the user achieve the desired state :
+
+- **<u>Navigation</u>** : how easy it is to navigate in the user interface
+- **<u>Errors</u>** : Are errors actionable and recoverable
+- **<u>Feedback</u>** : Do i understand when the system is handling a task in the background. Do i understand when an action is finished. Does it show success / error
+- **<u>Default</u>** : Are the defaults **<u>sane</u>** and the best for the majority of users (or me, if they could be designed only for me) - **<u>nudging</u>** is a great technique to leverage to design great defaults
