@@ -24,7 +24,7 @@ services:
     command: sleep infinity
 
   db:
-    image: postgres:18@sha256:979bccfde35445db618c65107d27d08c6c21339d8dc3ad4c830c6633947be0e4
+    image: postgres:18@sha256:eb63372c1e05c755f55fa30cbd07aecc443676fc6c0fa90b9002d01537841e1a
     container_name: caravel_postgres
     restart: unless-stopped
     ports:
