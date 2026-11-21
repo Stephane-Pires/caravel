@@ -1,6 +1,6 @@
 services:
   dev:
-    image: mcr.microsoft.com/devcontainers/typescript-node:24-trixie@sha256:85bf802bec074be0be2fc4229ca4d3882c6f9c9bfda1de7995d025257778514c
+    image: mcr.microsoft.com/devcontainers/typescript-node:24-trixie@sha256:d757292f5050d7b10bae4e0df80da615db98a68b6fdc412558caf24087452fd6
     container_name: caravel_devcontainer
     volumes:
       - .:/workspace:cached
