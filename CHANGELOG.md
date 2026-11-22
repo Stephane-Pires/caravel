@@ -1,5 +1,19 @@
 # caravel
 
+## 0.1.2
+
+### Patch Changes
+
+- [#414](https://github.com/Stephane-Pires/caravel/pull/414) [`cced747`](https://github.com/Stephane-Pires/caravel/commit/cced7472066866aa8c3c99e6b924f30a725c290e) Thanks [@renovate](https://github.com/apps/renovate)! - chore(app): 🧹 Update Node.js from v24.12.0 to v24.18.0
+
+- [#415](https://github.com/Stephane-Pires/caravel/pull/415) [`989b3b1`](https://github.com/Stephane-Pires/caravel/commit/989b3b1ecee512bafab5853d678ac9147d769824) Thanks [@renovate](https://github.com/apps/renovate)! - chore(app): 🧹 Update prettier from 3.7.4 to v3.9.10
+
+- [#419](https://github.com/Stephane-Pires/caravel/pull/419) [`7c15203`](https://github.com/Stephane-Pires/caravel/commit/7c152034cae5dee61fa6a38771c80a7c52020bb4) Thanks [@Stephane-Pires](https://github.com/Stephane-Pires)! - Install native binaries for both the devcontainer and the macOS host
+
+- [#429](https://github.com/Stephane-Pires/caravel/pull/429) [`acfc621`](https://github.com/Stephane-Pires/caravel/commit/acfc621ec608bb524f0e05d6564ad231688cf99a) Thanks [@Stephane-Pires](https://github.com/Stephane-Pires)! - Disable git hooks in the release workflow so the changesets commit isn't blocked by lint
+
+- [#427](https://github.com/Stephane-Pires/caravel/pull/427) [`56b0227`](https://github.com/Stephane-Pires/caravel/commit/56b0227ac2fd390ef54887f794e3c2e79962015a) Thanks [@Stephane-Pires](https://github.com/Stephane-Pires)! - Pin pnpm in the release workflow so CI stops failing on new pnpm majors
+
 ## 0.1.1
 
 ### Patch Changes
