@@ -1,0 +1,367 @@
+---
+title: "I have an opinion"
+image: "i-have-an-opinion.png"
+date: "2026-11-22"
+lede:
+  - "Readable code is a feeling until you test it."
+  - "I tested mine blind, and the AI's style lost five times."
+subject: "CODE"
+category: "THOUGH"
+star: "THREE"
+---
+
+Everyone says they like readable code. Almost nobody can say what it is without falling back on someone else's book.
+
+I wanted my own rules, written down, with one example each and a tool that checks them when a tool can. Not rules I would like to have: the rules I actually follow.
+
+## How I found them
+
+I did not start from an opinion. I started from evidence.
+
+- **My history.** Every commit of a recent project where code was cut or rewritten after my review: a before and an after, chosen by me.
+- **My words.** Every time I corrected or rejected code in a review.
+- **The code that survived.** What I accepted, measured file by file.
+
+Then I tested the rules blind: ten pairs of short snippets, no rule shown, pick the one that reads better. Two rounds.
+
+The result surprised me. Most of the code in that project was written by an AI and accepted by me. Some of its habits looked like rules because they were everywhere: booleans named `hosted` rather than `isHosted`, functions named `usageOf` rather than `getUsage`, types mixed in with the code. Blind, I picked the other version every time. **What code shows is what was accepted, not what was chosen.**
+
+The rules below are the ones that survived. When a rule can be checked by a tool, I name the [oxlint](https://oxc.rs/docs/guide/usage/linter) rule. When it cannot, it is for review.
+
+## Control flow
+
+### Exceptions first, the normal result last
+
+Guard clauses return early. Nothing comes in an `else` after a `return`.
+
+```ts
+// ✗
+function priceOf(order: Order) {
+  let price
+  if (order.items.length > 0) {
+    price = sum(order.items)
+  } else {
+    price = 0
+  }
+  return price
+}
+
+// ✓
+function priceOf(order: Order) {
+  if (order.items.length === 0) return 0
+  return sum(order.items)
+}
+```
+
+Checked by: `no-else-return`
+
+### A switch on the kind
+
+When a value is one of a closed set, I switch on it, and the compiler tells me the day a case is missing.
+
+```ts
+// ✗
+if (event.kind === "text") return showText(event)
+if (event.kind === "tool-call") return showCall(event)
+return showEnd(event)
+
+// ✓
+switch (event.kind) {
+  case "text": return showText(event)
+  case "tool-call": return showCall(event)
+  case "finished": return showEnd(event)
+}
+```
+
+Checked by: `typescript/switch-exhaustiveness-check`
+
+### No nested ternaries
+
+One ternary is a sentence. Two is a puzzle. A lookup table is a list.
+
+```ts
+// ✗
+const icon = status === "done" ? CHECK : status === "failed" ? CROSS : SPINNER
+
+// ✓
+const ICONS = { done: CHECK, failed: CROSS, running: SPINNER }
+const icon = ICONS[status]
+```
+
+Checked by: `no-nested-ternary`
+
+### Expressions over mutation
+
+`const` by default. A value is computed, not built step by step.
+
+```ts
+// ✗
+let total = 0
+for (const run of runs) if (run.done) total += run.tokens
+
+// ✓
+const total = runs.filter((run) => run.done).reduce((sum, run) => sum + run.tokens, 0)
+```
+
+Checked by: `prefer-const`, and review for the rest
+
+## Values and errors
+
+### A value is written once
+
+A value someone changes is a setting. A value nobody changes is a named constant, next to where it is used, with its unit in its name and why it has that value. Even when it is used once.
+
+```ts
+// ✗
+setTimeout(stop, 240_000) // Vercel stops a function at 300 s
+
+// ✓
+/** Vercel stops a function at 300 s: leave time to report the end. */
+const RUN_LIMIT_MS = 240_000
+
+setTimeout(stop, RUN_LIMIT_MS)
+```
+
+Checked by: review
+
+### Errors are values, and typed
+
+A function that can fail says so in its signature, and says how. I wrote about why in [Chaos is death, order is life](/logbook/chaos-is-death-order-is-life).
+
+```ts
+// ✗
+function readConfig(env: Env): Config {
+  if (!env.API_KEY) throw new Error("Missing key")
+  return { apiKey: env.API_KEY }
+}
+
+// ✓
+function readConfig(env: Env): Result<Config, MissingKey> {
+  if (!env.API_KEY) return err({ kind: "missing-key", name: "API_KEY" })
+  return ok({ apiKey: env.API_KEY })
+}
+```
+
+Checked by: review
+
+### Parse, never cast
+
+`as` is a promise the compiler cannot check. A schema at the edge checks it once.
+
+```ts
+// ✗
+const config = JSON.parse(text) as Config
+
+// ✓
+const config = Config.parse(JSON.parse(text))
+```
+
+Checked by: `typescript/consistent-type-assertions` (`assertionStyle: "never"`) and `typescript/no-unsafe-type-assertion`
+
+### A type allows only what can happen
+
+If the app can no longer reach a state, the type loses it.
+
+```ts
+// ✗
+type Track = { status: RunStatus | undefined } // undefined: not started, never shown anymore
+
+// ✓
+type Track = { status: RunStatus }
+```
+
+Checked by: review
+
+## Functions and parameters
+
+### An arrow for a one-liner, a function for the rest
+
+```ts
+// ✓
+const seconds = (ms: number) => Math.round(ms / 1000)
+
+function priceOf(order: Order) {
+  if (order.items.length === 0) return 0
+  return sum(order.items)
+}
+```
+
+Checked by: review
+
+### As few parameters as possible
+
+Positional by default. An object only when it is needed, and never a boolean nobody can read at the call site. It is the [On interfaces](/logbook/on-interfaces) rule applied to a function: the fewest entries.
+
+```ts
+// ✗
+openTheApp(open, true)
+
+// ✓
+openTheApp(open, { reducedMotion: true })
+```
+
+Checked by: `max-params` (3), and review for the boolean
+
+### Small named steps, in the same file
+
+A helper with a name is better than an expression to decode. A file, a module or a wrapper for a single user is not.
+
+```ts
+// ✗
+yield { kind: "failed", reason: error instanceof Error ? error.message : String(error) }
+
+// ✓
+const reasonOf = (error: unknown) => (error instanceof Error ? error.message : String(error))
+
+yield { kind: "failed", reason: reasonOf(error) }
+```
+
+Checked by: review
+
+## Placement and exports
+
+### Define before use
+
+Imports, types, constants, helpers, then what the file exports. A reader meets each word before it is used.
+
+```ts
+// ✓
+type Gate = { at: number; title: string }
+
+const PX_PER_SECOND = 28
+
+const gateX = (gate: Gate) => (gate.at / 1000) * PX_PER_SECOND
+
+export function drawGates(gates: Gate[]) { /* uses gateX */ }
+```
+
+Checked by: `no-use-before-define`
+
+### Named exports, and only what another file imports
+
+```ts
+// ✗
+export default function connect() {}
+export type ConnectOptions = { /* imported nowhere */ }
+
+// ✓
+export function connect() {}
+```
+
+Checked by: `import/no-default-export` (except where a framework requires one), and review for unused exports
+
+### Nothing unused
+
+No parameter, option, default or branch that nothing needs. Code planned for the next ticket can wait for it.
+
+```ts
+// ✗
+export function connect(url: string, options = { mode: "strict" }) {} // no caller passes options
+
+// ✓
+export function connect(url: string) {} // strict, always
+```
+
+Checked by: `no-unused-vars`, and review
+
+### A rule is written once
+
+A rule of the business lives in the one place that owns it. Everything else imports it. Data may be duplicated; logic never.
+
+```ts
+// ✗ two files decide what "fastest" means
+// ✓
+import { fastestOf } from "./comparison"
+```
+
+Checked by: review
+
+## Names and comments
+
+### Full words, and the usual shapes
+
+No abbreviations. Booleans start with `is` or `has`. A function that gives something starts with a verb.
+
+```ts
+// ✗
+const cfg = load()
+if (hosted) start(usageOf(run))
+
+// ✓
+const settings = load()
+if (isHosted) start(getUsage(run))
+```
+
+Checked by: review
+
+### Comments say why
+
+As a sentence. Never what the code already says, never history, never code left in a comment.
+
+```ts
+// ✗
+// set the sandbox mode
+args.push("--sandbox", "danger-full-access")
+
+// ✓
+// Codex's own sandbox cannot start inside a Vercel Sandbox, which already isolates the run.
+args.push("--sandbox", "danger-full-access")
+```
+
+Checked by: review
+
+### Tests read as behaviour
+
+```ts
+// ✗
+it("should return 401 when unauthorized", ...)
+
+// ✓
+it("refuses a caller without the password", ...)
+```
+
+Checked by: review
+
+## When no rule decides
+
+Every time my choice differed from the AI's code, I picked the common convention of the language. So when none of the rules above decides, that is my tiebreaker: write what most people who write this language would write.
+
+## The checks
+
+<Table
+  head={["Rule", "oxlint"]}
+  rows={[
+    ["Exceptions first", "no-else-return"],
+    ["A switch on the kind", "typescript/switch-exhaustiveness-check"],
+    ["No nested ternaries", "no-nested-ternary"],
+    ["Expressions over mutation", "prefer-const"],
+    ["Parse, never cast", "typescript/consistent-type-assertions, typescript/no-unsafe-type-assertion"],
+    ["As few parameters as possible", "max-params"],
+    ["Define before use", "no-use-before-define"],
+    ["Named exports", "import/no-default-export"],
+    ["Nothing unused", "no-unused-vars"],
+  ]}
+/>
+
+In a [Vite+](https://viteplus.dev) project they go in `vite.config.ts`. The two typed rules need the type-aware mode on.
+
+```ts
+export default defineConfig({
+  lint: {
+    options: { typeAware: true },
+    rules: {
+      "no-else-return": "error",
+      "no-nested-ternary": "error",
+      "no-use-before-define": "error",
+      "prefer-const": "error",
+      "max-params": ["error", { max: 3 }],
+      "import/no-default-export": "error",
+      "typescript/switch-exhaustiveness-check": "error",
+      "typescript/consistent-type-assertions": ["error", { assertionStyle: "never" }],
+      "typescript/no-unsafe-type-assertion": "error",
+    },
+  },
+})
+```
+
+Half of the rules have no tool. Those are the ones worth writing down.
